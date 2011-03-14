@@ -1,0 +1,6 @@
+content   careplane                 chrome/content/
+skin      careplane   classic/1.0   chrome/skin/
+locale    careplane   en-US         chrome/locale/en-US/
+
+
+overlay   chrome://browser/content/browser.xul   chrome://careplane/content/ff-overlay.xul
