@@ -10,6 +10,7 @@
     <em:contributor>Derek Kastner</em:contributor>
     <em:contributor>Ian Hough</em:contributor>
     <em:description>Real-time carbon footprints inserted into your favorite travel search sites</em:description>
+    <em:homepageURL>http://www.careplane.org/</em:homepageURL>
     <em:aboutURL>chrome://careplane/content/about.xul</em:aboutURL>
     <em:optionsURL>chrome://careplane/content/options.xul</em:optionsURL>
     <em:targetApplication>
