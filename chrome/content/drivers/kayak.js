@@ -49,11 +49,11 @@ var Kayak = {
       footprintParagraph.style.bottom = '-3px';
       top.window.content.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
       segments.forEach(function(segment) {
-          segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex);
+          segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);
       });
     },
-    insertEmissionEstimate: function(footprint, localIndex) {
-      Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex);
+    insertEmissionEstimate: function(footprint, localIndex, totalSegments) {
+      Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex, totalSegments);
     }
 }
 

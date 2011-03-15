@@ -38,12 +38,16 @@ var Careplane = {
     xhr.send(null);
   },
   
-  insertEmissionEstimate: function(footprint, elementId) {
+  insertEmissionEstimate: function(footprint, elementId, totalSegments) {
     var element = top.window.content.document.getElementById(elementId);
     var existingFootprint = Number(element.getAttribute('data-footprint'));
     var newFootprint = existingFootprint + footprint;
     element.setAttribute('data-footprint', newFootprint);
     element.innerHTML = Careplane.formatFootprint(newFootprint);
+    var existingSegmentCount = Number(element.getAttribute('data-segments'));
+    var newSegmentCount = existingSegmentCount + 1;
+    element.setAttribute('data-segments', newSegmentCount);
+    if (newSegmentCount == totalSegments) element.style.fontWeight = 'bold';
   },
   
   formatFootprint: function(footprint) {
