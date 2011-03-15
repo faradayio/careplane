@@ -16,11 +16,24 @@ var Careplane = {
     });
     if (matchingDrivers.length > 0) {
       var matchingDriver = matchingDrivers[0];
+      Careplane.notify(matchingDriver);
       var storage = bdoc.createElement('ul');
       storage.setAttribute('id', 'careplane-storage');
       storage.setAttribute('style', 'display: none;');
       bdoc.body.appendChild(storage);
       matchingDriver.scoreFlights(doc);
+    }
+  },
+  
+  notify: function(driver) {
+    var nb = gBrowser.getNotificationBox();
+    var n = nb.getNotificationWithValue('careplane');
+    var message = 'Careplane is calculating the carbon footprint of your ' + driver.name + ' flight search results. Footprints will turn bold when they are complete.'; 
+    if(n) {
+        n.label = message;
+    } else {
+        const priority = nb.PRIORITY_INFO_LOW;
+        nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: driver.hideEmissionEstimates, label: 'Hide footprints'}]);
     }
   },
   

@@ -1,1 +1,18 @@
+notification[value='careplane'] {
+  background: #96CFEA url(chrome://careplane/skin/airplane.png) no-repeat 5px 4px;
+  color: white;
+  padding-top: 6px;
+  padding-bottom: 5px;
+  padding-left: 100px;
+  text-shadow: 0px 1px 0px #52a7cf;
+  font-size: 14px;
+  border-bottom: 1px solid #52a7cf;
+}
 
+notification[value='careplane'] .notification-inner {
+  border: none;
+}
+
+notification[value='careplane'] button {
+  font-size: 12px;
+}
