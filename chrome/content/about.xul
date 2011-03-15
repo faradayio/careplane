@@ -5,14 +5,13 @@
 <!DOCTYPE dialog SYSTEM "chrome://careplane/locale/about.dtd">
 
 <dialog title="&about; Careplane" orient="vertical" autostretch="always" onload="sizeToContent()" buttons="accept" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <groupbox align="center" orient="horizontal">
+  <groupbox align="center" orient="horizontal" style="padding: 15px;">
     <vbox>
-      <text value="Careplane" style="font-weight: bold; font-size: x-large;"/>
-      <text value="&version; 1.0"/>
+      <text value="Careplane" style="font-weight: bold;"/>
+      <text value="&version; 0.1"/>
       <separator class="thin"/>
       <text value="&createdBy;" style="font-weight: bold;"/>
-      <text value="Andy Rossmeissl"/>
-      <separator class="thin"/>
+      <text value="Brighter Planet"/>
     </vbox>
   </groupbox>
 </dialog>
