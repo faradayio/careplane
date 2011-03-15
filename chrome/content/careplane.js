@@ -3,6 +3,7 @@ var Careplane = {
     this.initialized = true;
     this.drivers = [Kayak, Orbitz];
     this.strings = document.getElementById("careplane-strings");
+    this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.careplane.");
     var appcontent = document.getElementById("appcontent");   // browser
     if(appcontent)
     appcontent.addEventListener("DOMContentLoaded", this.onPageLoad, true);
@@ -12,7 +13,7 @@ var Careplane = {
     var doc = ev.originalTarget;
     var bdoc = top.window.content.document;
     var matchingDrivers = Careplane.drivers.filter(function(driver) {
-        return (doc.location.href.search(driver.searchPattern) >= 0);
+        return (doc.location.href.search(driver.searchPattern) >= 0 && Careplane.prefs.getBoolPref(driver.name.toLowerCase()));
     });
     if (matchingDrivers.length > 0) {
       var matchingDriver = matchingDrivers[0];
