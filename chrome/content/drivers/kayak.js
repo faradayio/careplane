@@ -53,9 +53,7 @@ var Kayak = {
       });
     },
     insertEmissionEstimate: function(footprint, localIndex) {
-      var footprintParagraph = top.window.content.document.getElementById('flight-footprint-' + localIndex);
-      var existingFootprint = Number(footprintParagraph.innerHTML);
-      footprintParagraph.innerHTML = existingFootprint + Number(footprint);
+      Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex);
     }
 }
 

@@ -37,5 +37,27 @@ var Careplane = {
     xhr.overrideMimeType('text/xml');
     xhr.send(null);
   },
+  
+  insertEmissionEstimate: function(footprint, elementId) {
+    var element = top.window.content.document.getElementById(elementId);
+    var existingFootprint = Number(element.getAttribute('data-footprint'));
+    var newFootprint = existingFootprint + footprint;
+    element.setAttribute('data-footprint', newFootprint);
+    element.innerHTML = Careplane.formatFootprint(newFootprint);
+  },
+  
+  formatFootprint: function(footprint) {
+    var roundedFootprint = Math.round(footprint * 10) / 10;
+    var delimitedFootprint = Careplane.numberWithDelimiter(roundedFootprint);
+    var labeledFootprint = delimitedFootprint + ' kg CO<sub>2</sub>e';
+    return labeledFootprint;
+  },
+  
+  numberWithDelimiter: function(number) { // hat tip http://kevinvaldek.com/number-with-delimiter-in-javascript
+    number = number + '', delimiter = ',';
+    var split = number.split('.');
+    split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
+    return split.join('.');
+  }
 };
 
