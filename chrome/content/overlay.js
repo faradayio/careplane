@@ -29,7 +29,7 @@ var Careplane = {
     xhr.onreadystatechange = function() {
       if (xhr.readyState==4 && xhr.status==200) {
           var response = xhr.responseText;
-          var keyDetail = response.match(matcher)[1];
+          var keyDetail = ((matcher) ? response.match(matcher)[1] : false);
           callback(response, keyDetail);
       };
     }
@@ -50,10 +50,14 @@ Flight.prototype.inspect = function() {
     return(this.origin + this.destination + this.airline + this.aircraft);
 };
 
-Flight.prototype.emissionEstimate = function() {
-  return 1.1;
+Flight.prototype.emissionEstimate = function(callback, identifier) {
+  var url = encodeURI('http://carbon.brighterplanet.com/flights.json?origin_airport=' + this.origin + '&destination_airport=' + this.destination + '&airline=' + this.airline + '&aircraft=' + this.aircraft);
+//  alert(url);
+  Careplane.fetch(url, function(response) {
+      var json = JSON.parse(response);
+      callback(json.emission, identifier);
+  });
 }
-
 
 var Kayak = {
     name: 'Kayak',
@@ -88,28 +92,32 @@ var Kayak = {
           for (var i = 1; i <= emplanementsCount; i++) {
             var segment = rows.slice((i - 1) * 3, i * 3);
             var basicDetails = segment[0].getElementsByTagName('td');
-            var airline = basicDetails[1].getElementsByTagName('nowrap')[0].innerHTML;
-            var origin = basicDetails[2].innerHTML.match(/(\([A-Z]{3}\))/)[1];
-            var destination = basicDetails[4].innerHTML.match(/(\([A-Z]{3}\))/)[1];
+            var airline = basicDetails[1].getElementsByTagName('nowrap')[0].innerHTML.replace('&nbsp;', '').trim();
+            var origin = basicDetails[2].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
+            var destination = basicDetails[4].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
             var extendedDetails = segment[1].getElementsByTagName('td');
-            var aircraft = extendedDetails[1].innerHTML.replace(/[\n\r\t]/g, '').match(/([^|]+) \([^|]+\)/)[1];
+            var aircraft = extendedDetails[1].innerHTML.replace(/[\n\r\t]/g, '').match(/([^|]+) \([^|]+\)/)[1].replace('&nbsp;', '').trim();
             legSegments.push(new Flight(origin, destination, airline, aircraft));
           }
           return legSegments;
       }).reduce(function(a, b) { return a.concat(b); }); // flatten
-      var footprint = 0;
-      segments.forEach(function(segment) {
-          footprint = footprint + segment.emissionEstimate();
-      });
       var footprintParagraph = top.window.content.document.createElement('p');
       footprintParagraph.setAttribute('class', 'careplane-footprint');
+      footprintParagraph.setAttribute('id', 'flight-footprint-' + localIndex);
       footprintParagraph.style.color = 'green';
       footprintParagraph.style.position = 'absolute';
       footprintParagraph.style.left = '95px';
       footprintParagraph.style.width = '130px';
       footprintParagraph.style.bottom = '-3px';
-      footprintParagraph.innerHTML = footprint + ' kg CO<sub>2</sub>e';
       top.window.content.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
+      segments.forEach(function(segment) {
+          segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex);
+      });
+    },
+    insertEmissionEstimate: function(footprint, localIndex) {
+      var footprintParagraph = top.window.content.document.getElementById('flight-footprint-' + localIndex);
+      var existingFootprint = Number(footprintParagraph.innerHTML);
+      footprintParagraph.innerHTML = existingFootprint + Number(footprint);
     }
 }
 
