@@ -42,11 +42,11 @@ var Kayak = {
       var footprintParagraph = top.window.content.document.createElement('p');
       footprintParagraph.setAttribute('class', 'careplane-footprint');
       footprintParagraph.setAttribute('id', 'flight-footprint-' + localIndex);
-      footprintParagraph.style.color = 'green';
+      footprintParagraph.style.color = '#aaa';
       footprintParagraph.style.position = 'absolute';
       footprintParagraph.style.left = '95px';
       footprintParagraph.style.width = '130px';
-      footprintParagraph.style.bottom = '-3px';
+      footprintParagraph.style.bottom = '-2px';
       top.window.content.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
       segments.forEach(function(segment) {
           segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);

@@ -60,7 +60,7 @@ var Careplane = {
     var existingSegmentCount = Number(element.getAttribute('data-segments'));
     var newSegmentCount = existingSegmentCount + 1;
     element.setAttribute('data-segments', newSegmentCount);
-    if (newSegmentCount == totalSegments) element.style.fontWeight = 'bold';
+    if (newSegmentCount == totalSegments) element.style.color = 'black';
   },
   
   formatFootprint: function(footprint) {
