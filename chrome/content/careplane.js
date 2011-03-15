@@ -17,6 +17,7 @@ var Careplane = {
     if (matchingDrivers.length > 0) {
       var matchingDriver = matchingDrivers[0];
       Careplane.notify(matchingDriver);
+      Careplane.attribution();
       var storage = bdoc.createElement('ul');
       storage.setAttribute('id', 'careplane-storage');
       storage.setAttribute('style', 'display: none;');
@@ -28,13 +29,21 @@ var Careplane = {
   notify: function(driver) {
     var nb = gBrowser.getNotificationBox();
     var n = nb.getNotificationWithValue('careplane');
-    var message = 'Careplane is calculating the carbon footprint of your ' + driver.name + ' flight search results. Footprints will turn bold when they are complete.'; 
+    var message = 'Careplane is calculating the carbon footprint of your ' + driver.name + ' flight search results.'; 
     if(n) {
         n.label = message;
     } else {
         const priority = nb.PRIORITY_INFO_LOW;
         nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: driver.hideEmissionEstimates, label: 'Hide footprints'}]);
     }
+  },
+  
+  attribution: function() {
+    var copyrightElement = Array.prototype.slice.call(top.window.content.document.getElementById('commonfooter').getElementsByTagName('div')).pop();
+    attributionElement = top.window.content.document.createElement('span');
+    attributionElement.setAttribute('id', 'careplane-attribution');
+    attributionElement.innerHTML = ' &middot; Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
+    copyrightElement.appendChild(attributionElement);
   },
   
   fetch: function(url, callback, matcher) {
