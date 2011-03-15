@@ -3,7 +3,6 @@
 <!DOCTYPE overlay SYSTEM "chrome://careplane/locale/overlay.dtd">
 <overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="overlay.js"/>
-  <script src="ff-overlay.js"/>
 
   <stringbundleset id="stringbundleset">
     <stringbundle id="careplane-strings" src="chrome://careplane/locale/overlay.properties"/>
