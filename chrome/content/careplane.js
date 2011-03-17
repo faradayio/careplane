@@ -18,13 +18,26 @@ var Careplane = {
     if (matchingDrivers.length > 0) {
       var matchingDriver = matchingDrivers[0];
       Careplane.notify(matchingDriver);
-      Careplane.attribution();
+      matchingDriver.insertAttribution();
       var storage = bdoc.createElement('ul');
       storage.setAttribute('id', 'careplane-storage');
       storage.setAttribute('style', 'display: none;');
       bdoc.body.appendChild(storage);
       matchingDriver.scoreFlights(doc);
     }
+  },
+  
+  standardTextAttribution: 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>',
+  
+  insertBadge: function(parentElement, referenceElement, badgeStyle) {
+    var styleElement = top.window.content.document.createElement('style');
+    styleElement.setAttribute('type', 'text/css');
+    styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
+    parentElement.insertBefore(styleElement, referenceElement);
+    var brandingElement = top.window.content.document.createElement('script');
+    brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
+    brandingElement.setAttribute('type', 'text/javascript');
+    parentElement.insertBefore(brandingElement, referenceElement);
   },
   
   notify: function(driver) {
@@ -37,14 +50,6 @@ var Careplane = {
         const priority = nb.PRIORITY_INFO_LOW;
         nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: driver.hideEmissionEstimates, label: 'Hide footprints'}]);
     }
-  },
-  
-  attribution: function() {
-    var copyrightElement = Array.prototype.slice.call(top.window.content.document.getElementById('commonfooter').getElementsByTagName('div')).pop();
-    attributionElement = top.window.content.document.createElement('span');
-    attributionElement.setAttribute('id', 'careplane-attribution');
-    attributionElement.innerHTML = ' &middot; Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
-    copyrightElement.appendChild(attributionElement);
   },
   
   fetch: function(url, callback, matcher) {

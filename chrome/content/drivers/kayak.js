@@ -57,6 +57,19 @@ var Kayak = {
     },
     hideEmissionEstimates: function() {
       Array.prototype.slice.call(top.window.content.document.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
-    }
+    },
+    insertAttribution: function() {
+      // In the sidebar
+      var parentElement = top.window.content.document.getElementById('rightads');
+      var referenceElement = top.window.content.document.getElementById('nrAds');
+      Careplane.insertBadge(parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
+      
+      // In the footer
+      var copyrightElement = Array.prototype.slice.call(top.window.content.document.getElementById('commonfooter').getElementsByTagName('div')).pop();
+      attributionElement = top.window.content.document.createElement('span');
+      attributionElement.setAttribute('id', 'careplane-attribution');
+      attributionElement.innerHTML = ' &middot; ' + Careplane.standardTextAttribution;
+      copyrightElement.appendChild(attributionElement);
+    },
 }
 
