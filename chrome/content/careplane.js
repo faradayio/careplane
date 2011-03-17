@@ -66,6 +66,8 @@ var Careplane = {
     xhr.send(null);
   },
   
+  brighterPlanetKey: '423120471f5c355512049b4532b2332f',
+  
   insertEmissionEstimate: function(footprint, elementId, totalSegments) {
     var element = top.window.content.document.getElementById(elementId);
     var existingFootprint = Number(element.getAttribute('data-footprint'));
