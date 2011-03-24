@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Careplane: real-time carbon footprints inserted into your favorite travel search sites</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/html5.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/application.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/syntax.css" />
+  <script type="text/javascript" src="javascript/jquery-1.5.min.js"></script>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="text/javascript">
+  //<![CDATA[
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1667526-26']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    });
+  //]]>
+  </script>
+  <header>
+    <div>
+      <h1>Careplane</h1>
+      <h2>Real-time carbon footprints inserted into your favorite travel search sites</h2>
+      <p class="firefox available" style="display: none;">
+        <a href="#FIXME" data-icon="FIXME" data-hash="FIXME" onclick="install();">
+          <span class="major">Install Careplane</span>
+          <span class="minor"><strong>Free</strong> Firefox plugin, 22KB</span>
+        </a>
+      </p>
+      <p class="other unavailable" style="display: none;">
+        <span class="major">Sadly, Careplane isn't available for your browser yet.</span>
+        <span class="minor">We're working on a plugin&mdash;in the meantime, why not <a href="http://firefox.com">give Firefox a try</a>?</span>
+      </p>
+    </div>
+  </header>
+  <article>
+    <div>
+      <div id="description">
+        <h1>Careplane inserts carbon footprints into your favorite travel search sites</h1>
+        <p>Trying to choose between several flights at the same price? Careplane lets you pick the greenest option, with no additional cost.</o>
+        <ul class="sites">
+          <li class="kayak"><a href="http://kayak.com">Kayak</a></li>
+          <li class="orbitz"><a href="http://orbitz.com">Kayak</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+  <footer>
+    <!--script type="text/javascript" src="http://carbon.brighterplanet.com/badge.js"></script-->
+  </footer>
+  <div id="screencast"></div>
+  <script type="text/javascript">
+  function install (aEvent) {
+    var params = {
+      "Careplane": { URL: aEvent.target.href,
+                     IconURL: aEvent.target.getAttribute("data-icon"),
+                     Hash: aEvent.target.getAttribute("data-hash"),
+                     toString: function () { return this.URL; }
+      }
+    };
+    InstallTrigger.install(params);
+    return false;
+  }
+  function showInstallButton() {
+    if ($.browser.mozilla) $('header .firefox').show();
+    else $('header .other').show();
+  }
+  $(document).ready(showInstallButton);
+  </script>
+</body>
+</html>

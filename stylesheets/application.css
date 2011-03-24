@@ -1,0 +1,165 @@
+@font-face { font-family: "Brighter Planet"; src: url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro.eot"); src: local("☺"), url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro.woff") format("woff"), url("http://brighterplanet.com/stylesheets/fonts/KievitOT-Regular.otf") format("opentype"); font-weight: normal; font-style: normal; }
+@font-face { font-family: "Brighter Planet"; src: url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro-Bold.eot"); src: local("☺"), url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro-Bold.woff") format("woff"), url("http://brighterplanet.com/stylesheets/fonts/KievitOT-Bold.otf") format("opentype"); font-weight: bold; font-style: normal; }
+@font-face { font-family: "Brighter Planet"; src: url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro-Ita.eot"); src: local("☺"), url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro-Ita.woff") format("woff"), url("http://brighterplanet.com/stylesheets/fonts/KievitOT-Ita.otf") format("opentype"); font-weight: normal; font-style: italic; }
+@font-face { font-family: "Brighter Planet"; src: url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro-BoldIta.eot"); src: local("☺"), url("http://brighterplanet.com/stylesheets/fonts/KievitWebPro-BoldIta.woff") format("woff"), url("http://brighterplanet.com/stylesheets/fonts/KievitOT-BoldIta.otf") format("opentype"); font-weight: bold; font-style: italic; }
+
+body {
+  font-family: "Brighter Planet", sans-serif;
+  background: #EDF7F9 url(images/clouds.png) repeat-x;
+}
+
+header, article {
+  width: 972px;
+  height: 480px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+header {
+  margin-top: 20px;
+  padding-top: 5px;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+}
+
+header div {
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  background: url(images/header.png) no-repeat;
+  height: 480px;
+  margin: 0 auto;
+  width: 960px;
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  border-left: 1px solid #86C0CE;
+  border-right: 1px solid #86C0CE;
+  position: relative;
+}
+
+header h1, header h2 {
+  display: none;
+}
+
+header p {
+  width: 340px;
+  position: absolute; 
+  top: 380px;
+  left: 600px;
+}
+
+header p.available {
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgb(222,69,69)),
+      color-stop(1, rgb(240,125,79))
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(222,69,69) 0%,
+      rgb(240,125,79) 100%
+  );
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  -moz-box-shadow: 0 2px 1px rgba(0,0,0,0.3), 0 0 5px rgba(0,0,0,0.1);
+}
+
+header p.available a {
+  display: block;
+  padding: 15px 20px 15px 85px;
+  text-decoration: none;
+}
+
+header p.firefox a {
+  background: url(images/firefox.png) no-repeat 15px 60%;
+}
+
+header p.available a .major {
+  color: #F7DBC4;
+  font-size: 22px;
+  display: block;
+  text-shadow: 0 -1px 0 rgba(255,255,255,0.2), 0 1px 0 rgba(0,0,0,0.1);
+  font-weight: bold;
+}
+
+header p.available a .minor {
+  color: #A32626;
+  font-size: 14px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+article>div {
+  margin: 0 auto;
+  width: 960px;
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  border-left: 1px solid #86C0CE;
+  border-right: 1px solid #86C0CE;
+  position: relative;
+}
+
+#description {
+  background: #1a2d56;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.7);
+  height: 310px;
+}
+
+#description h1 {
+  padding: 25px 20px 0 600px;
+  font-size: 21px;
+  color: #BBDCE6;
+  margin: 0 0 20px;
+}
+
+#description p {
+  color: #89b1bd;
+  font-size: 16px;
+  padding: 0 20px 0 600px;
+  margin: 0 0 10px;
+}
+
+#description ul.sites {
+  overflow: auto;
+  margin: 0 0 0 600px;
+  position: absolute;
+  bottom: 25px;
+}
+
+#description ul.sites li {
+  float: left;
+  width: 160px;
+  margin: 0 15px 0 0;
+}
+
+#description ul.sites li:last-child {
+  margin-right: 0;
+}
+
+#description ul.sites li a {
+  display: block;
+  height: 41px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  text-decoration: none;
+  text-indent: -9999px;
+}
+
+#description ul.sites li.kayak a { background-image: url(images/kayak.png) }
+#description ul.sites li.orbitz a { background-image: url(images/orbitz.png) }
+
+#screencast {
+  position: absolute;
+  top: 465px;
+  left: 50%;
+  margin: 0 0 0 -470px;
+  background: url(images/yaktrak.png) no-repeat;
+  width: 600px;
+  height: 350px;
+}
