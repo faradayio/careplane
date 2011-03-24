@@ -11,7 +11,9 @@
 #   - dist/**/*.js
 #
 src_files:
-    - chrome/content/**/*.js
+    - chrome/content/models/**/*.js
+    - chrome/content/drivers/**/*.js
+    - chrome/content/careplane.js
 
 # stylesheets
 #
