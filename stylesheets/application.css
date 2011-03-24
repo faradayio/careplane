@@ -10,12 +10,12 @@ body {
 
 header, article {
   width: 972px;
-  height: 480px;
   margin: 0 auto;
   overflow: hidden;
 }
 
 header {
+  height: 480px;
   margin-top: 20px;
   padding-top: 5px;
   -moz-border-radius: 5px 5px 0 0;
@@ -130,6 +130,7 @@ article>div {
   margin: 0 0 0 600px;
   position: absolute;
   bottom: 25px;
+  list-style: none;
 }
 
 #description ul.sites li {
@@ -162,4 +163,74 @@ article>div {
   background: url(images/yaktrak.png) no-repeat;
   width: 600px;
   height: 350px;
+}
+
+footer {
+  background: #071532;
+  border-top: 1px solid #BBDCE6;
+  overflow: auto;
+  padding: 30px 0 0;
+}
+
+footer>div {
+  width: 960px;
+  margin: 0 auto;
+  padding: 0 0 50px;
+}
+
+footer h1 {
+  display: none;
+}
+
+footer ul.questions {
+  width: 550px;
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 15px;
+}
+
+footer ul.questions li {
+  margin: 0 0 30px;
+}
+
+footer ul.questions li h2 {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0 0 5px;
+  color: #3c568f;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.9);
+}
+
+footer ul.questions li p {
+  font-size: 15px;
+  color: #8897b9;
+  line-height: 1.5;
+}
+
+footer ul.details {
+  list-style: none;
+  float: left;
+  width: 300px;
+  margin: 0 0 0 35px;
+  font-size: 13px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+}
+
+footer ul.details li {
+  margin: 0 0 20px;
+}
+
+footer ul.details li h2 {
+  color: #354e83;
+  font-weight: normal;
+}
+
+footer ul.details li p {
+  color: #2c3c5f;
+}
+
+.brighter_planet_cm1_badge {
+  clear: both;
+  margin: 0 0 0 15px;
 }
