@@ -1,14 +1,14 @@
 var Kayak = {
     name: 'Kayak',
     searchPattern: 'kayak.com/flights/',
-    scoreFlights: function(doc, bdoc) {
-      var storage = bdoc.createElement('ul');
+    scoreFlights: function() {
+      var storage = top.window.content.document.createElement('ul');
       storage.setAttribute('id', 'careplane-storage');
       storage.setAttribute('style', 'display: none;');
-      bdoc.body.appendChild(storage);
+      top.window.content.document.body.appendChild(storage);
 
-      var searchIdentifier = doc.forms[0].elements.namedItem('originsid').value;
-      var flightElements = Array.prototype.slice.call(doc.getElementsByClassName('flightresult'));
+      var searchIdentifier = top.window.content.document.forms[0].elements.namedItem('originsid').value;
+      var flightElements = Array.prototype.slice.call(top.window.content.document.getElementsByClassName('flightresult'));
       flightElements.forEach(function(flight) {
         Kayak.scoreFlight(flight, searchIdentifier);
       });
