@@ -12,7 +12,7 @@ var Orbitz = {
     }
   },
 
-  scoreFlights: function(doc) {
+  scoreFlights: function(doc, bdoc) {
     Orbitz.doc = doc;
     var airResults = Orbitz.doc.getElementsByClassName('airResults')[0];
 

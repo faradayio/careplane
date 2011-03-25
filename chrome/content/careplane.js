@@ -21,7 +21,7 @@ var Careplane = {
       var matchingDriver = matchingDrivers[0];
       Careplane.notify(matchingDriver);
       matchingDriver.insertAttribution();
-      matchingDriver.scoreFlights(doc);
+      matchingDriver.scoreFlights(doc, bdoc);
     }
   },
   
