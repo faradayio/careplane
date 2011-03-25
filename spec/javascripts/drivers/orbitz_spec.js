@@ -14,7 +14,7 @@ describe('Orbitz', function() {
       Careplane.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
       }
-      Orbitz.scoreFlights();
+      Orbitz.scoreFlights(window.document);
 
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.total-footprint');
