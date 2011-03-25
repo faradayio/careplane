@@ -48,6 +48,13 @@ header p {
   position: absolute; 
   top: 380px;
   left: 600px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  -moz-box-shadow: 0 2px 1px rgba(0,0,0,0.3), 0 0 5px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 2px 1px rgba(0,0,0,0.3), 0 0 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 1px rgba(0,0,0,0.3), 0 0 5px rgba(0,0,0,0.1);
 }
 
 header p.available {
@@ -63,17 +70,32 @@ header p.available {
       rgb(222,69,69) 0%,
       rgb(240,125,79) 100%
   );
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  border-radius: 8px;
-  border-top: 1px solid rgba(255,255,255,0.5);
-  -moz-box-shadow: 0 2px 1px rgba(0,0,0,0.3), 0 0 5px rgba(0,0,0,0.1);
+}
+
+header p.unavailable {
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgb(186,186,186)),
+      color-stop(1, rgb(222,222,222))
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(186,186,186) 0%,
+      rgb(222,222,222) 100%
+  );
 }
 
 header p.available a {
   display: block;
   padding: 15px 20px 15px 85px;
   text-decoration: none;
+}
+
+header p.unavailable span {
+  padding: 15px 20px;
+  display: block;
 }
 
 header p.firefox a {
@@ -92,6 +114,16 @@ header p.available a .minor {
   color: #A32626;
   font-size: 14px;
   text-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+header p.unavailable .major {
+  padding-bottom: 0;
+  font-size: 13px;
+}
+
+header p.unavailable .minor {
+  padding-top: 0;
+  font-size: 11px;
 }
 
 article>div {
