@@ -58,12 +58,6 @@ OrbitzScoreKeeper.prototype.officiate = function() {
 
 OrbitzScoreKeeper.prototype.onEmissionsSuccess = function(legElement, scoreKeeper) {
   return function(emission) {
-    var footprintP = Orbitz.doc.createElement('p');
-    footprintP.setAttribute('class', 'careplane-footprint');
-    footprintP.style.color = '#aaa';
-    footprintP.innerHTML = Careplane.numberWithDelimiter(emission) + 'kg CO2e';
-
-    legElement.appendChild(footprintP)
     scoreKeeper.completeCount++;
     scoreKeeper.totalEmissions += emission;
     if(scoreKeeper.completeCount == scoreKeeper.legs.length) {

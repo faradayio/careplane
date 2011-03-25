@@ -40,18 +40,10 @@ describe('OrbitzScoreKeeper', function() {
         callback(JSON.stringify({ emission: 123.0 }));
       }
       keeper.officiate();
-      expect($('.resultLeg .careplane-footprint').first()).toHaveText('123kg CO2e');
-      expect($('.resultLeg .careplane-footprint').last()).toHaveText('123kg CO2e');
       expect($('.result .total-footprint')).toHaveText('Total emissions: 246kg CO2e');
     });
   });
   describe('#onEmissionsSuccess', function() {
-    it('updates the specified resultLeg node with emissions', function() {
-      var leg = $('.resultLeg').get(0);
-      var func = keeper.onEmissionsSuccess(leg, keeper);
-      func(123.0);
-      expect($('.resultLeg p.careplane-footprint')).toHaveText('123kg CO2e');
-    });
     it('updates the total emissions result when all emissions are finished', function() {
       var func = keeper.onEmissionsSuccess($('.resultLeg').get(0), keeper);
       func(123.0);
