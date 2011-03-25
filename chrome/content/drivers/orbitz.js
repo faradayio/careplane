@@ -42,8 +42,11 @@ OrbitzScoreKeeper = function(resultNode) {
 
   this.totalFootprintP = Orbitz.doc.createElement('p');
   this.totalFootprintP.setAttribute('class', 'careplane-footprint total-footprint');
-  this.totalFootprintP.style.color = '#aaa';
-  this.totalFootprintP.innerHTML = 'Total emissions: <em>Loading...</em>';
+  this.totalFootprintP.style.color = '#666';
+  this.totalFootprintP.style.backgroundColor = '#adf';
+  this.totalFootprintP.style.marginBottom = '0';
+  this.totalFootprintP.style.padding = '7px 15px';
+  this.totalFootprintP.innerHTML = '<i>Loading Careplane footprint &hellip;</i>';
   this.resultNode.appendChild(this.totalFootprintP);
 };
 
@@ -67,7 +70,7 @@ OrbitzScoreKeeper.prototype.onEmissionsSuccess = function(legElement, scoreKeepe
 };
 
 OrbitzScoreKeeper.prototype.onEmissionsFinished = function() {
-  this.totalFootprintP.innerHTML = 'Total emissions: ' + Careplane.numberWithDelimiter(this.totalEmissions) + 'kg CO2e';
+  this.totalFootprintP.innerHTML = Careplane.formatFootprint(this.totalEmissions);
 };
 
 
