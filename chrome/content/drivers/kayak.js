@@ -2,11 +2,11 @@ var Kayak = {
     name: 'Kayak',
     searchPattern: 'kayak.com/flights/',
     scoreFlights: function(doc) {
-      var bdoc = top.window.document.body;
-      var storage = bdoc.createElement('ul');
+      Careplane.log('Kayak scoring flights');
+      var storage = doc.createElement('ul');
       storage.setAttribute('id', 'careplane-storage');
       storage.setAttribute('style', 'display: none;');
-      bdoc.body.appendChild(storage);
+      doc.body.appendChild(storage);
 
       var searchIdentifier = doc.forms[0].elements.namedItem('originsid').value;
       var flightElements = Array.prototype.slice.call(doc.getElementsByClassName('flightresult'));
@@ -22,11 +22,11 @@ var Kayak = {
       Careplane.fetch(flightDetails, Kayak.handleFlightDetails, /fdetailsdiv(\d+)/);
     },
     handleFlightDetails: function(flightDetails, localIndex) {
-      var detailStorage = top.window.document.createElement('li');
+      var detailStorage = top.window.content.document.createElement('li');
       detailStorage.setAttribute('id', 'flight-detail-' + localIndex);
       detailStorage.innerHTML = flightDetails;
-      top.window.document.getElementById('careplane-storage').appendChild(detailStorage);
-      var outerTable = top.window.document.getElementById('flight-detail-' + localIndex).getElementsByClassName('flightdetailstable')[0];
+      top.window.content.document.getElementById('careplane-storage').appendChild(detailStorage);
+      var outerTable = top.window.content.document.getElementById('flight-detail-' + localIndex).getElementsByClassName('flightdetailstable')[0];
       var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
       var segments = legs.map(function(leg) {
           var rows = Array.prototype.slice.call(leg.getElementsByTagName('tr'));
@@ -45,7 +45,7 @@ var Kayak = {
           }
           return legSegments;
       }).reduce(function(a, b) { return a.concat(b); }); // flatten
-      var footprintParagraph = top.window.document.createElement('p');
+      var footprintParagraph = top.window.content.document.createElement('p');
       footprintParagraph.setAttribute('class', 'careplane-footprint');
       footprintParagraph.setAttribute('id', 'flight-footprint-' + localIndex);
       footprintParagraph.style.color = '#aaa';
@@ -53,7 +53,7 @@ var Kayak = {
       footprintParagraph.style.left = '95px';
       footprintParagraph.style.width = '130px';
       footprintParagraph.style.bottom = '-2px';
-      top.window.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
+      top.window.content.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
       segments.forEach(function(segment) {
           segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);
       });
@@ -62,17 +62,18 @@ var Kayak = {
       Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex, totalSegments);
     },
     hideEmissionEstimates: function() {
-      Array.prototype.slice.call(top.window.document.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
+      Array.prototype.slice.call(top.window.content.document.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
     },
     insertAttribution: function() {
+      Careplane.log('Kayak insertAttribution');
       // In the sidebar
-      var parentElement = top.window.document.getElementById('rightads');
-      var referenceElement = top.window.document.getElementById('nrAds');
+      var parentElement = top.window.content.document.getElementById('rightads');
+      var referenceElement = top.window.content.document.getElementById('nrAds');
       Careplane.insertBadge(parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
       
       // In the footer
-      var copyrightElement = Array.prototype.slice.call(top.window.document.getElementById('commonfooter').getElementsByTagName('div')).pop();
-      attributionElement = top.window.document.createElement('span');
+      var copyrightElement = Array.prototype.slice.call(top.window.content.document.getElementById('commonfooter').getElementsByTagName('div')).pop();
+      attributionElement = top.window.content.document.createElement('span');
       attributionElement.setAttribute('id', 'careplane-attribution');
       attributionElement.innerHTML = ' &middot; ' + Careplane.standardTextAttribution;
       copyrightElement.appendChild(attributionElement);
