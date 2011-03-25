@@ -2,11 +2,12 @@ var Careplane = {
   onLoad: function() {
     this.initialized = true;
     this.drivers = [Kayak, Orbitz];
-    this.strings = document.getElementById("careplane-strings");
+    this.strings = top.window.document.getElementById("careplane-strings");
     this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.careplane.");
-    var appcontent = document.getElementById("appcontent");   // browser
-    if(appcontent)
-    appcontent.addEventListener("DOMContentLoaded", this.onPageLoad, true);
+    var appcontent = top.window.document.getElementById("appcontent");   // browser
+    if(appcontent) {
+      appcontent.addEventListener("DOMContentLoaded", this.onPageLoad, true);
+    }
   },
 
   brighterPlanetKey: '423120471f5c355512049b4532b2332f',
@@ -21,10 +22,6 @@ var Careplane = {
       var matchingDriver = matchingDrivers[0];
       Careplane.notify(matchingDriver);
       matchingDriver.insertAttribution();
-      var storage = bdoc.createElement('ul');
-      storage.setAttribute('id', 'careplane-storage');
-      storage.setAttribute('style', 'display: none;');
-      bdoc.body.appendChild(storage);
       matchingDriver.scoreFlights(doc);
     }
   },
@@ -32,14 +29,16 @@ var Careplane = {
   standardTextAttribution: 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>',
   
   insertBadge: function(parentElement, referenceElement, badgeStyle) {
-    var styleElement = top.window.document.createElement('style');
-    styleElement.setAttribute('type', 'text/css');
-    styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
-    parentElement.insertBefore(styleElement, referenceElement);
-    var brandingElement = top.window.document.createElement('script');
-    brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
-    brandingElement.setAttribute('type', 'text/javascript');
-    parentElement.insertBefore(brandingElement, referenceElement);
+    if(parentElement) {
+      var styleElement = top.window.document.createElement('style');
+      styleElement.setAttribute('type', 'text/css');
+      styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
+      parentElement.insertBefore(styleElement, referenceElement);
+      var brandingElement = top.window.document.createElement('script');
+      brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
+      brandingElement.setAttribute('type', 'text/javascript');
+      parentElement.insertBefore(brandingElement, referenceElement);
+    }
   },
   
   notify: function(driver) {
@@ -92,5 +91,11 @@ var Careplane = {
     var split = number.split('.');
     split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
     return split.join('.');
+  },
+
+  logger: Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService),
+
+  log: function(str) {
+    Careplane.logger.logStringMessage(str);
   }
 };

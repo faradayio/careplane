@@ -2,6 +2,12 @@ var Kayak = {
     name: 'Kayak',
     searchPattern: 'kayak.com/flights/',
     scoreFlights: function(doc) {
+      var bdoc = top.window.document.body;
+      var storage = bdoc.createElement('ul');
+      storage.setAttribute('id', 'careplane-storage');
+      storage.setAttribute('style', 'display: none;');
+      bdoc.body.appendChild(storage);
+
       var searchIdentifier = doc.forms[0].elements.namedItem('originsid').value;
       var flightElements = Array.prototype.slice.call(doc.getElementsByClassName('flightresult'));
       flightElements.forEach(function(flight) {
