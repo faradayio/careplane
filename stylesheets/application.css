@@ -240,7 +240,7 @@ footer ul.questions li h2 {
   text-shadow: 0 1px 0 rgba(0,0,0,0.9);
 }
 
-footer ul.questions li p {
+footer ul.questions li>p {
   font-size: 15px;
   color: #8897b9;
   line-height: 1.5;
@@ -270,7 +270,15 @@ footer ul.details li p {
   color: #3c568f;
 }
 
+footer ul.details li.original {
+  background: url(images/original.png) no-repeat;
+  padding: 0 0 0 120px;
+  min-height: 78px;
+}
+
 .brighter_planet_cm1_badge {
-  clear: both;
-  margin: 0 0 0 15px;
+}
+
+#original {
+  margin: 30px 0 0;
 }
