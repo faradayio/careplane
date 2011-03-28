@@ -256,10 +256,12 @@ footer ul.details li {
 footer ul.details li h2 {
   color: #354e83;
   font-weight: normal;
+  font-size: 15px;
+  margin: 0 0 5px;
 }
 
 footer ul.details li p {
-  color: #2c3c5f;
+  color: #3c568f;
 }
 
 .brighter_planet_cm1_badge {
