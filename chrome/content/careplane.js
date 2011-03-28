@@ -17,7 +17,6 @@ var Careplane = {
   onPageLoad: function(ev) {
     Careplane.firefoxDoc = ev.originalTarget;
     Careplane.webDoc = top.window.content.document;
-    Careplane.log('onPageLoad, webDoc location: ' + Careplane.webDoc.location.href);
     var matchingDrivers = Careplane.drivers.filter(function(driver) {
         return (Careplane.firefoxDoc.location.href.search(driver.searchPattern) >= 0 && Careplane.prefs.getBoolPref(driver.name.toLowerCase()));
     });
@@ -61,7 +60,6 @@ var Careplane = {
       if (xhr.readyState==4 && xhr.status==200) {
           var response = xhr.responseText;
           var keyDetail = ((matcher) ? response.match(matcher)[1] : false);
-          //Careplane.log(response);
           callback(response, keyDetail);
       };
     }

@@ -2,13 +2,13 @@ var Kayak = {
     name: 'Kayak',
     searchPattern: 'kayak.com/flights/',
     scoreFlights: function() {
-      var storage = top.window.content.document.createElement('ul');
+      var storage = Careplane.webDoc.createElement('ul');
       storage.setAttribute('id', 'careplane-storage');
       storage.setAttribute('style', 'display: none;');
-      top.window.content.document.body.appendChild(storage);
+      Careplane.webDoc.body.appendChild(storage);
 
-      var searchIdentifier = top.window.content.document.forms[0].elements.namedItem('originsid').value;
-      var flightElements = Array.prototype.slice.call(top.window.content.document.getElementsByClassName('flightresult'));
+      var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
+      var flightElements = Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('flightresult'));
       flightElements.forEach(function(flight) {
         Kayak.scoreFlight(flight, searchIdentifier);
       });
@@ -21,30 +21,50 @@ var Kayak = {
       Careplane.fetch(flightDetails, Kayak.handleFlightDetails, /fdetailsdiv(\d+)/);
     },
     handleFlightDetails: function(flightDetails, localIndex) {
-      var detailStorage = top.window.content.document.createElement('li');
+      var detailStorage = Careplane.webDoc.createElement('li');
       detailStorage.setAttribute('id', 'flight-detail-' + localIndex);
       detailStorage.innerHTML = flightDetails;
-      top.window.content.document.getElementById('careplane-storage').appendChild(detailStorage);
-      var outerTable = top.window.content.document.getElementById('flight-detail-' + localIndex).getElementsByClassName('flightdetailstable')[0];
+      Careplane.webDoc.getElementById('careplane-storage').appendChild(detailStorage);
+      var flightDetail = Careplane.webDoc.getElementById('flight-detail-' + localIndex);
+      var outerTable = flightDetail.getElementsByClassName('flightdetailstable')[0];
       var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
-      var segments = legs.map(function(leg) {
-          var rows = Array.prototype.slice.call(leg.getElementsByTagName('tr'));
-          rows.shift(); // remove "Depart Fri Apr 29 2011"
-          var emplanementsCount = ((rows.length + 1) / 3);
-          var legSegments = [];
-          for (var i = 1; i <= emplanementsCount; i++) {
-            var segment = rows.slice((i - 1) * 3, i * 3);
-            var basicDetails = segment[0].getElementsByTagName('td');
-            var airline = basicDetails[1].getElementsByTagName('nowrap')[0].innerHTML.replace('&nbsp;', '').trim();
-            var origin = basicDetails[2].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
-            var destination = basicDetails[4].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
-            var extendedDetails = segment[1].getElementsByTagName('td');
-            var aircraft = extendedDetails[1].innerHTML.replace(/[\n\r\t]/g, '').match(/([^|]+) \([^|]+\)/)[1].replace('&nbsp;', '').trim();
-            legSegments.push(new Flight(origin, destination, airline, aircraft));
-          }
-          return legSegments;
-      }).reduce(function(a, b) { return a.concat(b); }); // flatten
-      var footprintParagraph = top.window.content.document.createElement('p');
+      var segments = legs.map(this.parseLeg).
+        reduce(function(a, b) { return a.concat(b); }); // flatten
+      footprintParagraph = this.createFootprintP(localIndex);
+      Careplane.webDoc.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
+      segments.forEach(function(segment) {
+          segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);
+      });
+    },
+
+    parseLeg: function(leg) {
+      var rows = Array.prototype.slice.call(leg.getElementsByTagName('tr'));
+      rows.shift(); // remove "Depart Fri Apr 29 2011"
+      var emplanementsCount = ((rows.length + 1) / 3);
+      var legSegments = Kayak.segmentIndices(rows).map(function(i) {
+        var segment = rows.slice(i, i + 3);
+        return KayakFlight.parse(segment);
+      });
+      return legSegments;
+    },
+
+    segmentIndices: function(rows) {
+      var list = [];
+      for(var i in rows) {
+        var row = rows[i];
+        if(row.children.length > 1) {
+          var firstTd = row.getElementsByTagName('td')[0];
+          var imgs = firstTd.getElementsByTagName('img');
+
+          if(imgs.length > 0)
+            list.push(i);
+        }
+      }
+      return list;
+    },
+
+    createFootprintP: function(localIndex) {
+      var footprintParagraph = Careplane.webDoc.createElement('p');
       footprintParagraph.setAttribute('class', 'careplane-footprint');
       footprintParagraph.setAttribute('id', 'flight-footprint-' + localIndex);
       footprintParagraph.style.color = '#aaa';
@@ -52,29 +72,46 @@ var Kayak = {
       footprintParagraph.style.left = '95px';
       footprintParagraph.style.width = '130px';
       footprintParagraph.style.bottom = '-2px';
-      top.window.content.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
-      segments.forEach(function(segment) {
-          segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);
-      });
+
+      return footprintParagraph;
     },
     insertEmissionEstimate: function(footprint, localIndex, totalSegments) {
       Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex, totalSegments);
     },
     hideEmissionEstimates: function() {
-      Array.prototype.slice.call(top.window.content.document.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
+      Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
     },
     insertAttribution: function() {
       // In the sidebar
-      var parentElement = top.window.content.document.getElementById('rightads');
-      var referenceElement = top.window.content.document.getElementById('nrAds');
+      var parentElement = Careplane.webDoc.getElementById('rightads');
+      var referenceElement = Careplane.webDoc.getElementById('nrAds');
       Careplane.insertBadge(parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
       
       // In the footer
-      var copyrightElement = Array.prototype.slice.call(top.window.content.document.getElementById('commonfooter').getElementsByTagName('div')).pop();
-      attributionElement = top.window.content.document.createElement('span');
+      var copyrightElement = Array.prototype.slice.call(Careplane.webDoc.getElementById('commonfooter').getElementsByTagName('div')).pop();
+      attributionElement = Careplane.webDoc.createElement('span');
       attributionElement.setAttribute('id', 'careplane-attribution');
       attributionElement.innerHTML = ' &middot; ' + Careplane.standardTextAttribution;
       copyrightElement.appendChild(attributionElement);
     },
 }
 
+
+KayakFlight = function(origin, destination, airline, aircraft) {
+  this.origin = origin;
+  this.destination = destination;
+  this.airline = airline;
+  this.aircraft = aircraft;
+};
+KayakFlight.prototype = Flight.prototype;
+
+KayakFlight.parse = function(segment) {
+  var basicDetails = segment[0].getElementsByTagName('td');
+  var airline = basicDetails[1].getElementsByTagName('nowrap')[0].innerHTML.replace('&nbsp;', '').trim();
+  var origin = basicDetails[2].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
+  var destination = basicDetails[4].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
+  var extendedDetails = segment[1].getElementsByTagName('td');
+  var aircraft = extendedDetails[1].innerHTML.replace(/[\n\r\t]/g, '').match(/([^|]+) \([^|]+\)/)[1].replace('&nbsp;', '').trim();
+
+  return new KayakFlight(origin, destination, airline, aircraft);
+};
