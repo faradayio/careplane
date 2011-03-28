@@ -78,9 +78,6 @@ var Kayak = {
     insertEmissionEstimate: function(footprint, localIndex, totalSegments) {
       Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex, totalSegments);
     },
-    hideEmissionEstimates: function() {
-      Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
-    },
     insertAttribution: function() {
       // In the sidebar
       var parentElement = Careplane.webDoc.getElementById('rightads');

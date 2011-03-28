@@ -50,7 +50,7 @@ var Careplane = {
         n.label = message;
     } else {
         const priority = nb.PRIORITY_INFO_LOW;
-        nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: driver.hideEmissionEstimates, label: 'Hide footprints'}]);
+        nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: Careplane.hideEmissionEstimates, label: 'Hide footprints'}]);
     }
   },
   
@@ -78,6 +78,10 @@ var Careplane = {
     var newSegmentCount = existingSegmentCount + 1;
     element.setAttribute('data-segments', newSegmentCount);
     if (newSegmentCount == totalSegments) element.style.color = 'black';
+  },
+
+  hideEmissionEstimates: function() {
+    Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
   },
   
   formatFootprint: function(footprint) {
