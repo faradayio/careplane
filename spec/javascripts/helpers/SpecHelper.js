@@ -5,5 +5,7 @@ beforeEach(function() {
       return player.currentlyPlayingSong === expectedSong
           && player.isPlaying;
     }
-  })
+  });
+  Careplane.webDoc = window.document;
+  Careplane.log = jasmine.log;
 });

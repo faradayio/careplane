@@ -19,7 +19,7 @@ describe('Orbitz', function() {
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.total-footprint');
         expect($(result).children('p.total-footprint').get(0).innerText).
-          toMatch(/Total emissions: [\d,]+kg CO2e/);
+          toMatch(/[\d,]+\s*kg CO2e/);
       });
     });
   });
@@ -40,7 +40,7 @@ describe('OrbitzScoreKeeper', function() {
         callback(JSON.stringify({ emission: 123.0 }));
       }
       keeper.officiate();
-      expect($('.result .total-footprint')).toHaveText('Total emissions: 246kg CO2e');
+      expect($('.result .total-footprint')).toHaveText(/246 kg/);
     });
   });
   describe('#onEmissionsSuccess', function() {
@@ -49,7 +49,7 @@ describe('OrbitzScoreKeeper', function() {
       func(123.0);
       func = keeper.onEmissionsSuccess($('.resultLeg').get(1), keeper);
       func(123.0);
-      expect($('.result .total-footprint')).toHaveText('Total emissions: 246kg CO2e');
+      expect($('.result .total-footprint')).toHaveText(/246 kg/);
     });
   });
 });

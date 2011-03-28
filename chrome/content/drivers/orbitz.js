@@ -3,9 +3,9 @@ var Orbitz = {
   searchPattern: 'orbitz.com/App/ViewFlightSearchResults',
 
   insertAttribution: function() {
-    var parentElement = top.window.document.getElementById('matrix');
+    var parentElement = Careplane.webDoc.getElementById('matrix');
     if(parentElement) {
-      var referenceElement = top.window.document.getElementById('airResultMatrix');
+      var referenceElement = Careplane.webDoc.getElementById('airResultMatrix');
       Careplane.insertBadge(parentElement, null, '');
     } else {
       Careplane.log('Unable to find #matrix');
@@ -13,13 +13,11 @@ var Orbitz = {
   },
 
   scoreFlights: function(doc, bdoc) {
-    Orbitz.doc = bdoc;
-    var airResults = Orbitz.doc.getElementsByClassName('airResults')[0];
+    var airResults = Careplane.webDoc.getElementsByClassName('airResults')[0];
 
     if(airResults) {
       var results = airResults.getElementsByClassName('result');
 
-      Careplane.log('Got ' + results.length + ' results');
       for(var i = 0; i < results.length; i++) {
         var result = results[i];
         var scoreKeeper = new OrbitzScoreKeeper(result);
@@ -40,7 +38,7 @@ OrbitzScoreKeeper = function(resultNode) {
   this.completeCount = 0;
   this.totalEmissions = 0;
 
-  this.totalFootprintP = Orbitz.doc.createElement('p');
+  this.totalFootprintP = Careplane.webDoc.createElement('p');
   this.totalFootprintP.setAttribute('class', 'careplane-footprint total-footprint');
   this.totalFootprintP.style.color = '#666';
   this.totalFootprintP.style.backgroundColor = '#adf';
@@ -51,7 +49,6 @@ OrbitzScoreKeeper = function(resultNode) {
 };
 
 OrbitzScoreKeeper.prototype.officiate = function() {
-  Careplane.log('result has ' + this.legs + ' legs');
   for(var i = 0; i < this.legs.length; i++) {
     var leg = this.legs[i];
     var flight = OrbitzFlight.parse(leg);
