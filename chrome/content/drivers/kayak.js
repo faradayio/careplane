@@ -50,7 +50,7 @@ var Kayak = {
       footprintParagraph.setAttribute('id', 'flight-footprint-' + localIndex);
       footprintParagraph.style.color = '#aaa';
       footprintParagraph.style.position = 'absolute';
-      footprintParagraph.style.left = '95px';
+      footprintParagraph.style.left = '8px';
       footprintParagraph.style.width = '130px';
       footprintParagraph.style.bottom = '-2px';
       top.window.content.document.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
