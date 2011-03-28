@@ -93,13 +93,19 @@ header p.available a {
   text-decoration: none;
 }
 
+header p.available a:hover {
+  background-color: rgba(0,0,0,0.03);
+}
+
 header p.unavailable span {
   padding: 15px 20px;
   display: block;
 }
 
 header p.firefox a {
-  background: url(images/firefox.png) no-repeat 15px 60%;
+  background-image: url(images/firefox.png);
+  background-repeat: no-repeat;
+  background-position: 15px 60%;
 }
 
 header p.available a .major {
