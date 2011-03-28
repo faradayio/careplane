@@ -1,13 +1,4 @@
 describe('Orbitz', function() {
-  describe('.insertAttribution', function() {
-    beforeEach(function() {
-      loadFixtures('orbitz_dtw_sfo.html');
-      Orbitz.insertAttribution();
-    });
-    it('inserts a badge in the top area', function() {
-      expect($('div#trogdor')).toContain('script[src$="badge.js"]');
-    });
-  });
   describe('.scoreFlights', function() {
     it('asks the OrbitzScoreKeeper to officiate each result', function() {
       loadFixtures('orbitz_dtw_sfo.html');
