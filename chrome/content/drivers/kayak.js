@@ -28,9 +28,9 @@ var Kayak = {
       var flightDetail = Careplane.webDoc.getElementById('flight-detail-' + localIndex);
       var outerTable = flightDetail.getElementsByClassName('flightdetailstable')[0];
       var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
-      var segments = legs.map(this.parseLeg).
+      var segments = legs.map(Kayak.parseLeg).
         reduce(function(a, b) { return a.concat(b); }); // flatten
-      footprintParagraph = this.createFootprintP(localIndex);
+      footprintParagraph = Kayak.createFootprintP(localIndex);
       Careplane.webDoc.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
       segments.forEach(function(segment) {
           segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);
