@@ -3,7 +3,7 @@ require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
 task :build do
-  puts `zip -r pkg/careplane.xpi chrome defaults chrome.manifest icon.png install.rdf`
+  puts `zip -r pkg/careplane.xpi chrome defaults chrome.manifest icon.png install.rdf -x *~`
 end
 
 task :install do
