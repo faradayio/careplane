@@ -3,40 +3,45 @@ var Orbitz = {
   searchPattern: 'orbitz.com/App/ViewFlightSearchResults',
 
   insertAttribution: function() {
-    // In the matrix
-    var parentElement = Careplane.webDoc.getElementById('matrix');
-    if(parentElement) {
-      var attributionElement = Careplane.webDoc.createElement('div');
-      attributionElement.setAttribute('id', 'careplane-attribution');
-      attributionElement.setAttribute('class', 'matrixFooterAir');
-      attributionElement.setAttribute('style', 'padding-left: 4px; padding-bottom: 0;');
-      attributionElement.innerHTML = Careplane.standardTextAttribution;
-      parentElement.appendChild(attributionElement);
-    } else {
-      Careplane.log('Unable to find #matrix');
+    if(Careplane.webDoc.getElementById('careplane-attribution') == null) {
+      // In the matrix
+      var parentElement = Careplane.webDoc.getElementById('matrix');
+      if(parentElement) {
+        var attributionElement = Careplane.webDoc.createElement('div');
+        attributionElement.setAttribute('id', 'careplane-attribution');
+        attributionElement.setAttribute('class', 'matrixFooterAir');
+        attributionElement.setAttribute('style', 'padding-left: 4px; padding-bottom: 0;');
+        attributionElement.innerHTML = Careplane.standardTextAttribution;
+        parentElement.appendChild(attributionElement);
+      } else {
+        Careplane.log('Unable to find #matrix');
+      }
+      
+      // In the footer
+      var footer = Careplane.webDoc.getElementById('footer');
+      var container = Careplane.webDoc.createElement('div');
+      container.setAttribute('style', 'clear: both; margin-top: 5px');
+      footer.appendChild(container);
+      Careplane.insertBadge(container, null, '');
     }
-    
-    // In the footer
-    var footer = Careplane.webDoc.getElementById('footer');
-    var container = Careplane.webDoc.createElement('div');
-    container.setAttribute('style', 'clear: both; margin-top: 5px');
-    footer.appendChild(container);
-    Careplane.insertBadge(container, null, '');
   },
 
   scoreFlights: function(doc, bdoc) {
-    var airResults = Careplane.webDoc.getElementsByClassName('airResults')[0];
+    if(Careplane.webDoc.getElementsByClassName('careplane-footprint').length == 0) {
+      Careplane.log('scoring flights');
+      var airResults = Careplane.webDoc.getElementsByClassName('airResults')[0];
 
-    if(airResults) {
-      var results = airResults.getElementsByClassName('result');
+      if(airResults) {
+        var results = airResults.getElementsByClassName('result');
 
-      for(var i = 0; i < results.length; i++) {
-        var result = results[i];
-        var scoreKeeper = new OrbitzScoreKeeper(result);
-        scoreKeeper.officiate();
+        for(var i = 0; i < results.length; i++) {
+          var result = results[i];
+          var scoreKeeper = new OrbitzScoreKeeper(result);
+          scoreKeeper.officiate();
+        }
+      } else {
+        Careplane.log("Couldn't find an airResults element");
       }
-    } else {
-      Careplane.log("Couldn't find an airResults element");
     }
   }
 }
