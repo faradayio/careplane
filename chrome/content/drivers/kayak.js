@@ -2,81 +2,10 @@ var Kayak = {
     name: 'Kayak',
     searchPattern: 'kayak.com/flights/',
     scoreFlights: function() {
-      var storage = Careplane.webDoc.createElement('ul');
-      storage.setAttribute('id', 'careplane-storage');
-      storage.setAttribute('style', 'display: none;');
-      Careplane.webDoc.body.appendChild(storage);
-
       var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
-      var flightElements = Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('flightresult'));
-      flightElements.forEach(function(flight) {
-        Kayak.scoreFlight(flight, searchIdentifier);
-      });
-    },
-    scoreFlight: function(flightElement, searchIdentifier) {
-      var localIndex = flightElement.id.replace('tbd', '');
-      var resultIdentifier = flightElement.getElementsByTagName('div')[0].innerHTML;
-      flightElement.setAttribute('id', 'flight-' + localIndex);
-      var flightDetails = 'http://www.kayak.com/s/flightdetails?searchid=' + searchIdentifier + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
-      Careplane.fetch(flightDetails, Kayak.handleFlightDetails, /fdetailsdiv(\d+)/);
-    },
-    handleFlightDetails: function(flightDetails, localIndex) {
-      var detailStorage = Careplane.webDoc.createElement('li');
-      detailStorage.setAttribute('id', 'flight-detail-' + localIndex);
-      detailStorage.innerHTML = flightDetails;
-      Careplane.webDoc.getElementById('careplane-storage').appendChild(detailStorage);
-      var flightDetail = Careplane.webDoc.getElementById('flight-detail-' + localIndex);
-      var outerTable = flightDetail.getElementsByClassName('flightdetailstable')[0];
-      var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
-      var segments = legs.map(Kayak.parseLeg).
-        reduce(function(a, b) { return a.concat(b); }); // flatten
-      footprintParagraph = Kayak.createFootprintP(localIndex);
-      Careplane.webDoc.getElementById('flight-' + localIndex).getElementsByClassName('resultbottom')[0].appendChild(footprintParagraph);
-      segments.forEach(function(segment) {
-          segment.emissionEstimate(Kayak.insertEmissionEstimate, localIndex, segments.length);
-      });
-    },
-
-    parseLeg: function(leg) {
-      var rows = Array.prototype.slice.call(leg.getElementsByTagName('tr'));
-      rows.shift(); // remove "Depart Fri Apr 29 2011"
-      var emplanementsCount = ((rows.length + 1) / 3);
-      var legSegments = Kayak.segmentIndices(rows).map(function(i) {
-        var segment = rows.slice(i, i + 3);
-        return KayakFlight.parse(segment);
-      });
-      return legSegments;
-    },
-
-    segmentIndices: function(rows) {
-      var list = [];
-      for(var i in rows) {
-        var row = rows[i];
-        if(row.children.length > 1) {
-          var firstTd = row.getElementsByTagName('td')[0];
-          var imgs = firstTd.getElementsByTagName('img');
-
-          if(imgs.length > 0)
-            list.push(i);
-        }
-      }
-      return list;
-    },
-
-    createFootprintP: function(localIndex) {
-      var footprintParagraph = Careplane.webDoc.createElement('p');
-      footprintParagraph.setAttribute('class', 'careplane-footprint');
-      footprintParagraph.setAttribute('id', 'flight-footprint-' + localIndex);
-      footprintParagraph.style.color = '#aaa';
-      footprintParagraph.style.position = 'absolute';
-      footprintParagraph.style.left = '10px';
-      footprintParagraph.style.width = '130px';
-      footprintParagraph.style.bottom = '20px';
-
-      return footprintParagraph;
-    },
-    insertEmissionEstimate: function(footprint, localIndex, totalSegments) {
-      Careplane.insertEmissionEstimate(footprint, 'flight-footprint-' + localIndex, totalSegments);
+      Careplane.log("Using sid " + searchIdentifier);
+      this.controller = new KayakAirTrafficController(searchIdentifier);
+      this.controller.poll();
     },
     insertAttribution: function() {
       // In the sidebar
@@ -92,6 +21,146 @@ var Kayak = {
       copyrightElement.appendChild(attributionElement);
     },
 }
+
+
+
+KayakAirTrafficController = function(searchIdentifier) {
+  this.searchIdentifier = searchIdentifier;
+};
+
+KayakAirTrafficController.prototype.poll = function() {
+  setInterval(this.scoreTrips(), 1000);   // every 1 second
+}
+
+KayakAirTrafficController.prototype.scoreTrips = function() {
+  var self = this;
+  return function() {
+    var tripElements = Careplane.webDoc.getElementsByClassName('flightresult');
+    for(var i = 0; i < tripElements.length; i++) {
+      var tripElement = tripElements.item(i);
+      var trip = new KayakTrip(tripElement, self.searchIdentifier);
+      if(trip.isScorable()) {
+        trip.score();
+      }
+    }
+  };
+}
+
+
+
+KayakTrip = function(tripElement, searchIdentifier) {
+  this.tripElement = tripElement;
+  this.searchIdentifier = searchIdentifier;
+  this.totalFootprint = 0;
+};
+
+KayakTrip.prototype.tripDetailsContainer = function() {
+  if(!this._tripDetailsContainer) {
+    var inner = this.tripElement.getElementsByClassName('inner')[0]
+    this._tripDetailsContainer = inner.children[2];
+  }
+  return this._tripDetailsContainer;
+};
+
+KayakTrip.prototype.resultBottom = function() {
+  return this.tripElement.getElementsByClassName('resultbottom')[0];
+};
+
+KayakTrip.prototype.footprintParagraph = function() {
+  return this.resultBottom().getElementsByClassName('careplane-footprint')[0];
+}
+
+KayakTrip.prototype.isScorable = function() {
+  return this.footprintParagraph() == null;
+};
+
+KayakTrip.prototype.score = function() {
+  this.createFootprintParagraph();
+  this.fetchDetailsAndCalculateFootprint();
+};
+
+KayakTrip.prototype.createFootprintParagraph = function() {
+  var footprintParagraph = Careplane.webDoc.createElement('p');
+  footprintParagraph.setAttribute('class', 'careplane-footprint');
+  footprintParagraph.style.color = '#aaa';
+  footprintParagraph.style.position = 'absolute';
+  footprintParagraph.style.left = '10px';
+  footprintParagraph.style.width = '130px';
+  footprintParagraph.style.bottom = '20px';
+  footprintParagraph.innerHTML = '';
+
+  this.resultBottom().appendChild(footprintParagraph);
+};
+
+KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
+  var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
+  var localIndex = this.tripElement.id.replace('tbd', '');
+  var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
+
+  if(this.tripDetailsContainer().children.length == 0) {
+    var self = this;
+    Careplane.fetch(detailUrl, function(result) {
+      Careplane.log('Fetching trip data from ' + detailUrl);
+      self.tripDetailsContainer().innerHTML = result;
+      self.calculateFootprint();
+    });
+  } else {
+    this.calculateFootprint();
+  }
+};
+
+KayakTrip.prototype.flights = function() {
+  if(!this._flights) {
+    var outerTable = this.tripElement.getElementsByClassName('flightdetailstable')[0];
+    Careplane.log('Getting flights from outerTable ' + outerTable);
+    var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
+    this._flights = []
+    for(var i in legs) {
+      var leg = legs[i];
+      this._flights = this._flights.concat(this.parseFlights(leg));
+    }
+  }
+  return this._flights;
+}
+
+KayakTrip.prototype.parseFlights = function(leg) {
+  var rows = Array.prototype.slice.call(leg.getElementsByTagName('tr'));
+  return this.flightIndices(rows).map(function(i) {
+    var flight = rows.slice(i, i + 3);
+    return KayakFlight.parse(flight);
+  });
+};
+
+KayakTrip.prototype.flightIndices = function(rows) {
+  var list = [];
+  for(var i in rows) {
+    var row = rows[i];
+    if(row.children.length > 1) {
+      var firstTd = row.getElementsByTagName('td')[0];
+      var imgs = firstTd.getElementsByTagName('img');
+
+      if(imgs.length > 0)
+        list.push(i);
+    }
+  }
+  return list;
+};
+
+KayakTrip.prototype.calculateFootprint = function() {
+  for(var i in this.flights()) {
+    var flight = this.flights()[i];
+    flight.emissionEstimate(this.insertEmissionEstimate());
+  }
+};
+
+KayakTrip.prototype.insertEmissionEstimate = function() {
+  var self = this;
+  return function(footprint) {
+    self.totalFootprint += footprint;
+    self.footprintParagraph().innerHTML = Careplane.formatFootprint(self.totalFootprint);
+  };
+};
+
 
 
 KayakFlight = function(origin, destination, airline, aircraft) {
