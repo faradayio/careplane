@@ -108,6 +108,29 @@ describe('KayakTrip', function() {
       expect(indices[1]).toBe('5');
     });
   });
+
+  describe('#updateEmissionEstimate', function() {
+    var trip, updateEmissionEstimate, p;
+
+    beforeEach(function() {
+      p = document.createElement('p');
+      trip = new KayakTrip();
+      trip.flights = function() { return [1,2,3]; };
+      trip.footprintParagraph = function() { return p; };
+      updateEmissionEstimate = trip.updateEmissionEstimate();
+    });
+
+    it('updates the footprint paragraph with the latest total', function() {
+      updateEmissionEstimate(1234);
+      expect(p.innerHTML).toMatch(/1,234/);
+    });
+    it('sets the p font color to black when finished with all footprints', function() {
+      updateEmissionEstimate(1);
+      updateEmissionEstimate(2);
+      updateEmissionEstimate(3);
+      expect(p.style.color).toBe('rgb(0, 0, 0)');
+    });
+  });
 });
 
 describe('KayakFlight', function() {

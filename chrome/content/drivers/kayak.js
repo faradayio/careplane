@@ -52,6 +52,7 @@ KayakTrip = function(tripElement, searchIdentifier) {
   this.tripElement = tripElement;
   this.searchIdentifier = searchIdentifier;
   this.totalFootprint = 0;
+  this.completedFlightCount = 0;
 };
 
 KayakTrip.prototype.tripDetailsContainer = function() {
@@ -149,18 +150,21 @@ KayakTrip.prototype.flightIndices = function(rows) {
 KayakTrip.prototype.calculateFootprint = function() {
   for(var i in this.flights()) {
     var flight = this.flights()[i];
-    flight.emissionEstimate(this.insertEmissionEstimate());
+    flight.emissionEstimate(this.updateEmissionEstimate());
   }
 };
 
-KayakTrip.prototype.insertEmissionEstimate = function() {
+KayakTrip.prototype.updateEmissionEstimate = function() {
   var self = this;
   return function(footprint) {
     self.totalFootprint += footprint;
     self.footprintParagraph().innerHTML = Careplane.formatFootprint(self.totalFootprint);
+    self.completedFlightCount++;
+
+    if(self.completedFlightCount == self.flights().length)
+      self.footprintParagraph().style.color = '#000';
   };
 };
-
 
 
 KayakFlight = function(origin, destination, airline, aircraft) {
