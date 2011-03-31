@@ -273,7 +273,7 @@ footer ul.details li p {
 footer ul.details li.original {
   background: url(images/original.png) no-repeat;
   padding: 0 0 0 120px;
-  min-height: 78px;
+  min-height: 50px;
 }
 
 .brighter_planet_cm1_badge {
