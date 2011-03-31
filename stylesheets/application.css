@@ -116,6 +116,13 @@ header p.available a .major {
   font-weight: bold;
 }
 
+header p.available a .major span {
+  color: #F7DBC4;
+  font-size: 14px;
+  text-shadow: 0 -1px 0 rgba(255,255,255,0.2), 0 1px 0 rgba(0,0,0,0.1);
+  font-weight: normal;
+}
+
 header p.available a .minor {
   color: #A32626;
   font-size: 14px;
