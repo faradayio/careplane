@@ -195,12 +195,12 @@ article>div {
 
 #screencast {
   position: absolute;
-  top: 465px;
+  top: 460px;
   left: 50%;
-  margin: 0 0 0 -470px;
-  background: url(images/yaktrak.png) no-repeat;
+  margin: 0 0 0 -482px;
+  background: url(images/screenshot.png) no-repeat;
   width: 600px;
-  height: 350px;
+  height: 355px;
 }
 
 footer {
