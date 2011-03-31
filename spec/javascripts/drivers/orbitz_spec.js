@@ -35,12 +35,23 @@ describe('OrbitzScoreKeeper', function() {
     });
   });
   describe('#onEmissionsSuccess', function() {
+    var onEmissionsSuccess;
+    beforeEach(function() {
+      var onEmissionsSuccess = keeper.onEmissionsSuccess($('.resultLeg').get(0), keeper);
+      onEmissionsSuccess(123.0);
+      onEmissionsSuccess = keeper.onEmissionsSuccess($('.resultLeg').get(1), keeper);
+      onEmissionsSuccess(123.0);
+    });
+
     it('updates the total emissions result when all emissions are finished', function() {
-      var func = keeper.onEmissionsSuccess($('.resultLeg').get(0), keeper);
-      func(123.0);
-      func = keeper.onEmissionsSuccess($('.resultLeg').get(1), keeper);
-      func(123.0);
       expect($('.result .total-footprint')).toHaveText(/246 kg/);
+    });
+
+    it('updates the footprint paragraph with the latest total', function() {
+      expect($('.result .total-footprint').html()).toMatch(/246/);
+    });
+    it('sets the p font color to black when finished with all footprints', function() {
+      expect($('.result .total-footprint').get(0).style.color).toBe('rgb(0, 0, 0)');
     });
   });
 });

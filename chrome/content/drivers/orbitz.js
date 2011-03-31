@@ -84,6 +84,7 @@ OrbitzScoreKeeper.prototype.onEmissionsSuccess = function(legElement, scoreKeepe
 };
 
 OrbitzScoreKeeper.prototype.onEmissionsFinished = function() {
+  this.totalFootprintP.style.color = '#000';
   this.totalFootprintP.innerHTML = Careplane.formatFootprint(this.totalEmissions);
 };
 
