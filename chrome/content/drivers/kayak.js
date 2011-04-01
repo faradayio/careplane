@@ -1,25 +1,24 @@
 var Kayak = {
-    name: 'Kayak',
-    searchPattern: 'kayak.com/flights/',
-    scoreFlights: function() {
-      var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
-      Careplane.log("Using sid " + searchIdentifier);
-      this.controller = new KayakAirTrafficController(searchIdentifier);
-      this.controller.poll();
-    },
-    insertAttribution: function() {
-      // In the sidebar
-      var parentElement = Careplane.webDoc.getElementById('rightads');
-      var referenceElement = Careplane.webDoc.getElementById('nrAds');
-      Careplane.insertBadge(parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
-      
-      // In the footer
-      var copyrightElement = Array.prototype.slice.call(Careplane.webDoc.getElementById('commonfooter').getElementsByTagName('div')).pop();
-      attributionElement = Careplane.webDoc.createElement('span');
-      attributionElement.setAttribute('id', 'careplane-attribution');
-      attributionElement.innerHTML = ' &middot; ' + Careplane.standardTextAttribution;
-      copyrightElement.appendChild(attributionElement);
-    },
+  name: 'Kayak',
+  searchPattern: 'kayak.com/flights/',
+  scoreFlights: function() {
+    var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
+    this.controller = new KayakAirTrafficController(searchIdentifier);
+    this.controller.poll();
+  },
+  insertAttribution: function() {
+    // In the sidebar
+    var parentElement = Careplane.webDoc.getElementById('rightads');
+    var referenceElement = Careplane.webDoc.getElementById('nrAds');
+    Careplane.insertBadge(parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
+    
+    // In the footer
+    var copyrightElement = Array.prototype.slice.call(Careplane.webDoc.getElementById('commonfooter').getElementsByTagName('div')).pop();
+    attributionElement = Careplane.webDoc.createElement('span');
+    attributionElement.setAttribute('id', 'careplane-attribution');
+    attributionElement.innerHTML = ' &middot; ' + Careplane.standardTextAttribution;
+    copyrightElement.appendChild(attributionElement);
+  },
 }
 
 
