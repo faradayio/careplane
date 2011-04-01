@@ -13,6 +13,18 @@ describe('Orbitz', function() {
           toMatch(/[\d,]+\s*kg CO2e/);
       });
     });
+    it('works for DFW<->GRU', function() {
+      loadFixtures('orbitz_dfw_gru.html');
+      Careplane.fetch = function(url, callback) {
+        callback(JSON.stringify({ emission: 512.0 }));
+      }
+      Orbitz.scoreFlights(window.document);
+      $('div.result').each(function(i, result) {
+        expect($(result)).toContain('p.total-footprint');
+        expect($(result).children('p.total-footprint').get(0).innerText).
+          toMatch(/[\d,]+\s*kg CO2e/);
+      });
+    });
   });
 });
 

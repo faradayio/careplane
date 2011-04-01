@@ -111,11 +111,15 @@ OrbitzFlight.parse = function(legElement) {
   var legTitle = col3.getElementsByClassName('legTitle')[0];
   airline = legTitle.innerHTML;
   airline = airline.match(/([^\d]+)/)[1];
-  airline = airline.replace(/\s+$/,'');
+  airline = airline.replace(/[\n\r\t]+$/,'');
+  airline = airline.replace('&nbsp;','');
+  Careplane.log('Using airline "' + airline + '"');
 
   var extraInfo = legElement.getElementsByClassName('legExtraInfo')[0];
   var aircraftLi = extraInfo.getElementsByTagName('li')[2];
-  aircraft = aircraftLi.innerHTML;
+  if(aircraftLi) {
+    aircraft = aircraftLi.innerHTML;
+  }
 
   return new OrbitzFlight(origin, destination, airline, aircraft);
 };
