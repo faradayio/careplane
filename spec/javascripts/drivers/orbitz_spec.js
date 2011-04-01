@@ -10,7 +10,7 @@ describe('Orbitz', function() {
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.total-footprint');
         expect($(result).children('p.total-footprint').get(0).innerText).
-          toMatch(/[\d,]+\s*kg CO2e/);
+          toMatch(/[\d,]+\s*lbs CO2e/);
       });
     });
     it('works for DFW<->GRU', function() {
@@ -22,7 +22,7 @@ describe('Orbitz', function() {
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.total-footprint');
         expect($(result).children('p.total-footprint').get(0).innerText).
-          toMatch(/[\d,]+\s*kg CO2e/);
+          toMatch(/[\d,]+\s*lbs CO2e/);
       });
     });
   });
@@ -43,7 +43,7 @@ describe('OrbitzTrip', function() {
         callback(JSON.stringify({ emission: 123.0 }));
       }
       trip.score();
-      expect($('.result .total-footprint')).toHaveText(/246 kg/);
+      expect($('.result .total-footprint')).toHaveText(/541.2 lbs/);
     });
   });
   describe('#onEmissionsSuccess', function() {
@@ -56,11 +56,11 @@ describe('OrbitzTrip', function() {
     });
 
     it('updates the total emissions result when all emissions are finished', function() {
-      expect($('.result .total-footprint')).toHaveText(/246 kg/);
+      expect($('.result .total-footprint')).toHaveText(/541.2 lbs/);
     });
 
     it('updates the footprint paragraph with the latest total', function() {
-      expect($('.result .total-footprint').html()).toMatch(/246/);
+      expect($('.result .total-footprint').html()).toMatch(/541.2/);
     });
     it('sets the p font color to black when finished with all footprints', function() {
       expect($('.result .total-footprint').get(0).style.color).toBe('rgb(0, 0, 0)');

@@ -68,26 +68,14 @@ var Careplane = {
     xhr.send(null);
   },
   
-  insertEmissionEstimate: function(footprint, elementId, totalSegments) {
-    var element = this.webDoc.getElementById(elementId);
-    var existingFootprint = Number(element.getAttribute('data-footprint'));
-    var newFootprint = existingFootprint + footprint;
-    element.setAttribute('data-footprint', newFootprint);
-    element.innerHTML = Careplane.formatFootprint(newFootprint);
-    var existingSegmentCount = Number(element.getAttribute('data-segments'));
-    var newSegmentCount = existingSegmentCount + 1;
-    element.setAttribute('data-segments', newSegmentCount);
-    if (newSegmentCount == totalSegments) element.style.color = 'black';
-  },
-
   hideEmissionEstimates: function() {
     Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
   },
   
   formatFootprint: function(footprint) {
-    var roundedFootprint = Math.round(footprint * 10) / 10;
+    var roundedFootprint = Math.round((footprint * 2.2) * 10) / 10;
     var delimitedFootprint = Careplane.numberWithDelimiter(roundedFootprint);
-    var labeledFootprint = delimitedFootprint + ' kg CO<sub>2</sub>e';
+    var labeledFootprint = delimitedFootprint + ' lbs CO<sub>2</sub>e';
     return labeledFootprint;
   },
   

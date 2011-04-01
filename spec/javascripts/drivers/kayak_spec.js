@@ -122,7 +122,7 @@ describe('KayakTrip', function() {
 
     it('updates the footprint paragraph with the latest total', function() {
       updateEmissionEstimate(1234);
-      expect(p.innerHTML).toMatch(/1,234/);
+      expect(p.innerHTML).toMatch(/2,714.8/);
     });
     it('sets the p font color to black when finished with all footprints', function() {
       updateEmissionEstimate(1);
