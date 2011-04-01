@@ -111,7 +111,9 @@ OrbitzFlight.parse = function(legElement) {
   var legTitle = col3.getElementsByClassName('legTitle')[0];
   airline = legTitle.innerHTML;
   airline = airline.match(/([^\d]+)/)[1];
-  airline = airline.replace(/[\n\r\t]+$/,'');
+  airline = airline.replace(/[\n\r\t]+/,'');
+  airline = airline.replace(/[\s]+$/,'');
+  airline = airline.replace(/^[\s]+/,'');
   airline = airline.replace('&nbsp;','');
   Careplane.log('Using airline "' + airline + '"');
 
