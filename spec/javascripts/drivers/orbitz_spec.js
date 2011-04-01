@@ -1,6 +1,6 @@
 describe('Orbitz', function() {
   describe('.scoreFlights', function() {
-    it('asks the OrbitzScoreKeeper to officiate each result', function() {
+    it('asks the OrbitzTrip to score each result', function() {
       loadFixtures('orbitz_dtw_sfo.html');
       Careplane.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
@@ -28,30 +28,30 @@ describe('Orbitz', function() {
   });
 });
 
-describe('OrbitzScoreKeeper', function() {
-  var result, keeper;
+describe('OrbitzTrip', function() {
+  var result, trip;
 
   beforeEach(function() {
     loadFixtures('orbitz_dtw_sfo_result.html');
     result = $('.result').get(0);
-    keeper = new OrbitzScoreKeeper(result);
+    trip = new OrbitzTrip(result);
   });
 
-  describe('#officiate', function() {
+  describe('#score', function() {
     it('parses each flight and totals emissions', function() {
       Careplane.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 123.0 }));
       }
-      keeper.officiate();
+      trip.score();
       expect($('.result .total-footprint')).toHaveText(/246 kg/);
     });
   });
   describe('#onEmissionsSuccess', function() {
     var onEmissionsSuccess;
     beforeEach(function() {
-      var onEmissionsSuccess = keeper.onEmissionsSuccess($('.resultLeg').get(0), keeper);
+      var onEmissionsSuccess = trip.onEmissionsSuccess($('.resultLeg').get(0), trip);
       onEmissionsSuccess(123.0);
-      onEmissionsSuccess = keeper.onEmissionsSuccess($('.resultLeg').get(1), keeper);
+      onEmissionsSuccess = trip.onEmissionsSuccess($('.resultLeg').get(1), trip);
       onEmissionsSuccess(123.0);
     });
 

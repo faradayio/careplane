@@ -29,27 +29,30 @@ var Orbitz = {
   scoreFlights: function(doc, bdoc) {
     if(Careplane.webDoc.getElementsByClassName('careplane-footprint').length == 0) {
       Careplane.log('scoring flights');
-      var airResults = Careplane.webDoc.getElementsByClassName('airResults')[0];
 
-      if(airResults) {
-        var results = airResults.getElementsByClassName('result');
-
-        for(var i = 0; i < results.length; i++) {
-          var result = results[i];
-          var scoreKeeper = new OrbitzScoreKeeper(result);
-          scoreKeeper.officiate();
-        }
-      } else {
-        Careplane.log("Couldn't find an airResults element");
-      }
+      this.controller = new OrbitzAirTrafficController();
+      this.controller.scoreTrips();
     }
   }
 }
 
 
-// OrbitzScoreKeeper
 
-OrbitzScoreKeeper = function(resultNode) {
+OrbitzAirTrafficController = function() {};
+
+OrbitzAirTrafficController.prototype.scoreTrips = function() {
+  var tripElements = Careplane.webDoc.getElementsByClassName('result');
+
+  for(var i = 0; i < tripElements.length; i++) {
+    var tripElement = tripElements.item(i);
+    var trip = new OrbitzTrip(tripElement);
+    trip.score();
+  }
+}
+
+
+
+OrbitzTrip = function(resultNode) {
   this.resultNode = resultNode;
   this.legs = this.resultNode.getElementsByClassName('resultLeg');
   this.completeCount = 0;
@@ -65,7 +68,7 @@ OrbitzScoreKeeper = function(resultNode) {
   this.resultNode.appendChild(this.totalFootprintP);
 };
 
-OrbitzScoreKeeper.prototype.officiate = function() {
+OrbitzTrip.prototype.score = function() {
   for(var i = 0; i < this.legs.length; i++) {
     var leg = this.legs[i];
     var flight = OrbitzFlight.parse(leg);
@@ -73,7 +76,7 @@ OrbitzScoreKeeper.prototype.officiate = function() {
   }
 };
 
-OrbitzScoreKeeper.prototype.onEmissionsSuccess = function(legElement, scoreKeeper) {
+OrbitzTrip.prototype.onEmissionsSuccess = function(legElement, scoreKeeper) {
   return function(emission) {
     scoreKeeper.completeCount++;
     scoreKeeper.totalEmissions += emission;
@@ -83,7 +86,7 @@ OrbitzScoreKeeper.prototype.onEmissionsSuccess = function(legElement, scoreKeepe
   };
 };
 
-OrbitzScoreKeeper.prototype.onEmissionsFinished = function() {
+OrbitzTrip.prototype.onEmissionsFinished = function() {
   this.totalFootprintP.style.color = '#000';
   this.totalFootprintP.innerHTML = Careplane.formatFootprint(this.totalEmissions);
 };
