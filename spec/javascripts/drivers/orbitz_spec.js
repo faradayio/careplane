@@ -9,8 +9,9 @@ describe('Orbitz', function() {
 
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.total-footprint');
-        expect($(result).children('p.total-footprint').get(0).innerText).
-          toMatch(/[\d,]+\s*lbs CO2e/);
+        var p = $(result).children('p.total-footprint').get(0);
+        expect(p.innerText).toMatch(/[\d]+/);
+        expect(p.style.color).toMatch(/rgb\(\d+, \d+, \d+\)/);
       });
     });
     it('works for DFW<->GRU', function() {
@@ -42,17 +43,19 @@ describe('OrbitzTrip', function() {
       Careplane.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 123.0 }));
       }
-      trip.score();
+      var onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
+      trip.score(onTripEmissionsComplete);
       expect($('.result .total-footprint')).toHaveText(/541.2 lbs/);
     });
   });
-  describe('#onEmissionsSuccess', function() {
-    var onEmissionsSuccess;
+  describe('#onFlightEmissionsComplete', function() {
+    var onEmissionsComplete, onTripEmissionsComplete;
     beforeEach(function() {
-      var onEmissionsSuccess = trip.onEmissionsSuccess($('.resultLeg').get(0), trip);
-      onEmissionsSuccess(123.0);
-      onEmissionsSuccess = trip.onEmissionsSuccess($('.resultLeg').get(1), trip);
-      onEmissionsSuccess(123.0);
+      var onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
+      var onFlightEmissionsComplete = trip.onFlightEmissionsComplete(onTripEmissionsComplete);
+      onFlightEmissionsComplete(123.0);
+      onFlightEmissionsComplete = trip.onFlightEmissionsComplete(onTripEmissionsComplete);
+      onFlightEmissionsComplete(123.0);
     });
 
     it('updates the total emissions result when all emissions are finished', function() {

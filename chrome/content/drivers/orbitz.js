@@ -30,66 +30,77 @@ var Orbitz = {
     if(Careplane.webDoc.getElementsByClassName('careplane-footprint').length == 0) {
       Careplane.log('scoring flights');
 
-      this.controller = new OrbitzAirTrafficController();
-      this.controller.scoreTrips();
+      var controller = new OrbitzAirTrafficController();
+      controller.scoreTrips();
     }
   }
 }
 
 
 
-OrbitzAirTrafficController = function() {};
+OrbitzAirTrafficController = function() {
+  this.trips = [];
+  this.tripElements = Careplane.webDoc.getElementsByClassName('result');
+  this.completedTrips = 0;
+};
+OrbitzAirTrafficController.prototype = new AirTrafficController();
 
 OrbitzAirTrafficController.prototype.scoreTrips = function() {
-  var tripElements = Careplane.webDoc.getElementsByClassName('result');
-
-  for(var i = 0; i < tripElements.length; i++) {
-    var tripElement = tripElements.item(i);
+  for(var i = 0; i < this.tripElements.length; i++) {
+    var tripElement = this.tripElements.item(i);
     var trip = new OrbitzTrip(tripElement);
-    trip.score();
+    this.trips.push(trip);
+    trip.score(this.onTripEmissionsComplete());
   }
 }
+
+OrbitzAirTrafficController.prototype.onTripEmissionsComplete = function() {
+  var self = this;
+  return function() {
+    Careplane.log('onTripEmissionsComplete');
+    if(++self.completedTrips == self.tripElements.length) {
+      Careplane.log('all trips finished');
+      self.rateTrips();
+    }
+  }
+};
 
 
 
 OrbitzTrip = function(resultNode) {
   this.resultNode = resultNode;
-  this.legs = this.resultNode.getElementsByClassName('resultLeg');
-  this.completeCount = 0;
-  this.totalEmissions = 0;
+  this.completedFlightCount = 0;
+  this.totalFootprint = 0;
 
-  this.totalFootprintP = Careplane.webDoc.createElement('p');
-  this.totalFootprintP.setAttribute('class', 'careplane-footprint total-footprint');
-  this.totalFootprintP.style.color = '#666';
-  this.totalFootprintP.style.backgroundColor = '#adf';
-  this.totalFootprintP.style.marginBottom = '0';
-  this.totalFootprintP.style.padding = '7px 15px';
-  this.totalFootprintP.innerHTML = '<i>Loading Careplane footprint &hellip;</i>';
-  this.resultNode.appendChild(this.totalFootprintP);
+  this.footprintParagraph = Careplane.webDoc.createElement('p');
+  this.footprintParagraph.setAttribute('class', 'careplane-footprint total-footprint');
+  this.footprintParagraph.style.color = '#000';
+  this.footprintParagraph.style.backgroundColor = '#FFF';
+  this.footprintParagraph.style.margin = '0';
+  this.footprintParagraph.style.padding = '7px 15px';
+  this.footprintParagraph.innerHTML = '<i>Loading Careplane footprint &hellip;</i>';
+  this.resultNode.appendChild(this.footprintParagraph);
 };
+OrbitzTrip.prototype = new Trip();
 
-OrbitzTrip.prototype.score = function() {
-  for(var i = 0; i < this.legs.length; i++) {
-    var leg = this.legs[i];
-    var flight = OrbitzFlight.parse(leg);
-    flight.emissionEstimate(this.onEmissionsSuccess(leg, this));
+OrbitzTrip.prototype.flights = function() {
+  if(!this._flights) {
+    this._flights = [];
+    var legs = this.resultNode.getElementsByClassName('resultLeg');
+    for(var i = 0; i < legs.length; i++) {
+      this._flights.push(OrbitzFlight.parse(legs[i]));
+    }
+  }
+  return this._flights;
+}
+
+OrbitzTrip.prototype.score = function(onTripEmissionsComplete) {
+  for(var i in this.flights()) {
+    var flight = this.flights()[i];
+    flight.emissionEstimate(this.onFlightEmissionsComplete(onTripEmissionsComplete));
   }
 };
 
-OrbitzTrip.prototype.onEmissionsSuccess = function(legElement, scoreKeeper) {
-  return function(emission) {
-    scoreKeeper.completeCount++;
-    scoreKeeper.totalEmissions += emission;
-    if(scoreKeeper.completeCount == scoreKeeper.legs.length) {
-      scoreKeeper.onEmissionsFinished();
-    }
-  };
-};
-
-OrbitzTrip.prototype.onEmissionsFinished = function() {
-  this.totalFootprintP.style.color = '#000';
-  this.totalFootprintP.innerHTML = Careplane.formatFootprint(this.totalEmissions);
-};
 
 
 // OrbitzFlight
