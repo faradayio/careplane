@@ -146,15 +146,9 @@ KayakTrip.prototype.flightIndices = function(rows) {
 KayakTrip.prototype.calculateFootprint = function() {
   for(var i in this.flights()) {
     var flight = this.flights()[i];
-    flight.emissionEstimate(this.onFlightEmissionsComplete(this.onTripEmissionsComplete(this)));
+    flight.emissionEstimate(this.onFlightEmissionsComplete());
   }
 };
-
-KayakTrip.prototype.onTripEmissionsComplete = function(self) {
-  return function() {
-    //self.footprintParagraph.style.color = '#000';
-  };
-}
 
 
 
