@@ -5,7 +5,8 @@ Trip.prototype.onFlightEmissionsComplete = function(onTripEmissionsComplete) {
   return function(footprint) {
     self.totalFootprint += footprint;
     self.footprintParagraph.innerHTML = Careplane.formatFootprint(self.totalFootprint);
-    if(++self.completedFlightCount == self.flights().length)
+    self.completedFlightCount++;
+    if(onTripEmissionsComplete && self.completedFlightCount == self.flights().length)
       onTripEmissionsComplete();
   };
 };
