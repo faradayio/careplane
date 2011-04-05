@@ -95,10 +95,11 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
   var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
 
   if(this.tripDetailsContainer().children.length == 0) {
-    var self = this;
+    var trip = this;
+    Careplane.log('fetching details ' + detailUrl);
     Careplane.fetch(detailUrl, function(result) {
-      self.tripDetailsContainer().innerHTML = result;
-      self.calculateFootprint();
+      trip.tripDetailsContainer().innerHTML = result;
+      trip.calculateFootprint();
     });
   } else {
     this.calculateFootprint();
@@ -106,15 +107,17 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
 };
 
 KayakTrip.prototype.flights = function() {
-  if(!this._flights) {
-    Careplane.log('Getting outerTable from tripElement ' + this.tripElement.id);
+  if(!this._flights || this._flights.length == 0) {
+    //Careplane.log('Getting outerTable from tripElement ' + this.tripElement.id);
     var outerTable = this.tripElement.getElementsByClassName('flightdetailstable')[0];
-    Careplane.log('Getting flights from outerTable ' + outerTable);
-    var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
-    this._flights = []
-    for(var i in legs) {
-      var leg = legs[i];
-      this._flights = this._flights.concat(this.parseFlights(leg));
+    //Careplane.log('Getting flights from outerTable ' + outerTable);
+    if(outerTable) {
+      var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
+      this._flights = []
+      for(var i in legs) {
+        var leg = legs[i];
+        this._flights = this._flights.concat(this.parseFlights(leg));
+      }
     }
   }
   return this._flights;

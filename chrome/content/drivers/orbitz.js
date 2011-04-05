@@ -28,7 +28,7 @@ var Orbitz = {
 
   scoreFlights: function(doc, bdoc) {
     if(Careplane.webDoc.getElementsByClassName('careplane-footprint').length == 0) {
-      Careplane.log('scoring flights');
+      //Careplane.log('scoring flights');
 
       var controller = new OrbitzAirTrafficController();
       controller.scoreTrips();
@@ -55,12 +55,12 @@ OrbitzAirTrafficController.prototype.scoreTrips = function() {
 }
 
 OrbitzAirTrafficController.prototype.onTripEmissionsComplete = function() {
-  var self = this;
+  var controller = this;
   return function() {
-    Careplane.log('onTripEmissionsComplete');
-    if(++self.completedTrips == self.tripElements.length) {
-      Careplane.log('all trips finished');
-      self.rateTrips();
+    //Careplane.log('onTripEmissionsComplete');
+    if(++controller.completedTrips == controller.tripElements.length) {
+      //Careplane.log('all trips finished');
+      controller.rateTrips();
     }
   }
 };
@@ -129,7 +129,7 @@ OrbitzFlight.parse = function(legElement) {
   airline = airline.replace(/[\s]+$/,'');
   airline = airline.replace(/^[\s]+/,'');
   airline = airline.replace('&nbsp;','');
-  Careplane.log('Using airline "' + airline + '"');
+  //Careplane.log('Using airline "' + airline + '"');
 
   var extraInfo = legElement.getElementsByClassName('legExtraInfo')[0];
   var aircraftLi = extraInfo.getElementsByTagName('li')[2];

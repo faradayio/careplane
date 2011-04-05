@@ -22,7 +22,7 @@ var Careplane = {
     });
     if (matchingDrivers.length > 0) {
       var matchingDriver = matchingDrivers[0];
-      Careplane.log('matched driver ' + matchingDriver + ' with ' + matchingDriver.searchPattern);
+      //Careplane.log('matched driver ' + matchingDriver + ' with ' + matchingDriver.searchPattern);
       Careplane.notify(matchingDriver);
       matchingDriver.insertAttribution();
       matchingDriver.scoreFlights(this.firefoxDoc, this.webDoc);

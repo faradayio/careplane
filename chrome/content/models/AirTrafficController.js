@@ -1,18 +1,19 @@
 AirTrafficController = function() {};
 
 AirTrafficController.prototype.clear = function() {
-  var self = this;
+  var controller = this;
   return function() {
-    self.scoreTrips();
-    self.rateTrips();
+    controller.scoreTrips();
+    controller.rateTrips();
   };
 };
 
 AirTrafficController.prototype.rateTrips = function() {
   var scale = this.ratingScale();
 
-  for(var i in this.trips) {
-    var trip = this.trips[i];
+  var trips = this.finishedTrips();
+  for(var i in trips) {
+    var trip = trips[i];
     var rating = (scale == null) ? 0 : scale[trip.totalFootprint];
     trip.rate(rating);
   }
@@ -22,9 +23,9 @@ AirTrafficController.prototype.ratingScale = function() {
   var min = this.minFootprint();
   var max = this.maxFootprint();
   var avg = this.averageFootprint();
-  //Careplane.log('Min: ' + min);
-  //Careplane.log('Max: ' + max);
-  //Careplane.log('Avg: ' + avg);
+  Careplane.log('Min: ' + min);
+  Careplane.log('Max: ' + max);
+  Careplane.log('Avg: ' + avg);
 
   if(min == max) {
     return null;
@@ -33,11 +34,12 @@ AirTrafficController.prototype.ratingScale = function() {
     var maxDifference = max - avg;
     var scale = {};
 
-    for(var i in this.trips) {
-      var trip = this.trips[i];
+    var trips = this.finishedTrips();
+    for(var i in trips) {
+      var trip = trips[i];
       var tripDifference = avg - trip.totalFootprint;
-      //Careplane.log('Trip: ' + trip.totalFootprint);
-      //Careplane.log('Difference: ' + tripDifference);
+      Careplane.log('Trip: ' + trip.totalFootprint);
+      Careplane.log('Difference: ' + tripDifference);
 
       var rating = 0;
       if(trip.totalFootprint > avg)
@@ -45,7 +47,7 @@ AirTrafficController.prototype.ratingScale = function() {
       else if(trip.totalFootprint < avg)
         rating = tripDifference / minDifference;
 
-      //Careplane.log('Rating: ' + rating);
+      Careplane.log('Rating: ' + rating);
 
       scale[trip.totalFootprint] = rating;
     }
@@ -53,33 +55,48 @@ AirTrafficController.prototype.ratingScale = function() {
   }
 };
 
+AirTrafficController.prototype.finishedTrips = function() {
+  var list = this.trips.filter(function(trip) {
+    return trip.isDone();
+  });
+  return list;
+};
+
 AirTrafficController.prototype.averageFootprint = function() {
-  if(this.trips.length == 0) {
+  var trips = this.finishedTrips();
+  if(trips.length == 0) {
     return 0;
   } else {
     var totalFootprint = 0;
-    for(var i in this.trips) {
-      totalFootprint += this.trips[i].totalFootprint;
+    for(var i in trips) {
+      var trip = trips[i];
+      if(trip.isDone()) {
+        totalFootprint += trips[i].totalFootprint;
+      }
     }
-    return totalFootprint / this.trips.length;
+    return totalFootprint / trips.length;
   }
 };
 
 AirTrafficController.prototype.minFootprint = function() {
+  var trips = this.finishedTrips();
   var minFootprint = 0;
-  for(var i in this.trips) {
+  for(var i in trips) {
+    var trip = trips[i];
     if(minFootprint == 0) {
-      minFootprint = this.trips[i].totalFootprint;
+      minFootprint = trips[i].totalFootprint;
     } else {
-      minFootprint = Math.min(minFootprint, this.trips[i].totalFootprint);
+      minFootprint = Math.min(minFootprint, trips[i].totalFootprint);
     }
   }
   return minFootprint;
 };
+
 AirTrafficController.prototype.maxFootprint = function() {
+  var trips = this.finishedTrips();
   var maxFootprint = 0;
-  for(var i in this.trips) {
-    maxFootprint = Math.max(maxFootprint, this.trips[i].totalFootprint);
+  for(var i in trips) {
+    maxFootprint = Math.max(maxFootprint, trips[i].totalFootprint);
   }
   return maxFootprint;
 };

@@ -26,16 +26,18 @@ describe('Trip', function() {
 
     beforeEach(function() {
       p = document.createElement('p');
-      trip = new KayakTrip();
+      trip = new Trip();
       trip.flights = function() { return [1,2,3]; };
       trip.footprintParagraph = p;
+      trip.totalFootprint = 0;
+      trip.completedFlightCount = 0;
       onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
       onFlightEmissionsComplete = trip.onFlightEmissionsComplete(onTripEmissionsComplete);
     });
 
     it('updates the footprint paragraph with the latest total', function() {
-      onFlightEmissionsComplete(1234);
-      expect(p.innerHTML).toMatch(/2,714.8/);
+      onFlightEmissionsComplete(2714.8);
+      expect(p.innerHTML).toMatch(/5,972.6/);
     });
     it('executes the onTripEmissionsComplete function when all flights are ready', function() {
       onFlightEmissionsComplete(1);

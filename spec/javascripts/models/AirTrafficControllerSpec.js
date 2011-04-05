@@ -6,30 +6,35 @@ describe('AirTrafficController', function() {
     var resultBottom = document.createElement('div');
     resultBottom.setAttribute('class', 'resultbottom');
     tripElement.appendChild(resultBottom);
-    trip1 = new KayakTrip(tripElement);
-    trip1.createFootprintParagraph();
+    trip1 = new Trip(tripElement);
+    trip1.footprintParagraph = document.createElement('p');
     trip1.totalFootprint = 100;
-    trip2 = new KayakTrip(tripElement);
-    trip2.createFootprintParagraph();
+    trip1.completedFlightCount = 1;
+    trip2 = new Trip(tripElement);
+    trip2.footprintParagraph = document.createElement('p');
     trip2.totalFootprint = 200;
-    trip3 = new KayakTrip(tripElement);
-    trip3.createFootprintParagraph();
+    trip2.completedFlightCount = 1;
+    trip3 = new Trip(tripElement);
+    trip3.footprintParagraph = document.createElement('p');
     trip3.totalFootprint = 300;
-    trip4 = new KayakTrip(tripElement);
-    trip4.createFootprintParagraph();
+    trip3.completedFlightCount = 1;
+    trip4 = new Trip(tripElement);
+    trip4.footprintParagraph = document.createElement('p');
     trip4.totalFootprint = 400;
-    trip5 = new KayakTrip(tripElement);
-    trip5.createFootprintParagraph();
+    trip4.completedFlightCount = 1;
+    trip5 = new Trip(tripElement);
+    trip5.footprintParagraph = document.createElement('p');
     trip5.totalFootprint = 500;
+    trip5.completedFlightCount = 1;
   });
 
   describe('#averageFootprint', function() {
     it('returns the average trip footprint', function() {
-      var trip1 = new KayakTrip();
+      var trip1 = new Trip();
       trip1.totalFootprint = 300;
-      var trip2 = new KayakTrip();
+      var trip2 = new Trip();
       trip2.totalFootprint = 200;
-      var trip3 = new KayakTrip();
+      var trip3 = new Trip();
       trip3.totalFootprint = 400;
       controller.trips = [trip1, trip2, trip3]
       expect(controller.averageFootprint()).toBe(300);
@@ -41,7 +46,7 @@ describe('AirTrafficController', function() {
   });
 
   describe('#rateTrips', function() {
-    it('rates each trip on a scale of horrible to awesome', function() {
+    it('rates each trip on a scale of -1 to 1', function() {
       controller.trips = [trip1, trip2, trip3, trip4, trip5];
       controller.rateTrips();
       expect(trip1.rating).toBe(1);
