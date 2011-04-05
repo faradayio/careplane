@@ -56,11 +56,11 @@ var Careplane = {
   
   fetch: function(url, callback, matcher) {
     var xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState==4 && xhr.status==200) {
-          var response = xhr.responseText;
-          var keyDetail = ((matcher) ? response.match(matcher)[1] : false);
-          callback(response, keyDetail);
+    xhr.onload = function() {
+      if(xhr.status==200) {
+        var response = xhr.responseText;
+        var keyDetail = ((matcher) ? response.match(matcher)[1] : false);
+        callback(response, keyDetail);
       };
     }
     xhr.open('GET', url, true);
