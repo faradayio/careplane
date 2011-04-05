@@ -1,9 +1,7 @@
 beforeEach(function() {
   this.addMatchers({
-    toBePlaying: function(expectedSong) {
-      var player = this.actual;
-      return player.currentlyPlayingSong === expectedSong
-          && player.isPlaying;
+    toBeInstanceOf: function(klass) {
+      return typeof this.actual == klass;
     }
   });
   Careplane.webDoc = window.document;

@@ -1,32 +1,47 @@
 describe('Kayak', function() {
-  //describe('.insertAttribution', function() {
-    //beforeEach(function() {
-      //loadFixtures('kayak_dtw_sfo.html');
-      //Kayak.insertAttribution();
-    //});
-    //it('inserts a badge in the top area', function() {
-      //expect($('div#rightads')).toContain('script[src$="badge.js"]');
-    //});
-    //it('inserts a text attribution in the footer', function() {
-      //expect($('span#careplane-attribution')).toHaveText(' · Emission estimates powered by Brighter Planet');
-    //});
-  //});
+  describe('.insertAttribution', function() {
+    beforeEach(function() {
+      loadFixtures('kayak_dtw_sfo.html');
+      Kayak.insertAttribution();
+    });
+    it('inserts a badge in the top area', function() {
+      expect($('div#rightads')).toContain('script[src$="badge.js"]');
+    });
+    it('inserts a text attribution in the footer', function() {
+      expect($('span#careplane-attribution')).toHaveText(' · Emission estimates powered by Brighter Planet');
+    });
+  });
 });
 
-//describe('KayakAirTrafficController', function() {
-  //describe('#scoreTrips', function() {
-    //it('parses all flights', function() {
-      //// need a way to fake ajax for kayak AND cm1
-      //loadFixtures('kayak_dtw_sfo.html');
-      //var controller = new KayakAirTrafficController('abc123');
-      //controller.scoreTrips();
-      //expect($('.careplane-footprint').length).toBeGreaterThan(0);
-      //$('.careplane-footprint').each(function(footprintP) {
-        //expect($(footprintP)).toHaveText(/.+/)
-      //});
-    //});
-  //});
-//});
+describe('KayakAirTrafficController', function() {
+  it('keeps a list of trips', function() {
+    Careplane.fetch = function(url, callback) {
+      callback("{ \"emission\": 1234 }");
+    }
+    loadFixtures('kayak_dtw_sfo_direct_flight.html');
+    var controller = new KayakAirTrafficController('abc123');
+    controller.scoreTrips();
+    expect(controller.trips[0]).not.toBeNull();
+  });
+
+  describe('#clear', function() {
+    it('scores all trips and color codes them', function() {
+      Careplane.fetch = function(url, callback) {
+        callback("{ \"emission\": 123 }");
+      }
+      loadFixtures('kayak_dtw_sfo.html');
+      var controller = new KayakAirTrafficController('abc123');
+      controller.clear()();
+      expect(controller.trips.length).toBe(15);
+      for(var i in controller.trips) {
+        Careplane.log('CO2 is ' + controller.trips[i].footprintParagraph.innerHTML);
+        expect(controller.trips[i].footprintParagraph.innerHTML).toMatch(/[\d]+/);
+        Careplane.log('color is ' + controller.trips[i].footprintParagraph.style.color);
+        expect(controller.trips[i].footprintParagraph.style.color).toMatch(/rgb/);
+      }
+    });
+  });
+});
 
 describe('KayakTrip', function() {
   describe('#isScorable', function() {
@@ -44,22 +59,24 @@ describe('KayakTrip', function() {
     });
   });
 
-  describe('#calculateFootprint', function() {
+  describe('#scoreTrips', function() {
+    var onTripEmissionsComplete;
     beforeEach(function() {
       Careplane.fetch = function(url, callback) {
         callback("{ \"emission\": 1234 }");
       }
+      onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
     });
     it('parses regular flights', function() {
       loadFixtures('kayak_dtw_sfo_direct_flight.html');
       var controller = new KayakAirTrafficController('abc123');
-      controller.scoreTrips();
+      controller.scoreTrips(onTripEmissionsComplete);
       expect($('.careplane-footprint')).toHaveText(/.+/)
     });
     it('parses redeye flights', function() {
       loadFixtures('kayak_dtw_sfo_redeye.html');
       var controller = new KayakAirTrafficController('abc123');
-      controller.scoreTrips();
+      controller.scoreTrips(onTripEmissionsComplete);
       expect($('.careplane-footprint')).toHaveText(/.+/)
     });
   });
@@ -108,36 +125,13 @@ describe('KayakTrip', function() {
       expect(indices[1]).toBe('5');
     });
   });
-
-  describe('#updateEmissionEstimate', function() {
-    var trip, updateEmissionEstimate, p;
-
-    beforeEach(function() {
-      p = document.createElement('p');
-      trip = new KayakTrip();
-      trip.flights = function() { return [1,2,3]; };
-      trip.footprintParagraph = function() { return p; };
-      updateEmissionEstimate = trip.updateEmissionEstimate();
-    });
-
-    it('updates the footprint paragraph with the latest total', function() {
-      updateEmissionEstimate(1234);
-      expect(p.innerHTML).toMatch(/2,714.8/);
-    });
-    it('sets the p font color to black when finished with all footprints', function() {
-      updateEmissionEstimate(1);
-      updateEmissionEstimate(2);
-      updateEmissionEstimate(3);
-      expect(p.style.color).toBe('rgb(0, 0, 0)');
-    });
-  });
 });
 
 describe('KayakFlight', function() {
   describe('.parse', function() {
     describe('with a normal flight', function() {
       beforeEach(function() {
-
+        //loadFixtures('kayak_dtw_sfo_direct_flight.html');
       });
       it('parses airline', function() {
 

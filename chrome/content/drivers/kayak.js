@@ -25,25 +25,25 @@ var Kayak = {
 
 KayakAirTrafficController = function(searchIdentifier) {
   this.searchIdentifier = searchIdentifier;
+  this.trips = [];
 };
+KayakAirTrafficController.prototype = new AirTrafficController();
 
 KayakAirTrafficController.prototype.poll = function() {
-  setInterval(this.scoreTrips(), 1000);   // every 1 second
-}
+  setInterval(this.clear(), 1000);   // every 1 second
+};
 
 KayakAirTrafficController.prototype.scoreTrips = function() {
-  var self = this;
-  return function() {
-    var tripElements = Careplane.webDoc.getElementsByClassName('flightresult');
-    for(var i = 0; i < tripElements.length; i++) {
-      var tripElement = tripElements.item(i);
-      var trip = new KayakTrip(tripElement, self.searchIdentifier);
-      if(trip.isScorable()) {
-        trip.score();
-      }
+  var tripElements = Careplane.webDoc.getElementsByClassName('flightresult');
+  for(var i = 0; i < tripElements.length; i++) {
+    var tripElement = tripElements.item(i);
+    var trip = new KayakTrip(tripElement, this.searchIdentifier);
+    if(trip.isScorable()) {
+      this.trips.push(trip);
+      trip.score();
     }
-  };
-}
+  }
+};
 
 
 
@@ -53,6 +53,7 @@ KayakTrip = function(tripElement, searchIdentifier) {
   this.totalFootprint = 0;
   this.completedFlightCount = 0;
 };
+KayakTrip.prototype = new Trip();
 
 KayakTrip.prototype.tripDetailsContainer = function() {
   if(!this._tripDetailsContainer) {
@@ -66,12 +67,8 @@ KayakTrip.prototype.resultBottom = function() {
   return this.tripElement.getElementsByClassName('resultbottom')[0];
 };
 
-KayakTrip.prototype.footprintParagraph = function() {
-  return this.resultBottom().getElementsByClassName('careplane-footprint')[0];
-}
-
 KayakTrip.prototype.isScorable = function() {
-  return this.footprintParagraph() == null;
+  return this.resultBottom().getElementsByClassName('careplane-footprint').length == 0;
 };
 
 KayakTrip.prototype.score = function() {
@@ -80,16 +77,16 @@ KayakTrip.prototype.score = function() {
 };
 
 KayakTrip.prototype.createFootprintParagraph = function() {
-  var footprintParagraph = Careplane.webDoc.createElement('p');
-  footprintParagraph.setAttribute('class', 'careplane-footprint');
-  footprintParagraph.style.color = '#aaa';
-  footprintParagraph.style.position = 'absolute';
-  footprintParagraph.style.left = '10px';
-  footprintParagraph.style.width = '130px';
-  footprintParagraph.style.bottom = '20px';
-  footprintParagraph.innerHTML = '';
+  this.footprintParagraph = Careplane.webDoc.createElement('p');
+  this.footprintParagraph.setAttribute('class', 'careplane-footprint');
+  this.footprintParagraph.style.color = '#aaa';
+  this.footprintParagraph.style.position = 'absolute';
+  this.footprintParagraph.style.left = '10px';
+  this.footprintParagraph.style.width = '130px';
+  this.footprintParagraph.style.bottom = '20px';
+  this.footprintParagraph.innerHTML = '';
 
-  this.resultBottom().appendChild(footprintParagraph);
+  this.resultBottom().appendChild(this.footprintParagraph);
 };
 
 KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
@@ -100,7 +97,6 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
   if(this.tripDetailsContainer().children.length == 0) {
     var self = this;
     Careplane.fetch(detailUrl, function(result) {
-      Careplane.log('Fetching trip data from ' + detailUrl);
       self.tripDetailsContainer().innerHTML = result;
       self.calculateFootprint();
     });
@@ -111,6 +107,7 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
 
 KayakTrip.prototype.flights = function() {
   if(!this._flights) {
+    Careplane.log('Getting outerTable from tripElement ' + this.tripElement.id);
     var outerTable = this.tripElement.getElementsByClassName('flightdetailstable')[0];
     Careplane.log('Getting flights from outerTable ' + outerTable);
     var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
@@ -149,21 +146,16 @@ KayakTrip.prototype.flightIndices = function(rows) {
 KayakTrip.prototype.calculateFootprint = function() {
   for(var i in this.flights()) {
     var flight = this.flights()[i];
-    flight.emissionEstimate(this.updateEmissionEstimate());
+    flight.emissionEstimate(this.onFlightEmissionsComplete(this.onTripEmissionsComplete(this)));
   }
 };
 
-KayakTrip.prototype.updateEmissionEstimate = function() {
-  var self = this;
-  return function(footprint) {
-    self.totalFootprint += footprint;
-    self.footprintParagraph().innerHTML = Careplane.formatFootprint(self.totalFootprint);
-    self.completedFlightCount++;
-
-    if(self.completedFlightCount == self.flights().length)
-      self.footprintParagraph().style.color = '#000';
+KayakTrip.prototype.onTripEmissionsComplete = function(self) {
+  return function() {
+    //self.footprintParagraph.style.color = '#000';
   };
-};
+}
+
 
 
 KayakFlight = function(origin, destination, airline, aircraft) {
