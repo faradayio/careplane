@@ -3,8 +3,8 @@ var Kayak = {
   searchPattern: 'kayak.com/flights/',
   scoreFlights: function() {
     var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
-    this.controller = new KayakAirTrafficController(searchIdentifier);
-    this.controller.poll();
+    var controller = new KayakAirTrafficController(searchIdentifier);
+    controller.poll();
   },
   insertAttribution: function() {
     // In the sidebar
