@@ -23,9 +23,9 @@ AirTrafficController.prototype.ratingScale = function() {
   var min = this.minFootprint();
   var max = this.maxFootprint();
   var avg = this.averageFootprint();
-  Careplane.log('Min: ' + min);
-  Careplane.log('Max: ' + max);
-  Careplane.log('Avg: ' + avg);
+  //Careplane.log('Min: ' + min);
+  //Careplane.log('Max: ' + max);
+  //Careplane.log('Avg: ' + avg);
 
   if(min == max) {
     return null;
@@ -38,8 +38,8 @@ AirTrafficController.prototype.ratingScale = function() {
     for(var i in trips) {
       var trip = trips[i];
       var tripDifference = avg - trip.totalFootprint;
-      Careplane.log('Trip: ' + trip.totalFootprint);
-      Careplane.log('Difference: ' + tripDifference);
+      //Careplane.log('Trip: ' + trip.totalFootprint);
+      //Careplane.log('Difference: ' + tripDifference);
 
       var rating = 0;
       if(trip.totalFootprint > avg)
@@ -47,7 +47,7 @@ AirTrafficController.prototype.ratingScale = function() {
       else if(trip.totalFootprint < avg)
         rating = tripDifference / minDifference;
 
-      Careplane.log('Rating: ' + rating);
+      //Careplane.log('Rating: ' + rating);
 
       scale[trip.totalFootprint] = rating;
     }
