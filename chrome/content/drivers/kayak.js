@@ -86,11 +86,17 @@ KayakTrip.prototype.createFootprintParagraph = function() {
   this.resultBottom().appendChild(this.footprintParagraph);
 };
 
+KayakTrip.prototype.searchIdentifier = function() {
+  var form = Careplane.webDoc.forms[0];
+  if(form) {
+    return form.elements.namedItem('originsid').value;
+  }
+};
+
 KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
   var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
   var localIndex = this.tripElement.id.replace('tbd', '');
-  var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
-  var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + searchIdentifier + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
+  var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
 
   if(this.tripDetailsContainer().children.length == 0) {
     var trip = this;

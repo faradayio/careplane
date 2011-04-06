@@ -30,11 +30,8 @@ describe('AirTrafficController', function() {
 
   describe('#averageFootprint', function() {
     it('returns the average trip footprint', function() {
-      var trip1 = new Trip();
       trip1.totalFootprint = 300;
-      var trip2 = new Trip();
       trip2.totalFootprint = 200;
-      var trip3 = new Trip();
       trip3.totalFootprint = 400;
       controller.trips = [trip1, trip2, trip3]
       expect(controller.averageFootprint()).toBe(300);

@@ -53,9 +53,9 @@ describe('OrbitzTrip', function() {
     beforeEach(function() {
       var onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
       var onFlightEmissionsComplete = trip.onFlightEmissionsComplete(onTripEmissionsComplete);
-      onFlightEmissionsComplete(123.0);
+      onFlightEmissionsComplete({ emission: 123.0 }, {});
       onFlightEmissionsComplete = trip.onFlightEmissionsComplete(onTripEmissionsComplete);
-      onFlightEmissionsComplete(123.0);
+      onFlightEmissionsComplete({ emission: 123.0 }, {});
     });
 
     it('updates the total emissions result when all emissions are finished', function() {
