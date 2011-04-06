@@ -3,12 +3,23 @@
 <!DOCTYPE overlay SYSTEM "chrome://careplane/locale/overlay.dtd">
 <overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="overlay.js"/>
-  <script src="careplane.js"/>
-  <script src="models/flight.js"/>
+
+  <script src="Careplane.js"/>
+
+  <script src="models/Flight.js"/>
   <script src="models/Trip.js"/>
   <script src="models/AirTrafficController.js"/>
-  <script src="drivers/kayak.js"/>
-  <script src="drivers/orbitz.js"/>
+
+  <script src="drivers/Kayak.js"/>
+  <script src="drivers/Kayak/KayakFlight.js"/>
+  <script src="drivers/Kayak/KayakTrip.js"/>
+  <script src="drivers/Kayak/KayakAirTrafficController.js"/>
+
+  <script src="drivers/Orbitz.js"/>
+  <script src="drivers/Orbitz/OrbitzFlight.js"/>
+  <script src="drivers/Orbitz/OrbitzTrip.js"/>
+  <script src="drivers/Orbitz/OrbitzAirTrafficController.js"/>
+
   <stringbundleset id="stringbundleset">
     <stringbundle id="careplane-strings" src="chrome://careplane/locale/overlay.properties"/>
   </stringbundleset>
