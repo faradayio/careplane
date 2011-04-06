@@ -21,18 +21,24 @@ Flight.prototype.inspect = function() {
     return(this.origin + this.destination + this.airline + this.aircraft);
 };
 
-Flight.prototype.emissionEstimate = function(callback, identifier, totalSegments) {
+Flight.prototype.sanitizedAircraft = function() {
+  return this.aircraft.
+    replace(/\s+$/,'').
+    replace(/^\s+/,'').
+    replace(/[\n\r\t\s]+/g, ' ').
+    replace(/&nbsp;/g, '');
+};
+
+Flight.prototype.emissionEstimate = function(callback) {
   var url = encodeURI('http://carbon.brighterplanet.com/flights.json?key=' + Careplane.brighterPlanetKey + '&origin_airport=' + this.origin + '&destination_airport=' + this.destination + '&airline=' + this.airline + '&segments_per_trip=1&trips=1');
   if(this.aircraft) {
-    this.aircraft = this.aircraft.replace(/\s+$/,'');
-    this.aircraft = this.aircraft.replace(/^\s+/,'');
-    this.aircraft = this.aircraft.replace(/[\n\r\t]/g, '');
-    this.aircraft = this.aircraft.replace(/&nbsp;/g, '');
-    url += '&aircraft=' + this.aircraft
+    url += '&aircraft=' + this.sanitizedAircraft();
   }
+
+  var flight = this;
   Careplane.fetch(url, function(response) {
-      var json = JSON.parse(response);
-      callback(json.emission, identifier, totalSegments);
+    var json = JSON.parse(response);
+    callback(json, flight);
   });
 }
 

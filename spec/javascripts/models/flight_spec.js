@@ -11,4 +11,21 @@ describe('Flight', function() {
       expect(Flight.isAircraftInfo('WiFi Available')).toBeFalsy();
     });
   });
+  describe('#sanitizedAircraft', function() {
+    var flight;
+    beforeEach(function() { flight = new Flight(); });
+
+    it('removes preceding whitespace', function() {
+      flight.aircraft = "                Careplane";
+      expect(flight.sanitizedAircraft()).toBe('Careplane');
+    });
+    it('removes trailing whitespace', function() {
+      flight.aircraft = "Careplane 100           ";
+      expect(flight.sanitizedAircraft()).toBe('Careplane 100');
+    });
+    it('removes tabs and newlines', function() {
+      flight.aircraft = "Careplane\t\n\n100";
+      expect(flight.sanitizedAircraft()).toBe('Careplane 100');
+    });
+  });
 });
