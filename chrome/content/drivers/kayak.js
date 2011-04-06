@@ -2,8 +2,7 @@ var Kayak = {
   name: 'Kayak',
   searchPattern: 'kayak.com/flights/',
   scoreFlights: function() {
-    var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
-    var controller = new KayakAirTrafficController(searchIdentifier);
+    var controller = new KayakAirTrafficController();
     controller.poll();
   },
   insertAttribution: function() {
@@ -23,8 +22,7 @@ var Kayak = {
 
 
 
-KayakAirTrafficController = function(searchIdentifier) {
-  this.searchIdentifier = searchIdentifier;
+KayakAirTrafficController = function() {
   this.trips = [];
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
@@ -37,19 +35,18 @@ KayakAirTrafficController.prototype.scoreTrips = function() {
   var tripElements = Careplane.webDoc.getElementsByClassName('flightresult');
   for(var i = 0; i < tripElements.length; i++) {
     var tripElement = tripElements.item(i);
-    var trip = new KayakTrip(tripElement, this.searchIdentifier);
+    var trip = new KayakTrip(tripElement);
     if(trip.isScorable()) {
       this.trips.push(trip);
-      trip.score();
+      trip.score(i);
     }
   }
 };
 
 
 
-KayakTrip = function(tripElement, searchIdentifier) {
+KayakTrip = function(tripElement) {
   this.tripElement = tripElement;
-  this.searchIdentifier = searchIdentifier;
   this.totalFootprint = 0;
   this.completedFlightCount = 0;
 };
@@ -71,7 +68,7 @@ KayakTrip.prototype.isScorable = function() {
   return this.resultBottom().getElementsByClassName('careplane-footprint').length == 0;
 };
 
-KayakTrip.prototype.score = function() {
+KayakTrip.prototype.score = function(i) {
   this.createFootprintParagraph();
   this.fetchDetailsAndCalculateFootprint();
 };
@@ -92,7 +89,8 @@ KayakTrip.prototype.createFootprintParagraph = function() {
 KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
   var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
   var localIndex = this.tripElement.id.replace('tbd', '');
-  var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
+  var searchIdentifier = Careplane.webDoc.forms[0].elements.namedItem('originsid').value;
+  var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + searchIdentifier + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
 
   if(this.tripDetailsContainer().children.length == 0) {
     var trip = this;
@@ -149,6 +147,7 @@ KayakTrip.prototype.flightIndices = function(rows) {
 KayakTrip.prototype.calculateFootprint = function() {
   for(var i in this.flights()) {
     var flight = this.flights()[i];
+    Careplane.log('calculating footprint');
     flight.emissionEstimate(this.onFlightEmissionsComplete());
   }
 };

@@ -54,15 +54,30 @@ var Careplane = {
     }
   },
   
-  fetch: function(url, callback, matcher) {
-    var xhr = new XMLHttpRequest()
+  fetch: function(url, callback, matcher, tries) {
+    var xhr = new XMLHttpRequest();
+    if(!tries)
+      tries = 0;
+
+    var requestTimer = setTimeout(function() {
+      if(tries++ <= 3) {
+        //Careplane.log('Timeout! Trying ' + url + ' again');
+        Careplane.fetch(url, callback, matcher, tries);
+      }
+    }, 5000);
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState != 4)  { return; }
+      //Careplane.log('Clearing timeout for ' + url);
+      clearTimeout(requestTimer);
+    };
     xhr.onload = function() {
       if(xhr.status==200) {
         var response = xhr.responseText;
+        //Careplane.log('Response for ' + url + ': ' + response);
         var keyDetail = ((matcher) ? response.match(matcher)[1] : false);
         callback(response, keyDetail);
       };
-    }
+    };
     xhr.open('GET', url, true);
     xhr.overrideMimeType('text/xml');
     xhr.send(null);
