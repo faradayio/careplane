@@ -1,6 +1,6 @@
 var Kayak = {
   name: 'Kayak',
-  searchPattern: 'kayak.com/flights/',
+  searchPattern: /kayak.com\/#?flights\//,
   scoreFlights: function() {
     var controller = new KayakAirTrafficController();
     controller.poll();
