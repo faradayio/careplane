@@ -56,6 +56,7 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
     Careplane.log('fetching details ' + detailUrl);
     Careplane.fetch(detailUrl, function(result) {
       trip.tripDetailsContainer().innerHTML = result;
+      trip.tripDetailsContainer().style.display = 'none';
       trip.calculateFootprint();
     });
   } else {
