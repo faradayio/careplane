@@ -1,4 +1,5 @@
-KayakAirTrafficController = function() {
+KayakAirTrafficController = function(doc) {
+  this.doc = doc;
   this.trips = [];
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
@@ -8,10 +9,11 @@ KayakAirTrafficController.prototype.poll = function() {
 };
 
 KayakAirTrafficController.prototype.scoreTrips = function() {
-  var tripElements = Careplane.webDoc.getElementsByClassName('flightresult');
+  var tripElements = this.doc.getElementsByClassName('flightresult');
+  Careplane.log('looking for flightresult elements ' + tripElements.length);
   for(var i = 0; i < tripElements.length; i++) {
     var tripElement = tripElements.item(i);
-    var trip = new KayakTrip(tripElement);
+    var trip = new KayakTrip(this.doc, tripElement);
     if(trip.isScorable()) {
       this.trips.push(trip);
       trip.score(i);

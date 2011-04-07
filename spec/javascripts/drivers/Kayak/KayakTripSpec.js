@@ -3,36 +3,14 @@ describe('KayakTrip', function() {
     it('returns false if the tripElement has footprint <p>s', function() {
       setFixtures('<div class="flightresult resultrow"><div class="resultbottom" id="fdetails521"><p class="careplane-footprint"></p></div></div>');
 
-      var trip = new KayakTrip($('.flightresult').get(0));
+      var trip = new KayakTrip(document, $('.flightresult').get(0));
       expect(trip.isScorable()).toBeFalsy();
     });
     it('returns true if the tripElement has no footprint <p>s', function() {
       setFixtures('<div class="flightresult resultrow"><div class="resultbottom" id="fdetails521"></div></div>');
 
-      var trip = new KayakTrip($('.flightresult').get(0));
+      var trip = new KayakTrip(document, $('.flightresult').get(0));
       expect(trip.isScorable()).toBeTruthy();
-    });
-  });
-
-  describe('#scoreTrips', function() {
-    var controller, onTripEmissionsComplete;
-    beforeEach(function() {
-      controller = new KayakAirTrafficController();
-      Careplane.fetch = function(url, callback) {
-        callback("{ \"emission\": 1234 }");
-      }
-      onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
-      var searchIdentifier = jasmine.createSpy('KayakTrip', 'searchIdentifier');
-    });
-    it('parses regular flights', function() {
-      loadFixtures('kayak_dtw_sfo_direct_flight.html');
-      controller.scoreTrips(onTripEmissionsComplete);
-      expect($('.careplane-footprint')).toHaveText(/.+/)
-    });
-    it('parses redeye flights', function() {
-      loadFixtures('kayak_dtw_sfo_redeye.html');
-      controller.scoreTrips(onTripEmissionsComplete);
-      expect($('.careplane-footprint')).toHaveText(/.+/)
     });
   });
 
@@ -40,7 +18,7 @@ describe('KayakTrip', function() {
     it('creates a careplane-footprint paragraph', function() {
       setFixtures('<div class="flightresult resultrow"><div class="resultbottom"></div></div>');
 
-      var trip = new KayakTrip($('.flightresult').get(0));
+      var trip = new KayakTrip(document, $('.flightresult').get(0));
       trip.createFootprintParagraph();
       expect($('.resultbottom')).toContain('p.careplane-footprint');
     });
@@ -49,7 +27,7 @@ describe('KayakTrip', function() {
   describe('#flightIndices', function() {
     it('returns an array of tr indices which represent flights', function() {
       loadFixtures('kayak_dtw_sfo_direct_flight.html');
-      var trip = new KayakTrip();
+      var trip = new KayakTrip(document);
 
       var trs = $('.flightdetailstable').get(1).getElementsByTagName('tr');
       var indices = trip.flightIndices(Array.prototype.slice.call(trs));
@@ -65,7 +43,7 @@ describe('KayakTrip', function() {
     });
     it('gracefully handles redeyes', function() {
       loadFixtures('kayak_dtw_sfo_redeye.html');
-      var trip = new KayakTrip();
+      var trip = new KayakTrip(document);
 
       var trs = $('.flightdetailstable').get(1).getElementsByTagName('tr');
       var indices = trip.flightIndices(Array.prototype.slice.call(trs));

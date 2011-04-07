@@ -1,4 +1,5 @@
-KayakTrip = function(tripElement) {
+KayakTrip = function(doc, tripElement) {
+  this.doc = doc;
   this.tripElement = tripElement;
   this.totalFootprint = 0;
   this.completedFlightCount = 0;
@@ -27,7 +28,7 @@ KayakTrip.prototype.score = function(i) {
 };
 
 KayakTrip.prototype.createFootprintParagraph = function() {
-  this.footprintParagraph = Careplane.webDoc.createElement('p');
+  this.footprintParagraph = this.doc.createElement('p');
   this.footprintParagraph.setAttribute('class', 'careplane-footprint');
   this.footprintParagraph.style.color = '#aaa';
   this.footprintParagraph.style.position = 'absolute';
@@ -40,7 +41,7 @@ KayakTrip.prototype.createFootprintParagraph = function() {
 };
 
 KayakTrip.prototype.searchIdentifier = function() {
-  var form = Careplane.webDoc.forms[0];
+  var form = this.doc.forms[0];
   if(form) {
     return form.elements.namedItem('originsid').value;
   }

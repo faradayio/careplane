@@ -11,32 +11,25 @@ var Careplane = {
 
   brighterPlanetKey: '423120471f5c355512049b4532b2332f',
 
-  firefoxDoc: null,
-  webDoc: null,
-  
   onPageLoad: function(ev) {
-    Careplane.firefoxDoc = ev.originalTarget;
-    Careplane.webDoc = top.window.content.document;
+    var doc = ev.originalTarget;
     var matchingDrivers = Careplane.drivers.filter(function(driver) {
-        return (Careplane.firefoxDoc.location.href.search(driver.searchPattern) >= 0 && Careplane.prefs.getBoolPref(driver.name.toLowerCase()));
+      return Careplane.prefs.getBoolPref(driver.name.toLowerCase()) && driver.shouldMonitor(doc.location.href);
     });
     if (matchingDrivers.length > 0) {
-      var matchingDriver = matchingDrivers[0];
-      //Careplane.log('matched driver ' + matchingDriver + ' with ' + matchingDriver.searchPattern);
-      Careplane.notify(matchingDriver);
-      matchingDriver.insertAttribution();
-      matchingDriver.scoreFlights(this.firefoxDoc, this.webDoc);
+      var matchingDriver = new matchingDrivers[0](doc);
+      matchingDriver.load();
     }
   },
   
   standardTextAttribution: 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>',
   
-  insertBadge: function(parentElement, referenceElement, badgeStyle) {
-    var styleElement = this.webDoc.createElement('style');
+  insertBadge: function(doc, parentElement, referenceElement, badgeStyle) {
+    var styleElement = doc.createElement('style');
     styleElement.setAttribute('type', 'text/css');
     styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
     parentElement.insertBefore(styleElement, referenceElement);
-    var brandingElement = this.webDoc.createElement('script');
+    var brandingElement = doc.createElement('script');
     brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
     brandingElement.setAttribute('type', 'text/javascript');
     parentElement.insertBefore(brandingElement, referenceElement);
@@ -86,10 +79,6 @@ var Careplane = {
     xhr.open('GET', url, true);
     xhr.overrideMimeType('text/xml');
     xhr.send(null);
-  },
-  
-  hideEmissionEstimates: function() {
-    Array.prototype.slice.call(Careplane.webDoc.getElementsByClassName('careplane-footprint')).forEach(function(el) { el.setAttribute('style', 'display: none'); });
   },
   
   formatFootprint: function(footprint) {

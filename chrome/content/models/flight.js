@@ -18,7 +18,7 @@ Flight.isAircraftInfo = function(text) {
 };
 
 Flight.prototype.inspect = function() {
-    return(this.origin + this.destination + this.airline + this.aircraft);
+  return(this.origin + this.destination + this.airline + this.aircraft);
 };
 
 Flight.prototype.sanitizedAircraft = function() {

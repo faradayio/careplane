@@ -4,7 +4,7 @@ describe('OrbitzTrip', function() {
   beforeEach(function() {
     loadFixtures('orbitz_dtw_sfo_result.html');
     result = $('.result').get(0);
-    trip = new OrbitzTrip(result);
+    trip = new OrbitzTrip(document, result);
   });
 
   describe('#score', function() {

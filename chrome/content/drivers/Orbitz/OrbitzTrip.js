@@ -1,9 +1,10 @@
-OrbitzTrip = function(resultNode) {
+OrbitzTrip = function(doc, resultNode) {
+  this.doc = doc;
   this.resultNode = resultNode;
   this.completedFlightCount = 0;
   this.totalFootprint = 0;
 
-  this.footprintParagraph = Careplane.webDoc.createElement('p');
+  this.footprintParagraph = this.doc.createElement('p');
   this.footprintParagraph.setAttribute('class', 'careplane-footprint total-footprint');
   this.footprintParagraph.style.color = '#000';
   this.footprintParagraph.style.backgroundColor = '#FFF';

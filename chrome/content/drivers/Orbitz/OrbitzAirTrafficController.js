@@ -1,6 +1,7 @@
-OrbitzAirTrafficController = function() {
+OrbitzAirTrafficController = function(doc) {
+  this.doc = doc;
   this.trips = [];
-  this.tripElements = Careplane.webDoc.getElementsByClassName('result');
+  this.tripElements = this.doc.getElementsByClassName('result');
   this.completedTrips = 0;
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
@@ -8,7 +9,7 @@ OrbitzAirTrafficController.prototype = new AirTrafficController();
 OrbitzAirTrafficController.prototype.scoreTrips = function() {
   for(var i = 0; i < this.tripElements.length; i++) {
     var tripElement = this.tripElements.item(i);
-    var trip = new OrbitzTrip(tripElement);
+    var trip = new OrbitzTrip(this.doc, tripElement);
     this.trips.push(trip);
     trip.score(this.onTripEmissionsComplete());
   }
