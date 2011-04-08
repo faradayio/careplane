@@ -4,7 +4,7 @@
 <overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="overlay.js"/>
 
-  <script src="Careplane.js"/>
+  <script src="Driver.js"/>
 
   <script src="models/Flight.js"/>
   <script src="models/Trip.js"/>
@@ -19,6 +19,8 @@
   <script src="drivers/Orbitz/OrbitzFlight.js"/>
   <script src="drivers/Orbitz/OrbitzTrip.js"/>
   <script src="drivers/Orbitz/OrbitzAirTrafficController.js"/>
+
+  <script src="Careplane.js"/>
 
   <stringbundleset id="stringbundleset">
     <stringbundle id="careplane-strings" src="chrome://careplane/locale/overlay.properties"/>

@@ -1,4 +1,8 @@
 describe('Kayak', function() {
+  it('has a .driverName', function() {
+    expect(Kayak.driverName).toBe('Kayak');
+  });
+
   describe('.insertAttribution', function() {
     var kayak;
     beforeEach(function() {

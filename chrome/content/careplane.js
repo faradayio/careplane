@@ -1,7 +1,8 @@
 var Careplane = {
+  drivers: [Kayak, Orbitz],
+
   onLoad: function() {
     this.initialized = true;
-    this.drivers = [Kayak, Orbitz];
     this.strings = document.getElementById("careplane-strings");
     this.prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.careplane.");
     var appcontent = document.getElementById("appcontent");   // browser
@@ -14,9 +15,11 @@ var Careplane = {
   onPageLoad: function(ev) {
     var doc = ev.originalTarget;
     var matchingDrivers = Careplane.drivers.filter(function(driver) {
-      return Careplane.prefs.getBoolPref(driver.name.toLowerCase()) && driver.shouldMonitor(doc.location.href);
+      var driverName = driver.driverName.toLowerCase();
+      var driverEnabled = Careplane.prefs.getBoolPref(driverName);
+      return driverEnabled && driver.shouldMonitor(doc.location.href);
     });
-    if (matchingDrivers.length > 0) {
+    if(matchingDrivers.length > 0) {
       var matchingDriver = new matchingDrivers[0](doc);
       matchingDriver.load();
     }
@@ -38,7 +41,7 @@ var Careplane = {
   notify: function(driver) {
     var nb = gBrowser.getNotificationBox();
     var n = nb.getNotificationWithValue('careplane');
-    var message = 'Careplane is calculating the carbon footprint of your ' + driver.name + ' flight search results.'; 
+    var message = 'Careplane is calculating the carbon footprint of your ' + driver.driverName + ' flight search results.'; 
     if(n) {
         n.label = message;
     } else {

@@ -1,7 +1,10 @@
-Orbitz = function(doc) { this.doc = doc; };
+Orbitz = function(doc) {
+  this.doc = doc;
+  var foo = 'Orbitz';
+};
 Orbitz.prototype = new Driver();
 
-Orbitz.name = 'Orbitz';
+Orbitz.driverName = 'Orbitz';
 
 Orbitz.shouldMonitor = function(url) {
   var match = url.search('orbitz.com/App/ViewFlightSearchResults');

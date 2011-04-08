@@ -4,7 +4,7 @@ describe('Trip', function() {
     var parent = document.createElement('div');
     p = document.createElement('p');
     parent.appendChild(p);
-    trip = new Trip();
+    trip = new Trip(document);
     trip.flights = function() { return [1,2,3]; };
     trip.footprintParagraph = p;
     trip.totalFootprint = 0;
@@ -15,11 +15,6 @@ describe('Trip', function() {
 
 
   describe('#rate', function() {
-    beforeEach(function() {
-      trip = new Trip();
-      trip.footprintParagraph = window.document.createElement('p');
-    });
-
     it('assigns a rating to the trip <p> element', function() {
       trip.rate(0);
       expect(trip.footprintParagraph.style.color).toBe('rgb(127, 127, 127)');

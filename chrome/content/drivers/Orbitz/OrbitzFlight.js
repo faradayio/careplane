@@ -4,7 +4,7 @@ OrbitzFlight = function(origin, destination, airline, aircraft) {
   this.airline = airline;
   this.aircraft = aircraft;
 };
-OrbitzFlight.prototype = Flight.prototype;
+OrbitzFlight.prototype = new Flight();
 
 OrbitzFlight.parse = function(legElement) {
   var origin, destination, airline, aircraft;

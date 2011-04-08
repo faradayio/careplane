@@ -1,7 +1,7 @@
 Kayak = function(doc) { this.doc = doc; };
 Kayak.prototype = new Driver();
 
-Kayak.name = 'Kayak';
+Kayak.driverName = 'Kayak';
 
 Kayak.shouldMonitor = function(url) {
   var match = url.search('kayak.com');

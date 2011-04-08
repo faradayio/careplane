@@ -2,7 +2,7 @@ Trip = function() {}
 
 Trip.prototype.addDetails = function(html) {
   if(!this.debugDiv) {
-    this.debugDiv = Careplane.webDoc.createElement('div');
+    this.debugDiv = this.doc.createElement('div');
     this.debugDiv.style.display = 'none';
     this.footprintParagraph.parentNode.appendChild(this.debugDiv);
   }

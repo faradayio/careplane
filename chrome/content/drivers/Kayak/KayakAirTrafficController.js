@@ -10,7 +10,6 @@ KayakAirTrafficController.prototype.poll = function() {
 
 KayakAirTrafficController.prototype.scoreTrips = function() {
   var tripElements = this.doc.getElementsByClassName('flightresult');
-  Careplane.log('looking for flightresult elements ' + tripElements.length);
   for(var i = 0; i < tripElements.length; i++) {
     var tripElement = tripElements.item(i);
     var trip = new KayakTrip(this.doc, tripElement);
