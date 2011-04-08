@@ -1,4 +1,4 @@
-Trip = function() {}
+Trip = function(doc) { this.doc = doc; }
 
 Trip.prototype.addDetails = function(html) {
   if(!this.debugDiv) {
