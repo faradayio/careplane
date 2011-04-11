@@ -13,6 +13,8 @@ var Careplane = {
   brighterPlanetKey: '423120471f5c355512049b4532b2332f',
 
   onPageLoad: function(ev) {
+    Careplane.firstRun();
+
     var doc = ev.originalTarget;
     var matchingDrivers = Careplane.drivers.filter(function(driver) {
       var driverName = driver.driverName.toLowerCase();
@@ -23,6 +25,16 @@ var Careplane = {
       var matchingDriver = new matchingDrivers[0](doc);
       matchingDriver.load();
     }
+  },
+
+  firstRun: function(){
+    if(Careplane.prefs.getBoolPref("firstrun")) {
+      Careplane.prefs.setBoolPref("firstrun",false);
+   
+      window.setTimeout(function(){
+        gBrowser.selectedTab = gBrowser.addTab('http://careplane.org');
+      }, 1500); //Firefox 2 fix - or else tab will get closed
+    }    
   },
   
   standardTextAttribution: 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>',
