@@ -9,7 +9,7 @@ describe('OrbitzTrip', function() {
 
   describe('#score', function() {
     it('parses each flight and totals emissions', function() {
-      Careplane.fetch = function(url, callback) {
+      Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 123.0 }));
       }
       var onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');

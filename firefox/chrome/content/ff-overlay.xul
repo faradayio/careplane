@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://careplane/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://careplane/locale/overlay.dtd">
+<overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="src/Util.js"/>
+  <script src="src/Driver.js"/>
+
+  <script src="src/Flight.js"/>
+  <script src="src/Trip.js"/>
+  <script src="src/AirTrafficController.js"/>
+
+  <script src="src/drivers/Kayak.js"/>
+  <script src="src/drivers/Kayak/KayakFlight.js"/>
+  <script src="src/drivers/Kayak/KayakTrip.js"/>
+  <script src="src/drivers/Kayak/KayakAirTrafficController.js"/>
+
+  <script src="src/drivers/Orbitz.js"/>
+  <script src="src/drivers/Orbitz/OrbitzFlight.js"/>
+  <script src="src/drivers/Orbitz/OrbitzTrip.js"/>
+  <script src="src/drivers/Orbitz/OrbitzAirTrafficController.js"/>
+
+  <script src="src/Careplane.js"/>
+  <script src="FirefoxExtension.js"/>
+  <script src="overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="careplane-strings" src="chrome://careplane/locale/overlay.properties"/>
+  </stringbundleset>
+</overlay>

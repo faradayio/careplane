@@ -54,8 +54,7 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
 
   if(this.tripDetailsContainer().children.length == 0) {
     var trip = this;
-    Careplane.log('fetching details ' + detailUrl);
-    Careplane.fetch(detailUrl, function(result) {
+    Util.fetch(detailUrl, function(result) {
       trip.tripDetailsContainer().innerHTML = result;
       trip.tripDetailsContainer().style.display = 'none';
       trip.calculateFootprint();
@@ -67,9 +66,7 @@ KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
 
 KayakTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
-    //Careplane.log('Getting outerTable from tripElement ' + this.tripElement.id);
     var outerTable = this.tripElement.getElementsByClassName('flightdetailstable')[0];
-    //Careplane.log('Getting flights from outerTable ' + outerTable);
     if(outerTable) {
       var legs = Array.prototype.slice.call(outerTable.getElementsByClassName('flightdetailstable'));
       this._flights = []
@@ -108,7 +105,6 @@ KayakTrip.prototype.flightIndices = function(rows) {
 KayakTrip.prototype.calculateFootprint = function() {
   for(var i in this.flights()) {
     var flight = this.flights()[i];
-    Careplane.log('calculating footprint');
     flight.emissionEstimate(this.onFlightEmissionsComplete());
   }
 };

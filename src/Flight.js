@@ -30,13 +30,14 @@ Flight.prototype.sanitizedAircraft = function() {
 };
 
 Flight.prototype.emissionEstimate = function(callback) {
-  var url = encodeURI('http://carbon.brighterplanet.com/flights.json?key=' + Careplane.brighterPlanetKey + '&origin_airport=' + this.origin + '&destination_airport=' + this.destination + '&airline=' + this.airline + '&segments_per_trip=1&trips=1');
+  var brighterPlanetKey = '423120471f5c355512049b4532b2332f';
+  var url = encodeURI('http://carbon.brighterplanet.com/flights.json?key=' + brighterPlanetKey + '&origin_airport=' + this.origin + '&destination_airport=' + this.destination + '&airline=' + this.airline + '&segments_per_trip=1&trips=1');
   if(this.aircraft) {
     url += '&aircraft=' + this.sanitizedAircraft();
   }
 
   var flight = this;
-  Careplane.fetch(url, function(response) {
+  Util.fetch(url, function(response) {
     var json = JSON.parse(response);
     callback(json, flight);
   });

@@ -1,4 +1,7 @@
-Kayak = function(doc) { this.doc = doc; };
+Kayak = function(extension, doc) {
+  this.extension = extension;
+  this.doc = doc;
+};
 Kayak.prototype = new Driver();
 
 Kayak.driverName = 'Kayak';
@@ -13,7 +16,7 @@ Kayak.prototype.load = function() {
   var kayak = this;
   var loadInterval = setInterval(function() {
     if(kayak.isActiveSearch()) {
-      Careplane.notify(Kayak);
+      kayak.extension.notify(Kayak);
       kayak.insertAttribution();
       kayak.scoreFlights();
       clearInterval(loadInterval);
@@ -26,7 +29,6 @@ Kayak.prototype.isActiveSearch = function() {
 };
 
 Kayak.prototype.scoreFlights = function() {
-  Careplane.log('starting kayak');
   var controller = new KayakAirTrafficController(this.doc);
   controller.poll();
 };
@@ -35,12 +37,12 @@ Kayak.prototype.insertAttribution = function() {
   // In the sidebar
   var parentElement = this.doc.getElementById('rightads');
   var referenceElement = this.doc.getElementById('nrAds');
-  Careplane.insertBadge(this.doc, parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
+  this.extension.insertBadge(this.doc, parentElement, referenceElement, 'margin-left: 15px !important; margin-bottom: 10px !important;');
   
   // In the footer
   var copyrightElement = Array.prototype.slice.call(this.doc.getElementById('commonfooter').getElementsByTagName('div')).pop();
   attributionElement = this.doc.createElement('span');
   attributionElement.setAttribute('id', 'careplane-attribution');
-  attributionElement.innerHTML = ' &middot; ' + Careplane.standardTextAttribution;
+  attributionElement.innerHTML = ' &middot; ' + this.extension.standardTextAttribution;
   copyrightElement.appendChild(attributionElement);
 };

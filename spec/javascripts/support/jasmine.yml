@@ -12,23 +12,10 @@
 #
 src_files:
     - spec/javascripts/helpers/Components.js
-    - chrome/content/Driver.js
-    - chrome/content/models/**/*.js
-    - chrome/content/drivers/**/*.js
-    - chrome/content/Careplane.js
-
-# stylesheets
-#
-# Return an array of stylesheet filepaths relative to src_dir to include before jasmine specs.
-# Default: []
-#
-# EXAMPLE:
-#
-# stylesheets:
-#   - css/style.css
-#   - stylesheets/*.css
-#
-stylesheets:
+    - src/Driver.js
+    - src/*.js
+    - src/models/**/*.js
+    - src/drivers/**/*.js
 
 # helpers
 #

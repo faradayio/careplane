@@ -1,4 +1,5 @@
-Orbitz = function(doc) {
+Orbitz = function(extension, doc) {
+  this.extension = extension;
   this.doc = doc;
   var foo = 'Orbitz';
 };
@@ -12,7 +13,7 @@ Orbitz.shouldMonitor = function(url) {
 };
 
 Orbitz.prototype.load = function() {
-  Careplane.notify(Orbitz);
+  this.notify(Orbitz);
   this.insertAttribution();
   this.scoreFlights();
 };
@@ -21,30 +22,24 @@ Orbitz.prototype.insertAttribution = function() {
   if(this.doc.getElementById('careplane-attribution') == null) {
     // In the matrix
     var parentElement = this.doc.getElementById('matrix');
-    if(parentElement) {
-      var attributionElement = this.doc.createElement('div');
-      attributionElement.setAttribute('id', 'careplane-attribution');
-      attributionElement.setAttribute('class', 'matrixFooterAir');
-      attributionElement.setAttribute('style', 'padding-left: 4px; padding-bottom: 0;');
-      attributionElement.innerHTML = Careplane.standardTextAttribution;
-      parentElement.appendChild(attributionElement);
-    } else {
-      Careplane.log('Unable to find #matrix');
-    }
+    var attributionElement = this.doc.createElement('div');
+    attributionElement.setAttribute('id', 'careplane-attribution');
+    attributionElement.setAttribute('class', 'matrixFooterAir');
+    attributionElement.setAttribute('style', 'padding-left: 4px; padding-bottom: 0;');
+    attributionElement.innerHTML = Careplane.standardTextAttribution;
+    parentElement.appendChild(attributionElement);
     
     // In the footer
     var footer = this.doc.getElementById('footer');
     var container = this.doc.createElement('div');
     container.setAttribute('style', 'clear: both; margin-top: 5px');
     footer.appendChild(container);
-    Careplane.insertBadge(this.doc, container, null, '');
+    this.extension.insertBadge(this.doc, container, null, '');
   }
 };
 
 Orbitz.prototype.scoreFlights = function() {
   if(this.doc.getElementsByClassName('careplane-footprint').length == 0) {
-    //Careplane.log('scoring flights');
-
     var controller = new OrbitzAirTrafficController(this.doc);
     controller.scoreTrips();
   }

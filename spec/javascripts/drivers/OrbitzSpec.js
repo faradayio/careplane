@@ -2,12 +2,13 @@ describe('Orbitz', function() {
   describe('.scoreFlights', function() {
     var orbitz;
     beforeEach(function() {
-      orbitz = new Orbitz(document);
+      var extension = new Careplane();
+      orbitz = new Orbitz(extension, document);
     });
 
     it('asks the OrbitzTrip to score each result', function() {
       loadFixtures('orbitz_dtw_sfo.html');
-      Careplane.fetch = function(url, callback) {
+      Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
       }
       orbitz.scoreFlights(window.document);
@@ -21,7 +22,7 @@ describe('Orbitz', function() {
     });
     it('works for DFW<->GRU', function() {
       loadFixtures('orbitz_dfw_gru.html');
-      Careplane.fetch = function(url, callback) {
+      Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
       }
       orbitz.scoreFlights(window.document);

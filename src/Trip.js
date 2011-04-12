@@ -11,7 +11,7 @@ Trip.prototype.addDetails = function(html) {
 };
 
 Trip.prototype.reportFootprint = function() {
-  this.footprintParagraph.innerHTML = Careplane.formatFootprint(this.totalFootprint);
+  this.footprintParagraph.innerHTML = Util.formatFootprint(this.totalFootprint);
 };
 
 Trip.prototype.reportFlightMethodology = function(methodologyUrl, flight) {

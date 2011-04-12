@@ -6,7 +6,7 @@ describe('KayakAirTrafficController', function() {
   });
 
   it('keeps a list of trips', function() {
-    Careplane.fetch = function(url, callback) {
+    Util.fetch = function(url, callback) {
       callback("{ \"emission\": 1234 }");
     }
     loadFixtures('kayak_dtw_sfo_direct_flight.html');
@@ -16,7 +16,7 @@ describe('KayakAirTrafficController', function() {
 
   describe('#clear', function() {
     it('scores all trips and color codes them', function() {
-      Careplane.fetch = function(url, callback) {
+      Util.fetch = function(url, callback) {
         callback("{ \"emission\": 123 }");
       }
       loadFixtures('kayak_dtw_sfo.html');
@@ -28,7 +28,7 @@ describe('KayakAirTrafficController', function() {
       }
     });
     it('scores one-way trips', function() {
-      Careplane.fetch = function(url, callback) {
+      Util.fetch = function(url, callback) {
         callback("{ \"emission\": 123 }");
       }
       loadFixtures('kayak_dtw_sfo.html');
@@ -44,7 +44,7 @@ describe('KayakAirTrafficController', function() {
   describe('#scoreTrips', function() {
     var onTripEmissionsComplete;
     beforeEach(function() {
-      Careplane.fetch = function(url, callback) {
+      Util.fetch = function(url, callback) {
         callback("{ \"emission\": 1234 }");
       }
       onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
