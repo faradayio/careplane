@@ -40,6 +40,8 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
+    - **/*[eE]xamples.js
+    - **/*[sS]pec.js
 
 # src_dir
 #
