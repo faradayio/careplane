@@ -14,8 +14,10 @@ src_files:
     - spec/javascripts/helpers/Components.js
     - src/Driver.js
     - src/*.js
-    - src/models/**/*.js
+    - src/drivers/*.js
     - src/drivers/**/*.js
+    - src/views/*.js
+    - src/views/**/*.js
 
 # helpers
 #
