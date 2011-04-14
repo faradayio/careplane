@@ -45,5 +45,11 @@ Util = {
     var split = number.split('.');
     split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
     return split.join('.');
+  },
+
+  proxy: function(func, reprsentedParty) {
+    return function() {
+      return func.apply(reprsentedParty, arguments);
+    };
   }
 };

@@ -3,7 +3,7 @@ Overlay = {
     var appcontent = document.getElementById("appcontent");
     if(appcontent) {
       var extension = new FirefoxExtension();
-      appcontent.addEventListener("DOMContentLoaded", extension.onPageLoad(), true);
+      appcontent.addEventListener("DOMContentLoaded", Util.proxy(extension.onPageLoad, extension), true);
     }
   },
 };
