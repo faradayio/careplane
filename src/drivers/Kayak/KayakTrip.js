@@ -1,10 +1,17 @@
-KayakTrip = function(doc, tripElement) {
-  this.doc = doc;
+KayakTrip = function(tripElement) {
   this.tripElement = tripElement;
   this.totalFootprint = 0;
   this.completedFlightCount = 0;
+  this.isScorable = true;
 };
 KayakTrip.prototype = new Trip();
+
+KayakTrip.prototype.footprintView = function() {
+  if(!this._footprintView) {
+    this._footprintView = new KayakTripFootprintView(this.tripElement);
+  }
+  return this._footprintView;
+};
 
 KayakTrip.prototype.tripDetailsContainer = function() {
   if(!this._tripDetailsContainer) {
@@ -14,53 +21,30 @@ KayakTrip.prototype.tripDetailsContainer = function() {
   return this._tripDetailsContainer;
 };
 
-KayakTrip.prototype.resultBottom = function() {
-  return this.tripElement.getElementsByClassName('resultbottom')[0];
-};
-
-KayakTrip.prototype.isScorable = function() {
-  return this.resultBottom().getElementsByClassName('careplane-footprint').length == 0;
-};
-
-KayakTrip.prototype.score = function(i) {
-  this.createFootprintParagraph();
-  this.fetchDetailsAndCalculateFootprint();
-};
-
-KayakTrip.prototype.createFootprintParagraph = function() {
-  this.footprintParagraph = this.doc.createElement('p');
-  this.footprintParagraph.setAttribute('class', 'careplane-footprint');
-  this.footprintParagraph.style.color = '#aaa';
-  this.footprintParagraph.style.position = 'absolute';
-  this.footprintParagraph.style.left = '10px';
-  this.footprintParagraph.style.width = '130px';
-  this.footprintParagraph.style.bottom = '20px';
-  this.footprintParagraph.innerHTML = '';
-
-  this.resultBottom().appendChild(this.footprintParagraph);
-};
-
 KayakTrip.prototype.searchIdentifier = function() {
-  var form = this.doc.forms[0];
+  var form = this.tripElement.ownerDocument.forms[0];
   if(form) {
     return form.elements.namedItem('originsid').value;
   }
 };
 
-KayakTrip.prototype.fetchDetailsAndCalculateFootprint = function() {
-  var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
-  var localIndex = this.tripElement.id.replace('tbd', '');
-  var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
-
+KayakTrip.prototype.eachFlight = function(callback) {
   if(this.tripDetailsContainer().children.length == 0) {
     var trip = this;
+    var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
+    var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
+    var localIndex = this.tripElement.id.replace('tbd', '');
+
     Util.fetch(detailUrl, function(result) {
       trip.tripDetailsContainer().innerHTML = result;
       trip.tripDetailsContainer().style.display = 'none';
-      trip.calculateFootprint();
+      trip.eachFlight(callback);
     });
   } else {
-    this.calculateFootprint();
+    for(var i in this.flights()) {
+      var flight = this.flights()[i];
+      callback(flight);
+    }
   }
 };
 
@@ -100,11 +84,4 @@ KayakTrip.prototype.flightIndices = function(rows) {
     }
   }
   return list;
-};
-
-KayakTrip.prototype.calculateFootprint = function() {
-  for(var i in this.flights()) {
-    var flight = this.flights()[i];
-    flight.emissionEstimate(this.onFlightEmissionsComplete());
-  }
 };

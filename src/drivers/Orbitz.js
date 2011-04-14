@@ -15,7 +15,8 @@ Orbitz.shouldMonitor = function(url) {
 Orbitz.prototype.load = function() {
   this.notify(Orbitz);
   this.insertAttribution();
-  this.scoreFlights();
+  this.scoreTrips();
+  this.rateTrips();
 };
 
 Orbitz.prototype.insertAttribution = function() {
@@ -38,7 +39,7 @@ Orbitz.prototype.insertAttribution = function() {
   }
 };
 
-Orbitz.prototype.scoreFlights = function() {
+Orbitz.prototype.scoreTrips = function() {
   if(this.doc.getElementsByClassName('careplane-footprint').length == 0) {
     var controller = new OrbitzAirTrafficController(this.doc);
     controller.scoreTrips();

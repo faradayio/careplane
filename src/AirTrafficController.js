@@ -1,11 +1,8 @@
 AirTrafficController = function() {};
 
 AirTrafficController.prototype.clear = function() {
-  var controller = this;
-  return function() {
-    controller.scoreTrips();
-    controller.rateTrips();
-  };
+  this.scoreTrips();
+  this.rateTrips();
 };
 
 AirTrafficController.prototype.rateTrips = function() {
@@ -16,6 +13,8 @@ AirTrafficController.prototype.rateTrips = function() {
     var trip = trips[i];
     var rating = (scale == null) ? 0 : scale[trip.totalFootprint];
     trip.rate(rating);
+    trip.footprintView().updateRating(rating);
+    trip.infoView().updateSearchAverage(this.averageFootprint());
   }
 };
 
@@ -69,10 +68,7 @@ AirTrafficController.prototype.averageFootprint = function() {
   } else {
     var totalFootprint = 0;
     for(var i in trips) {
-      var trip = trips[i];
-      if(trip.isDone()) {
-        totalFootprint += trips[i].totalFootprint;
-      }
+      totalFootprint += trips[i].totalFootprint;
     }
     return totalFootprint / trips.length;
   }
@@ -99,4 +95,13 @@ AirTrafficController.prototype.maxFootprint = function() {
     maxFootprint = Math.max(maxFootprint, trips[i].totalFootprint);
   }
   return maxFootprint;
+};
+
+
+
+// Events
+
+AirTrafficController.prototype.onFlightEmissionsComplete = function(trip, cm1Response, flight) {
+  trip.footprintView().update(trip.totalFootprint);
+  trip.infoView().reportFlightMethodology(cm1Response.methodology, flight);
 };

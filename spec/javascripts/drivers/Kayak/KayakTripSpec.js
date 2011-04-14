@@ -1,32 +1,15 @@
 describe('KayakTrip', function() {
-  describe('#isScorable', function() {
-    it('returns false if the tripElement has footprint <p>s', function() {
-      setFixtures('<div class="flightresult resultrow"><div class="resultbottom" id="fdetails521"><p class="careplane-footprint"></p></div></div>');
-
-      var trip = new KayakTrip(document, $('.flightresult').get(0));
-      expect(trip.isScorable()).toBeFalsy();
-    });
-    it('returns true if the tripElement has no footprint <p>s', function() {
-      setFixtures('<div class="flightresult resultrow"><div class="resultbottom" id="fdetails521"></div></div>');
-
-      var trip = new KayakTrip(document, $('.flightresult').get(0));
-      expect(trip.isScorable()).toBeTruthy();
-    });
+  beforeEach(function() {
+    loadFixtures('kayak_dtw_sfo_direct_flight.html');
+    this.trip = new KayakTrip($('.flightresult').get(0));
+    this.trip.totalFootprint = 0;
+    this.trip.completedFlightCount = 0;
   });
 
-  describe('#createFootprintParagraph', function() {
-    it('creates a careplane-footprint paragraph', function() {
-      setFixtures('<div class="flightresult resultrow"><div class="resultbottom"></div></div>');
-
-      var trip = new KayakTrip(document, $('.flightresult').get(0));
-      trip.createFootprintParagraph();
-      expect($('.resultbottom')).toContain('p.careplane-footprint');
-    });
-  });
+  itBehavesLikeA('Trip');
 
   describe('#flightIndices', function() {
     it('returns an array of tr indices which represent flights', function() {
-      loadFixtures('kayak_dtw_sfo_direct_flight.html');
       var trip = new KayakTrip(document);
 
       var trs = $('.flightdetailstable').get(1).getElementsByTagName('tr');

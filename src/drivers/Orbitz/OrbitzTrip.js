@@ -1,24 +1,22 @@
-OrbitzTrip = function(doc, resultNode) {
-  this.doc = doc;
-  this.resultNode = resultNode;
-  this.completedFlightCount = 0;
+OrbitzTrip = function(tripElement) {
+  this.tripElement = tripElement;
   this.totalFootprint = 0;
-
-  this.footprintParagraph = this.doc.createElement('p');
-  this.footprintParagraph.setAttribute('class', 'careplane-footprint total-footprint');
-  this.footprintParagraph.style.color = '#000';
-  this.footprintParagraph.style.backgroundColor = '#FFF';
-  this.footprintParagraph.style.margin = '0';
-  this.footprintParagraph.style.padding = '7px 15px';
-  this.footprintParagraph.innerHTML = '<i>Loading Careplane footprint &hellip;</i>';
-  this.resultNode.appendChild(this.footprintParagraph);
+  this.completedFlightCount = 0;
+  this.isScorable = true;
 };
 OrbitzTrip.prototype = new Trip();
+
+OrbitzTrip.prototype.footprintView = function() {
+  if(!this._footprintView) {
+    this._footprintView = new OrbitzTripFootprintView(this.tripElement);
+  }
+  return this._footprintView;
+};
 
 OrbitzTrip.prototype.flights = function() {
   if(!this._flights) {
     this._flights = [];
-    var legs = this.resultNode.getElementsByClassName('resultLeg');
+    var legs = this.tripElement.getElementsByClassName('resultLeg');
     for(var i = 0; i < legs.length; i++) {
       this._flights.push(OrbitzFlight.parse(legs[i]));
     }
@@ -26,9 +24,8 @@ OrbitzTrip.prototype.flights = function() {
   return this._flights;
 }
 
-OrbitzTrip.prototype.score = function(onTripEmissionsComplete) {
+OrbitzTrip.prototype.eachFlight = function(callback) {
   for(var i in this.flights()) {
-    var flight = this.flights()[i];
-    flight.emissionEstimate(this.onFlightEmissionsComplete(onTripEmissionsComplete));
+    callback(this.flights()[i]);
   }
 };

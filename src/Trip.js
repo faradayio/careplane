@@ -1,45 +1,19 @@
-Trip = function(doc) { this.doc = doc; }
+Trip = function() {};
 
-Trip.prototype.addDetails = function(html) {
-  if(!this.debugDiv) {
-    this.debugDiv = this.doc.createElement('div');
-    this.debugDiv.style.display = 'none';
-    this.footprintParagraph.parentNode.appendChild(this.debugDiv);
-  }
-
-  this.debugDiv.innerHTML += html;
-};
-
-Trip.prototype.reportFootprint = function() {
-  this.footprintParagraph.innerHTML = Util.formatFootprint(this.totalFootprint);
-};
-
-Trip.prototype.reportFlightMethodology = function(methodologyUrl, flight) {
-  this.addDetails('<a href="' + methodologyUrl + '">Methodology for ' + flight.origin + '-' + flight.destination + '</a>');
-};
-
-Trip.prototype.onFlightEmissionsComplete = function(onTripEmissionsComplete) {
-  var trip = this;
-  return function(cm1Response, flight) {
-    trip.totalFootprint += cm1Response.emission;
-    trip.reportFootprint();
-    trip.reportFlightMethodology(cm1Response.methodology, flight);
-    trip.completedFlightCount++;
-    if(onTripEmissionsComplete && trip.isDone())
-      onTripEmissionsComplete();
-  };
-};
+Trip.prototype.score = function(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete) {
+  this.isScorable = false;
+  this.footprintView().init();
+  this.infoView().init();
+  this.eachFlight(Util.proxy(function(flight) {
+    flight.emissionEstimate(
+      this.onFlightEmissionsComplete(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete));
+  }, this));
+}
 
 Trip.prototype.rate = function(rating) {
-  var hue = (rating < 0) ? 0 : 120;
-  var saturation = Math.round(Math.abs(rating * 100));
+  this.infoView().init();
   this.rating = rating;
-  var hsl = 'hsl(' + hue + ', ' + saturation + '%, 50%)';
-  //Careplane.log('For rating ' + this.rating + ', Setting hsl ' + hsl);
-  this.footprintParagraph.style.color = hsl;
 };
-
-Trip.prototype.flights = function() { return [new Flight()]; };
 
 Trip.prototype.isDone = function() {
   return this.flights() != null && this.completedFlightCount == this.flights().length;
@@ -47,4 +21,26 @@ Trip.prototype.isDone = function() {
 
 Trip.prototype.isRated = function() {
   return this.rating != null;
+};
+
+Trip.prototype.infoView = function() {
+  if(!this._infoView) {
+    this._infoView = new TripInfoView(this.tripElement);
+  }
+  return this._infoView;
+};
+
+
+
+// Events
+//
+
+Trip.prototype.onFlightEmissionsComplete = function(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete) {
+  return Util.proxy(function(cm1Response, flight) {
+    this.totalFootprint += cm1Response.emission;
+    this.completedFlightCount++;
+    onScorerFlightEmissionsComplete(this, cm1Response, flight);
+    if(onScorerTripEmissionsComplete && this.isDone())
+      onScorerTripEmissionsComplete();
+  }, this);
 };

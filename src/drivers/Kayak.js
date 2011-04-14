@@ -18,7 +18,7 @@ Kayak.prototype.load = function() {
     if(kayak.isActiveSearch()) {
       kayak.extension.notify(Kayak);
       kayak.insertAttribution();
-      kayak.scoreFlights();
+      kayak.scoreTrips();
       clearInterval(loadInterval);
     }
   }, 500);
@@ -28,7 +28,7 @@ Kayak.prototype.isActiveSearch = function() {
   return this.doc.getElementsByClassName('flightlist').length > 0;
 };
 
-Kayak.prototype.scoreFlights = function() {
+Kayak.prototype.scoreTrips = function() {
   var controller = new KayakAirTrafficController(this.doc);
   controller.poll();
 };

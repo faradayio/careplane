@@ -1,5 +1,5 @@
 describe('Orbitz', function() {
-  describe('.scoreFlights', function() {
+  describe('.scoreTrips', function() {
     var orbitz;
     beforeEach(function() {
       var extension = new Careplane();
@@ -11,11 +11,11 @@ describe('Orbitz', function() {
       Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
       }
-      orbitz.scoreFlights(window.document);
+      orbitz.scoreTrips(window.document);
 
       $('div.result').each(function(i, result) {
-        expect($(result)).toContain('p.total-footprint');
-        var p = $(result).children('p.total-footprint').get(0);
+        expect($(result)).toContain('p.careplane-footprint');
+        var p = $(result).children('p.careplane-footprint').get(0);
         expect(p.innerText).toMatch(/[\d]+/);
         expect(p.style.color).toMatch(/rgb\(\d+, \d+, \d+\)/);
       });
@@ -25,10 +25,10 @@ describe('Orbitz', function() {
       Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
       }
-      orbitz.scoreFlights(window.document);
+      orbitz.scoreTrips(window.document);
       $('div.result').each(function(i, result) {
-        expect($(result)).toContain('p.total-footprint');
-        expect($(result).children('p.total-footprint').get(0).innerText).
+        expect($(result)).toContain('p.careplane-footprint');
+        expect($(result).children('p.careplane-footprint').get(0).innerText).
           toMatch(/[\d,]+\s*lbs CO2e/);
       });
     });
