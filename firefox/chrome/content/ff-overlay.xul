@@ -19,8 +19,14 @@
   <script src="src/drivers/Orbitz/OrbitzTrip.js"/>
   <script src="src/drivers/Orbitz/OrbitzAirTrafficController.js"/>
 
+  <script src="src/views/TripInfoView.js"/>
+  <script src="src/views/TripFootprintView.js"/>
+  <script src="src/views/Orbitz/OrbitzTripFootprintView.js"/>
+  <script src="src/views/Kayak/KayakTripFootprintView.js"/>
+
   <script src="src/Careplane.js"/>
   <script src="FirefoxExtension.js"/>
+  <script src="FirefoxExtensionLoader.js"/>
   <script src="overlay.js"/>
 
   <stringbundleset id="stringbundleset">
