@@ -1,6 +1,6 @@
-Kayak = function(extension, doc) {
+Kayak = function(extension) {
   this.extension = extension;
-  this.doc = doc;
+  this.doc = extension.doc;
 };
 Kayak.prototype = new Driver();
 

@@ -1,4 +1,5 @@
-FirefoxExtension = function() {
+FirefoxExtension = function(doc) {
+  this.doc = doc;
   this.logger = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
   this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
     getService(Components.interfaces.nsIPrefService).
@@ -10,7 +11,7 @@ FirefoxExtension.prototype.log = function(str) {
   this.logger.logStringMessage(str);
 };
 
-FirefoxExtension.prototype.firstRun = function(){
+FirefoxExtension.prototype.welcome = function() {
   if(this.prefs.getBoolPref("firstrun")) {
     this.prefs.setBoolPref("firstrun",false);
  

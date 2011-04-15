@@ -1,9 +1,8 @@
 Overlay = {
   onLoad: function() {
-    var appcontent = document.getElementById("appcontent");
-    if(appcontent) {
-      var extension = new FirefoxExtension();
-      appcontent.addEventListener("DOMContentLoaded", Util.proxy(extension.onPageLoad, extension), true);
+    var browser = document.getElementById("appcontent");
+    if(browser) {
+      browser.addEventListener("DOMContentLoaded", FirefoxExtensionLoader.load, true);
     }
   },
 };

@@ -1,6 +1,6 @@
-Orbitz = function(extension, doc) {
+Orbitz = function(extension) {
   this.extension = extension;
-  this.doc = doc;
+  this.doc = extension.doc;
   var foo = 'Orbitz';
 };
 Orbitz.prototype = new Driver();
@@ -13,7 +13,7 @@ Orbitz.shouldMonitor = function(url) {
 };
 
 Orbitz.prototype.load = function() {
-  this.notify(Orbitz);
+  this.extension.notify(Orbitz);
   this.insertAttribution();
   this.scoreTrips();
   this.rateTrips();
