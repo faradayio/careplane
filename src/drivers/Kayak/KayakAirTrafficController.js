@@ -13,13 +13,20 @@ KayakAirTrafficController.prototype.poll = function() {
   setInterval(Util.proxy(this.clear, this), 1000);   // every 1 second
 };
 
+KayakAirTrafficController.prototype.clear = function() {
+  this.discoverTrips();
+  this.scoreTrips();
+  this.rateTrips();
+};
+
+KayakAirTrafficController.prototype.createTrip = function(tripElement) {
+  return new KayakTrip(tripElement);
+};
+
 KayakAirTrafficController.prototype.scoreTrips = function() {
-  var tripElements = this.tripElements();
-  for(var i = 0; i < tripElements.length; i++) {
-    var tripElement = tripElements.item(i);
-    var trip = new KayakTrip(tripElement);
+  for(var i in this.trips) {
+    var trip = this.trips[i];
     if(trip.isScorable) {
-      this.trips.push(trip);
       trip.score(this.onFlightEmissionsComplete);
     }
   }

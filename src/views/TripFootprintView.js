@@ -1,5 +1,9 @@
 TripFootprintView = function() {};
 
+TripFootprintView.prototype.target = function() {
+  return this.footprintParagraph;
+};
+
 TripFootprintView.prototype.init = function() {
   this.footprintParagraph = this.tripElement.ownerDocument.createElement('p');
   this.footprintParagraph.setAttribute('class', 'careplane-footprint');

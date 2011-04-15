@@ -10,17 +10,17 @@ OrbitzAirTrafficController.prototype.tripElements = function() {
 };
 
 OrbitzAirTrafficController.prototype.scoreTrips = function() {
-  var tripElements = this.tripElements();
-  for(var i = 0; i < tripElements.length; i++) {
-    var tripElement = tripElements.item(i);
-    var trip = new OrbitzTrip(tripElement);
-    this.trips.push(trip);
+  for(var i in this.trips) {
+    var trip = this.trips[i];
     trip.score(
       this.onFlightEmissionsComplete,
       Util.proxy(this.onTripEmissionsComplete, this));
   }
 }
 
+OrbitzAirTrafficController.prototype.createTrip = function(tripElement) {
+  return new OrbitzTrip(tripElement);
+};
 
 
 // Events

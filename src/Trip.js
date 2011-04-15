@@ -1,9 +1,12 @@
 Trip = function() {};
 
+Trip.isAlreadyDiscovered = function(tripElement) {
+  var p = tripElement.getElementsByClassName('.careplane-footprint');
+  return p.length > 0;
+};
+
 Trip.prototype.score = function(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete) {
   this.isScorable = false;
-  this.footprintView().init();
-  this.infoView().init();
   this.eachFlight(Util.proxy(function(flight) {
     flight.emissionEstimate(
       this.onFlightEmissionsComplete(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete));
@@ -11,7 +14,6 @@ Trip.prototype.score = function(onScorerFlightEmissionsComplete, onScorerTripEmi
 }
 
 Trip.prototype.rate = function(rating) {
-  this.infoView().init();
   this.rating = rating;
 };
 
@@ -19,8 +21,11 @@ Trip.prototype.isDone = function() {
   return this.flights() != null && this.completedFlightCount == this.flights().length;
 };
 
-Trip.prototype.isRated = function() {
-  return this.rating != null;
+Trip.prototype.controller = function() {
+  if(!this._controller) {
+    this._controller = new TripController(this);
+  }
+  return this._controller;
 };
 
 Trip.prototype.infoView = function() {

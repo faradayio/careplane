@@ -1,17 +1,18 @@
 describe('Orbitz', function() {
-  describe('.scoreTrips', function() {
+  describe('.startAirTrafficControl', function() {
     var orbitz;
     beforeEach(function() {
-      var extension = new Careplane();
-      orbitz = new Orbitz(extension, document);
+      var extension = new Careplane(window.document);
+      extension.doc = window.document;
+      orbitz = new Orbitz(extension);
     });
 
     it('asks the OrbitzTrip to score each result', function() {
       loadFixtures('orbitz_dtw_sfo.html');
       Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
-      }
-      orbitz.scoreTrips(window.document);
+      };
+      orbitz.startAirTrafficControl();
 
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.careplane-footprint');
@@ -25,7 +26,7 @@ describe('Orbitz', function() {
       Util.fetch = function(url, callback) {
         callback(JSON.stringify({ emission: 512.0 }));
       }
-      orbitz.scoreTrips(window.document);
+      orbitz.startAirTrafficControl();
       $('div.result').each(function(i, result) {
         expect($(result)).toContain('p.careplane-footprint');
         expect($(result).children('p.careplane-footprint').get(0).innerText).

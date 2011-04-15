@@ -22,6 +22,7 @@ describe('KayakAirTrafficController', function() {
     it('parses redeye flights', function() {
       jasmine.getFixtures().cleanUp(); // unload fixtures
       loadFixtures('kayak_dtw_sfo_redeye.html');
+      this.controller.discoverTrips();
       this.controller.scoreTrips();
       expect($('.careplane-footprint')).toHaveText(/\d+/)
     });
