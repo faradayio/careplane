@@ -9,6 +9,8 @@
   <script src="src/Trip.js"/>
   <script src="src/AirTrafficController.js"/>
 
+  <script src="src/controllers/TripController.js"/>
+
   <script src="src/drivers/Kayak.js"/>
   <script src="src/drivers/Kayak/KayakFlight.js"/>
   <script src="src/drivers/Kayak/KayakTrip.js"/>
