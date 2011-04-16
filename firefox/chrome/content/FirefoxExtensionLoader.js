@@ -1,7 +1,9 @@
 FirefoxExtensionLoader = {
   load: function(ev) {
     var extension = new FirefoxExtension(ev.originalTarget);
-    extension.welcome();
-    extension.loadDriver();
+    if(extension.isActive) {
+      extension.welcome();
+      extension.loadDriver();
+    }
   }
 };

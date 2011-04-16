@@ -1,15 +1,22 @@
 Careplane = function() {};
 
 Careplane.prototype.eligableDrivers = function() {
-  var eligableDrivers = [Kayak, Orbitz].filter(Util.proxy(function(driver) {
-    var driverName = driver.driverName.toLowerCase();
-    var driverEnabled = this.prefs.getBoolPref(driverName);
-    return driverEnabled && driver.shouldMonitor(this.doc.location.href);
-  }, this));
-  return eligableDrivers;
+  if(!this._eligableDrivers) {
+    this._eligableDrivers = [Kayak, Orbitz].filter(Util.proxy(function(driver) {
+      var driverName = driver.driverName.toLowerCase();
+      var driverEnabled = this.prefs.getBoolPref(driverName);
+      return driverEnabled && driver.shouldMonitor(this.doc.location.href);
+    }, this));
+  }
+
+  return this._eligableDrivers;
 };
 
 Careplane.prototype.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
+
+Careplane.prototype.isActive = function() {
+  return this.eligableDrivers().length > 0;
+};
 
 Careplane.prototype.loadDriver = function() {
   var drivers = this.eligableDrivers();
