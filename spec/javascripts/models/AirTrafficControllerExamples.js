@@ -27,6 +27,12 @@ sharedExamplesFor('AirTrafficController', function() {
       this.controller.discoverTrips();
       expect(this.controller.trips.length).toBeGreaterThan(0);
     });
+    it('does not load duplicate trips', function() {
+      this.controller.discoverTrips();
+      var numTrips = this.controller.trips.length;
+      this.controller.discoverTrips();
+      expect(this.controller.trips.length).toBe(numTrips);
+    });
   });
 
   describe('#scoreTrips', function() {

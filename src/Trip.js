@@ -1,7 +1,7 @@
 Trip = function() {};
 
 Trip.isAlreadyDiscovered = function(tripElement) {
-  var p = tripElement.getElementsByClassName('.careplane-footprint');
+  var p = tripElement.getElementsByClassName('careplane-footprint');
   return p.length > 0;
 };
 
