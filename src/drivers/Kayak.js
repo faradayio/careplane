@@ -43,7 +43,7 @@ Kayak.prototype.insertAttribution = function() {
   // In the footer
   var copyrightElement = Array.prototype.slice.call(this.doc.getElementById('commonfooter').getElementsByTagName('div')).pop();
   attributionElement = this.doc.createElement('span');
-  attributionElement.setAttribute('id', 'careplane-attribution');
+  attributionElement.setAttribute('class', 'careplane-attribution-footer kayak');
   attributionElement.innerHTML = ' &middot; ' + this.extension.standardTextAttribution;
   copyrightElement.appendChild(attributionElement);
 };

@@ -20,20 +20,18 @@ Orbitz.prototype.load = function() {
 };
 
 Orbitz.prototype.insertAttribution = function() {
-  if(this.doc.getElementById('careplane-attribution') == null) {
+  if(this.doc.getElementsByClassName('careplane-attribution').length == 0) {
     // In the matrix
     var parentElement = this.doc.getElementById('matrix');
     var attributionElement = this.doc.createElement('div');
-    attributionElement.setAttribute('id', 'careplane-attribution');
-    attributionElement.setAttribute('class', 'matrixFooterAir');
-    attributionElement.setAttribute('style', 'padding-left: 4px; padding-bottom: 0;');
+    attributionElement.setAttribute('class', 'matrixFooterAir careplane-attribution orbitz');
     attributionElement.innerHTML = this.extension.standardTextAttribution;
     parentElement.appendChild(attributionElement);
     
     // In the footer
     var footer = this.doc.getElementById('footer');
     var container = this.doc.createElement('div');
-    container.setAttribute('style', 'clear: both; margin-top: 5px');
+    container.setAttribute('class', 'careplane-attribution-footer orbitz');
     footer.appendChild(container);
     this.extension.insertBadge(this.doc, container, null, '');
   }

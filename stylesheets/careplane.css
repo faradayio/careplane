@@ -17,3 +17,15 @@
 .careplane-info {
   visibility: hidden;
 }
+
+
+.careplane-attribution .orbitz {
+  padding-left: 4px;
+  padding-bottom: 0;
+}
+
+
+.careplane-attribution-footer .orbitz {
+  clear: both;
+  margin-top: 5px;
+}

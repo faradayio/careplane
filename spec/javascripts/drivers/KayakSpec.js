@@ -16,7 +16,7 @@ describe('Kayak', function() {
       expect($('div#rightads')).toContain('script[src$="badge.js"]');
     });
     it('inserts a text attribution in the footer', function() {
-      expect($('span#careplane-attribution')).toHaveText(' · Emission estimates powered by Brighter Planet');
+      expect($('span.careplane-attribution-footer')).toHaveText(' · Emission estimates powered by Brighter Planet');
     });
   });
 });

@@ -18,7 +18,6 @@ describe('Orbitz', function() {
         expect($(result)).toContain('p.careplane-footprint');
         var p = $(result).children('p.careplane-footprint').get(0);
         expect(p.innerText).toMatch(/[\d]+/);
-        expect(p.style.color).toMatch(/rgb\(\d+, \d+, \d+\)/);
       });
     });
     it('works for DFW<->GRU', function() {
