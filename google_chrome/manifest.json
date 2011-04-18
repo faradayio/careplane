@@ -1,0 +1,12 @@
+{
+  "name": "Careplane",
+  "version": "0.5.0
+",
+  "description": "Real-time carbon footprints inserted into your favorite travel search sites",
+  "matches": [
+    "*://*kayak.com/*",
+    "*://*orbitz.com/*"
+  ],
+  "css": ["stylesheets/careplane.css"],
+  "js": ["src/Util.js","src/Driver.js","src/Flight.js","src/Trip.js","src/AirTrafficController.js","src/controllers/TripController.js","src/drivers/Kayak.js","src/drivers/Kayak/KayakFlight.js","src/drivers/Kayak/KayakTrip.js","src/drivers/Kayak/KayakAirTrafficController.js","src/drivers/Orbitz.js","src/drivers/Orbitz/OrbitzFlight.js","src/drivers/Orbitz/OrbitzTrip.js","src/drivers/Orbitz/OrbitzAirTrafficController.js","src/views/TripInfoView.js","src/views/TripFootprintView.js","src/views/Orbitz/OrbitzTripFootprintView.js","src/views/Kayak/KayakTripFootprintView.js","src/Careplane.js"],
+}
