@@ -14,6 +14,7 @@ Orbitz.shouldMonitor = function(url) {
 
 Orbitz.prototype.load = function() {
   this.extension.notify(Orbitz);
+  this.extension.addStyleSheet();
   this.insertAttribution();
   this.startAirTrafficControl();
 };

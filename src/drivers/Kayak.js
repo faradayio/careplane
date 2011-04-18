@@ -17,6 +17,7 @@ Kayak.prototype.load = function() {
   var loadInterval = setInterval(function() {
     if(kayak.isActiveSearch()) {
       kayak.extension.notify(Kayak);
+      kayak.extension.addStyleSheet();
       kayak.insertAttribution();
       kayak.startAirTrafficControl();
       clearInterval(loadInterval);

@@ -1,6 +1,7 @@
 content   careplane                 chrome/content/
+content   careplane                 chrome/content/       contentaccessible=yes
+resource  careplaneStyle            chrome/content/stylesheets/
 skin      careplane   classic/1.0   chrome/skin/
 locale    careplane   en-US         chrome/locale/en-US/
-
 
 overlay   chrome://browser/content/browser.xul   chrome://careplane/content/ff-overlay.xul

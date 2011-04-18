@@ -32,3 +32,11 @@ FirefoxExtension.prototype.notify = function(driver) {
     nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: this.hideEmissionEstimates, label: 'Hide footprints'}]);
   }
 };
+
+FirefoxExtension.prototype.addStyleSheet = function() {
+  var style = document.createElement('link');
+  style.setAttribute('rel','stylesheet');
+  style.setAttribute('type','text/css');
+  style.setAttribute('href','resource://careplanestyle/careplane.css');
+  document.head.appendChild(style);
+};
