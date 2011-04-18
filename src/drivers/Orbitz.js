@@ -27,7 +27,7 @@ Orbitz.prototype.insertAttribution = function() {
     attributionElement.setAttribute('id', 'careplane-attribution');
     attributionElement.setAttribute('class', 'matrixFooterAir');
     attributionElement.setAttribute('style', 'padding-left: 4px; padding-bottom: 0;');
-    attributionElement.innerHTML = Careplane.standardTextAttribution;
+    attributionElement.innerHTML = this.extension.standardTextAttribution;
     parentElement.appendChild(attributionElement);
     
     // In the footer
