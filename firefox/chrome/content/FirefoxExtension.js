@@ -1,14 +1,21 @@
 FirefoxExtension = function(doc) {
   this.doc = doc;
-  this.logger = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
   this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
     getService(Components.interfaces.nsIPrefService).
     getBranch("extensions.careplane.");
 };
 FirefoxExtension.prototype = new Careplane();
-  
+
+FirefoxExtension.logger = function() {
+  return Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
+};
+
+FirefoxExtension.log = function(str) {
+  FirefoxExtension.logger().logStringMessage(str);
+};
+
 FirefoxExtension.prototype.log = function(str) {
-  this.logger.logStringMessage(str);
+  FirefoxExtension.log(str);
 };
 
 FirefoxExtension.prototype.welcome = function() {
