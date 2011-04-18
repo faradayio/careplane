@@ -1,0 +1,11 @@
+{
+  "name": "Careplane",
+  "version": "<%= @version %>",
+  "description": "Real-time carbon footprints inserted into your favorite travel search sites",
+  "matches": [
+    "*://*kayak.com/*",
+    "*://*orbitz.com/*"
+  ],
+  "css": [<%= @css_files.map { |css| "\"#{css}\"" }.join(',') %>],
+  "js": [<%= @js_files.map { |js| "\"#{js}\"" }.join(',') %>],
+}
