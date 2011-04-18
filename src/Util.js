@@ -1,5 +1,5 @@
 Util = {
-  fetch: function(url, callback, matcher, tries) {
+  fetch: function(url, callback) {
     var xhr = new XMLHttpRequest();
     //if(!tries)
       //tries = 0;
@@ -23,9 +23,7 @@ Util = {
       //clearTimeout(requestTimer);
       if(xhr.status==200) {
         var response = xhr.responseText;
-        //Careplane.log('Response for ' + url + ': ' + response);
-        var keyDetail = ((matcher) ? response.match(matcher)[1] : false);
-        callback(response, keyDetail);
+        callback(response);
       };
     }, false);
     xhr.open('GET', url, true);
