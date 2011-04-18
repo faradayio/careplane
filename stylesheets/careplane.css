@@ -1,3 +1,19 @@
+.careplane-footprint {
+  color: '#AAA';
+}
+.kayak .careplane-footprint {
+  position: 'absolute';
+  left: '10px';
+  width: '130px';
+  bottom: '20px';
+}
+.orbitz .careplane-footprint {
+  background-color: '#FFF',
+  margin: '0',
+  padding: '7px 15px'
+}
+
+
 .careplane-info {
   visibility: hidden;
 }
