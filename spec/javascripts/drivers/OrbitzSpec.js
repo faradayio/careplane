@@ -1,5 +1,5 @@
 describe('Orbitz', function() {
-  describe('.startAirTrafficControl', function() {
+  describe('#startAirTrafficControl', function() {
     var orbitz;
     beforeEach(function() {
       var extension = new Careplane(window.document);
