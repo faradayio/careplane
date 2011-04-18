@@ -42,3 +42,10 @@ TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight
   li.appendChild(a);
   ul.appendChild(li);
 };
+
+TripInfoView.prototype.show = function() {
+  this.target().style.setAttribute('visibility','visible');
+};
+TripInfoView.prototype.hide = function() {
+  this.target().style.setAttribute('visibility','hidden');
+};
