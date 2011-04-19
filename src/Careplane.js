@@ -3,8 +3,7 @@ Careplane = function() {};
 Careplane.prototype.eligableDrivers = function() {
   if(!this._eligableDrivers) {
     this._eligableDrivers = [Kayak, Orbitz].filter(Util.proxy(function(driver) {
-      var driverName = driver.driverName.toLowerCase();
-      var driverEnabled = this.prefs.getBoolPref(driverName);
+      var driverEnabled = this.prefs.get('sites.' + driver.driverName) == 'true';
       return driverEnabled && driver.shouldMonitor(this.doc.location.href);
     }, this));
   }

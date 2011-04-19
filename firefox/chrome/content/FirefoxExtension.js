@@ -1,10 +1,12 @@
 FirefoxExtension = function(doc) {
   this.doc = doc;
-  this.prefs = Components.classes["@mozilla.org/preferences-service;1"].
-    getService(Components.interfaces.nsIPrefService).
-    getBranch("extensions.careplane.");
+  this.prefs = new FirefoxPreferences();
 };
 FirefoxExtension.prototype = new Careplane();
+
+FirefoxExtension.fetch = function(url, callback) {
+  Util.fetch(url, callback);
+};
 
 FirefoxExtension.logger = function() {
   return Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
@@ -19,8 +21,8 @@ FirefoxExtension.prototype.log = function(str) {
 };
 
 FirefoxExtension.prototype.welcome = function() {
-  if(this.prefs.getBoolPref("firstrun")) {
-    this.prefs.setBoolPref("firstrun",false);
+  if(this.prefs.get("firstrun") == 'true') {
+    this.prefs.put("firstrun",false);
  
     window.setTimeout(function(){
       gBrowser.selectedTab = gBrowser.addTab('http://careplane.org');
