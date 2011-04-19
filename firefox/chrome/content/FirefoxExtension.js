@@ -43,9 +43,9 @@ FirefoxExtension.prototype.notify = function(driver) {
 };
 
 FirefoxExtension.prototype.addStyleSheet = function() {
-  var style = document.createElement('link');
+  var style = this.doc.createElement('link');
   style.setAttribute('rel','stylesheet');
   style.setAttribute('type','text/css');
   style.setAttribute('href','resource://careplanestyle/careplane.css');
-  document.head.appendChild(style);
+  this.doc.head.appendChild(style);
 };
