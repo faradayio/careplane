@@ -5,6 +5,11 @@ Trip.isAlreadyDiscovered = function(tripElement) {
   return p.length > 0;
 };
 
+Trip.prototype.initViews = function() {
+  this.footprintView().init();
+  this.infoView().init();
+};
+
 Trip.prototype.score = function(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete) {
   this.isScorable = false;
   this.eachFlight(Util.proxy(function(flight) {

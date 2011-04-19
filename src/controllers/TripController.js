@@ -3,19 +3,22 @@ TripController = function(trip) {
 };
 
 TripController.events = {
-  tripFootprintHoverIn: function(controller) {
-    this.trip.infoView().show();
+  tripFootprintHoverIn: function(trip) {
+    return function(ev) {
+      trip.infoView().show();
+    };
   },
-  tripFootprintHoverOut: function(controller) {
-    this.trip.infoView().hide();
+  tripFootprintHoverOut: function(trip) {
+    return function(ev) {
+      trip.infoView().hide();
+    }
   }
 };
 
 TripController.prototype.init = function() {
-  this.trip.footprintView().init();
-  this.trip.infoView().init();
+  this.trip.initViews();
 
   var target = this.trip.footprintView().target();
-  target.addEventListener('mouseover', TripController.events.tripFootprintHoverIn)
-  target.addEventListener('mouseout', TripController.events.tripFootprintHoverOut)
+  target.addEventListener('mouseover', TripController.events.tripFootprintHoverIn(this.trip), false);
+  target.addEventListener('mouseout', TripController.events.tripFootprintHoverOut(this.trip), false);
 };
