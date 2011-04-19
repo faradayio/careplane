@@ -8,24 +8,13 @@ TripInfoView.prototype.target = function() {
 };
 
 TripInfoView.prototype.init = function() {
-  //<div class="careplane-info">
-  //  Search average: <span class="careplane-search-average"></span>
-  //  <ul class="careplane-methodologies"></ul>
-  //</div>
+  var content = "\
+    <div class=\"careplane-info\">\
+      Search average: <span class=\"careplane-search-average\"></span>\
+      <ul class=\"careplane-methodologies\"></ul>\
+    </div>";
 
-  var careplaneInfoDiv = this.doc.createElement('div');
-  careplaneInfoDiv.setAttribute('class', 'careplane-info');
-  careplaneInfoDiv.appendChild(this.doc.createTextNode('Search average:'));
-
-  var careplaneSearchAverage = this.doc.createElement('span');
-  careplaneSearchAverage.setAttribute('class', 'careplane-search-average');
-  careplaneInfoDiv.appendChild(careplaneSearchAverage);
-
-  var careplaneMethodologies = this.doc.createElement('ul');
-  careplaneMethodologies.setAttribute('class', 'careplane-methodologies');
-  careplaneInfoDiv.appendChild(careplaneMethodologies);
-
-  this.tripElement.appendChild(careplaneInfoDiv);
+  this.tripElement.innerHTML += content;
 };
 
 TripInfoView.prototype.updateSearchAverage = function(average) {
