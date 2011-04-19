@@ -1,11 +1,19 @@
 {
   "name": "Careplane",
-  "version": "<%= @version %>",
+  "version": "<%= @version.gsub(/[\s\n]+$/,'') %>",
   "description": "Real-time carbon footprints inserted into your favorite travel search sites",
-  "matches": [
-    "*://*kayak.com/*",
-    "*://*orbitz.com/*"
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.kayak.com/*",
+        "*://kayak.com/*",
+        "*://*.orbitz.com/*",
+        "*://orbitz.com/*"
+      ],
+      "css": [<%= @css_files.map { |css| "\"#{css}\"" }.join(',') %>],
+      "js": ["application.js"]
+    }
   ],
-  "css": [<%= @css_files.map { |css| "\"#{css}\"" }.join(',') %>],
-  "js": [<%= @js_files.map { |js| "\"#{js}\"" }.join(',') %>],
+  "background_page": "background.html",
+  "options_page": "options.html"
 }

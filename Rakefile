@@ -3,6 +3,7 @@ require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
 @js_files = %w{
+  src/Preferences.js
   src/Util.js
   src/Driver.js
 
@@ -39,6 +40,26 @@ def build(driver, target_dir = '')
     FileUtils.mkdir_p(File.dirname(destination))
     puts file
     FileUtils.cp file, destination
+  end
+end
+
+def build_application_js(driver, target_dir = '')
+  puts 'Copying assets...'
+  (@css_files + @image_files).each do |file|
+    destination = File.join(driver, target_dir, file)
+    FileUtils.mkdir_p(File.dirname(destination))
+    puts file
+    FileUtils.cp file, destination
+  end
+
+  puts 'Building application.js...'
+  `echo '' > google_chrome/application.js`
+  (@js_files +
+   %w{google_chrome/GoogleChromePreferences.js google_chrome/GoogleChromeExtension.js
+      google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
+  ).each do |file|
+    puts "cat #{file} >> google_chrome/application.js"
+    `cat #{file} >> google_chrome/application.js`
   end
 end
 
@@ -81,7 +102,7 @@ namespace :google_chrome do
     end
     task :default => 'google_chrome:build:templates' do
       puts 'Building Google Chrome'
-      build 'google_chrome'
+      build_application_js 'google_chrome'
       puts 'Done'
     end
   end

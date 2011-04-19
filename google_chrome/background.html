@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+      function fetch(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(data) {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              var data = JSON.parse(xhr.responseText);
+              callback(data);
+            } else {
+              callback(null);
+            }
+          }
+        }
+        xhr.open('GET', url, true);
+        xhr.send();
+      }
+
+      function welcome() {
+        chrome.tabs.create({ url: 'http://careplane.org' });
+      }
+
+      /**
+       * Handles data sent via chrome.extension.sendRequest().
+       * @param request Object Data sent in the request.
+       * @param sender Object Origin of the request.
+       * @param callback Function The method to call when the request completes.
+       */
+      function onRequest(request, sender, callback) {
+        switch(request.action) {
+        case 'fetch':
+          fetchTwitterFeed(callback);
+          break;
+        case 'welcome':
+          welcome();
+        }
+      };
+
+      // Wire up the listener.
+      chrome.extension.onRequest.addListener(onRequest);
+    </script>
+  </body>
+</html>
