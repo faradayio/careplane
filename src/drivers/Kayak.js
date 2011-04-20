@@ -1,6 +1,6 @@
 Kayak = function() {
   this.extension = Careplane.currentExtension;
-  this.doc = extension.doc;
+  this.doc = this.extension.doc;
 };
 Kayak.prototype = new Driver();
 
