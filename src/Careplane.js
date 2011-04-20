@@ -1,5 +1,9 @@
 Careplane = function() {};
 
+Careplane.setCurrentExtension = function(extension) {
+  Careplane.currentExtension = extension;
+};
+
 Careplane.prototype.eligableDrivers = function() {
   if(!this._eligableDrivers) {
     this._eligableDrivers = [Kayak, Orbitz].filter(Util.proxy(function(driver) {
