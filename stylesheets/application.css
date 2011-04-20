@@ -8,6 +8,10 @@ body {
   background: #EDF7F9 url(images/clouds.png) repeat-x;
 }
 
+body.welcome {
+  padding-top: 50px;
+}
+
 header, article {
   width: 972px;
   margin: 0 auto;
@@ -153,7 +157,7 @@ article>div {
 #description {
   background: #1a2d56;
   text-shadow: 0 1px 0 rgba(0,0,0,0.7);
-  height: 310px;
+  height: 200px;
 }
 
 #description h1 {
@@ -208,6 +212,44 @@ article>div {
   background: url(images/screenshot.png) no-repeat;
   width: 600px;
   height: 355px;
+}
+
+ul#sites {
+  position: absolute;
+  top: 510px;
+  left: 50%;
+  margin: 0 0 0 -480px;
+  width: 960px;
+  height: 355px;
+  list-style: none;
+  padding: 0 15px;
+}
+
+ul#sites li {
+  float: left;
+  width: 465px;
+}
+
+ul#sites li.kayak { background-image: url(images/sites/kayak.png); }
+ul#sites li.orbitz { background-image: url(images/sites/orbitz.png); }
+
+ul#sites li a {
+  display: block;
+  height: 245px;
+}
+
+ul#sites li a span {
+  display: none;
+}
+
+ul#sites li a:hover span {
+  position: absolute;
+  display: block;
+  width: 465px;
+  margin: -70px 0 0;
+  text-align: center;
+  font-size: 48px;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
 }
 
 footer {
@@ -288,4 +330,15 @@ footer ul.details li.original {
 
 #original {
   margin: 30px 0 0;
+}
+
+#thanks {
+  text-align: center;
+  font-size: 18px;
+  margin: 25px 0;
+  color: #1A2D56;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

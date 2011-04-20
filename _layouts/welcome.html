@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Careplane: real-time carbon footprints inserted into your favorite travel search sites</title>
+  <title>Welcome to Careplane!</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/html5.css" />
   <link rel="stylesheet" type="text/css" href="stylesheets/application.css" />
   <link rel="stylesheet" type="text/css" href="stylesheets/syntax.css" />
@@ -9,7 +9,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <meta charset="utf-8">
 </head>
-<body class="default">
+<body class="welcome">
   <script type="text/javascript">
   //<![CDATA[
     var _gaq = _gaq || [];
@@ -23,32 +23,16 @@
     });
   //]]>
   </script>
+  <p id="thanks"><strong>Thanks for installing Careplane!</strong> To get started, visit one of the supported travel search websites listed below.</p>
   <header>
     <div>
       <h1>Careplane</h1>
       <h2>Real-time carbon footprints inserted into your favorite travel search sites</h2>
-      <p class="firefox available" style="display: none;">
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/careplane/">
-          <span class="major">Install Careplane <span>0.5.0</span></span>
-          <span class="minor"><strong>Free</strong> Firefox plugin, 30KB</span>
-        </a>
-      </p>
-      <p class="other unavailable" style="display: none;">
-        <span class="major">Sadly, Careplane isn't available for your browser</span>
-        <span class="minor">We're working on a plugin&mdash;in the meantime, why not <a href="http://firefox.com">give Firefox a try</a>?</span>
-      </p>
     </div>
   </header>
   <article>
     <div>
-      <div id="description">
-        <h1>Careplane inserts carbon footprints into your favorite travel search sites</h1>
-        <p>Trying to choose between several flights at the same price? Careplane lets you pick the greenest option, with no additional cost.</o>
-        <ul class="sites">
-          <li class="kayak"><a href="http://kayak.com">Kayak</a></li>
-          <li class="orbitz"><a href="http://orbitz.com">Kayak</a></li>
-        </ul>
-      </div>
+      <div id="description"></div>
     </div>
   </article>
   <footer>
@@ -76,25 +60,12 @@
           <h2>How can I help?</h2>
           <p>Everybody can help by installing Careplane&mdash;it doesn't get in the way, and only kicks into gear when you visit a travel search site. Even when activated, it mostly stays out of the way, inserting carbon information discreetly into your favorite travel search interfaces. <strong>Developers</strong> are enthusiastically welcomed to join the effort. Careplane has a pretty well-organized codebase; adding a driver for an additional travel search site is mostly a matter of defining decent screen-scraping rules. Check out our <a href="http://github.com/brighterplanet/careplane">GitHub repo</a> for details.</p>
         </li>
-        <li class="original">
-          <a href="#original">Looking for the original Careplane concept video?</a>
-        </li>
       </ul>
-      <p id="original" style="display: none;">
-        <object type="application/x-shockwave-flash" data="http://banjo.brighterplanet.com/andy/careplane.swf" width="1024" height="768">
-            <param name="movie" value="http://banjo.brighterplanet.com/andy/careplane.swf" />
-        </object>
-      </p>
     </div>
   </footer>
-  <div id="screencast"></div>
-  <script type="text/javascript">
-  function showInstallButton() {
-    if ($.browser.mozilla) $('header .firefox').show();
-    else $('header .other').show();
-  }
-  $(document).ready(showInstallButton);
-  $(document).ready(function() { $('ul.details li.original a').click(function() { $('#original').show();}); });
-  </script>
+  <ul id="sites">
+    <li class="kayak"><a href="http://kayak.com"><span>Kayak</span></a></li>
+    <li class="orbitz"><a href="http://orbitz.com"><span>Orbitz</span></a></li>
+  </ul>
 </body>
 </html>
