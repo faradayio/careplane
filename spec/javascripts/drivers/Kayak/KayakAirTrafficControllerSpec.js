@@ -13,7 +13,7 @@ describe('KayakAirTrafficController', function() {
       this.controller.discoverTrips();
       this.controller.scoreTrips();
       for(var i in this.controller.trips) {
-        var p = this.controller.trips[i].footprintView().footprintParagraph;
+        var p = this.controller.trips[i].footprintView().footprintParagraph();
         expect(p.innerHTML).toMatch(/[\d]+/);
       }
     });

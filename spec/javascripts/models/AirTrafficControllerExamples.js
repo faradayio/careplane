@@ -13,7 +13,7 @@ sharedExamplesFor('AirTrafficController', function() {
       this.controller.clear();
       expect(this.controller.trips.length).toBeGreaterThan(0);
       for(var i in this.controller.trips) {
-        var p = this.controller.trips[i].footprintView().footprintParagraph;
+        var p = this.controller.trips[i].footprintView().footprintParagraph();
         expect(p.innerHTML).toMatch(/[\d,]+/);
       }
     });
