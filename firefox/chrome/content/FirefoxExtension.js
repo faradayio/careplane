@@ -25,7 +25,7 @@ FirefoxExtension.prototype.welcome = function() {
     this.prefs.put("firstrun",false);
  
     window.setTimeout(function(){
-      gBrowser.selectedTab = gBrowser.addTab('http://careplane.org');
+      gBrowser.selectedTab = gBrowser.addTab('http://careplane.org/welcome.html');
     }, 1500); //Firefox 2 fix - or else tab will get closed
   }
 };
