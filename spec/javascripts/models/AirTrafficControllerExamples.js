@@ -44,8 +44,8 @@ sharedExamplesFor('AirTrafficController', function() {
     it('reports methodologies for each trip', function() {
       for(var i in this.controller.trips) {
         var div = this.controller.trips[i].infoView().target();
-        expect($(div).find('ul.careplane-methodologies li a').length).toBeGreaterThan(0);
-        $(div).find('ul.careplane-methodologies li a').each(function(i, a) {
+        expect($(div).find('.careplane-methodologies li a').length).toBeGreaterThan(0);
+        $(div).find('.careplane-methodologies li a').each(function(i, a) {
           expect($(a)).toHaveText(/[A-Z]{3}-[A-Z]{3}/);
         });
       }
