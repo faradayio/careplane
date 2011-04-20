@@ -1,5 +1,5 @@
 describe('Util', function() {
-  describe('proxy', function() {
+  describe('.proxy', function() {
     var myfunc = function() {
       return 'oh, ' + this.boogla;
     };
@@ -25,6 +25,21 @@ describe('Util', function() {
       var prox = Util.proxy(output, this);
 
       expect(prox('milk')).toBe('got milk?');
+    });
+  });
+
+  describe('.footprintAnalysis', function() {
+    it('reports a better-than-average footprint', function() {
+      var result = Util.footprintAnalysis(1500,1100);
+      expect(result).toMatch(/taking/);
+    });
+    it('reports an average footprint', function() {
+      var result = Util.footprintAnalysis(1100,1100);
+      expect(result).toMatch(/is an average/);
+    });
+    it('reports a worse-than-average footprint', function() {
+      var result = Util.footprintAnalysis(1500,1700);
+      expect(result).toMatch(/adding/);
     });
   });
 });

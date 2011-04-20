@@ -37,6 +37,20 @@ Util = {
     var labeledFootprint = delimitedFootprint + ' lbs CO<sub>2</sub>e';
     return labeledFootprint;
   },
+
+  footprintAnalysis: function(average, current) {
+    var diff = average - current;
+    var differentialInCarDays = Util.numberWithDelimiter(Math.abs(diff) / 30.6356);
+    var result;
+    if(current < average) {
+      result = 'Flying this trip instead would be like taking ' + differentialInCarDays + ' cars off the road for a day';
+    } else if(current == average) {
+      result = 'This is an average flight';
+    } else {
+      result = 'Flying this trip instead would be like adding ' + differentialInCarDays + ' cars to the road for a day';
+    }
+    return result;
+  },
   
   numberWithDelimiter: function(number) { // hat tip http://kevinvaldek.com/number-with-delimiter-in-javascript
     number = number + '', delimiter = ',';
@@ -49,5 +63,12 @@ Util = {
     return function() {
       return func.apply(reprsentedParty, arguments);
     };
+  },
+
+  setTextChild: function(parentElement, text) {
+    if(parentElement.firstChild)
+      parentElement.removeChild(parentElement.firstChild);
+    var txt = document.createTextNode(text);
+    parentElement.appendChild(txt);
   }
 };
