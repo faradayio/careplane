@@ -26,7 +26,7 @@ AirTrafficController.prototype.rateTrips = function() {
     var rating = (scale == null) ? 0 : scale[trip.totalFootprint];
     trip.rate(rating);
     trip.footprintView().updateRating(rating);
-    trip.infoView().updateSearchAverage(this.averageFootprint());
+    trip.infoView().updateSearchAverage(this.averageFootprint(), trip);
   }
 };
 

@@ -3,8 +3,6 @@ var Flight = function(origin, destination, airline, aircraft) {
   this.destination = destination;
   this.airline = airline;
   this.aircraft = aircraft;
-  this.segments_per_trip = 1;
-  this.trips = 1;
 }
 
 Flight.isAircraftInfo = function(text) {
@@ -16,6 +14,9 @@ Flight.isAircraftInfo = function(text) {
   }
   return false;
 };
+
+Flight.prototype.segments_per_trip = 1;
+Flight.prototype.trips = 1;
 
 Flight.prototype.inspect = function() {
   return(this.origin + this.destination + this.airline + this.aircraft);
@@ -30,14 +31,19 @@ Flight.prototype.sanitizedAircraft = function() {
 };
 
 Flight.prototype.emissionEstimate = function(callback) {
-  var brighterPlanetKey = '423120471f5c355512049b4532b2332f';
-  var url = encodeURI('http://carbon.brighterplanet.com/flights.json?key=' + brighterPlanetKey + '&origin_airport=' + this.origin + '&destination_airport=' + this.destination + '&airline=' + this.airline + '&segments_per_trip=1&trips=1');
-  if(this.aircraft) {
-    url += '&aircraft=' + this.sanitizedAircraft();
+  var params = {
+    'key': '423120471f5c355512049b4532b2332f',
+    'origin_airport': this.origin,
+    'destination_airport': this.destination,
+    'airline': this.airline,
+    'aircraft': this.aircraft,
+    'segments_per_trip': this.segments_per_trip,
+    'trips': this.trips
   }
+  var url = Util.urlFor('http://carbon.brighterplanet.com/flights.json', params);
 
   var flight = this;
-  Util.fetch(url, function(response) {
+  Careplane.currentExtension.fetch(url, function(response) {
     var json = JSON.parse(response);
     callback(json, flight);
   });

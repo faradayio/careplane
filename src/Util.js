@@ -70,5 +70,17 @@ Util = {
       parentElement.removeChild(parentElement.firstChild);
     var txt = document.createTextNode(text);
     parentElement.appendChild(txt);
+  },
+
+  urlFor: function(base, params) {
+    var queryString = '?';
+    for(var key in params) {
+      if(params[key] != null) {
+        if(queryString != '?')
+          queryString += '&';
+        queryString += key + '=' + params[key];
+      }
+    }
+    return encodeURI(base + queryString);
   }
 };

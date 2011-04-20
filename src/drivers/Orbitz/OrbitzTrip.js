@@ -1,8 +1,5 @@
 OrbitzTrip = function(tripElement) {
   this.tripElement = tripElement;
-  this.totalFootprint = 0;
-  this.completedFlightCount = 0;
-  this.isScorable = true;
 };
 OrbitzTrip.prototype = new Trip();
 
@@ -23,9 +20,3 @@ OrbitzTrip.prototype.flights = function() {
   }
   return this._flights;
 }
-
-OrbitzTrip.prototype.eachFlight = function(callback) {
-  for(var i in this.flights()) {
-    callback(this.flights()[i]);
-  }
-};

@@ -13,6 +13,7 @@
 src_files:
     - spec/javascripts/helpers/Components.js
     - src/Driver.js
+    - src/Trip.js
     - src/*.js
     - src/controllers/*.js
     - src/drivers/*.js

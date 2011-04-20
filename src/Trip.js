@@ -1,4 +1,20 @@
 Trip = function() {};
+Trip.prototype.totalFootprint = 0;
+Trip.prototype.completedFlightCount = 0;
+Trip.prototype.isScorable = true;
+
+Trip._averages = [];
+Trip.average = function(origin, destination, callback) {
+  var trip = Array.prototype.filter.call(Trip._averages, function(trip) {
+    return trip.origin == origin && trip.destination == destination;
+  });
+  if(trip.length > 0) {
+    callback(trip[0].totalFootprint);
+  } else {
+    trip = new AverageTrip(origin, destination);
+    trip.score(function() {}, callback);
+  }
+};
 
 Trip.isAlreadyDiscovered = function(tripElement) {
   var p = tripElement.getElementsByClassName('careplane-footprint');
@@ -10,12 +26,19 @@ Trip.prototype.initViews = function() {
   this.infoView().init();
 };
 
-Trip.prototype.score = function(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete) {
+Trip.prototype.eachFlight = function(callback) {
+  for(var i in this.flights()) {
+    callback(this.flights()[i]);
+  }
+};
+
+Trip.prototype.score = function(flightEmissionsCallback, tripEmissionsCallback) {
   this.isScorable = false;
-  this.eachFlight(Util.proxy(function(flight) {
+  var trip = this;
+  this.eachFlight(function(flight) {
     flight.emissionEstimate(
-      this.onFlightEmissionsComplete(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete));
-  }, this));
+      TripEvents.flightEmissionsComplete(trip, flightEmissionsCallback, tripEmissionsCallback));
+  });
 }
 
 Trip.prototype.rate = function(rating) {
@@ -40,17 +63,7 @@ Trip.prototype.infoView = function() {
   return this._infoView;
 };
 
-
-
-// Events
-//
-
-Trip.prototype.onFlightEmissionsComplete = function(onScorerFlightEmissionsComplete, onScorerTripEmissionsComplete) {
-  return Util.proxy(function(cm1Response, flight) {
-    this.totalFootprint += cm1Response.emission;
-    this.completedFlightCount++;
-    onScorerFlightEmissionsComplete(this, cm1Response, flight);
-    if(onScorerTripEmissionsComplete && this.isDone())
-      onScorerTripEmissionsComplete();
-  }, this);
+Trip.prototype.tallyFootprint = function(emission) {
+  this.totalFootprint += emission;
+  this.completedFlightCount++;
 };

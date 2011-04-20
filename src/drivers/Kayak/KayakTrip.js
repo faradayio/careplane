@@ -1,8 +1,5 @@
 KayakTrip = function(tripElement) {
   this.tripElement = tripElement;
-  this.totalFootprint = 0;
-  this.completedFlightCount = 0;
-  this.isScorable = true;
 };
 KayakTrip.prototype = new Trip();
 

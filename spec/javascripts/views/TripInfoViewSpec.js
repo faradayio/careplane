@@ -25,4 +25,20 @@ describe('TripInfoView', function() {
       expect($(view.target()).find('ul li a')).toHaveText(/DTW/);
     });
   });
+
+  describe('#updateTripAverage', function() {
+    it('displays the trip average', function() {
+      view.updateTripAverage(trip);
+      expect($(view.target()).find('.careplane-trip-average')).
+        toHaveText(/[\d,]+/);
+      expect($(view.target()).find('.careplane-trip-average-origin')).
+        toHaveText(/DTW/);
+      expect($(view.target()).find('.careplane-trip-average-destination')).
+        toHaveText(/SFO/);
+    });
+    it('analyzes the result', function() {
+      view.updateTripAverage(trip);
+      expect($(view.target()).find('.careplane-trip-average-analysis')).toHaveText(/car/);
+    });
+  });
 });

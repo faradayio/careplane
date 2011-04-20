@@ -38,29 +38,6 @@ sharedExamplesFor('Trip', function() {
     });
   });
 
-  describe('#onFlightEmissionsComplete', function() {
-    beforeEach(function() {
-      this.trip.footprintView().init();
-      onFlightEmissionsComplete = this.trip.onFlightEmissionsComplete(onTripEmissionsComplete);
-    });
-
-    it('increments #completedFlightCount', function() {
-      onFlightEmissionsComplete({ emission: 1 }, {});
-      expect(this.trip.completedFlightCount).toBe(1);
-    });
-    it('increments #totalFootprint', function() {
-      onFlightEmissionsComplete({ emission: 11 }, {});
-      expect(this.trip.totalFootprint).toBe(11);
-    });
-    it('executes the onTripEmissionsComplete function when all flights are ready', function() {
-      onFlightEmissionsComplete({ emission: 1 }, {});
-      onFlightEmissionsComplete({ emission: 2 }, {});
-      onFlightEmissionsComplete({ emission: 3 }, {});
-      onFlightEmissionsComplete({ emission: 4 }, {});
-      expect(onTripEmissionsComplete).toHaveBeenCalled();
-    });
-  });
-
   describe('#flights', function() {
     it('returns a list of flights', function() {
       this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
