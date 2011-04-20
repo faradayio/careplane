@@ -33,10 +33,11 @@
       function onRequest(request, sender, callback) {
         switch(request.action) {
         case 'fetch':
-          fetchTwitterFeed(callback);
+          fetch(callback);
           break;
         case 'welcome':
           welcome();
+          break;
         }
       };
 
