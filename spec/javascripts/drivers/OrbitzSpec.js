@@ -2,9 +2,8 @@ describe('Orbitz', function() {
   describe('#startAirTrafficControl', function() {
     var orbitz;
     beforeEach(function() {
-      var extension = new Careplane(window.document);
-      extension.doc = window.document;
-      orbitz = new Orbitz(extension);
+      orbitz = new Orbitz();
+      TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{\"emission\": 1234}"
     });
 
     it('asks the OrbitzTrip to score each result', function() {

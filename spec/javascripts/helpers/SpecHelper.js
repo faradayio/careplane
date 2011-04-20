@@ -4,8 +4,8 @@ beforeEach(function() {
       return typeof this.actual == klass;
     }
   });
-  Careplane.webDoc = window.document;
-  Careplane.log = jasmine.log;
+  Careplane.currentExtension = new TestExtension(window.document);
+  Careplane.currentExtension.doc = window.document;
 });
 
 jasmine.exampleGroups = {};

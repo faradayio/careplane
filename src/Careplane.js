@@ -24,7 +24,7 @@ Careplane.prototype.isActive = function() {
 Careplane.prototype.loadDriver = function() {
   var drivers = this.eligableDrivers();
   if(drivers.length > 0) {
-    var driver = new drivers[0](this);
+    var driver = new drivers[0]();
     driver.load();
   }
 };

@@ -1,16 +1,23 @@
 describe('TripInfoView', function() {
-  var view;
+  var view, trip;
   beforeEach(function() {
+    TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 1200 }"
+    trip = { totalFootprint: 143.2, origin: 'DTW', destination: 'SFO' };
     view = new TripInfoView(document.createElement('div'));
     view.init();
   });
 
   describe('#updateSearchAverage', function() {
     it('updates the search average', function() {
-      view.updateSearchAverage(1234);
-      expect($(view.target()).find('span.careplane-search-average')).toHaveText(/[\d,]+/);
+      view.updateSearchAverage(1234, trip);
+      expect($(view.target()).find('.careplane-search-average')).toHaveText(/[\d,]+/);
+    });
+    it('analyzes the result', function() {
+      view.updateSearchAverage(1234, trip);
+      expect($(view.target()).find('.careplane-search-average-analysis')).toHaveText(/car/);
     });
   });
+
   describe('#reportFlightMethodology', function() {
     it('adds a methodology URL to the ul', function() {
       var flight = { origin: 'DTW', destination: 'IAD' };

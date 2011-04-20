@@ -1,5 +1,5 @@
-Kayak = function(extension) {
-  this.extension = extension;
+Kayak = function() {
+  this.extension = Careplane.currentExtension;
   this.doc = extension.doc;
 };
 Kayak.prototype = new Driver();

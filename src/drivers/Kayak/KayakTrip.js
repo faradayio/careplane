@@ -35,7 +35,7 @@ KayakTrip.prototype.eachFlight = function(callback) {
     var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
     var localIndex = this.tripElement.id.replace('tbd', '');
 
-    Util.fetch(detailUrl, function(result) {
+    Careplane.currentExtension.fetch(detailUrl, function(result) {
       trip.tripDetailsContainer().innerHTML = result;
       trip.tripDetailsContainer().style.display = 'none';
       trip.eachFlight(callback);

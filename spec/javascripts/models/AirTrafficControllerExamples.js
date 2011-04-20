@@ -1,8 +1,6 @@
 sharedExamplesFor('AirTrafficController', function() {
   beforeEach(function() {
-    Util.fetch = function(url, callback) {
-      callback("{ \"emission\": 234 }");
-    }
+    TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
   });
 
   it('keeps a list of trips', function() {

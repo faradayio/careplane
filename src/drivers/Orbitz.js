@@ -1,6 +1,6 @@
-Orbitz = function(extension) {
-  this.extension = extension;
-  this.doc = extension.doc;
+Orbitz = function() {
+  this.extension = Careplane.currentExtension;
+  this.doc = this.extension.doc;
   var foo = 'Orbitz';
 };
 Orbitz.prototype = new Driver();
