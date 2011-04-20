@@ -157,6 +157,10 @@ article>div {
 #description {
   background: #1a2d56;
   text-shadow: 0 1px 0 rgba(0,0,0,0.7);
+  height: 310px;
+}
+
+body.welcome #description {
   height: 200px;
 }
 
