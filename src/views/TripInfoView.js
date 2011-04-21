@@ -54,10 +54,10 @@ TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight
 };
 
 TripInfoView.prototype.show = function() {
-  this.target().style.setAttribute('visibility','visible');
+  this.target().style.display = 'block';
 };
 TripInfoView.prototype.hide = function() {
-  this.target().style.setAttribute('visibility','hidden');
+  this.target().style.display = 'none';
 };
 
 
