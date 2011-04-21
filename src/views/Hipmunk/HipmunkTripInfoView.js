@@ -53,13 +53,6 @@ HipmunkTripInfoView.prototype.reportFlightMethodology = function(methodologyUrl,
   ul.appendChild(li);
 };
 
-HipmunkTripInfoView.prototype.show = function() {
-  this.target().style.setAttribute('visibility','visible');
-};
-HipmunkTripInfoView.prototype.hide = function() {
-  this.target().style.setAttribute('visibility','hidden');
-};
-
 
 
 // Events
