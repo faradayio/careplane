@@ -6,6 +6,7 @@ load 'jasmine/tasks/jasmine.rake'
   src/Preferences.js
   src/Util.js
   src/Driver.js
+  src/HallOfFame.js
 
   src/Flight.js
   src/Trip.js

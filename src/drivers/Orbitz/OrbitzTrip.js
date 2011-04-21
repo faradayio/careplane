@@ -1,7 +1,10 @@
 OrbitzTrip = function(tripElement) {
   this.tripElement = tripElement;
+  this.id = ++OrbitzTrip.count;
 };
 OrbitzTrip.prototype = new Trip();
+
+OrbitzTrip.count = 0;
 
 OrbitzTrip.prototype.footprintView = function() {
   if(!this._footprintView) {

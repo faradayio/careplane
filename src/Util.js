@@ -40,14 +40,14 @@ Util = {
 
   footprintAnalysis: function(average, current) {
     var diff = average - current;
-    var differentialInCarDays = Util.numberWithDelimiter(Math.abs(diff) / 30.6356);
+    var differentialInCarDays = Math.round(Math.abs(diff) / 30.6356);
     var result;
     if(current < average) {
-      result = 'Flying this trip instead would be like taking ' + differentialInCarDays + ' cars off the road for a day';
+      result = 'Flying this trip instead would be equivalent to <b>taking ' + differentialInCarDays + ' cars off the road</b> for a day';
     } else if(current == average) {
       result = 'This is an average flight';
     } else {
-      result = 'Flying this trip instead would be like adding ' + differentialInCarDays + ' cars to the road for a day';
+      result = 'Flying this trip instead would be equivalent to <b>adding ' + differentialInCarDays + ' cars to the road</b> for a day';
     }
     return result;
   },

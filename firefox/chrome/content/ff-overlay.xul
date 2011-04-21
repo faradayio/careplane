@@ -6,6 +6,7 @@
   <script src="src/Preferences.js"/>
   <script src="src/Util.js"/>
   <script src="src/Driver.js"/>
+  <script src="src/HallOfFame.js"/>
   <script src="src/Flight.js"/>
   <script src="src/Trip.js"/>
   <script src="src/TripEvents.js"/>

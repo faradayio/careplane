@@ -6,6 +6,7 @@ beforeEach(function() {
   });
   Careplane.currentExtension = new TestExtension(window.document);
   Careplane.currentExtension.doc = window.document;
+  HallOfFame.clear();
 });
 
 jasmine.exampleGroups = {};
