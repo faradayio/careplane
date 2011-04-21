@@ -32,9 +32,5 @@ GoogleChromeExtension.prototype.notify = function(driver) {
 };
 
 GoogleChromeExtension.prototype.addStyleSheet = function() {
-  var style = this.doc.createElement('link');
-  style.setAttribute('rel','stylesheet');
-  style.setAttribute('type','text/css');
-  style.setAttribute('href','resource://careplanestyle/careplane.css');
-  this.doc.head.appendChild(style);
+  // this is handled by manifest.json
 };
