@@ -1,12 +1,14 @@
 GoogleChromeExtension = function(doc) {
   this.doc = doc;
+  this.klass = GoogleChromeExtension;
 };
 GoogleChromeExtension.prototype = new Careplane();
 
 GoogleChromeExtension.prefs = new GoogleChromePreferences();
 
 GoogleChromeExtension.fetch = function(url, callback) {
-  chrome.extension.sendRequest({'action': 'fetch', 'url': url}, callback);
+  Util.fetch(url, callback);
+  //chrome.extension.sendRequest({'action': 'fetch', 'url': url}, callback);
 };
 
 GoogleChromeExtension.logger = function() {
