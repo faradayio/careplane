@@ -23,6 +23,15 @@
         chrome.tabs.create({ url: 'http://careplane.org/welcome.html' });
       }
 
+      var preferences = {
+        get: function(key, callback) {
+          callback(localStorage[key]);
+        },
+        put: function(key, value) {
+          localStorage[key] = value;
+        }
+      };
+
       /**
        * Handles data sent via chrome.extension.sendRequest().
        * @param request Object Data sent in the request.
@@ -36,6 +45,12 @@
           break;
         case 'welcome':
           welcome();
+          break;
+        case 'preferences.get':
+          preferences.get(request.key, callback);
+          break;
+        case 'preferences.put':
+          preferences.put(request.key, request.value);
           break;
         }
       }

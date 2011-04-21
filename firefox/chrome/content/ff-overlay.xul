@@ -30,6 +30,7 @@
   <script src="src/views/Kayak/KayakTripFootprintView.js"/>
   <script src="src/views/Hipmunk/HipmunkTripFootprintView.js"/>
   <script src="src/Careplane.js"/>
+  <script src="src/ExtensionLoader.js"/>
 
   <script src="FirefoxPreferences.js"/>
   <script src="FirefoxExtension.js"/>

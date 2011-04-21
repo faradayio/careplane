@@ -37,6 +37,7 @@ load 'jasmine/tasks/jasmine.rake'
   src/views/Hipmunk/HipmunkTripFootprintView.js
 
   src/Careplane.js
+  src/ExtensionLoader.js
 }
 @css_files = ['stylesheets/careplane.css']
 @image_files = ['images/icon64.png']

@@ -5,8 +5,8 @@ FirefoxPreferences = function() {
 };
 FirefoxPreferences.prototype = new Preferences();
 
-FirefoxPreferences.prototype.nativeGet = function(key, defaultValue) {
-  return this.prefService.getCharPref(key);
+FirefoxPreferences.prototype.nativeGet = function(key, callback) {
+  callback(this.prefService.getCharPref(key));
 };
 
 FirefoxPreferences.prototype.nativePut = function(key, value) {

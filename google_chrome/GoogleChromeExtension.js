@@ -1,8 +1,9 @@
 GoogleChromeExtension = function(doc) {
   this.doc = doc;
-  this.prefs = new GoogleChromePreferences();
 };
 GoogleChromeExtension.prototype = new Careplane();
+
+GoogleChromeExtension.prefs = new GoogleChromePreferences();
 
 GoogleChromeExtension.fetch = function(url, callback) {
   chrome.extension.sendRequest({'action': 'fetch', 'url': url}, callback);
@@ -24,12 +25,12 @@ GoogleChromeExtension.prototype.log = function(str) {
   GoogleChromeExtension.log(str);
 };
 
-GoogleChromeExtension.prototype.welcome = function() {
-  if(this.prefs.get('hasRunPreviously') != 'true') {
-    this.prefs.put('hasRunPreviously', 'true');
+GoogleChromeExtension.prototype.prefs = function() {
+  return GoogleChromeExtension.prefs;
+};
 
-    chrome.extension.sendRequest({'action' : 'welcome'});
-  }
+GoogleChromeExtension.prototype.openWelcomeScreen = function() {
+  chrome.extension.sendRequest({action : 'welcome'});
 };
   
 GoogleChromeExtension.prototype.notify = function(driver) {

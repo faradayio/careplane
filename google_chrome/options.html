@@ -5,7 +5,7 @@ function save_options() {
   var checkboxes = document.getElementsByTagName('input');
   for(var i = 0; i < checkboxes.length; i++) {
     var checkbox = checkboxes[i];
-    localStorage['careplane.sites.' + checkbox.value] = checkbox.checked;
+    localStorage['sites.' + checkbox.value] = checkbox.checked;
   }
 
   var status = document.getElementById('status');
@@ -19,7 +19,7 @@ function restore_options() {
   var checkboxes = document.getElementsByTagName('input');
   for (var i = 0; i < checkboxes.length; i++) {
     var checkbox = checkboxes[i];
-    checkbox.checked = localStorage['careplane.sites.' + checkbox.value] == 'true';
+    checkbox.checked = localStorage['sites.' + checkbox.value] == 'true';
   }
 }
 </script>
@@ -28,6 +28,8 @@ function restore_options() {
   <p id="status" style="color: red; background: #FF9;"></p>
 
   Choose the travel sites that Careplane will add carbon intelligence to:
+  <input type="checkbox" name="sites" value="Hipmunk">
+  <label for="sites">Hipmunk</label>
   <input type="checkbox" name="sites" value="Orbitz">
   <label for="sites">Orbitz</label>
   <input type="checkbox" name="sites" value="Kayak">

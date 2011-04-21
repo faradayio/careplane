@@ -1,13 +1,7 @@
 Preferences = function() {};
 
-Preferences.prototype.get = function(key, defaultValue) {
-  var value = this.nativeGet('careplane.' + key);
-  if(value == null && defaultValue) {
-    value = defaultValue();
-    this.nativePut(key, value);
-  }
-
-  return value;
+Preferences.prototype.get = function(key, callback) {
+  this.nativeGet(key, callback);
 };
 
 Preferences.prototype.put = function(key, value) {

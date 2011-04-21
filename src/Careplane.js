@@ -4,29 +4,20 @@ Careplane.setCurrentExtension = function(extension) {
   Careplane.currentExtension = extension;
 };
 
-Careplane.prototype.eligableDrivers = function() {
-  if(!this._eligableDrivers) {
-    this._eligableDrivers = [Hipmunk, Kayak, Orbitz].filter(Util.proxy(function(driver) {
-      var driverEnabled = this.prefs.get('sites.' + driver.driverName) == 'true';
-      return driverEnabled && driver.shouldMonitor(this.doc.location.href);
-    }, this));
-  }
-
-  return this._eligableDrivers;
-};
-
 Careplane.prototype.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
 
-Careplane.prototype.isActive = function() {
-  return this.eligableDrivers().length > 0;
+Careplane.prototype.welcome = function() {
+  this.prefs().get('hasRunPreviously', CareplaneEvents.welcome(this));
 };
 
-Careplane.prototype.loadDriver = function() {
-  var drivers = this.eligableDrivers();
-  if(drivers.length > 0) {
-    var driver = new drivers[0]();
-    driver.load();
-  }
+Careplane.prototype.loadDriver = function(callback) {
+  var careplane = this;
+  [Hipmunk, Kayak, Orbitz].filter(function(driver) {
+    if(driver.shouldMonitor(careplane.doc.location.href)) {
+      careplane.prefs().get('sites.' + driver.driverName,
+                          CareplaneEvents.driverBecomesAvailable(driver, callback));
+    }
+  });
 };
   
 Careplane.prototype.insertBadge = function(doc, parentElement, referenceElement, badgeStyle) {
@@ -39,3 +30,27 @@ Careplane.prototype.insertBadge = function(doc, parentElement, referenceElement,
   brandingElement.setAttribute('type', 'text/javascript');
   parentElement.insertBefore(brandingElement, referenceElement);
 };
+
+
+
+CareplaneEvents = {
+  driverBecomesAvailable: function(driverClass, callback) {
+    return function(driverEnabled) {
+      if(driverEnabled == 'true') {
+        callback();
+        var driver = new driverClass();
+        driver.load();
+      }
+    };
+  },
+
+  welcome: function(extension) {
+    return function(hasRunPreviously) {
+      if(hasRunPreviously != 'true') {
+        extension.prefs().put('hasRunPreviously', 'true');
+
+        extension.openWelcomeScreen();
+      }
+    };
+  }
+}

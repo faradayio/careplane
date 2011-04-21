@@ -1,10 +1,6 @@
-GoogleChromeExtensionLoader = {
-  load: function() {
-    var extension = new GoogleChromeExtension(window.document);
-    if(extension.isActive()) {
-      Careplane.setCurrentExtension(extension);
-      extension.welcome();
-      extension.loadDriver();
-    }
-  }
+GoogleChromeExtensionLoader = ExtensionLoader;
+
+GoogleChromeExtensionLoader.load = function() {
+  var extension = new GoogleChromeExtension(window.document);
+  extension.loadDriver(GoogleChromeExtensionLoader.driverLoaded(extension));
 };

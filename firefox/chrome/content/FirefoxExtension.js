@@ -20,14 +20,10 @@ FirefoxExtension.prototype.log = function(str) {
   FirefoxExtension.log(str);
 };
 
-FirefoxExtension.prototype.welcome = function() {
-  if(this.prefs.get("firstrun") == 'true') {
-    this.prefs.put("firstrun",false);
- 
-    window.setTimeout(function(){
-      gBrowser.selectedTab = gBrowser.addTab('http://careplane.org/welcome.html');
-    }, 1500); //Firefox 2 fix - or else tab will get closed
-  }
+FirefoxExtension.prototype.openWelcomeScreen = function() {
+  window.setTimeout(function(){
+    gBrowser.selectedTab = gBrowser.addTab('http://careplane.org/welcome.html');
+  }, 1500); //Firefox 2 fix - or else tab will get closed
 };
   
 FirefoxExtension.prototype.notify = function(driver) {
