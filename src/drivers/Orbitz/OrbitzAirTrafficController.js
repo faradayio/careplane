@@ -14,7 +14,7 @@ OrbitzAirTrafficController.prototype.scoreTrips = function() {
     var trip = this.trips[i];
     trip.score(
       this.onFlightEmissionsComplete,
-      Util.proxy(this.onTripEmissionsComplete, this));
+      OrbitzAirTrafficControllerEvents.tripEmissionsComplete(this));
   }
 }
 
@@ -23,10 +23,15 @@ OrbitzAirTrafficController.prototype.createTrip = function(tripElement) {
 };
 
 
-// Events
 
-OrbitzAirTrafficController.prototype.onTripEmissionsComplete = function() {
-  if(++this.completedTrips == this.tripElements.length) {
-    this.rateTrips();
+OrbitzAirTrafficControllerEvents = {
+  tripEmissionsComplete: function(controller) {
+    return function(trip, cm1Response, flight) {
+      HallOfFame.induct(trip);
+
+      if(++controller.completedTrips == controller.tripElements.length) {
+        controller.rateTrips();
+      }
+    }
   }
 };

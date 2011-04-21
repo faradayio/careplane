@@ -27,7 +27,15 @@ HipmunkAirTrafficController.prototype.scoreTrips = function() {
   for(var i in this.trips) {
     var trip = this.trips[i];
     if(trip.isScorable) {
-      trip.score(this.onFlightEmissionsComplete);
+      trip.score(this.onFlightEmissionsComplete, HipmunkAirTrafficControllerEvents.tripEmissionsComplete);
     }
+  }
+};
+
+
+
+HipmunkAirTrafficControllerEvents = {
+  tripEmissionsComplete: function(trip, cm1Response, flight) {
+    HallOfFame.induct(trip);
   }
 };

@@ -4,7 +4,7 @@ TripEvents = {
       trip.tallyFootprint(cm1Response.emission);
       callback(trip, cm1Response, flight);
       if(onTripEmissionsComplete && trip.isDone())
-        onTripEmissionsComplete(cm1Response.emission);
+        onTripEmissionsComplete(trip, cm1Response, flight);
     };
   }
 };

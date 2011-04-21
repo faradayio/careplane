@@ -43,7 +43,3 @@ AirTrafficController.prototype.onFlightEmissionsComplete = function(trip, cm1Res
   trip.footprintView().update(trip.totalFootprint);
   trip.infoView().reportFlightMethodology(cm1Response.methodology, flight);
 };
-
-AirTrafficController.prototype.onTripEmissionsComplete = function(trip, cm1Response, flight) {
-  this.rateTrips();
-};
