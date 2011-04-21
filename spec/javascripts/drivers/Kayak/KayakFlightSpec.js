@@ -1,22 +1,4 @@
 describe('KayakFlight', function() {
-  describe('.parse', function() {
-    describe('with a normal flight', function() {
-      beforeEach(function() {
-        //loadFixtures('kayak_dtw_sfo_direct_flight.html');
-      });
-      it('parses airline', function() {
-
-      });
-      it('parses origin', function() {
-
-      });
-      it('parses destination', function() {
-
-      });
-    });
-    describe('with a redeye flight', function() {
-    });
-  });
   describe('.parseAircraft', function() {
     it('returns the name of the aircraft', function() {
       loadFixtures('kayak_dtw_sfo_direct_flight.html');

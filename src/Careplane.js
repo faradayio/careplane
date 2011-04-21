@@ -6,7 +6,7 @@ Careplane.setCurrentExtension = function(extension) {
 
 Careplane.prototype.eligableDrivers = function() {
   if(!this._eligableDrivers) {
-    this._eligableDrivers = [Kayak, Orbitz].filter(Util.proxy(function(driver) {
+    this._eligableDrivers = [Hipmunk, Kayak, Orbitz].filter(Util.proxy(function(driver) {
       var driverEnabled = this.prefs.get('sites.' + driver.driverName) == 'true';
       return driverEnabled && driver.shouldMonitor(this.doc.location.href);
     }, this));

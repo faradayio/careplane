@@ -25,10 +25,10 @@ describe('Trip', function() {
   });
 
   describe('#isAlreadyDiscovered', function() {
-    it('returns true if a careplane footprint element exists', function() {
+    it('returns true if a careplane info element exists', function() {
       var elem = document.createElement('div');
       var careplane = document.createElement('p');
-      careplane.setAttribute('class', 'careplane-footprint');
+      careplane.setAttribute('class', 'careplane-info');
       elem.appendChild(careplane);
 
       expect(Trip.isAlreadyDiscovered(elem)).toBeTruthy();

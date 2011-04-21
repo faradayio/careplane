@@ -17,7 +17,7 @@ Trip.average = function(origin, destination, callback) {
 };
 
 Trip.isAlreadyDiscovered = function(tripElement) {
-  var p = tripElement.getElementsByClassName('careplane-footprint');
+  var p = tripElement.getElementsByClassName('careplane-info');
   return p.length > 0;
 };
 
