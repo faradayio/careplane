@@ -67,3 +67,7 @@ Trip.prototype.tallyFootprint = function(emission) {
   this.totalFootprint += emission;
   this.completedFlightCount++;
 };
+
+Trip.prototype.roundedTotalFootprint = function() {
+  return Math.round(this.totalFootprint);
+};

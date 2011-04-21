@@ -18,11 +18,11 @@ HallOfFame = {
   cleanest: function() {
     var minFootprint = 0;
     for(var i in this.trips) {
-      var trip = this.trips[i];
+      var footprint = this.trips[i].roundedTotalFootprint();
       if(minFootprint == 0) {
-        minFootprint = trip.totalFootprint;
+        minFootprint = footprint;
       } else {
-        minFootprint = Math.min(minFootprint, trip.totalFootprint);
+        minFootprint = Math.min(minFootprint, footprint);
       }
     }
     return minFootprint;
@@ -31,7 +31,7 @@ HallOfFame = {
   dirtiest: function() {
     var maxFootprint = 0;
     for(var i in this.trips) {
-      maxFootprint = Math.max(maxFootprint, this.trips[i].totalFootprint);
+      maxFootprint = Math.max(maxFootprint, this.trips[i].roundedTotalFootprint());
     }
     return maxFootprint;
   },
@@ -42,7 +42,7 @@ HallOfFame = {
     } else {
       var totalFootprint = 0;
       for(var i in this.trips) {
-        totalFootprint += this.trips[i].totalFootprint;
+        totalFootprint += this.trips[i].roundedTotalFootprint();
       }
       return totalFootprint / this.count;
     }
@@ -62,15 +62,15 @@ HallOfFame = {
 
       for(var i in this.trips) {
         var trip = this.trips[i];
-        var tripDifference = avg - trip.totalFootprint;
+        var tripDifference = avg - trip.roundedTotalFootprint();
 
         var rating = 0;
-        if(trip.totalFootprint > avg)
+        if(trip.roundedTotalFootprint() > avg)
           rating = tripDifference / maxDifference;
         else if(trip.totalFootprint < avg)
           rating = tripDifference / minDifference;
 
-        this.scale[trip.totalFootprint] = rating;
+        this.scale[trip.roundedTotalFootprint()] = rating;
       }
     }
   },
@@ -79,7 +79,7 @@ HallOfFame = {
     if(this.scale == null) {
       return 0;
     } else {
-      return this.scale[trip.totalFootprint];
+      return this.scale[trip.roundedTotalFootprint()];
     }
   },
 
