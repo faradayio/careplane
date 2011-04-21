@@ -1,8 +1,10 @@
 FirefoxExtension = function(doc) {
   this.doc = doc;
-  this.prefs = new FirefoxPreferences();
+  this.klass = FirefoxExtension;
 };
 FirefoxExtension.prototype = new Careplane();
+
+FirefoxExtension.prefs = new FirefoxPreferences();
 
 FirefoxExtension.fetch = function(url, callback) {
   Util.fetch(url, callback);
@@ -14,10 +16,6 @@ FirefoxExtension.logger = function() {
 
 FirefoxExtension.log = function(str) {
   FirefoxExtension.logger().logStringMessage(str);
-};
-
-FirefoxExtension.prototype.log = function(str) {
-  FirefoxExtension.log(str);
 };
 
 FirefoxExtension.prototype.openWelcomeScreen = function() {

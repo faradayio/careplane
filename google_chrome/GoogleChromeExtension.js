@@ -17,14 +17,6 @@ GoogleChromeExtension.log = function(str) {
   GoogleChromeExtension.logger().logStringMessage(str);
 };
 
-GoogleChromeExtension.prototype.fetch = function(url, callback) {
-  GoogleChromeExtension.fetch(url, callback);
-};
-
-GoogleChromeExtension.prototype.log = function(str) {
-  GoogleChromeExtension.log(str);
-};
-
 GoogleChromeExtension.prototype.prefs = function() {
   return GoogleChromeExtension.prefs;
 };
