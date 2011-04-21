@@ -8,6 +8,7 @@
   <script src="src/Driver.js"/>
   <script src="src/Flight.js"/>
   <script src="src/Trip.js"/>
+  <script src="src/AverageTrip.js"/>
   <script src="src/AirTrafficController.js"/>
   <script src="src/controllers/TripController.js"/>
   <script src="src/drivers/Kayak.js"/>

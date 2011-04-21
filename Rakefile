@@ -9,6 +9,7 @@ load 'jasmine/tasks/jasmine.rake'
 
   src/Flight.js
   src/Trip.js
+  src/AverageTrip.js
   src/AirTrafficController.js
 
   src/controllers/TripController.js
