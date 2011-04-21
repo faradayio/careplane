@@ -28,9 +28,9 @@ KayakTrip.prototype.searchIdentifier = function() {
 KayakTrip.prototype.eachFlight = function(callback) {
   if(this.tripDetailsContainer().children.length == 0) {
     var trip = this;
-    var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
     var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
     var localIndex = this.tripElement.id.replace('tbd', '');
+    var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + localIndex + '&fs=;';
 
     Careplane.currentExtension.fetch(detailUrl, function(result) {
       trip.tripDetailsContainer().innerHTML = result;
