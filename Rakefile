@@ -9,10 +9,16 @@ load 'jasmine/tasks/jasmine.rake'
 
   src/Flight.js
   src/Trip.js
+  src/TripEvents.js
   src/AverageTrip.js
   src/AirTrafficController.js
 
   src/controllers/TripController.js
+
+  src/drivers/Hipmunk.js
+  src/drivers/Hipmunk/HipmunkFlight.js
+  src/drivers/Hipmunk/HipmunkTrip.js
+  src/drivers/Hipmunk/HipmunkAirTrafficController.js
 
   src/drivers/Kayak.js
   src/drivers/Kayak/KayakFlight.js
@@ -28,6 +34,7 @@ load 'jasmine/tasks/jasmine.rake'
   src/views/TripFootprintView.js
   src/views/Orbitz/OrbitzTripFootprintView.js
   src/views/Kayak/KayakTripFootprintView.js
+  src/views/Hipmunk/HipmunkTripFootprintView.js
 
   src/Careplane.js
 }

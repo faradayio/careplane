@@ -8,9 +8,14 @@
   <script src="src/Driver.js"/>
   <script src="src/Flight.js"/>
   <script src="src/Trip.js"/>
+  <script src="src/TripEvents.js"/>
   <script src="src/AverageTrip.js"/>
   <script src="src/AirTrafficController.js"/>
   <script src="src/controllers/TripController.js"/>
+  <script src="src/drivers/Hipmunk.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkFlight.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkTrip.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkAirTrafficController.js"/>
   <script src="src/drivers/Kayak.js"/>
   <script src="src/drivers/Kayak/KayakFlight.js"/>
   <script src="src/drivers/Kayak/KayakTrip.js"/>
@@ -23,6 +28,7 @@
   <script src="src/views/TripFootprintView.js"/>
   <script src="src/views/Orbitz/OrbitzTripFootprintView.js"/>
   <script src="src/views/Kayak/KayakTripFootprintView.js"/>
+  <script src="src/views/Hipmunk/HipmunkTripFootprintView.js"/>
   <script src="src/Careplane.js"/>
 
   <script src="FirefoxPreferences.js"/>
