@@ -5,7 +5,7 @@ GoogleChromeExtension = function(doc) {
 GoogleChromeExtension.prototype = new Careplane();
 
 GoogleChromeExtension.fetch = function(url, callback) {
-  chrome.extension.sendRequest({'action' : 'fetch'}, url, callback);
+  chrome.extension.sendRequest({'action': 'fetch', 'url': url}, callback);
 };
 
 GoogleChromeExtension.logger = function() {
@@ -14,6 +14,10 @@ GoogleChromeExtension.logger = function() {
 
 GoogleChromeExtension.log = function(str) {
   GoogleChromeExtension.logger().logStringMessage(str);
+};
+
+GoogleChromeExtension.prototype.fetch = function(url, callback) {
+  GoogleChromeExtension.fetch(url, callback);
 };
 
 GoogleChromeExtension.prototype.log = function(str) {

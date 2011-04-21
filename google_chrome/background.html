@@ -9,8 +9,7 @@
         xhr.onreadystatechange = function(data) {
           if (xhr.readyState == 4) {
             if (xhr.status == 200) {
-              var data = JSON.parse(xhr.responseText);
-              callback(data);
+              callback(xhr.responseText);
             } else {
               callback(null);
             }
@@ -33,13 +32,13 @@
       function onRequest(request, sender, callback) {
         switch(request.action) {
         case 'fetch':
-          fetch(callback);
+          fetch(request.url, callback);
           break;
         case 'welcome':
           welcome();
           break;
         }
-      };
+      }
 
       // Wire up the listener.
       chrome.extension.onRequest.addListener(onRequest);
