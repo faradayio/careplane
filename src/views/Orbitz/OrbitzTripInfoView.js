@@ -23,3 +23,9 @@ OrbitzTripInfoView.prototype.content = function() {
 OrbitzTripInfoView.prototype.getElement = function(className) {
   return this.target().getElementsByClassName(className)[0];
 };
+
+OrbitzTripInfoView.prototype.positionRelativeTo = function(other) {
+  var position = $(other).position();
+  this.target().style.left = (position.left + 20).toString() + 'px';
+  this.target().style.top = (position.top + 20).toString() + 'px';
+};
