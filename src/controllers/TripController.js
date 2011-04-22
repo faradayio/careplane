@@ -6,6 +6,7 @@ TripController.events = {
   tripFootprintHoverIn: function(trip) {
     return function(ev) {
       trip.infoView().show();
+      trip.infoView().positionRelativeTo(trip.footprintView().target());
     };
   },
   tripFootprintHoverOut: function(trip) {

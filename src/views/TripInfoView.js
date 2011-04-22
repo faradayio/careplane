@@ -12,8 +12,6 @@ TripInfoView.prototype.init = function() {
     <div class=\"careplane-info\">\
       <p>Search average: <span class=\"careplane-search-average\"></span></p>\
       <p class=\"careplane-search-average-analysis\"></p>\
-      <p>Typical footprint of a flight from <span class=\"careplane-trip-average-origin\"></span> to <span class=\"careplane-trip-average-destination\"></span>: <span class=\"careplane-trip-average\"></span> according to CM1</p>\
-      <p class=\"careplane-trip-average-analysis\"></p>\
       <section class=\"careplane-methodologies\">\
         <ul class=\"careplane-methodologies-list\"></ul>\
       </section>\
@@ -58,6 +56,12 @@ TripInfoView.prototype.show = function() {
 };
 TripInfoView.prototype.hide = function() {
   this.target().style.display = 'none';
+};
+
+TripInfoView.prototype.positionRelativeTo = function(other) {
+  var position = Util.absolutePosition(other);
+  this.target().style.left = position[0] + 'px';
+  this.target().style.top = (position[1] + 20).toString() + 'px';
 };
 
 

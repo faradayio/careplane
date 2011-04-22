@@ -42,12 +42,13 @@ Util = {
     var diff = average - current;
     var differentialInCarDays = Math.round(Math.abs(diff) / 30.6356);
     var result;
-    if(current < average) {
-      result = 'Flying this trip instead would be equivalent to <b>taking ' + differentialInCarDays + ' cars off the road</b> for a day';
-    } else if(differentialInCarDays == 0) {
+    var car = differentialInCarDays > 1 ? 'cars' : 'car';
+    if(differentialInCarDays == 0) {
       result = 'This is an average flight';
+    } else if(current < average) {
+      result = 'Choosing this trip over the average trip would be like <b>taking ' + differentialInCarDays + ' ' + car + ' off the road</b> for a day';
     } else {
-      result = 'Flying this trip instead would be equivalent to <b>adding ' + differentialInCarDays + ' cars to the road</b> for a day';
+      result = 'Choosing this trip over the average trip would be like <b>adding ' + differentialInCarDays + ' ' + car + ' to the road</b> for a day';
     }
     return result;
   },
@@ -82,5 +83,16 @@ Util = {
       }
     }
     return encodeURI(base + queryString);
+  },
+
+  absolutePosition: function(obj) {
+    var curleft = curtop = 0;
+    if (obj.offsetParent) {	
+      do {
+        curleft += obj.offsetLeft;
+        curtop += obj.offsetTop;	
+      } while (obj = obj.offsetParent);
+    }
+    return [curleft,curtop];
   }
 };

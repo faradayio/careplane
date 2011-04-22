@@ -1,13 +1,13 @@
 .careplane-footprint {
   color: #AAA;
+  display: inline;
 }
-.kayak .careplane-footprint {
+.kayak.careplane-footprint {
   position: absolute;
   left: 10px;
-  width: 130px;
   bottom: 20px;
 }
-.orbitz .careplane-footprint {
+.orbitz.careplane-footprint {
   background-color: #FFF,
   margin: 0,
   padding: 7px 15px
@@ -16,6 +16,15 @@
 
 .careplane-info {
   display: none;
+  position: absolute;
+  border: 1px solid black;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: white;
+  this.target().style.position = 'absolute';
+  padding: 10px;
+  width: 250px;
+  z-index: 10;
 }
 .info-panel .careplane-info {
   display: block;

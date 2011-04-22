@@ -13,8 +13,6 @@ HipmunkTripInfoView.prototype.init = function() {
       <p>This leg's footprint: <span class=\"careplane-leg-footprint\">...</span></p>\
       <p>Search average: <span class=\"careplane-search-average\">...</span></p>\
       <p class=\"careplane-search-average-analysis\"></p>\
-      <p>Typical footprint of a flight from <span class=\"careplane-trip-average-origin\">...</span> to <span class=\"careplane-trip-average-destination\">...</span>: <span class=\"careplane-trip-average\">...</span> according to <a href=\"http://carbon.brighterplanet.com\">CM1</a></p>\
-      <p class=\"careplane-trip-average-analysis\"></p>\
       <section class=\"careplane-methodologies\">\
         <ul class=\"careplane-methodologies-list\"></ul>\
       </section>\
