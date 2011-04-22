@@ -17,6 +17,7 @@
   <script src="src/drivers/Hipmunk/HipmunkFlight.js"/>
   <script src="src/drivers/Hipmunk/HipmunkTrip.js"/>
   <script src="src/drivers/Hipmunk/HipmunkAirTrafficController.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkTripController.js"/>
   <script src="src/drivers/Kayak.js"/>
   <script src="src/drivers/Kayak/KayakFlight.js"/>
   <script src="src/drivers/Kayak/KayakTrip.js"/>
@@ -30,6 +31,7 @@
   <script src="src/views/Orbitz/OrbitzTripFootprintView.js"/>
   <script src="src/views/Kayak/KayakTripFootprintView.js"/>
   <script src="src/views/Hipmunk/HipmunkTripFootprintView.js"/>
+  <script src="src/views/Hipmunk/HipmunkTripInfoView.js"/>
   <script src="src/Careplane.js"/>
   <script src="src/ExtensionLoader.js"/>
 

@@ -20,6 +20,7 @@ load 'jasmine/tasks/jasmine.rake'
   src/drivers/Hipmunk/HipmunkFlight.js
   src/drivers/Hipmunk/HipmunkTrip.js
   src/drivers/Hipmunk/HipmunkAirTrafficController.js
+  src/drivers/Hipmunk/HipmunkTripController.js
 
   src/drivers/Kayak.js
   src/drivers/Kayak/KayakFlight.js
@@ -36,6 +37,7 @@ load 'jasmine/tasks/jasmine.rake'
   src/views/Orbitz/OrbitzTripFootprintView.js
   src/views/Kayak/KayakTripFootprintView.js
   src/views/Hipmunk/HipmunkTripFootprintView.js
+  src/views/Hipmunk/HipmunkTripInfoView.js
 
   src/Careplane.js
   src/ExtensionLoader.js
