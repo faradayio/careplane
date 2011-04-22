@@ -17,6 +17,9 @@
 .careplane-info {
   display: none;
 }
+.info-panel .careplane-info {
+  display: block;
+}
 
 
 .careplane-attribution .orbitz {
