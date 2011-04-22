@@ -8,12 +8,16 @@ TripFootprintView.prototype.footprintParagraph = function() {
   return this.footprintParent().getElementsByClassName('careplane-footprint')[0];
 }
 
+TripFootprintView.prototype.loadingText = '<i>Loading Careplane footprint &hellip;</i>';
+
 TripFootprintView.prototype.init = function() {
   var footprintParagraph = this.tripElement.ownerDocument.createElement('p');
   footprintParagraph.setAttribute('class', this.className());
-  footprintParagraph.innerHTML = '<i>Loading Careplane footprint &hellip;</i>';
+  footprintParagraph.innerHTML = this.loadingText;
 
   this.footprintParent().appendChild(footprintParagraph);
+  if(this.position)
+    this.position();
 };
 
 TripFootprintView.prototype.className = function() {

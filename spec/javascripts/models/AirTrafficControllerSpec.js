@@ -29,7 +29,8 @@ describe('AirTrafficController', function() {
       trip.infoView = function() { return {
         init: function() {},
         updateSearchAverage: function() {},
-        updateTripAverage: function() {}
+        updateTripAverage: function() {},
+        updateTripTotal: function() {}
       } };
     }
   });

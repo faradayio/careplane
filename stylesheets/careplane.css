@@ -11,6 +11,20 @@
   background-color: #FFF;
   margin: 7px 15px;
 }
+.hipmunk.careplane-footprint {
+  position: relative;
+  background-color: #FCF9D7;
+  border: 1px solid #947847;
+  padding: 0 2px 2px 2px;
+  font-size: 11px;
+  height: 15px;
+  line-height: 15px;
+  left: 15px;
+  z-index: 11;
+}
+.hipmunk.careplane-footprint sub {
+  line-height: 15px;
+}
 
 
 .careplane-info {

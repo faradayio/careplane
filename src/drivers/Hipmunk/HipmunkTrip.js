@@ -5,7 +5,7 @@ HipmunkTrip.prototype = new Trip();
 
 HipmunkTrip.prototype.footprintView = function() {
   if(!this._footprintView) {
-    this._footprintView = HipmunkTripFootprintView.createFromInfoPanel(this.infoView().tripElement);
+    this._footprintView = new HipmunkTripFootprintView(this.infoView().tripElement);
   }
   return this._footprintView;
 };
