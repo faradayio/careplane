@@ -13,6 +13,13 @@ OrbitzTrip.prototype.footprintView = function() {
   return this._footprintView;
 };
 
+OrbitzTrip.prototype.infoView = function() {
+  if(!this._infoView) {
+    this._infoView = new OrbitzTripInfoView(this.tripElement);
+  }
+  return this._infoView;
+};
+
 OrbitzTrip.prototype.flights = function() {
   if(!this._flights) {
     this._flights = [];

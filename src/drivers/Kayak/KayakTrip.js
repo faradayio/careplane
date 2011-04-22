@@ -11,6 +11,13 @@ KayakTrip.prototype.footprintView = function() {
   return this._footprintView;
 };
 
+KayakTrip.prototype.infoView = function() {
+  if(!this._infoView) {
+    this._infoView = new KayakTripInfoView(this.tripElement);
+  }
+  return this._infoView;
+};
+
 KayakTrip.prototype.tripDetailsContainer = function() {
   if(!this._tripDetailsContainer) {
     var inner = this.tripElement.getElementsByClassName('inner')[0]

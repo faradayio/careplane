@@ -65,13 +65,6 @@ Trip.prototype.controller = function() {
   return this._controller;
 };
 
-Trip.prototype.infoView = function() {
-  if(!this._infoView) {
-    this._infoView = new TripInfoView(this.tripElement);
-  }
-  return this._infoView;
-};
-
 Trip.prototype.tallyFootprint = function(emission) {
   this.totalFootprint += emission;
   this.completedFlightCount++;

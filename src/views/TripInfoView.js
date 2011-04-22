@@ -1,23 +1,11 @@
-TripInfoView = function(tripElement) {
-  this.tripElement = tripElement;
-  this.doc = this.tripElement.ownerDocument;
-};
+TripInfoView = function() {};
 
 TripInfoView.prototype.target = function() {
   return this.tripElement.getElementsByClassName('careplane-info')[0];
 };
 
 TripInfoView.prototype.init = function() {
-  var content = "\
-    <div class=\"careplane-info\">\
-      <p>Search average: <span class=\"careplane-search-average\"></span></p>\
-      <p class=\"careplane-search-average-analysis\"></p>\
-      <section class=\"careplane-methodologies\">\
-        <ul class=\"careplane-methodologies-list\"></ul>\
-      </section>\
-    </div>";
-
-  this.tripElement.innerHTML += content;
+  this.tripElement.innerHTML += this.content();
 };
 
 TripInfoView.prototype.getElement = function(className) {
@@ -59,7 +47,7 @@ TripInfoView.prototype.hide = function() {
 };
 
 TripInfoView.prototype.positionRelativeTo = function(other) {
-  var position = $(other).offset();
+  var offset = $(other).offset();
   this.target().style.left = offset.left + 'px';
   this.target().style.top = (offset.top + 20).toString() + 'px';
 };
