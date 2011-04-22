@@ -59,9 +59,9 @@ TripInfoView.prototype.hide = function() {
 };
 
 TripInfoView.prototype.positionRelativeTo = function(other) {
-  var position = Util.absolutePosition(other);
-  this.target().style.left = position[0] + 'px';
-  this.target().style.top = (position[1] + 20).toString() + 'px';
+  var position = $(other).offset();
+  this.target().style.left = offset.left + 'px';
+  this.target().style.top = (offset.top + 20).toString() + 'px';
 };
 
 

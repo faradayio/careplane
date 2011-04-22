@@ -3,6 +3,8 @@ require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
 @js_files = %w{
+  lib/jquery-1.5.2.min.js
+
   src/Preferences.js
   src/Util.js
   src/Driver.js

@@ -3,6 +3,7 @@
 <!DOCTYPE overlay SYSTEM "chrome://careplane/locale/overlay.dtd">
 <overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   
+  <script src="lib/jquery-1.5.2.min.js"/>
   <script src="src/Preferences.js"/>
   <script src="src/Util.js"/>
   <script src="src/Driver.js"/>
