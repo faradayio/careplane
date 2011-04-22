@@ -4,21 +4,6 @@
   </head>
   <body>
     <script>
-      function fetch(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(data) {
-          if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-              callback(xhr.responseText);
-            } else {
-              callback(null);
-            }
-          }
-        }
-        xhr.open('GET', url, true);
-        xhr.send();
-      }
-
       function welcome() {
         chrome.tabs.create({ url: 'http://careplane.org/welcome.html' });
       }
@@ -40,9 +25,6 @@
        */
       function onRequest(request, sender, callback) {
         switch(request.action) {
-        case 'fetch':
-          fetch(request.url, callback);
-          break;
         case 'welcome':
           welcome();
           break;
