@@ -17,6 +17,13 @@ HipmunkTrip.prototype.infoView = function() {
   return this._infoView;
 };
 
+HipmunkTrip.prototype.controller = function() {
+  if(!this._controller) {
+    this._controller = new HipmunkTripController(this);
+  }
+  return this._controller;
+};
+
 HipmunkTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
     var legs = Array.prototype.slice.call(this.tripElement.getElementsByClassName('leg'));

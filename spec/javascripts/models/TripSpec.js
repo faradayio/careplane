@@ -17,10 +17,10 @@ describe('Trip', function() {
       var avg = Trip.average('ORD','SEA', function() { });
       expect(Careplane.currentExtension.fetch).not.toHaveBeenCalled();
     });
-    it('provides the average emission value to the callback', function() {
+    it('provides the average trip to the callback', function() {
       var result;
       var avg = Trip.average('ORD','SEA', function(average) { result = average; });
-      expect(result).toBe(143.5);
+      expect(result).toEqual(trip);
     });
   });
 

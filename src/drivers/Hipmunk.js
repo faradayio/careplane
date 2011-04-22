@@ -25,7 +25,7 @@ Hipmunk.prototype.load = function() {
 };
 
 Hipmunk.prototype.isActiveSearch = function() {
-  return this.doc.getElementsByClassName('flightlist').length > 0;
+  return this.doc.getElementsByClassName('info-panel').length > 0;
 };
 
 Hipmunk.prototype.startAirTrafficControl = function() {

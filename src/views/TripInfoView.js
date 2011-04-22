@@ -10,9 +10,9 @@ TripInfoView.prototype.target = function() {
 TripInfoView.prototype.init = function() {
   var content = "\
     <div class=\"careplane-info\">\
-      <p>Average footprints of this search: <span class=\"careplane-search-average\"></span></p>\
+      <p>Search average: <span class=\"careplane-search-average\"></span></p>\
       <p class=\"careplane-search-average-analysis\"></p>\
-      <p>Average footprints of flights from <span class=\"careplane-trip-average-origin\"></span> to <span class=\"careplane-trip-average-destination\"></span>: <span class=\"careplane-trip-average\"></span></p>\
+      <p>Typical footprint of a flight from <span class=\"careplane-trip-average-origin\"></span> to <span class=\"careplane-trip-average-destination\"></span>: <span class=\"careplane-trip-average\"></span> according to CM1</p>\
       <p class=\"careplane-trip-average-analysis\"></p>\
       <section class=\"careplane-methodologies\">\
         <ul class=\"careplane-methodologies-list\"></ul>\
@@ -31,16 +31,16 @@ TripInfoView.prototype.updateSearchAverage = function(average, trip) {
   span.innerHTML = Util.formatFootprint(average);
 
   var avgAnalysis = this.getElement('careplane-search-average-analysis');
-  Util.setTextChild(avgAnalysis, Util.footprintAnalysis(average, trip.totalFootprint));
+  avgAnalysis.innerHTML = Util.footprintAnalysis(average, trip.totalFootprint);
 };
 
 TripInfoView.prototype.updateTripAverage = function(trip) {
-  Trip.average(trip.origin, trip.destination, this.onTripAverageUpdateTripAverageInfo(this, trip));
+  Trip.average(trip.origin(), trip.destination(), this.onTripAverageUpdateTripAverageInfo(this, trip));
 
   var origin = this.getElement('careplane-trip-average-origin');
-  Util.setTextChild(origin, trip.origin);
+  Util.setTextChild(origin, trip.origin());
   var destination = this.getElement('careplane-trip-average-destination');
-  Util.setTextChild(destination, trip.destination);
+  Util.setTextChild(destination, trip.destination());
 };
 
 TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight) {
@@ -65,11 +65,11 @@ TripInfoView.prototype.hide = function() {
 // Events
 
 TripInfoView.prototype.onTripAverageUpdateTripAverageInfo = function(tripInfoView, trip) {
-  return function(avgFootprint) {
+  return function(avgTrip) {
     var avgSpan = tripInfoView.getElement('careplane-trip-average');
-    Util.setTextChild(avgSpan, Util.formatFootprint(avgFootprint));
+    avgSpan.innerHTML = Util.formatFootprint(avgTrip.totalFootrpint);
 
     var avgAnalysis = tripInfoView.getElement('careplane-trip-average-analysis');
-    Util.setTextChild(avgAnalysis, Util.footprintAnalysis(avgFootprint, trip.totalFootprint))
+    avgAnalysis.innerHTML = Util.footprintAnalysis(avgTrip.totalFootprint, trip.totalFootprint);
   };
 };

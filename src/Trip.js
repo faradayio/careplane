@@ -5,13 +5,14 @@ Trip.prototype.isScorable = true;
 
 Trip._averages = [];
 Trip.average = function(origin, destination, callback) {
-  var trip = Array.prototype.filter.call(Trip._averages, function(trip) {
-    return trip.origin == origin && trip.destination == destination;
+  var trip = Array.prototype.filter.call(this._averages, function(trip) {
+    return trip.origin() == origin && trip.destination() == destination;
   });
   if(trip.length > 0) {
-    callback(trip[0].totalFootprint);
+    callback(trip[0]);
   } else {
     trip = new AverageTrip(origin, destination);
+    this._averages.push(trip);
     trip.score(function() {}, callback);
   }
 };
@@ -19,6 +20,14 @@ Trip.average = function(origin, destination, callback) {
 Trip.isAlreadyDiscovered = function(tripElement) {
   var p = tripElement.getElementsByClassName('careplane-info');
   return p.length > 0;
+};
+
+Trip.prototype.origin = function() {
+  return this.flights()[0].origin;
+};
+Trip.prototype.destination = function() {
+  var flights = this.flights();
+  return flights[flights.length - 1].destination;
 };
 
 Trip.prototype.initViews = function() {
