@@ -25,6 +25,7 @@ AirTrafficController.prototype.rateTrips = function() {
     trip.rate(rating);
     trip.footprintView().updateRating(rating);
     trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
+    trip.infoView().updateTripAverage(trip);
   }
 };
 
