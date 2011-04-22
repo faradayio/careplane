@@ -13,7 +13,10 @@ watch(/^firefox\/chrome\/content\/Firefox[A-Za-z]+.js/) { |md| build }
 # --------------------------------------------------
 # Signal Handling
 # --------------------------------------------------
-Signal.trap('QUIT') { build }       # Ctrl-\
+begin
+  Signal.trap('QUIT') { build }       # Ctrl-\
+rescue ArgumentError
+end
 Signal.trap('INT' ) { abort("\n") } # Ctrl-C
 
 # --------------------------------------------------
