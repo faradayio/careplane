@@ -19,7 +19,7 @@ TripController.events = {
 TripController.prototype.init = function() {
   this.trip.initViews();
 
-  var target = this.trip.footprintView().target();
-  target.addEventListener('mouseover', TripController.events.tripFootprintHoverIn(this.trip), false);
-  target.addEventListener('mouseout', TripController.events.tripFootprintHoverOut(this.trip), false);
+  var target = $(this.trip.footprintView().target());
+  target.hover(TripController.events.tripFootprintHoverIn(this.trip),
+               TripController.events.tripFootprintHoverOut(this.trip));
 };

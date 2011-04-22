@@ -45,10 +45,10 @@ TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight
 };
 
 TripInfoView.prototype.show = function() {
-  this.target().style.display = 'block';
+  $(this.target()).show();
 };
 TripInfoView.prototype.hide = function() {
-  this.target().style.display = 'none';
+  $(this.target()).hide();
 };
 
 TripInfoView.prototype.positionRelativeTo = function(other) {
