@@ -5,7 +5,7 @@ HipmunkTrip.prototype = new Trip();
 
 HipmunkTrip.prototype.footprintView = function() {
   if(!this._footprintView) {
-    this._footprintView = new HipmunkTripFootprintView(this.infoView().tripElement);
+    this._footprintView = new HipmunkTripFootprintView(this.tripElement);
   }
   return this._footprintView;
 };
@@ -38,3 +38,8 @@ HipmunkTrip.prototype.flights = function() {
   }
   return this._flights;
 }
+
+HipmunkTrip.prototype.initViews = function() {
+  this.footprintView().init();
+  this.infoView().init();
+};

@@ -10,7 +10,7 @@ HipmunkTripFootprintView.prototype.driverName = function() {
   return 'Hipmunk';
 };
 
-HipmunkTripFootprintView.prototype.findRoutingElement = function(tripElement) {
+HipmunkTripFootprintView.prototype.findRoutingElement = function() {
   var uid = this.tripElement.id.replace('info-panel','routing');
   
   var routingDivs = this.tripElement.ownerDocument.getElementsByClassName('routing');
@@ -23,6 +23,10 @@ HipmunkTripFootprintView.prototype.findRoutingElement = function(tripElement) {
 
 HipmunkTripFootprintView.prototype.footprintParent = function() {
   return $(this.routingElement).find('.graph').get(0);
+};
+
+HipmunkTripFootprintView.prototype.tripBarElements = function() {
+  return $(this.routingElement).find('.graph .box');
 };
 
 HipmunkTripFootprintView.prototype.leftmostLeg = function() {
