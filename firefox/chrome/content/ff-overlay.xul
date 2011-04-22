@@ -30,7 +30,9 @@
   <script src="src/views/TripInfoView.js"/>
   <script src="src/views/TripFootprintView.js"/>
   <script src="src/views/Orbitz/OrbitzTripFootprintView.js"/>
+  <script src="src/views/Orbitz/OrbitzTripInfoView.js"/>
   <script src="src/views/Kayak/KayakTripFootprintView.js"/>
+  <script src="src/views/Kayak/KayakTripInfoView.js"/>
   <script src="src/views/Hipmunk/HipmunkTripFootprintView.js"/>
   <script src="src/views/Hipmunk/HipmunkTripInfoView.js"/>
   <script src="src/Careplane.js"/>

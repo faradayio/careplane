@@ -37,7 +37,9 @@ load 'jasmine/tasks/jasmine.rake'
   src/views/TripInfoView.js
   src/views/TripFootprintView.js
   src/views/Orbitz/OrbitzTripFootprintView.js
+  src/views/Orbitz/OrbitzTripInfoView.js
   src/views/Kayak/KayakTripFootprintView.js
+  src/views/Kayak/KayakTripInfoView.js
   src/views/Hipmunk/HipmunkTripFootprintView.js
   src/views/Hipmunk/HipmunkTripInfoView.js
 
