@@ -44,7 +44,7 @@ Util = {
     var result;
     if(current < average) {
       result = 'Flying this trip instead would be equivalent to <b>taking ' + differentialInCarDays + ' cars off the road</b> for a day';
-    } else if(current == average) {
+    } else if(differentialInCarDays == 0) {
       result = 'This is an average flight';
     } else {
       result = 'Flying this trip instead would be equivalent to <b>adding ' + differentialInCarDays + ' cars to the road</b> for a day';
