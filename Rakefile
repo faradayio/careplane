@@ -80,7 +80,7 @@ def build_application_js(driver, target_dir = '')
 end
 
 def templates(target)
-  @version = File.read('VERSION')
+  @version = File.read('VERSION').gsub(/[\s\n]+$/,'')
   Dir.glob(File.join('rake', 'templates', target, '**/*.erb')).each do |template|
     erb = ERB.new File.read(template)
     filename = File.basename template, '.erb'
@@ -124,10 +124,12 @@ namespace :google_chrome do
   end
 
   task :package => :build do
+    FileUtils.mkdir_p('google_chrome/build')
     Dir.chdir 'google_chrome' do
-      puts `zip -r build/careplane.zip src manifest.json icon64.png -x *~`
+      puts `zip -r build/careplane.zip application.js background.html images manifest.json options.html stylesheets -x *~`
     end
   end
 end
 
 task :build => ['firefox:build:default', 'google_chrome:build:default']
+task :package => ['firefox:package', 'google_chrome:package']
