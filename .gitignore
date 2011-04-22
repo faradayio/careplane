@@ -3,6 +3,7 @@ _site
 Gemfile.lock
 firefox/build
 firefox/chrome/content/images
+firefox/chrome/content/lib
 firefox/chrome/content/src
 firefox/chrome/content/stylesheets
 google_chrome/images
