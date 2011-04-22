@@ -29,7 +29,7 @@ OrbitzAirTrafficControllerEvents = {
     return function(trip, cm1Response, flight) {
       HallOfFame.induct(trip);
 
-      if(++controller.completedTrips == controller.tripElements.length) {
+      if(++controller.completedTrips == controller.tripElements().length) {
         controller.rateTrips();
       }
     }
