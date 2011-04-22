@@ -20,6 +20,11 @@ TripInfoView.prototype.updateSearchAverage = function(average, trip) {
   avgAnalysis.innerHTML = Util.footprintAnalysis(average, trip.totalFootprint);
 };
 
+TripInfoView.prototype.updateTripTotal = function(trip) {
+  var span = this.getElement('careplane-leg-footprint');
+  span.innerHTML = Util.formatFootprint(trip.totalFootprint);
+};
+
 TripInfoView.prototype.updateTripAverage = function(trip) {
   Trip.average(trip.origin(), trip.destination(), this.onTripAverageUpdateTripAverageInfo(this, trip));
 

@@ -10,7 +10,7 @@ KayakTripInfoView.prototype.target = function() {
 
 KayakTripInfoView.prototype.content = function() {
   return "\
-    <div class=\"leg careplane-info\">\
+    <div class=\"careplane-info\">\
       <p>This trip's footprint: <span class=\"careplane-leg-footprint\">...</span></p>\
       <p>Search average: <span class=\"careplane-search-average\">...</span></p>\
       <p class=\"careplane-search-average-analysis\"></p>\
