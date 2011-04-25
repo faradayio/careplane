@@ -7,7 +7,10 @@ Careplane.setCurrentExtension = function(extension) {
 Careplane.prototype.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
 
 Careplane.prototype.fetch = function(url, callback) {
-  this.klass.fetch(url, callback);
+  $.ajax({
+    url: url,
+    success: callback
+  });
 };
 
 Careplane.prototype.log = function(str) {

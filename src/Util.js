@@ -1,36 +1,4 @@
 Util = {
-  fetch: function(url, callback) {
-    var xhr = new XMLHttpRequest();
-    //if(!tries)
-      //tries = 0;
-
-    //var requestTimer = setTimeout(function() {
-      //if(tries++ <= 3) {
-        ////Careplane.log('Timeout! Trying ' + url + ' again');
-        //Careplane.fetch(url, callback, matcher, tries);
-      //}
-    //}, 5000);
-    //xhr.onreadystatechange = function() {
-      //if(xhr.readyState == 2) {
-        ////Careplane.log('Clearing timeout for ' + url);
-        //clearTimeout(requestTimer);
-      //}
-    //};
-    //xhr.addEventListener('error', function() {
-      //clearTimeout(requestTimer);
-    //}, false);
-    xhr.addEventListener('load', function() {
-      //clearTimeout(requestTimer);
-      if(xhr.status==200) {
-        var response = xhr.responseText;
-        callback(response);
-      };
-    }, false);
-    xhr.open('GET', url, true);
-    xhr.overrideMimeType('text/xml');
-    xhr.send(null);
-  },
-  
   formatFootprint: function(footprint) {
     var roundedFootprint = Math.round((footprint * 2.2) * 10) / 10;
     var delimitedFootprint = Util.numberWithDelimiter(roundedFootprint);
@@ -64,13 +32,6 @@ Util = {
     return function() {
       return func.apply(reprsentedParty, arguments);
     };
-  },
-
-  setTextChild: function(parentElement, text) {
-    if(parentElement.firstChild)
-      parentElement.removeChild(parentElement.firstChild);
-    var txt = document.createTextNode(text);
-    parentElement.appendChild(txt);
   },
 
   urlFor: function(base, params) {

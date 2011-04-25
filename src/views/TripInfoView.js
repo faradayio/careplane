@@ -9,29 +9,29 @@ TripInfoView.prototype.init = function() {
 };
 
 TripInfoView.prototype.getElement = function(className) {
-  return this.target().getElementsByClassName(className)[0];
+  return $(this.target()).find('.' + className);
 };
 
 TripInfoView.prototype.updateSearchAverage = function(average, trip) {
   var span = this.getElement('careplane-search-average');
-  span.innerHTML = Util.formatFootprint(average);
+  span.html(Util.formatFootprint(average));
 
   var avgAnalysis = this.getElement('careplane-search-average-analysis');
-  avgAnalysis.innerHTML = Util.footprintAnalysis(average, trip.totalFootprint);
+  avgAnalysis.html(Util.footprintAnalysis(average, trip.totalFootprint));
 };
 
 TripInfoView.prototype.updateTripTotal = function(trip) {
   var span = this.getElement('careplane-leg-footprint');
-  span.innerHTML = Util.formatFootprint(trip.totalFootprint);
+  span.html(Util.formatFootprint(trip.totalFootprint));
 };
 
 TripInfoView.prototype.updateTripAverage = function(trip) {
   Trip.average(trip.origin(), trip.destination(), this.onTripAverageUpdateTripAverageInfo(this, trip));
 
   var origin = this.getElement('careplane-trip-average-origin');
-  Util.setTextChild(origin, trip.origin());
+  origin.html(trip.origin());
   var destination = this.getElement('careplane-trip-average-destination');
-  Util.setTextChild(destination, trip.destination());
+  destination.html(trip.destination());
 };
 
 TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight) {
@@ -41,7 +41,7 @@ TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight
   a.setAttribute('href', methodologyUrl);
   a.appendChild(this.doc.createTextNode('Methodology for ' + flight.origin + '-' + flight.destination));
   li.appendChild(a);
-  ul.appendChild(li);
+  ul.append(li);
 };
 
 TripInfoView.prototype.show = function() {
@@ -64,9 +64,9 @@ TripInfoView.prototype.positionRelativeTo = function(other) {
 TripInfoView.prototype.onTripAverageUpdateTripAverageInfo = function(tripInfoView, trip) {
   return function(avgTrip) {
     var avgSpan = tripInfoView.getElement('careplane-trip-average');
-    avgSpan.innerHTML = Util.formatFootprint(avgTrip.totalFootrpint);
+    avgSpan.html(Util.formatFootprint(avgTrip.totalFootrpint));
 
     var avgAnalysis = tripInfoView.getElement('careplane-trip-average-analysis');
-    avgAnalysis.innerHTML = Util.footprintAnalysis(avgTrip.totalFootprint, trip.totalFootprint);
+    avgAnalysis.html(Util.footprintAnalysis(avgTrip.totalFootprint, trip.totalFootprint));
   };
 };

@@ -42,11 +42,7 @@ Flight.prototype.emissionEstimate = function(callback) {
   }
   var url = Util.urlFor('http://carbon.brighterplanet.com/flights.json', params);
 
-  var flight = this;
-  Careplane.currentExtension.fetch(url, function(response) {
-    var json = JSON.parse(response);
-    callback(json, flight);
-  });
+  Careplane.currentExtension.fetch(url, FlightEvents.emissionEstimateSuccess(this, callback));
 }
 
 Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIALE',
@@ -58,3 +54,12 @@ Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIA
 'PILATUS','PILATUS BRITTENNORMAN','PIPER','ROCKWELL','SAAB','SHORT','SUDEST',
 'SWEARINGEN','TUPOLEV','VOLPAR','VULCANAIR','YAKOVLEV'];
 
+
+
+FlightEvents = {
+  emissionEstimateSuccess: function(flight, callback) {
+    return function(response) {
+      callback(response, flight);
+    };
+  }
+};

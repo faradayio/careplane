@@ -6,10 +6,6 @@ FirefoxExtension.prototype = new Careplane();
 
 FirefoxExtension.prefs = new FirefoxPreferences();
 
-FirefoxExtension.fetch = function(url, callback) {
-  Util.fetch(url, callback);
-};
-
 FirefoxExtension.logger = function() {
   return Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
 };

@@ -6,21 +6,8 @@ GoogleChromeExtension.prototype = new Careplane();
 
 GoogleChromeExtension.prefs = new GoogleChromePreferences();
 
-GoogleChromeExtension.fetch = function(url, callback) {
-  Util.fetch(url, callback);
-  //chrome.extension.sendRequest({'action': 'fetch', 'url': url}, callback);
-};
-
-GoogleChromeExtension.logger = function() {
-  return Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
-};
-
 GoogleChromeExtension.log = function(str) {
-  GoogleChromeExtension.logger().logStringMessage(str);
-};
-
-GoogleChromeExtension.prototype.prefs = function() {
-  return GoogleChromeExtension.prefs;
+  console.log(str);
 };
 
 GoogleChromeExtension.prototype.openWelcomeScreen = function() {

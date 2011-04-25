@@ -21,8 +21,8 @@ describe('Orbitz', function() {
     });
     it('works for DFW<->GRU', function() {
       loadFixtures('orbitz_dfw_gru.html');
-      Util.fetch = function(url, callback) {
-        callback(JSON.stringify({ emission: 512.0 }));
+      TestExtension.fetch = function(url, callback) {
+        callback({ emission: 512.0 });
       }
       orbitz.startAirTrafficControl();
       $('div.result').each(function(i, result) {
