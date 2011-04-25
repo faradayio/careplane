@@ -69,7 +69,7 @@ def build_application_js(driver, target_dir = '')
   end
 
   puts 'Building application.js...'
-  `echo '' > google_chrome/application.js`
+  FileUtils.rm_f 'google_chrome/application.js'
   (@js_files +
    %w{google_chrome/GoogleChromePreferences.js google_chrome/GoogleChromeExtension.js
       google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
