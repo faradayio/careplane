@@ -28,7 +28,7 @@ FirefoxExtension.prototype.notify = function(driver) {
     n.label = message;
   } else {
     const priority = nb.PRIORITY_INFO_LOW;
-    nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: this.hideEmissionEstimates, label: 'Hide footprints'}]);
+    nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: CareplaneEvents.hideEmissionEstimates(this.doc), label: 'Hide footprints'}]);
   }
 };
 

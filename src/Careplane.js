@@ -67,5 +67,15 @@ CareplaneEvents = {
         extension.openWelcomeScreen();
       }
     };
+  },
+
+  hideEmissionEstimates: function(doc) {
+    return function() {
+      var footprints = doc.getElementsByClassName('careplane-footprint');
+      for(var i in footprints) {
+        var p = footprints[i];
+        $(p).hide();
+      }
+    };
   }
 }
