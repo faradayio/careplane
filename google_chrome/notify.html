@@ -1,0 +1,15 @@
+<html>
+  <body>
+    Careplane is calculating the carbon footprint of your Hipmunk flight search results.
+    <button id="hide" value="Hide footprints">
+
+    <script>
+      var hider = document.getElementById('hide');
+      hider.addListener('click', function() {
+        chrome.tabs.getSelected(null, function(tab) {
+          chrome.tabs.sendRequest(tab.id, {action: 'hide'});
+        });
+      });
+    </script>
+  </body>
+</html>

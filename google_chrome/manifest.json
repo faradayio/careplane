@@ -2,6 +2,9 @@
   "name": "Careplane",
   "version": "0.6.0",
   "description": "Real-time carbon footprints inserted into your favorite travel search sites",
+  "permissions": ["experimental"],
+  "background_page": "background.html",
+  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": [
@@ -16,6 +19,8 @@
       "js": ["application.js"]
     }
   ],
-  "background_page": "background.html",
-  "options_page": "options.html"
+  "icons": {
+    "64": "images/icon64.png",
+    "128": "images/icon128.png"
+  }
 }

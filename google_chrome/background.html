@@ -17,6 +17,10 @@
         }
       };
 
+      function notify(driver, tabId) {
+        chrome.experimental.infobars.show({ path: 'notify.html', tabId: tabId });
+      }
+
       /**
        * Handles data sent via chrome.extension.sendRequest().
        * @param request Object Data sent in the request.
@@ -33,6 +37,9 @@
           break;
         case 'preferences.put':
           preferences.put(request.key, request.value);
+          break;
+        case 'notify':
+          notify(request.driver, sender.tab.id);
           break;
         }
       }

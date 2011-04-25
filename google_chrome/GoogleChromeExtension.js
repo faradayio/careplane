@@ -15,7 +15,7 @@ GoogleChromeExtension.prototype.openWelcomeScreen = function() {
 };
   
 GoogleChromeExtension.prototype.notify = function(driver) {
-  // not sure if we want to use desktop notifications for this, no real alternative
+  chrome.extension.sendRequest({action : 'notify', driver: driver});
 };
 
 GoogleChromeExtension.prototype.addStyleSheet = function() {
