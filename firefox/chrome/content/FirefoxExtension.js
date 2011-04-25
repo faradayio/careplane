@@ -19,7 +19,7 @@ FirefoxExtension.prototype.openWelcomeScreen = function() {
     gBrowser.selectedTab = gBrowser.addTab('http://careplane.org/welcome.html');
   }, 1500); //Firefox 2 fix - or else tab will get closed
 };
-  
+ 
 FirefoxExtension.prototype.notify = function(driver) {
   var nb = gBrowser.getNotificationBox();
   var n = nb.getNotificationWithValue('careplane');

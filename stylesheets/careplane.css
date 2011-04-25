@@ -28,7 +28,7 @@
 
 
 .careplane-info {
-  display: none;
+  /*display: none;*/
   position: absolute;
   border: 1px solid black;
   -moz-border-radius: 5px;
