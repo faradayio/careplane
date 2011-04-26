@@ -10,8 +10,14 @@
   bottom: 20px;
 }
 .orbitz.careplane-footprint {
-  background-color: #FFF;
-  margin: 7px 15px;
+  background-color: #eee;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 476px;
+  padding: 5px 15px 2px;
+  border: none;
 }
 .hipmunk.careplane-footprint {
   position: relative;
@@ -69,8 +75,13 @@
   text-shadow: -1px 0 0 #eee, 1px 0 0 gray;
 }
 
-.careplane-info .careplane-search-average-analysis {
+.careplane-info .careplane-credit {
   margin-bottom: 0;
+  font-size: smaller;
+}
+
+.careplane-info .careplane-credit a {
+  color: blue;
 }
 
 .info-panel .careplane-info {
