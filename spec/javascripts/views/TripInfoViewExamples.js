@@ -2,7 +2,7 @@ sharedExamplesFor('TripInfoView', function() {
   describe('#updateSearchAverage', function() {
     it('updates the search average', function() {
       this.view.updateSearchAverage(1234, this.trip);
-      expect($(this.view.target()).find('.careplane-search-average')).toHaveText(/[\d,]+/);
+      expect($(this.view.target()).find('.careplane-search-average-comparison')).toHaveText(/%/);
     });
     it('analyzes the result', function() {
       this.view.updateSearchAverage(1234, this.trip);

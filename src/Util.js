@@ -5,6 +5,20 @@ Util = {
     var labeledFootprint = delimitedFootprint + ' lbs CO<sub>2</sub>e';
     return labeledFootprint;
   },
+  
+  footprintComparison: function(average, current) {
+    var diff = current - average;
+    var change = Math.abs(diff) / average;
+    var changePercentage = Math.round(change * 100);
+    if (diff < 0) {
+      result = changePercentage + '% lower impact than average';
+    } else if (diff > 0) {
+      result = changePercentage + '% more impact than average';
+    } else {
+      result = 'Same impact as average';
+    }
+    return result;
+  },
 
   footprintAnalysis: function(average, current) {
     var diff = average - current;

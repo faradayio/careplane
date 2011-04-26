@@ -14,16 +14,11 @@ TripInfoView.prototype.getElement = function(className) {
 };
 
 TripInfoView.prototype.updateSearchAverage = function(average, trip) {
-  var span = this.getElement('careplane-search-average');
-  span.html(Util.formatFootprint(average));
+  var avgComparison = this.getElement('careplane-search-average-comparison');
+  avgComparison.html(Util.footprintComparison(average, trip.totalFootprint));
 
   var avgAnalysis = this.getElement('careplane-search-average-analysis');
   avgAnalysis.html(Util.footprintAnalysis(average, trip.totalFootprint));
-};
-
-TripInfoView.prototype.updateTripTotal = function(trip) {
-  var span = this.getElement('careplane-leg-footprint');
-  span.html(Util.formatFootprint(trip.totalFootprint));
 };
 
 TripInfoView.prototype.updateTripAverage = function(trip) {
