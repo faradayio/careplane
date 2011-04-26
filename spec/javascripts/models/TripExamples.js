@@ -11,13 +11,16 @@ sharedExamplesFor('Trip', function() {
     expect(this.tripElement).not.toBeNull();
   });
   it('provides #totalFootprint', function() {
-    expect(this.trip.totalFootprint).not.toBeNull();
+    expect(this.trip.totalFootprint).toBeDefined();
   });
   it('provides #completedFlightCount', function() {
-    expect(this.trip.completedFlightCount).not.toBeNull();
+    expect(this.trip.completedFlightCount).toBeDefined();
   });
   it('provides #isScorable', function() {
-    expect(this.trip.isScorable).not.toBeNull();
+    expect(this.trip.isScorable).toBeDefined();
+  });
+  it('provides #id', function() {
+    expect(this.trip.id).toBeDefined();
   });
 
   describe('#score', function() {
