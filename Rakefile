@@ -133,3 +133,5 @@ end
 
 task :build => ['firefox:build:default', 'google_chrome:build:default']
 task :package => ['firefox:package', 'google_chrome:package']
+
+task :default => :build
