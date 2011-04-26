@@ -19,7 +19,12 @@ function restore_options() {
   var checkboxes = document.getElementsByTagName('input');
   for (var i = 0; i < checkboxes.length; i++) {
     var checkbox = checkboxes[i];
-    checkbox.checked = localStorage['sites.' + checkbox.value] == 'true';
+    var key = 'sites.' + checkbox.value;
+    var storedPreference = localStorage[key];
+    if(storedPreference == null) {
+      storedPreference = localStorage[key] = 'true';
+    }
+    checkbox.checked = storedPreference == 'true';
   }
 }
 </script>
