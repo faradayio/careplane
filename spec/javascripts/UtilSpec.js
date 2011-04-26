@@ -53,7 +53,7 @@ describe('Util', function() {
       expect(result).toMatch(/as average/);
     });
     it('reports a worse-than-average footprint', function() {
-      var result = Util.footprintAnalysis(1500,1700);
+      var result = Util.footprintComparison(1500,1700);
       expect(result).toMatch(/more/);
     });
   });
