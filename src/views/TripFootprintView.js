@@ -33,6 +33,8 @@ TripFootprintView.prototype.updateRating = function(rating) {
 
 TripFootprintView.prototype.update = function(footprint) {
   this.footprintParagraph().innerHTML = Util.formatFootprint(footprint);
+  if(this.position)
+    this.position();
 };
 
 TripFootprintView.prototype.show = function() {

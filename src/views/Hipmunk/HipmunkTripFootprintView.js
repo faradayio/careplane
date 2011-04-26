@@ -43,6 +43,7 @@ HipmunkTripFootprintView.prototype.position = function() {
   if(this.hasRoomOnLeft()) {
     var fpOffset = parseInt(footprint.css('width')) + 10;
     footprint.css('position', 'absolute');
-    footprint.css('left', (this.leftmostLeg().offset().left - fpOffset).toString() + 'px');
+    var bar = this.leftmostLeg();
+    footprint.css('left', (parseInt(bar.css('margin-left')) - fpOffset).toString() + 'px');
   }
 };

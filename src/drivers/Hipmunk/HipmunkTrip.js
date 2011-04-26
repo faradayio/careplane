@@ -1,5 +1,6 @@
 HipmunkTrip = function(tripElement) {
   this.tripElement = tripElement;
+  this.id = tripElement.id
 };
 HipmunkTrip.prototype = new Trip();
 
