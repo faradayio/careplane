@@ -1,6 +1,8 @@
 .careplane-footprint {
   color: #AAA;
   display: inline;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
 }
 .kayak.careplane-footprint {
   position: absolute;
@@ -28,16 +30,47 @@
 
 
 .careplane-info {
-  /*display: none;*/
   position: absolute;
-  border: 1px solid black;
+  border-top: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+  margin: 10px 0 0;
   -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: white;
+  background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, rgb(255,255,255)),
+      color-stop(1, rgb(237,237,237))
+  );
+  background-image: -moz-linear-gradient(
+      center top,
+      rgb(255,255,255) 0%,
+      rgb(237,237,237) 100%
+  );
   padding: 10px;
   width: 250px;
   z-index: 999;
 }
+
+.careplane-info:before {
+  content: "▲";
+  position: absolute;
+  margin: -23px 0 0 0;
+  font-size: 14px;
+  line-height: 14px;
+  color: white;
+  text-shadow: -1px 0 0 #eee, 1px 0 0 gray;
+}
+
+.careplane-info .careplane-search-average-analysis {
+  margin-bottom: 0;
+}
+
 .info-panel .careplane-info {
   display: block;
   position: relative;
