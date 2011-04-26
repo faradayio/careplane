@@ -42,12 +42,6 @@ Util = {
     return split.join('.');
   },
 
-  proxy: function(func, reprsentedParty) {
-    return function() {
-      return func.apply(reprsentedParty, arguments);
-    };
-  },
-
   urlFor: function(base, params) {
     var queryString = '?';
     for(var key in params) {

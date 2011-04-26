@@ -10,7 +10,7 @@ HipmunkAirTrafficController.prototype.tripElements = function() {
 };
 
 HipmunkAirTrafficController.prototype.poll = function() {
-  setInterval(Util.proxy(this.clear, this), 1000);   // every 1 second
+  setInterval(HipmunkAirTrafficControllerEvents.pollInterval(this), 1000);   // every 1 second
 };
 
 HipmunkAirTrafficController.prototype.clear = function() {

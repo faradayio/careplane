@@ -10,7 +10,7 @@ KayakAirTrafficController.prototype.tripElements = function() {
 };
 
 KayakAirTrafficController.prototype.poll = function() {
-  setInterval(Util.proxy(this.clear, this), 1000);   // every 1 second
+  setInterval(KayakAirTrafficControllerEvents.pollInterval(this), 1000);   // every 1 second
 };
 
 KayakAirTrafficController.prototype.clear = function() {
@@ -35,6 +35,12 @@ KayakAirTrafficController.prototype.scoreTrips = function() {
 
 
 KayakAirTrafficControllerEvents = {
+  pollInterval: function(controller) {
+    return function() {
+      controller.clear();
+    }
+  },
+
   tripEmissionsComplete: function(trip, cm1Response, flight) {
     HallOfFame.induct(trip);
   }
