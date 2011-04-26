@@ -192,6 +192,11 @@ body.welcome #description {
   margin: 0 15px 0 0;
 }
 
+#description ul.sites li.hipmunk {
+  width: 335px;
+  margin-bottom: 10px;
+}
+
 #description ul.sites li:last-child {
   margin-right: 0;
 }
@@ -207,6 +212,7 @@ body.welcome #description {
 
 #description ul.sites li.kayak a { background-image: url(images/kayak.png) }
 #description ul.sites li.orbitz a { background-image: url(images/orbitz.png) }
+#description ul.sites li.hipmunk a { background-image: url(images/hipmunk.png) }
 
 #screencast {
   position: absolute;
