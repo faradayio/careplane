@@ -22,7 +22,7 @@ Careplane.prototype.prefs = function() {
 };
 
 Careplane.prototype.welcome = function() {
-  this.prefs().get('hasRunPreviously', CareplaneEvents.welcome(this));
+  this.prefs().get('hasRunPreviously', CareplaneEvents.welcome(this), 'false');
 };
 
 Careplane.prototype.loadDriver = function(callback) {
@@ -30,7 +30,8 @@ Careplane.prototype.loadDriver = function(callback) {
   [Hipmunk, Kayak, Orbitz].filter(function(driver) {
     if(driver.shouldMonitor(careplane.doc.location.href)) {
       careplane.prefs().get('sites.' + driver.driverName,
-                          CareplaneEvents.driverBecomesAvailable(driver, callback));
+                            CareplaneEvents.driverBecomesAvailable(driver, callback),
+                            'true');
     }
   });
 };
