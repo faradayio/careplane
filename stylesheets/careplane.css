@@ -22,11 +22,8 @@
 .hipmunk.careplane-footprint {
   position: relative;
   color: #947847;
-  font-weight: bold;
   font-size: 11px;
-  background-color: #FCF9D7;
-  border: 1px solid #947847;
-  padding: 0 2px 2px 2px;
+  padding: 3px;
   height: 15px;
   line-height: 15px;
   left: 5px;
@@ -88,6 +85,10 @@
   display: block;
   position: relative;
   width: 278px;
+}
+
+.info-panel .careplane-info:before {
+  display: none;
 }
 
 
