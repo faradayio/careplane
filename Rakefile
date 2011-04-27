@@ -42,6 +42,7 @@ load 'jasmine/tasks/jasmine.rake'
   src/views/Kayak/KayakTripInfoView.js
   src/views/Hipmunk/HipmunkTripFootprintView.js
   src/views/Hipmunk/HipmunkTripInfoView.js
+  src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
 
   src/Careplane.js
   src/ExtensionLoader.js
@@ -131,7 +132,15 @@ namespace :google_chrome do
   end
 end
 
-task :build => ['firefox:build:default', 'google_chrome:build:default']
+namespace :jasmine do
+  task :build do
+    puts 'Building Jasmine templates'
+    templates 'spec'
+    puts 'Done'
+  end
+end
+
+task :build => ['firefox:build:default', 'google_chrome:build:default', 'jasmine:build']
 task :package => ['firefox:package', 'google_chrome:package']
 
 task :default => :build
