@@ -55,7 +55,6 @@ CareplaneEvents = {
       if(driverEnabled == 'true') {
         callback();
         var driver = new driverClass(extension);
-        extension.doc.careplaneDriver = driver;
         driver.load();
       }
     };
