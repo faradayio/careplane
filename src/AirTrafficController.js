@@ -1,4 +1,6 @@
 AirTrafficController = function() {};
+AirTrafficController.prototype.trips = [];
+AirTrafficController.prototype.completedTrips = 0;
 
 AirTrafficController.prototype.clear = function() {
   this.discoverTrips();
@@ -10,10 +12,16 @@ AirTrafficController.prototype.discoverTrips = function() {
   for(var i = 0; i < tripElements.length; i++) {
     var tripElement = tripElements.item(i);
     if(!Trip.isAlreadyDiscovered(tripElement)) {
-      var trip = this.createTrip(tripElement);
-      this.trips.push(trip);
-      trip.controller().init();
+      this.createTrip(tripElement);
     }
+  }
+};
+
+AirTrafficController.prototype.createTrip = function(tripElement) {
+  var trip = new this.tripClass(tripElement);
+  if(trip.isValid()) {
+    this.trips.push(trip);
+    trip.controller().init();
   }
 };
 
@@ -23,10 +31,14 @@ AirTrafficController.prototype.rateTrips = function() {
     var trip = trips[i];
     var rating = HallOfFame.ratingFor(trip);
     trip.rate(rating);
-    trip.footprintView().updateRating(rating);
-    trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
-    //trip.infoView().updateTripAverage(trip);  this is too difficult right now
+    this.updateViews(trip, rating);
   }
+};
+
+AirTrafficController.prototype.updateViews = function(trip, rating) {
+  trip.footprintView().updateRating(rating);
+  trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
+  //trip.infoView().updateTripAverage(trip);  this is too difficult right now
 };
 
 AirTrafficController.prototype.finishedTrips = function() {

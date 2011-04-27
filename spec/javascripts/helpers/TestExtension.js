@@ -1,6 +1,6 @@
 TestExtension = function(doc) {
   this.doc = doc;
-  //this.prefs = new TestPreferences();
+  this.klass = TestExtension;
 };
 TestExtension.prototype = new Careplane();
 

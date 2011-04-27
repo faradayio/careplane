@@ -4,6 +4,10 @@ HipmunkTripFootprintView = function(tripElement) {
 };
 HipmunkTripFootprintView.prototype = new TripFootprintView();
 
+HipmunkTripFootprintView.prototype.isValid = function() {
+  return this.routingElement != null;
+};
+
 HipmunkTripFootprintView.prototype.loadingText = '<i>Footprinting&hellip;</i>';
 
 HipmunkTripFootprintView.prototype.driverName = function() {

@@ -8,14 +8,14 @@ describe('Trip', function() {
     });
 
     it('looks up an average trip based on origin and destination', function() {
-      spyOn(Careplane.currentExtension,'fetch');
+      spyOn(Careplane,'fetch');
       var avg = Trip.average('ORD','PDX', function() { });
-      expect(Careplane.currentExtension.fetch).toHaveBeenCalled();
+      expect(Careplane.fetch).toHaveBeenCalled();
     });
     it('fetches cached averages', function() {
-      spyOn(Careplane.currentExtension,'fetch');
+      spyOn(Careplane,'fetch');
       var avg = Trip.average('ORD','SEA', function() { });
-      expect(Careplane.currentExtension.fetch).not.toHaveBeenCalled();
+      expect(Careplane.fetch).not.toHaveBeenCalled();
     });
     it('provides the average trip to the callback', function() {
       var result;

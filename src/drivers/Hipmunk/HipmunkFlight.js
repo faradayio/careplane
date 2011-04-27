@@ -7,14 +7,14 @@ HipmunkFlight = function(origin, destination, airline, aircraft) {
 HipmunkFlight.prototype = Flight.prototype;
 
 HipmunkFlight.parse = function(leg) {
-  var airline = leg.getElementsByTagName('b')[0].innerText;
+  var airline = $('b', leg).text();
 
-  var facts = leg.getElementsByClassName('facts')[0].innerText;
+  var facts = $('.facts:first', leg).text();
   var airportMatches = facts.match(/\([^\)]+\)/g);
-
   var origin = airportMatches[0].replace(/[\(\)]/g,'');
   var destination = airportMatches[1].replace(/[\(\)]/g,'');;
-  var aircraft = leg.getElementsByClassName('equipment')[0].innerText;
+
+  var aircraft = $('.equipment:first', leg).text();
 
   return new HipmunkFlight(origin, destination, airline, aircraft);
 };

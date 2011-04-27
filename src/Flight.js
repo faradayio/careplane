@@ -42,7 +42,7 @@ Flight.prototype.emissionEstimate = function(callback) {
   }
   var url = Util.urlFor('http://carbon.brighterplanet.com/flights.json', params);
 
-  Careplane.currentExtension.fetch(url, FlightEvents.emissionEstimateSuccess(this, callback));
+  Careplane.fetch(url, FlightEvents.emissionEstimateSuccess(this, callback));
 }
 
 Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIALE',

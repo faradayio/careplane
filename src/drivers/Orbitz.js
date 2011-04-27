@@ -1,7 +1,6 @@
-Orbitz = function() {
-  this.extension = Careplane.currentExtension;
-  this.doc = this.extension.doc;
-  var foo = 'Orbitz';
+Orbitz = function(extension) {
+  this.extension = extension;
+  this.doc = extension.doc;
 };
 Orbitz.prototype = new Driver();
 
@@ -25,7 +24,7 @@ Orbitz.prototype.insertAttribution = function() {
     var parentElement = this.doc.getElementById('matrix');
     var attributionElement = this.doc.createElement('div');
     attributionElement.setAttribute('class', 'matrixFooterAir careplane-attribution orbitz');
-    attributionElement.innerHTML = this.extension.standardTextAttribution;
+    attributionElement.innerHTML = Careplane.standardTextAttribution;
     parentElement.appendChild(attributionElement);
     
     // In the footer
@@ -33,13 +32,13 @@ Orbitz.prototype.insertAttribution = function() {
     var container = this.doc.createElement('div');
     container.setAttribute('class', 'careplane-attribution-footer orbitz');
     footer.appendChild(container);
-    this.extension.insertBadge(this.doc, container, null, '');
+    Careplane.insertBadge(this.doc, container, null, '');
   }
 };
 
 Orbitz.prototype.startAirTrafficControl = function() {
-  if(this.doc.getElementsByClassName('careplane-footprint').length == 0) {
+  //if(this.doc.getElementsByClassName('careplane-footprint').length == 0) {
     var controller = new OrbitzAirTrafficController(this.doc);
     controller.clear();
-  }
+  //}
 };

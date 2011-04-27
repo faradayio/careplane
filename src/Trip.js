@@ -3,6 +3,10 @@ Trip.prototype.totalFootprint = 0;
 Trip.prototype.completedFlightCount = 0;
 Trip.prototype.isScorable = true;
 
+Trip.prototype.isValid = function() {
+  return this.footprintView().isValid();
+};
+
 Trip._averages = [];
 Trip.average = function(origin, destination, callback) {
   var trip = Array.prototype.filter.call(this._averages, function(trip) {

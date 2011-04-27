@@ -7,7 +7,7 @@ describe('Kayak', function() {
     var kayak;
     beforeEach(function() {
       loadFixtures('kayak_dtw_sfo.html');
-      kayak = new Kayak();
+      kayak = new Kayak(Careplane.currentExtension);
       kayak.insertAttribution();
     });
     it('inserts a badge in the top area', function() {

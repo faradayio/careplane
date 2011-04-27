@@ -27,15 +27,15 @@ HipmunkTrip.prototype.controller = function() {
 
 HipmunkTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
-    var legs = Array.prototype.slice.call(this.tripElement.getElementsByClassName('leg'));
-    legs = Array.prototype.filter.call(legs, function(leg) {
-      return leg.getElementsByClassName('facts').length > 0;
+    var legs = $('.leg', this.tripElement);
+    legs = $(legs).filter(function(leg) {
+      return $('.facts', leg).length > 0;
     });
-    this._flights = []
-    for(var i in legs) {
-      var leg = legs[i];
-      this._flights.push(HipmunkFlight.parse(leg));
-    }
+    this._flights = [];
+    var trip = this;
+    $(legs).each(function(i, leg) {
+      trip._flights.push(HipmunkFlight.parse(leg));
+    });
   }
   return this._flights;
 }

@@ -1,6 +1,6 @@
-Hipmunk = function() {
-  this.extension = Careplane.currentExtension;
-  this.doc = this.extension.doc;
+Hipmunk = function(extension) {
+  this.extension = extension;
+  this.doc = extension.doc;
 };
 Hipmunk.prototype = new Driver();
 

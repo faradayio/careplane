@@ -59,7 +59,7 @@ sharedExamplesFor('AirTrafficController', function() {
       this.controller.rateTrips();
       for(var i in this.controller.trips) {
         var div = this.controller.trips[i].infoView().target();
-        expect($(div).find('span.careplane-search-average')).toHaveText(/[\d,]+/);
+        expect($(div).find('p.careplane-search-average-comparison')).toHaveText(/impact/);
       }
     });
   });

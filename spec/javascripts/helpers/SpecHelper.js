@@ -5,7 +5,7 @@ beforeEach(function() {
     }
   });
   Careplane.currentExtension = new TestExtension(window.document);
-  Careplane.currentExtension.doc = window.document;
+  Careplane.fetch = TestExtension.fetch;
   HallOfFame.clear();
 });
 

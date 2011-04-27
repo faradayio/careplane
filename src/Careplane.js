@@ -4,9 +4,20 @@ Careplane.setCurrentExtension = function(extension) {
   Careplane.currentExtension = extension;
 };
 
-Careplane.prototype.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
+Careplane.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
+  
+Careplane.insertBadge = function(doc, parentElement, referenceElement, badgeStyle) {
+  var styleElement = doc.createElement('style');
+  styleElement.setAttribute('type', 'text/css');
+  styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
+  parentElement.insertBefore(styleElement, referenceElement);
+  var brandingElement = doc.createElement('script');
+  brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
+  brandingElement.setAttribute('type', 'text/javascript');
+  parentElement.insertBefore(brandingElement, referenceElement);
+};
 
-Careplane.prototype.fetch = function(url, callback) {
+Careplane.fetch = function(url, callback) {
   $.ajax({
     url: url,
     success: callback
@@ -30,31 +41,21 @@ Careplane.prototype.loadDriver = function(callback) {
   [Hipmunk, Kayak, Orbitz].filter(function(driver) {
     if(driver.shouldMonitor(careplane.doc.location.href)) {
       careplane.prefs().get('sites.' + driver.driverName,
-                            CareplaneEvents.driverBecomesAvailable(driver, callback),
+                            CareplaneEvents.driverBecomesAvailable(careplane, driver, callback),
                             'true');
     }
   });
-};
-  
-Careplane.prototype.insertBadge = function(doc, parentElement, referenceElement, badgeStyle) {
-  var styleElement = doc.createElement('style');
-  styleElement.setAttribute('type', 'text/css');
-  styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
-  parentElement.insertBefore(styleElement, referenceElement);
-  var brandingElement = doc.createElement('script');
-  brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
-  brandingElement.setAttribute('type', 'text/javascript');
-  parentElement.insertBefore(brandingElement, referenceElement);
 };
 
 
 
 CareplaneEvents = {
-  driverBecomesAvailable: function(driverClass, callback) {
+  driverBecomesAvailable: function(extension, driverClass, callback) {
     return function(driverEnabled) {
       if(driverEnabled == 'true') {
         callback();
-        var driver = new driverClass();
+        var driver = new driverClass(extension);
+        extension.doc.careplaneDriver = driver;
         driver.load();
       }
     };

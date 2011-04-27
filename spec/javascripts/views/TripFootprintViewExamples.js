@@ -6,11 +6,11 @@ sharedExamplesFor('TripFootprintView', function() {
     });
     it('assigns a "green" rating if rating is positive', function() {
       this.view.updateRating(0.6);
-      expect(this.view.footprintParagraph().style.color).toBe('rgb(51, 204, 51)');
+      expect(this.view.footprintParagraph().style.color).toMatch(/rgb\(5\d, 204, 5\d\)/);
     });
     it('assigns a "red" rating if rating is negative', function() {
       this.view.updateRating(-0.6);
-      expect(this.view.footprintParagraph().style.color).toBe('rgb(204, 51, 51)');
+      expect(this.view.footprintParagraph().style.color).toMatch(/rgb\(204, 5\d, 5\d\)/);
     });
   });
 });

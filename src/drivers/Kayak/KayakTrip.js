@@ -39,7 +39,7 @@ KayakTrip.prototype.eachFlight = function(callback) {
     var resultIdentifier = this.tripElement.getElementsByTagName('div')[0].innerHTML;
     var detailUrl = 'http://www.kayak.com/s/flightdetails?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + this.id + '&fs=;';
 
-    Careplane.currentExtension.fetch(detailUrl, function(result) {
+    Careplane.fetch(detailUrl, function(result) {
       trip.tripDetailsContainer().innerHTML = result;
       trip.tripDetailsContainer().style.display = 'none';
       trip.eachFlight(callback);
