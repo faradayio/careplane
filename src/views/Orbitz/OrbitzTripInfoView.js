@@ -4,10 +4,6 @@ OrbitzTripInfoView = function(tripElement) {
 };
 OrbitzTripInfoView.prototype = new TripInfoView();
 
-OrbitzTripInfoView.prototype.target = function() {
-  return this.tripElement.getElementsByClassName('careplane-info')[0];
-};
-
 OrbitzTripInfoView.prototype.content = function() {
   return "\
     <div class=\"careplane-info\">\
@@ -20,12 +16,8 @@ OrbitzTripInfoView.prototype.content = function() {
     </div>";
 };
 
-OrbitzTripInfoView.prototype.getElement = function(className) {
-  return $(this.target()).find('.' + className);
-};
-
 OrbitzTripInfoView.prototype.positionRelativeTo = function(other) {
   var position = $(other).position();
-  this.target().style.left = (position.left + 20).toString() + 'px';
-  this.target().style.top = (position.top + 20).toString() + 'px';
+  this.target().css('left', (position.left + 20).toString() + 'px');
+  this.target().css('top', (position.top + 20).toString() + 'px');
 };

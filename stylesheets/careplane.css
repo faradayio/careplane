@@ -22,6 +22,8 @@
 .hipmunk.careplane-footprint {
   position: relative;
   color: #947847;
+  /*background-color: #FCF9D7;*/
+  /*border: 1px solid #947847;*/
   font-size: 11px;
   padding: 3px;
   height: 15px;
@@ -81,6 +83,13 @@
   color: blue;
 }
 
+.careplane-popup {
+  line-height: 14px;
+}
+.careplane-info p {
+  margin-bottom: 4px;
+}
+
 .info-panel .careplane-embedded {
   display: block;
   position: relative;
@@ -90,9 +99,9 @@
   content: "";
 }
 
-.info-panel .careplane-info:before {
-  display: none;
-}
+/*.info-panel .careplane-info:before {*/
+  /*display: none;*/
+/*}*/
 
 
 .careplane-attribution .orbitz {

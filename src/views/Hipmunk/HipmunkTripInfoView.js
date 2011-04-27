@@ -1,11 +1,10 @@
 HipmunkTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
-  this.doc = this.tripElement.ownerDocument;
 };
 HipmunkTripInfoView.prototype = new TripInfoView();
 
 HipmunkTripInfoView.prototype.target = function() {
-  return this.tripElement.getElementsByClassName('careplane-popup')[0];
+  return $('.careplane-popup',this.tripElement);
 };
 
 HipmunkTripInfoView.prototype.content = function() {
@@ -18,4 +17,10 @@ HipmunkTripInfoView.prototype.content = function() {
         <ul class=\"careplane-methodologies-list\"></ul>\
       </section>\
     </div>";
+};
+
+HipmunkTripInfoView.prototype.positionRelativeTo = function(other) {
+  var offset = $(other).offset();
+  this.target().css('left', offset.left + 'px');
+  this.target().css('top', (parseInt($(other).css('height')) + 10).toString() + 'px');
 };

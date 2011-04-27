@@ -5,7 +5,7 @@ HipmunkTripEmbeddedInfoView = function(tripElement) {
 HipmunkTripEmbeddedInfoView.prototype = new TripInfoView();
 
 HipmunkTripEmbeddedInfoView.prototype.target = function() {
-  return $(this.tripElement).find('.careplane-embedded').get(0);
+  return $('.careplane-embedded', this.tripElement);
 };
 
 HipmunkTripEmbeddedInfoView.prototype.init = function() {

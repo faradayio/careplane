@@ -1,11 +1,10 @@
 HipmunkTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
-  this.routingElement = this.findRoutingElement();
 };
 HipmunkTripFootprintView.prototype = new TripFootprintView();
 
 HipmunkTripFootprintView.prototype.isValid = function() {
-  return this.routingElement != null;
+  return this.tripElement != null;
 };
 
 HipmunkTripFootprintView.prototype.loadingText = '<i>Footprinting&hellip;</i>';
@@ -14,27 +13,16 @@ HipmunkTripFootprintView.prototype.driverName = function() {
   return 'Hipmunk';
 };
 
-HipmunkTripFootprintView.prototype.findRoutingElement = function() {
-  var uid = this.tripElement.id.replace('info-panel','routing');
-  
-  var routingDivs = this.tripElement.ownerDocument.getElementsByClassName('routing');
-  for(var i = 0; i < routingDivs.length; i++) {
-    var div = routingDivs[i];
-    if(div.id.match(new RegExp(uid)))
-      return div;
-  }
-};
-
 HipmunkTripFootprintView.prototype.footprintParent = function() {
-  return $('.graph', this.routingElement).get(0);
+  return $('.graph', this.tripElement).get(0);
 };
 
 HipmunkTripFootprintView.prototype.tripBarElements = function() {
-  return $('.graph .box ', this.routingElement);
+  return $('.graph .box ', this.tripElement);
 };
 
 HipmunkTripFootprintView.prototype.leftmostLeg = function() {
-  return $('div.airline:first', this.routingElement);
+  return $('div.airline:first', this.tripElement);
 };
 
 HipmunkTripFootprintView.prototype.hasRoomOnLeft = function() {

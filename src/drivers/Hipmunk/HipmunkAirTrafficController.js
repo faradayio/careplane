@@ -6,7 +6,7 @@ HipmunkAirTrafficController.prototype = new AirTrafficController();
 HipmunkAirTrafficController.prototype.tripClass = HipmunkTrip;
 
 HipmunkAirTrafficController.prototype.tripElements = function() {
-  return this.doc.getElementsByClassName('info-panel');
+  return this.doc.getElementsByClassName('routing');
 };
 
 HipmunkAirTrafficController.prototype.poll = function() {

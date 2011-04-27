@@ -4,10 +4,6 @@ KayakTripInfoView = function(tripElement) {
 };
 KayakTripInfoView.prototype = new TripInfoView();
 
-KayakTripInfoView.prototype.target = function() {
-  return this.tripElement.getElementsByClassName('careplane-info')[0];
-};
-
 KayakTripInfoView.prototype.content = function() {
   return "\
     <div class=\"careplane-info\">\

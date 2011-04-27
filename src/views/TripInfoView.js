@@ -1,16 +1,16 @@
 TripInfoView = function() {};
 
 TripInfoView.prototype.target = function() {
-  return this.tripElement.getElementsByClassName('careplane-info')[0];
+  return $('.careplane-info', this.tripElement);
 };
 
 TripInfoView.prototype.init = function() {
   this.tripElement.innerHTML += this.content();
-  $(this.target()).hide();
+  this.target().hide();
 };
 
 TripInfoView.prototype.getElement = function(className) {
-  return $(this.target()).find('.' + className);
+  return this.target().find('.' + className);
 };
 
 TripInfoView.prototype.updateSearchAverage = function(average, trip) {
@@ -31,26 +31,27 @@ TripInfoView.prototype.updateTripAverage = function(trip) {
 };
 
 TripInfoView.prototype.reportFlightMethodology = function(methodologyUrl, flight) {
+  var doc = this.target()[0].ownerDocument;
   var ul = this.getElement('careplane-methodologies-list');
-  var li = this.doc.createElement('li');
-  var a = this.doc.createElement('a');
+  var li = doc.createElement('li');
+  var a = doc.createElement('a');
   a.setAttribute('href', methodologyUrl);
-  a.appendChild(this.doc.createTextNode('Methodology for ' + flight.origin + '-' + flight.destination));
+  a.appendChild(doc.createTextNode('Methodology for ' + flight.origin + '-' + flight.destination));
   li.appendChild(a);
   ul.append(li);
 };
 
 TripInfoView.prototype.show = function() {
-  $(this.target()).show();
+  this.target().show();
 };
 TripInfoView.prototype.hide = function() {
-  $(this.target()).hide();
+  this.target().hide();
 };
 
 TripInfoView.prototype.positionRelativeTo = function(other) {
   var offset = $(other).offset();
-  this.target().style.left = offset.left + 'px';
-  this.target().style.top = (offset.top + 20).toString() + 'px';
+  this.target().css('left', offset.left + 'px');
+  this.target().css('top', (offset.top + 20).toString() + 'px');
 };
 
 
