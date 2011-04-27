@@ -10,6 +10,7 @@ Util = {
     var diff = current - average;
     var change = Math.abs(diff) / average;
     var changePercentage = Math.round(change * 100);
+    var result;
     if (diff < 0) {
       result = changePercentage + '% lower impact than average';
     } else if (diff > 0) {
