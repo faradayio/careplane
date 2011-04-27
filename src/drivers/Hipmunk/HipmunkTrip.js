@@ -18,6 +18,13 @@ HipmunkTrip.prototype.infoView = function() {
   return this._infoView;
 };
 
+HipmunkTrip.prototype.embeddedInfoView = function() {
+  if(!this._embeddedInfoView) {
+    this._embeddedInfoView = new HipmunkTripEmbeddedInfoView(this.tripElement);
+  }
+  return this._embeddedInfoView;
+};
+
 HipmunkTrip.prototype.controller = function() {
   if(!this._controller) {
     this._controller = new HipmunkTripController(this);
@@ -43,4 +50,5 @@ HipmunkTrip.prototype.flights = function() {
 HipmunkTrip.prototype.initViews = function() {
   this.footprintView().init();
   this.infoView().init();
+  this.embeddedInfoView().init();
 };

@@ -5,16 +5,12 @@ HipmunkTripInfoView = function(tripElement) {
 HipmunkTripInfoView.prototype = new TripInfoView();
 
 HipmunkTripInfoView.prototype.target = function() {
-  return this.tripElement.getElementsByClassName('careplane-info')[0];
-};
-
-HipmunkTripInfoView.prototype.init = function() {
-  this.tripElement.innerHTML += this.content();
+  return this.tripElement.getElementsByClassName('careplane-popup')[0];
 };
 
 HipmunkTripInfoView.prototype.content = function() {
   return "\
-    <div class=\"leg careplane-info\">\
+    <div class=\"careplane-info careplane-popup\">\
       <p class=\"careplane-search-average-comparison\">...</p>\
       <p class=\"careplane-search-average-analysis\">...</p>\
       <section class=\"careplane-methodologies\">\

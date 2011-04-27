@@ -73,10 +73,13 @@
   margin-bottom: 0;
 }
 
-.info-panel .careplane-info {
+.info-panel .careplane-embedded {
   display: block;
   position: relative;
   width: 278px;
+}
+.info-panel .careplane-embedded:before {
+  content: "";
 }
 
 

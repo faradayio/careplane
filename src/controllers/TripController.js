@@ -18,7 +18,10 @@ TripController.events = {
 
 TripController.prototype.init = function() {
   this.trip.initViews();
+  this.showInfoViewPopupOnFootprintHover();
+};
 
+TripController.prototype.showInfoViewPopupOnFootprintHover = function() {
   var target = $(this.trip.footprintView().target());
   target.hover(TripController.events.tripFootprintHoverIn(this.trip),
                TripController.events.tripFootprintHoverOut(this.trip));

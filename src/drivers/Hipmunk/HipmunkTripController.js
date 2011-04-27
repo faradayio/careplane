@@ -1,6 +1,7 @@
 HipmunkTripController = function(trip) {
   this.trip = trip;
 };
+HipmunkTripController.prototype = new TripController();
 
 HipmunkTripController.events = {
   tripFootprintShow: function(trip) {
@@ -18,6 +19,7 @@ HipmunkTripController.events = {
 HipmunkTripController.prototype.init = function() {
   this.trip.initViews();
   this.hideFootprintOnTripHover();
+  this.showInfoViewPopupOnFootprintHover();
 };
 
 HipmunkTripController.prototype.hideFootprintOnTripHover = function() {

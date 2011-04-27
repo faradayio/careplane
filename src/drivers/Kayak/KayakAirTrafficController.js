@@ -1,9 +1,9 @@
 KayakAirTrafficController = function(doc) {
   this.doc = doc;
-  this.trips = [];
-  this.completedTrips = 0;
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
+
+KayakAirTrafficController.prototype.tripClass = KayakTrip;
 
 KayakAirTrafficController.prototype.tripElements = function() {
   return this.doc.getElementsByClassName('flightresult');
@@ -17,10 +17,6 @@ KayakAirTrafficController.prototype.clear = function() {
   this.discoverTrips();
   this.scoreTrips();
   this.rateTrips();
-};
-
-KayakAirTrafficController.prototype.createTrip = function(tripElement) {
-  return new KayakTrip(tripElement);
 };
 
 KayakAirTrafficController.prototype.scoreTrips = function() {

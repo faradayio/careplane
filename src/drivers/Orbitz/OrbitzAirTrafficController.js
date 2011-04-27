@@ -1,9 +1,9 @@
 OrbitzAirTrafficController = function(doc) {
   this.doc = doc;
-  this.trips = [];
-  this.completedTrips = 0;
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
+
+OrbitzAirTrafficController.prototype.tripClass = OrbitzTrip;
 
 OrbitzAirTrafficController.prototype.tripElements = function() {
   return this.doc.getElementsByClassName('result');
@@ -17,10 +17,6 @@ OrbitzAirTrafficController.prototype.scoreTrips = function() {
       OrbitzAirTrafficControllerEvents.tripEmissionsComplete(this));
   }
 }
-
-OrbitzAirTrafficController.prototype.createTrip = function(tripElement) {
-  return new OrbitzTrip(tripElement);
-};
 
 
 

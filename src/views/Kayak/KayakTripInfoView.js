@@ -12,7 +12,7 @@ KayakTripInfoView.prototype.content = function() {
   return "\
     <div class=\"careplane-info\">\
       <p class=\"careplane-search-average-comparison\">...</p>\
-      <p class=\"careplane-search-average-analysis\"></p>\
+      <p class=\"careplane-search-average-analysis\">...</p>\
       <section class=\"careplane-methodologies\">\
         <ul class=\"careplane-methodologies-list\"></ul>\
       </section>\

@@ -35,6 +35,7 @@
   <script src="src/views/Kayak/KayakTripInfoView.js"/>
   <script src="src/views/Hipmunk/HipmunkTripFootprintView.js"/>
   <script src="src/views/Hipmunk/HipmunkTripInfoView.js"/>
+  <script src="src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js"/>
   <script src="src/Careplane.js"/>
   <script src="src/ExtensionLoader.js"/>
 

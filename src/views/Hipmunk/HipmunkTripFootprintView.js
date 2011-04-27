@@ -26,15 +26,15 @@ HipmunkTripFootprintView.prototype.findRoutingElement = function() {
 };
 
 HipmunkTripFootprintView.prototype.footprintParent = function() {
-  return $(this.routingElement).find('.graph').get(0);
+  return $('.graph', this.routingElement).get(0);
 };
 
 HipmunkTripFootprintView.prototype.tripBarElements = function() {
-  return $(this.routingElement).find('.graph .box');
+  return $('.graph .box ', this.routingElement);
 };
 
 HipmunkTripFootprintView.prototype.leftmostLeg = function() {
-  return $(this.routingElement).find('div.airline:first');
+  return $('div.airline:first', this.routingElement);
 };
 
 HipmunkTripFootprintView.prototype.hasRoomOnLeft = function() {
