@@ -112,6 +112,12 @@ header p.firefox a {
   background-position: 15px 60%;
 }
 
+header p.chrome a {
+  background-image: url(images/chrome.png);
+  background-repeat: no-repeat;
+  background-position: 15px 60%;
+}
+
 header p.available a .major {
   color: #F7DBC4;
   font-size: 22px;
@@ -161,7 +167,7 @@ article>div {
 }
 
 body.welcome #description {
-  height: 200px;
+  height: 140px;
 }
 
 #description h1 {
@@ -229,7 +235,7 @@ ul#sites {
   top: 510px;
   left: 50%;
   margin: 0 0 0 -480px;
-  width: 960px;
+  width: 930px;
   height: 355px;
   list-style: none;
   padding: 0 15px;
@@ -237,15 +243,16 @@ ul#sites {
 
 ul#sites li {
   float: left;
-  width: 465px;
+  width: 310px;
 }
 
 ul#sites li.kayak { background-image: url(images/sites/kayak.png); }
 ul#sites li.orbitz { background-image: url(images/sites/orbitz.png); }
+ul#sites li.hipmunk { background-image: url(images/sites/hipmunk.png); }
 
 ul#sites li a {
   display: block;
-  height: 245px;
+  height: 185px;
 }
 
 ul#sites li a span {
@@ -255,7 +262,7 @@ ul#sites li a span {
 ul#sites li a:hover span {
   position: absolute;
   display: block;
-  width: 465px;
+  width: 310px;
   margin: -70px 0 0;
   text-align: center;
   font-size: 48px;
