@@ -29,8 +29,14 @@
       <h2>Real-time carbon footprints inserted into your favorite travel search sites</h2>
       <p class="firefox available" style="display: none;">
         <a href="https://addons.mozilla.org/en-US/firefox/addon/careplane/">
-          <span class="major">Install Careplane <span>0.5.0</span></span>
+          <span class="major">Install Careplane <span>0.6.0</span></span>
           <span class="minor"><strong>Free</strong> Firefox plugin, 30KB</span>
+        </a>
+      </p>
+      <p class="chrome available" style="display: none;">
+        <a href="https://chrome.google.com/webstore/detail/nnfhekhgpccbbfcklllodpnlfakndkgl?hl=en-US">
+          <span class="major">Install Careplane <span>0.6.0</span></span>
+          <span class="minor"><strong>Free</strong> Google Chrome plugin, 30KB</span>
         </a>
       </p>
       <p class="other unavailable" style="display: none;">
@@ -91,8 +97,14 @@
   <div id="screencast"></div>
   <script type="text/javascript">
   function showInstallButton() {
-    if ($.browser.mozilla) $('header .firefox').show();
-    else $('header .other').show();
+    var browser = '.other';
+    if ($.browser.mozilla) {
+      browser = '.firefox';
+    } else if (navigator && navigator.userAgent && navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+      browser = '.chrome';
+    }
+
+    $('header ' + browser).show();
   }
   $(document).ready(showInstallButton);
   $(document).ready(function() { $('ul.details li.original a').click(function() { $('#original').show();}); });
