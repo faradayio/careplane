@@ -33,16 +33,16 @@ Careplane.prototype.prefs = function() {
 };
 
 Careplane.prototype.welcome = function() {
-  this.prefs().get('hasRunPreviously', CareplaneEvents.welcome(this), 'false');
+  this.prefs().getBoolean('hasRunPreviously', CareplaneEvents.welcome(this), false);
 };
 
 Careplane.prototype.loadDriver = function(callback) {
   var careplane = this;
   [Hipmunk, Kayak, Orbitz].filter(function(driver) {
     if(driver.shouldMonitor(careplane.doc.location.href)) {
-      careplane.prefs().get('sites.' + driver.driverName,
+      careplane.prefs().getBoolean('sites.' + driver.driverName,
                             CareplaneEvents.driverBecomesAvailable(careplane, driver, callback),
-                            'true');
+                            true);
     }
   });
 };
@@ -52,7 +52,7 @@ Careplane.prototype.loadDriver = function(callback) {
 CareplaneEvents = {
   driverBecomesAvailable: function(extension, driverClass, callback) {
     return function(driverEnabled) {
-      if(driverEnabled == 'true') {
+      if(driverEnabled) {
         callback();
         var driver = new driverClass(extension);
         driver.load();
@@ -62,8 +62,8 @@ CareplaneEvents = {
 
   welcome: function(extension) {
     return function(hasRunPreviously) {
-      if(hasRunPreviously != 'true') {
-        extension.prefs().put('hasRunPreviously', 'true');
+      if(!hasRunPreviously) {
+        extension.prefs().putBoolean('hasRunPreviously', true);
 
         extension.openWelcomeScreen();
       }
