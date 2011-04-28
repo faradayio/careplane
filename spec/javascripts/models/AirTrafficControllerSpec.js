@@ -70,4 +70,20 @@ describe('AirTrafficController', function() {
         expect(list[i].rating).toBe(0);
     });
   });
+
+  describe('#tripIsAlreadyDiscovered', function() {
+    it('returns true if a careplane info element exists', function() {
+      var elem = document.createElement('div');
+      var careplane = document.createElement('p');
+      careplane.setAttribute('class', 'careplane-info');
+      elem.appendChild(careplane);
+
+      expect(controller.tripIsAlreadyDiscovered(elem)).toBeTruthy();
+    });
+    it('returns false if no careplane footprint element exists', function() {
+      var elem = document.createElement('div');
+
+      expect(controller.tripIsAlreadyDiscovered(elem)).toBeFalsy();
+    });
+  });
 });

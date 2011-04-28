@@ -4,13 +4,17 @@ HipmunkTrip = function(tripElement) {
 };
 HipmunkTrip.prototype = new Trip();
 
+HipmunkTrip.prototype.isValid = function() {
+  return this.footprintView().isValid() && this.infoPanelElement() != null;
+};
+
 HipmunkTrip.prototype.infoPanelElement = function() {
   if(!this._infoPanelElement) {
     var uid = this.tripElement.id;
     uid = uid.replace('routing','info-panel');
     uid = uid.replace(/_.+_.+$/,'');
     
-    this._infoPanelElement = $('#' + uid).get(0);
+    this._infoPanelElement = $('#' + uid, this.tripElement.ownerDocument).get(0);
   }
 
   return this._infoPanelElement;
@@ -35,7 +39,7 @@ HipmunkTrip.prototype.infoView = function() {
 };
 
 HipmunkTrip.prototype.embeddedInfoView = function() {
-  if(!this._embeddedInfoView) {
+  if(!this._embeddedInfoView && this.infoPanelElement()) {
     this._embeddedInfoView = new HipmunkTripEmbeddedInfoView(this.infoPanelElement());
   }
   return this._embeddedInfoView;
@@ -49,8 +53,9 @@ HipmunkTrip.prototype.controller = function() {
 };
 
 HipmunkTrip.prototype.flights = function() {
+  var infoPanel = this.infoPanelElement();
   if(!this._flights || this._flights.length == 0) {
-    var legs = $('.leg', this.infoPanelElement());
+    var legs = $('.leg', infoPanel);
     legs = $(legs).filter(function(i, leg) {
       return $('.facts', leg).length > 0;
     });
@@ -66,5 +71,6 @@ HipmunkTrip.prototype.flights = function() {
 HipmunkTrip.prototype.initViews = function() {
   this.footprintView().init();
   this.infoView().init();
-  this.embeddedInfoView().init();
+  if(this.embeddedInfoView())
+    this.embeddedInfoView().init();
 };

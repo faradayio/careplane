@@ -1,6 +1,5 @@
 HipmunkTripEmbeddedInfoView = function(tripElement) {
   this.tripElement = tripElement;
-  this.doc = this.tripElement.ownerDocument;
 };
 HipmunkTripEmbeddedInfoView.prototype = new TripInfoView();
 
@@ -9,7 +8,8 @@ HipmunkTripEmbeddedInfoView.prototype.target = function() {
 };
 
 HipmunkTripEmbeddedInfoView.prototype.init = function() {
-  this.tripElement.innerHTML += this.content();
+  if(this.tripElement)
+    this.tripElement.innerHTML += this.content();
 };
 
 HipmunkTripEmbeddedInfoView.prototype.content = function() {

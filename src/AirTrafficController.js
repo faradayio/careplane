@@ -11,18 +11,21 @@ AirTrafficController.prototype.discoverTrips = function() {
   var tripElements = this.tripElements();
   for(var i = 0; i < tripElements.length; i++) {
     var tripElement = tripElements.item(i);
-    if(!Trip.isAlreadyDiscovered(tripElement)) {
+    if(!this.tripIsAlreadyDiscovered(tripElement)) {
       this.createTrip(tripElement);
     }
   }
 };
 
+AirTrafficController.prototype.tripIsAlreadyDiscovered = function(tripElement) {
+  var p = tripElement.getElementsByClassName('careplane-info');
+  return p.length > 0;
+};
+
 AirTrafficController.prototype.createTrip = function(tripElement) {
   var trip = new this.tripClass(tripElement);
-  if(trip.isValid()) {
-    this.trips.push(trip);
-    trip.controller().init();
-  }
+  this.trips.push(trip);
+  trip.controller().init();
 };
 
 AirTrafficController.prototype.rateTrips = function() {

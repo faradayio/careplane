@@ -21,11 +21,6 @@ Trip.average = function(origin, destination, callback) {
   }
 };
 
-Trip.isAlreadyDiscovered = function(tripElement) {
-  var p = tripElement.getElementsByClassName('careplane-info');
-  return p.length > 0;
-};
-
 Trip.prototype.origin = function() {
   return this.flights()[0].origin;
 };

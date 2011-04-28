@@ -23,20 +23,4 @@ describe('Trip', function() {
       expect(result).toEqual(trip);
     });
   });
-
-  describe('#isAlreadyDiscovered', function() {
-    it('returns true if a careplane info element exists', function() {
-      var elem = document.createElement('div');
-      var careplane = document.createElement('p');
-      careplane.setAttribute('class', 'careplane-info');
-      elem.appendChild(careplane);
-
-      expect(Trip.isAlreadyDiscovered(elem)).toBeTruthy();
-    });
-    it('returns false if no careplane footprint element exists', function() {
-      var elem = document.createElement('div');
-
-      expect(Trip.isAlreadyDiscovered(elem)).toBeFalsy();
-    });
-  });
 });

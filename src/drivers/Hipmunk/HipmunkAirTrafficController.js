@@ -6,7 +6,8 @@ HipmunkAirTrafficController.prototype = new AirTrafficController();
 HipmunkAirTrafficController.prototype.tripClass = HipmunkTrip;
 
 HipmunkAirTrafficController.prototype.tripElements = function() {
-  return this.doc.getElementsByClassName('routing');
+  var resultTable = this.doc.getElementsByClassName('results-table')[0];
+  return resultTable.getElementsByClassName('routing');
 };
 
 HipmunkAirTrafficController.prototype.poll = function() {
@@ -30,8 +31,9 @@ HipmunkAirTrafficController.prototype.scoreTrips = function() {
 
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView().updateRating(rating);
-  trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
   trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
+  if(trip.embeddedInfoView())
+    trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
   //trip.infoView().updateTripAverage(trip);  this is too difficult right now
 };
 
