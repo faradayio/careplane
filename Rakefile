@@ -133,6 +133,7 @@ namespace :google_chrome do
 end
 
 namespace :jasmine do
+  desc 'Build Jasmine spec setup'
   task :build do
     puts 'Building Jasmine templates'
     templates 'spec'
@@ -140,7 +141,10 @@ namespace :jasmine do
   end
 end
 
+desc 'Build all plugins and Jasmine'
 task :build => ['firefox:build:default', 'google_chrome:build:default', 'jasmine:build']
+
+desc 'Package all plugins'
 task :package => ['firefox:package', 'google_chrome:package']
 
 task :default => :build
