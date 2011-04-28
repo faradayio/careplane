@@ -51,7 +51,7 @@ HipmunkTrip.prototype.controller = function() {
 HipmunkTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
     var legs = $('.leg', this.infoPanelElement());
-    legs = $(legs).filter(function(leg) {
+    legs = $(legs).filter(function(i, leg) {
       return $('.facts', leg).length > 0;
     });
     this._flights = [];
