@@ -65,6 +65,7 @@ CareplaneEvents = {
       if(!hasRunPreviously) {
         extension.prefs().putBoolean('hasRunPreviously', true);
 
+        extension.tracker.firstRun();
         extension.openWelcomeScreen();
       }
     };

@@ -1,6 +1,7 @@
 Hipmunk = function(extension) {
   this.extension = extension;
   this.doc = extension.doc;
+  this.controllerClass = HipmunkAirTrafficController;
 };
 Hipmunk.prototype = new Driver();
 

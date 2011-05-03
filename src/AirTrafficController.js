@@ -1,5 +1,6 @@
 AirTrafficController = function() {};
 AirTrafficController.prototype.trips = [];
+AirTrafficController.prototype.tripCount = 0;
 AirTrafficController.prototype.completedTrips = 0;
 AirTrafficController.prototype.events = {
   flightEmissionsComplete: function(trip, cm1Response, flight) {
@@ -7,6 +8,35 @@ AirTrafficController.prototype.events = {
     trip.infoView().reportFlightMethodology(cm1Response.methodology, flight);
   },
 
+  tripEmissionsComplete: function(controller) {
+    return function(trip, cm1Response, flight) {
+      HallOfFame.induct(trip);
+
+      if(++controller.completedTrips == controller.tripCount) {
+        controller.events.searchEmissionsComplete(controller);
+      }
+    };
+  },
+
+  searchEmissionsComplete: function(controller) {
+    Careplane.currentExtension.search(controller.origin(), controller.destination(), HallOfFame.average());
+  },
+
+  ratingComplete: function(controller) {
+    return function() {
+      Careplane.currentExtension.tracker.search(controller.origin, controller.destination, averageCo2);
+    };
+  },
+
+  pollInterval: function(controller) {
+    return function() {
+      controller.clear();
+    }
+  }
+};
+
+AirTrafficController.prototype.poll = function() {
+  setInterval(this.events.pollInterval(this), 1000);   // every 1 second
 };
 
 AirTrafficController.prototype.clear = function() {
@@ -32,7 +62,18 @@ AirTrafficController.prototype.tripIsAlreadyDiscovered = function(tripElement) {
 AirTrafficController.prototype.createTrip = function(tripElement) {
   var trip = new this.tripClass(tripElement);
   this.trips.push(trip);
+  this.tripCount++;
   trip.controller().init();
+};
+
+AirTrafficController.prototype.scoreTrips = function() {
+  for(var i in this.trips) {
+    var trip = this.trips[i];
+    if(trip.isScorable) {
+      trip.score(this.events.flightEmissionsComplete,
+                 this.events.tripEmissionsComplete);
+    }
+  }
 };
 
 AirTrafficController.prototype.rateTrips = function() {

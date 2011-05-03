@@ -1,6 +1,7 @@
 Kayak = function(extension) {
   this.extension = extension;
   this.doc = extension.doc;
+  this.controllerClass = KayakAirTrafficController;
 };
 Kayak.prototype = new Driver();
 
@@ -27,11 +28,6 @@ Kayak.prototype.load = function() {
 
 Kayak.prototype.isActiveSearch = function() {
   return this.doc.getElementsByClassName('flightlist').length > 0;
-};
-
-Kayak.prototype.startAirTrafficControl = function() {
-  var controller = new KayakAirTrafficController(this.doc);
-  controller.poll();
 };
 
 Kayak.prototype.insertAttribution = function() {

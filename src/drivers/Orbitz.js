@@ -1,6 +1,7 @@
 Orbitz = function(extension) {
   this.extension = extension;
   this.doc = extension.doc;
+  this.controllerClass = OrbitzAirTrafficController;
 };
 Orbitz.prototype = new Driver();
 
@@ -34,11 +35,4 @@ Orbitz.prototype.insertAttribution = function() {
     footer.appendChild(container);
     Careplane.insertBadge(this.doc, container, null, '');
   }
-};
-
-Orbitz.prototype.startAirTrafficControl = function() {
-  //if(this.doc.getElementsByClassName('careplane-footprint').length == 0) {
-    var controller = new OrbitzAirTrafficController(this.doc);
-    controller.clear();
-  //}
 };

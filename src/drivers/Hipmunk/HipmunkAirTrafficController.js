@@ -1,43 +1,27 @@
 HipmunkAirTrafficController = function(doc) {
   this.doc = doc;
+  this.url = this.doc.location.href;
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
 
-HipmunkAirTrafficController.prototype.tripClass = HipmunkTrip;
-HipmunkAirTrafficController.prototype.events = Util.mergeObjects(HipmunkAirTrafficController.prototype.events, {
-  pollInterval: function(controller) {
-    return function() {
-      controller.clear();
-    }
-  },
+HipmunkAirTrafficController.prototype.origin = function() {
+  return this.url.match(/from=([^&]+)/)[1];
+};
+HipmunkAirTrafficController.prototype.destination = function() {
+  return this.url.match(/to=([^&]+)/)[1];
+};
 
-  tripEmissionsComplete: function(trip, cm1Response, flight) {
-    HallOfFame.induct(trip);
-  }
-});
+HipmunkAirTrafficController.prototype.tripClass = HipmunkTrip;
 
 HipmunkAirTrafficController.prototype.tripElements = function() {
   var resultTable = this.doc.getElementsByClassName('results-table')[0];
   return resultTable.getElementsByClassName('routing');
 };
 
-HipmunkAirTrafficController.prototype.poll = function() {
-  setInterval(this.events.pollInterval(this), 1000);   // every 1 second
-};
-
 HipmunkAirTrafficController.prototype.clear = function() {
   this.discoverTrips();
   this.scoreTrips();
   this.rateTrips();
-};
-
-HipmunkAirTrafficController.prototype.scoreTrips = function() {
-  for(var i in this.trips) {
-    var trip = this.trips[i];
-    if(trip.isScorable) {
-      trip.score(this.onFlightEmissionsComplete, HipmunkAirTrafficControllerEvents.tripEmissionsComplete);
-    }
-  }
 };
 
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {

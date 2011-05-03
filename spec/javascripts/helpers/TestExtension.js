@@ -1,6 +1,12 @@
 TestExtension = function(doc) {
   this.doc = doc;
   this.klass = TestExtension;
+  this.tracker = {
+    welcome: function() {},
+    search: function() {},
+    purchase: function() {},
+    purchaseComparison: function() {}
+  };
 };
 TestExtension.prototype = new Careplane();
 

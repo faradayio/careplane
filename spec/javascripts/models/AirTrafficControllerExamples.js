@@ -11,7 +11,7 @@ sharedExamplesFor('AirTrafficController', function() {
   describe('#clear', function() {
     it('scores all trips and color codes them', function() {
       this.controller.clear();
-      expect(this.controller.trips.length).toBeGreaterThan(0);
+      expect(this.controller.tripCount).toBeGreaterThan(0);
       for(var i in this.controller.trips) {
         var p = this.controller.trips[i].footprintView().footprintParagraph();
         expect(p.innerHTML).toMatch(/[\d,]+/);
@@ -22,18 +22,21 @@ sharedExamplesFor('AirTrafficController', function() {
   describe('#discoverTrips', function() {
     it('creates a list of Trip objects', function() {
       this.controller.discoverTrips();
-      expect(this.controller.trips.length).toBeGreaterThan(0);
+      expect(this.controller.tripCount).toBeGreaterThan(0);
     });
     it('does not load duplicate trips', function() {
       this.controller.discoverTrips();
-      var numTrips = this.controller.trips.length;
+      var numTrips = this.controller.tripCount;
       this.controller.discoverTrips();
-      expect(this.controller.trips.length).toBe(numTrips);
+      expect(this.controller.tripCount).toBe(numTrips);
     });
   });
 
   describe('#scoreTrips', function() {
+    var searchEmissionsComplete;
     beforeEach(function() {
+      searchEmissionsComplete = jasmine.createSpy('searchEmissionsComplete');
+      this.controller.events.searchEmissionsComplete = searchEmissionsComplete;
       this.controller.discoverTrips();
       this.controller.scoreTrips();
     });
@@ -41,6 +44,7 @@ sharedExamplesFor('AirTrafficController', function() {
     it('scores each trip', function() {
       expect($('.careplane-footprint')).toHaveText(/[\d,]+/)
     });
+
     it('reports methodologies for each trip', function() {
       for(var i in this.controller.trips) {
         var div = this.controller.trips[i].infoView().target();
@@ -49,6 +53,10 @@ sharedExamplesFor('AirTrafficController', function() {
           expect($(a)).toHaveText(/[A-Z]{3}-[A-Z]{3}/);
         });
       }
+    });
+
+    it('fires the searchEmissionsComplete event when finished', function() {
+      expect(searchEmissionsComplete).toHaveBeenCalled();
     });
   });
 
