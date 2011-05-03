@@ -4,13 +4,24 @@ KayakAirTrafficController = function(doc) {
 KayakAirTrafficController.prototype = new AirTrafficController();
 
 KayakAirTrafficController.prototype.tripClass = KayakTrip;
+KayakAirTrafficController.prototype.events = Util.mergeObjects(KayakAirTrafficController.prototype.events, {
+  pollInterval: function(controller) {
+    return function() {
+      controller.clear();
+    }
+  },
+
+  tripEmissionsComplete: function(trip, cm1Response, flight) {
+    HallOfFame.induct(trip);
+  }
+});
 
 KayakAirTrafficController.prototype.tripElements = function() {
   return this.doc.getElementsByClassName('flightresult');
 };
 
 KayakAirTrafficController.prototype.poll = function() {
-  setInterval(KayakAirTrafficControllerEvents.pollInterval(this), 1000);   // every 1 second
+  setInterval(this.events.pollInterval(this), 1000);   // every 1 second
 };
 
 KayakAirTrafficController.prototype.clear = function() {
@@ -23,21 +34,8 @@ KayakAirTrafficController.prototype.scoreTrips = function() {
   for(var i in this.trips) {
     var trip = this.trips[i];
     if(trip.isScorable) {
-      trip.score(this.onFlightEmissionsComplete, KayakAirTrafficControllerEvents.tripEmissionsComplete);
+      trip.score(this.events.flightEmissionsComplete,
+                 this.events.tripEmissionsComplete);
     }
-  }
-};
-
-
-
-KayakAirTrafficControllerEvents = {
-  pollInterval: function(controller) {
-    return function() {
-      controller.clear();
-    }
-  },
-
-  tripEmissionsComplete: function(trip, cm1Response, flight) {
-    HallOfFame.induct(trip);
   }
 };

@@ -4,6 +4,17 @@ HipmunkAirTrafficController = function(doc) {
 HipmunkAirTrafficController.prototype = new AirTrafficController();
 
 HipmunkAirTrafficController.prototype.tripClass = HipmunkTrip;
+HipmunkAirTrafficController.prototype.events = Util.mergeObjects(HipmunkAirTrafficController.prototype.events, {
+  pollInterval: function(controller) {
+    return function() {
+      controller.clear();
+    }
+  },
+
+  tripEmissionsComplete: function(trip, cm1Response, flight) {
+    HallOfFame.induct(trip);
+  }
+});
 
 HipmunkAirTrafficController.prototype.tripElements = function() {
   var resultTable = this.doc.getElementsByClassName('results-table')[0];
@@ -11,7 +22,7 @@ HipmunkAirTrafficController.prototype.tripElements = function() {
 };
 
 HipmunkAirTrafficController.prototype.poll = function() {
-  setInterval(HipmunkAirTrafficControllerEvents.pollInterval(this), 1000);   // every 1 second
+  setInterval(this.events.pollInterval(this), 1000);   // every 1 second
 };
 
 HipmunkAirTrafficController.prototype.clear = function() {
@@ -35,18 +46,4 @@ HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   if(trip.embeddedInfoView())
     trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
   //trip.infoView().updateTripAverage(trip);  this is too difficult right now
-};
-
-
-
-HipmunkAirTrafficControllerEvents = {
-  pollInterval: function(controller) {
-    return function() {
-      controller.clear();
-    }
-  },
-
-  tripEmissionsComplete: function(trip, cm1Response, flight) {
-    HallOfFame.induct(trip);
-  }
 };

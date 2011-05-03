@@ -54,4 +54,13 @@ Util = {
     }
     return encodeURI(base + queryString);
   },
+
+  mergeObjects: function() {
+    var merger = arguments[1] || {};
+    var newObject = arguments[0];
+    for(var i in merger) {
+      newObject[i] = merger[i];
+    }
+    return newObject;
+  }
 };

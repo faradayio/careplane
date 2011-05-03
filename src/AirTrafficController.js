@@ -1,6 +1,13 @@
 AirTrafficController = function() {};
 AirTrafficController.prototype.trips = [];
 AirTrafficController.prototype.completedTrips = 0;
+AirTrafficController.prototype.events = {
+  flightEmissionsComplete: function(trip, cm1Response, flight) {
+    trip.footprintView().update(trip.totalFootprint);
+    trip.infoView().reportFlightMethodology(cm1Response.methodology, flight);
+  },
+
+};
 
 AirTrafficController.prototype.clear = function() {
   this.discoverTrips();
@@ -49,13 +56,4 @@ AirTrafficController.prototype.finishedTrips = function() {
     return trip.isDone();
   });
   return list;
-};
-
-
-
-// Events
-
-AirTrafficController.prototype.onFlightEmissionsComplete = function(trip, cm1Response, flight) {
-  trip.footprintView().update(trip.totalFootprint);
-  trip.infoView().reportFlightMethodology(cm1Response.methodology, flight);
 };
