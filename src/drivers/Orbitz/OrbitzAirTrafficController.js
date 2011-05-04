@@ -14,10 +14,10 @@ OrbitzAirTrafficController.prototype.events.searchEmissionsComplete = function(c
 };
 
 OrbitzAirTrafficController.prototype.origin = function() {
-  return $('#airchgOrigin').value();
+  return $('#airchgOrigin', this.doc)[0].value;
 };
 OrbitzAirTrafficController.prototype.destination = function() {
-  return $('#airchgDestination').value();
+  return $('#airchgDestination', this.doc)[0].value;
 };
 
 OrbitzAirTrafficController.prototype.tripElements = function() {
@@ -25,7 +25,8 @@ OrbitzAirTrafficController.prototype.tripElements = function() {
 };
 
 OrbitzAirTrafficController.prototype.sniffPurchases = function() {
+  var controller = this;
   this.eachTrip(function(trip) {
-    $('', trip.tripElement).click(this.events.purchase(this, trip));
+    $('.bookIt a', trip.tripElement).click(controller.events.purchase(controller, trip));
   });
 };

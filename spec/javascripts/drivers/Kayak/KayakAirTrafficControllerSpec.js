@@ -9,7 +9,7 @@ describe('KayakAirTrafficController', function() {
 
     describe('#minCost', function() {
       it('returns the minimum cost amount', function() {
-        expect(this.controller.minCost()).toBe(359);
+        expect(this.controller.minCost()).toBe(411);
       });
     });
   });
