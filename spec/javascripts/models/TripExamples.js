@@ -22,6 +22,9 @@ sharedExamplesFor('Trip', function() {
   it('provides #id', function() {
     expect(this.trip.id).toBeDefined();
   });
+  it('provides #cost', function() {
+    expect(this.trip.cost()).toMatch(/^\d+$/);
+  });
 
   describe('#score', function() {
     it('parses each flight and runs the onFlightEmissionsComplete callback', function() {

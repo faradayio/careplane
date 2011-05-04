@@ -4,6 +4,13 @@ HipmunkTrip = function(tripElement) {
 };
 HipmunkTrip.prototype = new Trip();
 
+HipmunkTrip.prototype.cost = function() {
+  if(!this._cost)
+    this._cost = $('.price', this.tripElement).text().match(/\d+/)[0];
+
+  return this._cost;
+};
+
 HipmunkTrip.prototype.isValid = function() {
   return this.footprintView().isValid() && this.infoPanelElement() != null;
 };

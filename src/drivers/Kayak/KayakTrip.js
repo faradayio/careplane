@@ -1,8 +1,15 @@
 KayakTrip = function(tripElement) {
   this.tripElement = tripElement;
-  this.id = this.tripElement.id.replace('tbd', '');
+  this.id = this.tripElement.id.match(/\d+/)[0];
 };
 KayakTrip.prototype = new Trip();
+
+KayakTrip.prototype.cost = function() {
+  if(!this._cost)
+    this._cost = $('#priceAnchor' + this.id, this.tripElement).text().replace(/[^0-9]/g,'');
+
+  return this._cost;
+};
 
 KayakTrip.prototype.footprintView = function() {
   if(!this._footprintView) {

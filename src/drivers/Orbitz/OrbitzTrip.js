@@ -6,6 +6,13 @@ OrbitzTrip.prototype = new Trip();
 
 OrbitzTrip.count = 0;
 
+OrbitzTrip.prototype.cost = function() {
+  if(!this._cost)
+    this._cost = $('.totalPrice', this.tripElement).text().replace(/[^0-9]/g,'');
+
+  return this._cost;
+};
+
 OrbitzTrip.prototype.footprintView = function() {
   if(!this._footprintView) {
     this._footprintView = new OrbitzTripFootprintView(this.tripElement);
