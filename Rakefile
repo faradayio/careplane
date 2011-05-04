@@ -7,6 +7,7 @@ load 'jasmine/tasks/jasmine.rake'
 
   src/Preferences.js
   src/Util.js
+  src/Tracker.js
   src/Driver.js
   src/HallOfFame.js
 

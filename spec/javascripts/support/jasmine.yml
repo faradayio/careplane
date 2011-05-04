@@ -6,6 +6,7 @@ src_files:
     - lib/jquery-1.5.2.min.js
     - src/Preferences.js
     - src/Util.js
+    - src/Tracker.js
     - src/Driver.js
     - src/HallOfFame.js
     - src/Flight.js
