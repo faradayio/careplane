@@ -109,6 +109,16 @@ namespace :firefox do
       puts `zip -r build/careplane.xpi chrome defaults chrome.manifest icon64.png install.rdf -x *~`
     end
   end
+
+  namespace :develop do
+    task :mac do
+      dir = File.join(Dir.pwd, 'firefox/')
+      profile = Dir.glob('~/Library/Application Support/Firefox/Profiles/*')[0]
+      File.open("Library/Application Support/Firefox/Profiles/#{profile}/extensions/careplane@brighterplanet.com", 'w') do |f|
+        f.puts dir
+      end
+    end
+  end
 end
 
 namespace :google_chrome do
