@@ -152,6 +152,49 @@ namespace :jasmine do
   end
 end
 
+namespace :func do
+  desc "Generate a new funcunit test suite (provide ENV['FUNC'])"
+  task :generate do
+    name = ENV['FUNC']
+    js = <<-JS
+module("#{name}",{
+  setup: function() {
+    S.open('autosuggest.html')
+  }
+});
+
+test("Something",function(){
+  S('input').click();
+  equal( S('.foo').text(), 'bar', "foo is the new bar");
+});
+    JS
+    File.open("func/#{name}_test.js", 'w') { |f| f.puts js }
+
+    js_files = Dir.glob('func/*.js').map do |js_file|
+      "<script type='text/javascript' src='#{File.basename(js_file)}'></script>"
+    end.join("\n")
+
+    html = <<-HTML
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="support/qunit/qunit.css" />
+  <script type="text/javascript" src="support/funcunit.js"></script>
+  #{js_files}
+	<title>Careplane Test Suite</title>
+</head>
+<body>
+  <h1 id="qunit-header">Careplane Test Suite</h1>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+</body>
+</html>
+    HTML
+    File.open("func/funcunit.html", 'w') { |f| f.puts html }
+  end
+end
+
 desc 'Build all plugins and Jasmine'
 task :build => ['firefox:build:default', 'google_chrome:build:default', 'jasmine:build']
 
