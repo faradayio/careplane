@@ -7,8 +7,8 @@ Hipmunk.prototype = new Driver();
 
 Hipmunk.driverName = 'Hipmunk';
 
-Hipmunk.shouldMonitor = function(url) {
-  var match = url.search('hipmunk.com/results');
+Hipmunk.shouldMonitor = function(doc) {
+  var match = doc.location.href.search('hipmunk.com/results');
   return match >=0
 };
 

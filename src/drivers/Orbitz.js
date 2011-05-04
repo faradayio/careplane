@@ -7,9 +7,9 @@ Orbitz.prototype = new Driver();
 
 Orbitz.driverName = 'Orbitz';
 
-Orbitz.shouldMonitor = function(url) {
-  var match = url.search('orbitz.com/App/ViewFlightSearchResults');
-  return match >= 0;
+Orbitz.shouldMonitor = function(doc) {
+  var match = doc.location.href.search('orbitz.com/App/ViewFlightSearchResults');
+  return match >= 0 && this.doc.getElementById('matrix');
 };
 
 Orbitz.prototype.load = function() {

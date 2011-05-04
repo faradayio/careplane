@@ -39,7 +39,7 @@ Careplane.prototype.welcome = function() {
 Careplane.prototype.loadDriver = function(callback) {
   var careplane = this;
   [Hipmunk, Kayak, Orbitz].filter(function(driver) {
-    if(driver.shouldMonitor(careplane.doc.location.href)) {
+    if(driver.shouldMonitor(careplane.doc)) {
       careplane.prefs().getBoolean('sites.' + driver.driverName,
                             CareplaneEvents.driverBecomesAvailable(careplane, driver, callback),
                             true);

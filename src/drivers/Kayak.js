@@ -7,8 +7,8 @@ Kayak.prototype = new Driver();
 
 Kayak.driverName = 'Kayak';
 
-Kayak.shouldMonitor = function(url) {
-  var match = url.search('kayak.com');
+Kayak.shouldMonitor = function(doc) {
+  var match = doc.location.href.search('kayak.com');
   var staticMatch = url.search('fbcdn.net');
   return match >=0 && staticMatch < 0
 };
