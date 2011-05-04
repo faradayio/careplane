@@ -1,15 +1,17 @@
 OrbitzAirTrafficController = function(doc) {
   this.doc = doc;
+  this.url = this.doc.location.href;
+  this.tripClass = OrbitzTrip;
+  this.driver = Orbitz;
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
 
-OrbitzAirTrafficController.prototype.tripClass = OrbitzTrip;
-OrbitzAirTrafficController.prototype.events = Util.mergeObjects(OrbitzAirTrafficController.prototype.events, {
-  searchEmissionsComplete: function() {
-    Careplane.currentExtension.search();
-    controller.rateTrips();
-  }
-});
+OrbitzAirTrafficController.prototype.events.searchEmissionsComplete = function(controller) {
+  Careplane.currentExtension.tracker.search(controller.origin(), controller.destination(), HallOfFame.average());
+  controller.sniffPurchases();
+
+  controller.rateTrips();
+};
 
 OrbitzAirTrafficController.prototype.origin = function() {
   return $('#airchgOrigin').value();

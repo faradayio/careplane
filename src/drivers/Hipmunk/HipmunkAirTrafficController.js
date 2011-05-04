@@ -1,17 +1,19 @@
 HipmunkAirTrafficController = function(doc) {
   this.doc = doc;
   this.url = this.doc.location.href;
+  this.tripClass = HipmunkTrip;
+  this.driver = Hipmunk;
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
 
 HipmunkAirTrafficController.prototype.origin = function() {
-  return this.url.match(/from=([^&]+)/)[1];
+  var match = this.url.match(/from=([^&]+)/);
+  return match ? match[1].toUpperCase() : '';
 };
 HipmunkAirTrafficController.prototype.destination = function() {
-  return this.url.match(/to=([^&]+)/)[1];
+  var match = this.url.match(/to=([^&]+)/);
+  return match ? match[1].toUpperCase() : '';
 };
-
-HipmunkAirTrafficController.prototype.tripClass = HipmunkTrip;
 
 HipmunkAirTrafficController.prototype.tripElements = function() {
   var resultTable = this.doc.getElementsByClassName('results-table')[0];

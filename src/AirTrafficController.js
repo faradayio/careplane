@@ -19,19 +19,22 @@ AirTrafficController.prototype.events = {
   },
 
   searchEmissionsComplete: function(controller) {
-    Careplane.currentExtension.search(controller.origin(), controller.destination(), HallOfFame.average());
-  },
-
-  ratingComplete: function(controller) {
-    return function() {
-      Careplane.currentExtension.tracker.search(controller.origin, controller.destination, averageCo2);
-    };
+    Careplane.currentExtension.tracker.search(controller.driver.driverName, controller.origin(), controller.destination(), HallOfFame.average());
+    
+    controller.sniffPurchases();
   },
 
   pollInterval: function(controller) {
     return function() {
       controller.clear();
     }
+  },
+
+  purchase: function(controller, trip) {
+    return function() {
+      Careplane.currentExtension.tracker.purchase(controller.origin(), controller.destination(),
+                                                  trip.cost(), controller.minCost(), HallOfFame.average());
+    };
   }
 };
 
@@ -71,19 +74,18 @@ AirTrafficController.prototype.scoreTrips = function() {
     var trip = this.trips[i];
     if(trip.isScorable) {
       trip.score(this.events.flightEmissionsComplete,
-                 this.events.tripEmissionsComplete);
+                 this.events.tripEmissionsComplete(this));
     }
   }
 };
 
 AirTrafficController.prototype.rateTrips = function() {
-  var trips = this.finishedTrips();
-  for(var i in trips) {
-    var trip = trips[i];
+  var controller = this;
+  this.eachFinishedTrip(function(trip) {
     var rating = HallOfFame.ratingFor(trip);
     trip.rate(rating);
-    this.updateViews(trip, rating);
-  }
+    controller.updateViews(trip, rating);
+  });
 };
 
 AirTrafficController.prototype.updateViews = function(trip, rating) {
@@ -97,4 +99,11 @@ AirTrafficController.prototype.finishedTrips = function() {
     return trip.isDone();
   });
   return list;
+};
+
+AirTrafficController.prototype.eachTrip = function(callback) {
+  this.trips.map(callback);
+};
+AirTrafficController.prototype.eachFinishedTrip = function(callback) {
+  this.finishedTrips().map(callback);
 };

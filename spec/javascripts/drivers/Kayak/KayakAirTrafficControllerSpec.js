@@ -10,11 +10,13 @@ describe('KayakAirTrafficController', function() {
 
   describe('#scoreTrips', function() {
     it('scores redeye flights', function() {
+      TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
       loadFixtures('kayak_dtw_sfo_redeye.html');
-      this.controller.discoverTrips();
-      this.controller.scoreTrips();
-      for(var i in this.controller.trips) {
-        var p = this.controller.trips[i].footprintView().footprintParagraph();
+      var controller = new KayakAirTrafficController(document);
+      controller.discoverTrips();
+      controller.scoreTrips();
+      for(var i in controller.trips) {
+        var p = controller.trips[i].footprintView().footprintParagraph();
         expect(p.innerHTML).toMatch(/[\d]+/);
       }
     });
