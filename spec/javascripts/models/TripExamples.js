@@ -23,7 +23,7 @@ sharedExamplesFor('Trip', function() {
     expect(this.trip.id).toBeDefined();
   });
   it('provides #cost', function() {
-    expect(this.trip.cost()).toMatch(/^\d+$/);
+    expect(this.trip.cost().toString()).toMatch(/^\d+$/);
   });
 
   describe('#score', function() {

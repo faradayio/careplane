@@ -33,7 +33,7 @@ AirTrafficController.prototype.events = {
   purchase: function(controller, trip) {
     return function() {
       Careplane.currentExtension.tracker.purchase(controller.origin(), controller.destination(),
-                                                  trip.cost(), controller.minCost(), HallOfFame.average());
+                                                  trip.cost(), controller.minCost(), trip.totalFootprint, HallOfFame.average());
     };
   }
 };
@@ -106,4 +106,16 @@ AirTrafficController.prototype.eachTrip = function(callback) {
 };
 AirTrafficController.prototype.eachFinishedTrip = function(callback) {
   this.finishedTrips().map(callback);
+};
+
+AirTrafficController.prototype.minCost = function() {
+  var min;
+  this.eachTrip(function(trip) {
+    if(min == null) {
+      min = trip.cost();
+    } else {
+      min = Math.min(min, trip.cost());
+    }
+  });
+  return min;
 };

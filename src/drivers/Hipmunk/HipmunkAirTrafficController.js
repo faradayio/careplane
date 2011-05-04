@@ -33,3 +33,10 @@ HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
     trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
   //trip.infoView().updateTripAverage(trip);  this is too difficult right now
 };
+
+HipmunkAirTrafficController.prototype.sniffPurchases = function() {
+  var controller = this;
+  this.eachTrip(function(trip) {
+    $('', trip.tripElement).click(controller.events.purchase(this, trip));
+  });
+};

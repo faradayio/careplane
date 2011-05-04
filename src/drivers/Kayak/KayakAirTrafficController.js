@@ -29,3 +29,10 @@ KayakAirTrafficController.prototype.clear = function() {
   this.scoreTrips();
   this.rateTrips();
 };
+
+KayakAirTrafficController.prototype.sniffPurchases = function() {
+  var controller = this;
+  this.eachTrip(function(trip) {
+    $('.results_price', trip.tripElement).click(controller.events.purchase(controller, trip));
+  });
+};

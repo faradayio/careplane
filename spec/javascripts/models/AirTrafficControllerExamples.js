@@ -3,9 +3,11 @@ sharedExamplesFor('AirTrafficController', function() {
     TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
   });
 
-  it('keeps a list of trips', function() {
-    this.controller.scoreTrips();
-    expect(this.controller.trips[0]).not.toBeNull();
+  describe('#trips', function() {
+    it('keeps a list of trips', function() {
+      this.controller.scoreTrips();
+      expect(this.controller.trips[0]).not.toBeNull();
+    });
   });
 
   describe('#clear', function() {

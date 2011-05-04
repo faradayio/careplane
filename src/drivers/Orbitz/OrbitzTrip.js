@@ -8,7 +8,7 @@ OrbitzTrip.count = 0;
 
 OrbitzTrip.prototype.cost = function() {
   if(!this._cost)
-    this._cost = $('.totalPrice', this.tripElement).text().replace(/[^0-9]/g,'');
+    this._cost = parseInt($('.totalPrice', this.tripElement).text().replace(/[^0-9]/g,''));
 
   return this._cost;
 };

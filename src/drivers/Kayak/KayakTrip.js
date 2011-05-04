@@ -6,7 +6,7 @@ KayakTrip.prototype = new Trip();
 
 KayakTrip.prototype.cost = function() {
   if(!this._cost)
-    this._cost = $('#priceAnchor' + this.id, this.tripElement).text().replace(/[^0-9]/g,'');
+    this._cost = parseInt($('#priceAnchor' + this.id, this.tripElement).text().replace(/[^0-9]/g,''));
 
   return this._cost;
 };

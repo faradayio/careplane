@@ -7,6 +7,12 @@ describe('HipmunkAirTrafficController', function() {
     });
 
     itBehavesLikeAn('AirTrafficController');
+
+    describe('#minCost', function() {
+      it('returns the minimum cost amount', function() {
+        expect(this.controller.minCost()).toBe(411);
+      });
+    });
   });
 
   describe('#origin', function() {

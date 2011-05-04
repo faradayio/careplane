@@ -6,7 +6,7 @@ HipmunkTrip.prototype = new Trip();
 
 HipmunkTrip.prototype.cost = function() {
   if(!this._cost)
-    this._cost = $('.price', this.tripElement).text().match(/\d+/)[0];
+    this._cost = parseInt($('.price', this.tripElement).text().match(/\d+/)[0]);
 
   return this._cost;
 };

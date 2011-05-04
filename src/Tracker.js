@@ -12,14 +12,14 @@ Tracker = function(doc){
     firstRun: function() {
       _gaq.push(['_trackEvent', 'First Run', 'Welcome']);
     },
-    search: function(origin, destination, averageCo2) {
-      _gaq.push(['_trackEvent', 'Search', origin + '-' + destination, averageCo2]);
+    search: function(site, origin, destination, averageCo2) {
+      _gaq.push(['_trackEvent', 'Search', site, origin + '-' + destination, averageCo2]);
     },
-    purchase: function(airline, origin, destination, cost, minCost, averageCo2) {
-      _gaq.push(['_trackEvent', 'Purchase', 'Route', airline + '/' + origin + '-' + destination, cost]);
+    purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
+      _gaq.push(['_trackEvent', 'Purchase', 'Route', origin + '-' + destination, cost]);
 
-      var pctCo2Difference = co2 / averageCo2;
-      if(Math.abs(cost - minCost) < 1) {
+      var pctCo2Difference = Math.round((co2 / averageCo2) * 100);
+      if(cost - minCost <= 0) {
         _gaq.push(['_trackEvent', 'Purchase', 'Cheapest', 'CO2 % Difference', pctCo2Difference]);
       } else {
         _gaq.push(['_trackEvent', 'Purchase', 'Premium', 'CO2 % Difference', pctCo2Difference]);

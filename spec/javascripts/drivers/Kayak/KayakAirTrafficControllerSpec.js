@@ -6,6 +6,12 @@ describe('KayakAirTrafficController', function() {
     });
 
     itBehavesLikeAn('AirTrafficController');
+
+    describe('#minCost', function() {
+      it('returns the minimum cost amount', function() {
+        expect(this.controller.minCost()).toBe(359);
+      });
+    });
   });
 
   describe('#scoreTrips', function() {
