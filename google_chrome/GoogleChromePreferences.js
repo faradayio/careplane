@@ -5,11 +5,12 @@ GoogleChromePreferences.prototype.nativeGet = function(key, callback) {
   chrome.extension.sendRequest({ action: 'preferences.get', key: key }, callback);
 };
 GoogleChromePreferences.prototype.nativeGetBoolean = function(key, callback) {
-  chrome.extension.sendRequest({ action: 'preferences.get', key: key }, GoogleChromePreferencesEvents.convertStringPreferenceToBoolean(callback));
+  chrome.extension.sendRequest({ action: 'preferences.get', key: key },
+                               GoogleChromePreferencesEvents.convertStringPreferenceToBoolean(callback));
 };
 
 GoogleChromePreferences.prototype.nativePut = function(key, value) {
-  value = (value == 'true');
+  value = (value === true || value == 'true');
   chrome.extension.sendRequest({ action: 'preferences.put', key: key, value: value });
   return value;
 };
