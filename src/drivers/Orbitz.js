@@ -9,7 +9,7 @@ Orbitz.driverName = 'Orbitz';
 
 Orbitz.shouldMonitor = function(doc) {
   var match = doc.location.href.search('orbitz.com/App/ViewFlightSearchResults');
-  return match >= 0 && this.doc.getElementById('matrix');
+  return match >= 0 && doc.getElementById('matrix');
 };
 
 Orbitz.prototype.load = function() {

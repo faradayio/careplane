@@ -9,7 +9,7 @@ Kayak.driverName = 'Kayak';
 
 Kayak.shouldMonitor = function(doc) {
   var match = doc.location.href.search('kayak.com');
-  var staticMatch = url.search('fbcdn.net');
+  var staticMatch = doc.location.href.search('fbcdn.net');
   return match >=0 && staticMatch < 0
 };
 
