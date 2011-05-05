@@ -2,13 +2,13 @@ Tracker = function(doc){
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-1667526-26']);
 
-  (function() {
+  function() {
     var ga = doc.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;
     ga.src = 'https://ssl.google-analytics.com/ga.js';
     doc.head.appendChild(ga);
-  })();
+  };
 
   return {
     firstRun: function() {
