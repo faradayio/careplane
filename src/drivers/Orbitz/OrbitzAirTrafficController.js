@@ -13,6 +13,11 @@ OrbitzAirTrafficController.prototype.events.searchEmissionsComplete = function(c
   controller.rateTrips();
 };
 
+OrbitzAirTrafficController.prototype.poll = function() {
+  this.discoverTrips();
+  this.scoreTrips();
+};
+
 OrbitzAirTrafficController.prototype.origin = function() {
   return $('#airchgOrigin', this.doc)[0].value;
 };

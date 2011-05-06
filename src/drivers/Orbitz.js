@@ -1,7 +1,8 @@
 Orbitz = function(extension) {
+  this.klass = Orbitz;
   this.extension = extension;
   this.doc = extension.doc;
-  this.controllerClass = OrbitzAirTrafficController;
+  this.atc = new OrbitzAirTrafficController(this.doc);
 };
 Orbitz.prototype = new Driver();
 
@@ -13,10 +14,10 @@ Orbitz.shouldMonitor = function(doc) {
 };
 
 Orbitz.prototype.load = function() {
-  this.extension.notify(Orbitz);
+  this.extension.notify(this.klass);
   this.extension.addStyleSheet();
   this.insertAttribution();
-  this.startAirTrafficControl();
+  this.atc.poll();
 };
 
 Orbitz.prototype.insertAttribution = function() {

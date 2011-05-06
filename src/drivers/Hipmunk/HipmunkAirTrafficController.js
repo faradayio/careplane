@@ -20,12 +20,6 @@ HipmunkAirTrafficController.prototype.tripElements = function() {
   return resultTable.getElementsByClassName('routing');
 };
 
-HipmunkAirTrafficController.prototype.clear = function() {
-  this.discoverTrips();
-  this.scoreTrips();
-  this.rateTrips();
-};
-
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView().updateRating(rating);
   trip.infoView().updateSearchAverage(HallOfFame.average(), trip);

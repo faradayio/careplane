@@ -1,6 +1,15 @@
 Driver = function() {};
 
-Driver.prototype.startAirTrafficControl = function() {
-  this.controller = new this.controllerClass(this.doc);
-  this.controller.clear();
+Driver.prototype.load = function() {
+  var driver = this;
+  var loadInterval = setInterval(function() {
+    if(driver.isActiveSearch()) {
+      driver.extension.notify(driver.klass);
+      driver.extension.addStyleSheet();
+      driver.insertAttribution();
+      driver.atc.poll();
+      clearInterval(loadInterval);
+    }
+  }, 500);
 };
+

@@ -1,7 +1,8 @@
 Kayak = function(extension) {
+  this.klass = Kayak;
   this.extension = extension;
   this.doc = extension.doc;
-  this.controllerClass = KayakAirTrafficController;
+  this.atc = new KayakAirTrafficController(this.doc);
 };
 Kayak.prototype = new Driver();
 
@@ -11,19 +12,6 @@ Kayak.shouldMonitor = function(doc) {
   var match = doc.location.href.search('kayak.com');
   var staticMatch = doc.location.href.search('fbcdn.net');
   return match >=0 && staticMatch < 0
-};
-
-Kayak.prototype.load = function() {
-  var kayak = this;
-  var loadInterval = setInterval(function() {
-    if(kayak.isActiveSearch()) {
-      kayak.extension.notify(Kayak);
-      kayak.extension.addStyleSheet();
-      kayak.insertAttribution();
-      kayak.startAirTrafficControl();
-      clearInterval(loadInterval);
-    }
-  }, 500);
 };
 
 Kayak.prototype.isActiveSearch = function() {

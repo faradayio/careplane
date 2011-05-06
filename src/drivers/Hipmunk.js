@@ -1,7 +1,8 @@
 Hipmunk = function(extension) {
+  this.klass = Hipmunk;
   this.extension = extension;
   this.doc = extension.doc;
-  this.controllerClass = HipmunkAirTrafficController;
+  this.atc = new HipmunkAirTrafficController(this.doc);
 };
 Hipmunk.prototype = new Driver();
 
@@ -12,26 +13,8 @@ Hipmunk.shouldMonitor = function(doc) {
   return match >=0
 };
 
-Hipmunk.prototype.load = function() {
-  var hipmunk = this;
-  var loadInterval = setInterval(function() {
-    if(hipmunk.isActiveSearch()) {
-      hipmunk.extension.notify(Hipmunk);
-      hipmunk.extension.addStyleSheet();
-      hipmunk.insertAttribution();
-      hipmunk.startAirTrafficControl();
-      clearInterval(loadInterval);
-    }
-  }, 500);
-};
-
 Hipmunk.prototype.isActiveSearch = function() {
   return this.doc.getElementsByClassName('info-panel').length > 0;
-};
-
-Hipmunk.prototype.startAirTrafficControl = function() {
-  var controller = new HipmunkAirTrafficController(this.doc);
-  controller.poll();
 };
 
 Hipmunk.prototype.insertAttribution = function() {

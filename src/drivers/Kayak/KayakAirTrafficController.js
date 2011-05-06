@@ -24,12 +24,6 @@ KayakAirTrafficController.prototype.tripElements = function() {
   return this.doc.getElementsByClassName('flightresult');
 };
 
-KayakAirTrafficController.prototype.clear = function() {
-  this.discoverTrips();
-  this.scoreTrips();
-  this.rateTrips();
-};
-
 KayakAirTrafficController.prototype.sniffPurchases = function() {
   var controller = this;
   this.eachTrip(function(trip) {
