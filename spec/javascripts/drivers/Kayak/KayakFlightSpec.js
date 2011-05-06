@@ -1,26 +1,23 @@
 describe('KayakFlight', function() {
   describe('.parseAircraft', function() {
+    var segments;
+    beforeEach(function() {
+      loadFixtures('kayak_dtw_sfo_flight.html');
+      segments = $('.inlineFlightDetailsLeg table:first tr').get();
+    });
+
     it('returns the name of the aircraft', function() {
-      loadFixtures('kayak_dtw_sfo_direct_flight.html');
-      var trs = $('.flightdetailstable').get(1).getElementsByTagName('tr');
-      var rows = Array.prototype.slice.call(trs);
-      var aircraft = KayakFlight.parseAircraft(rows.slice(1, 4));
+      var aircraft = KayakFlight.parseAircraft(table);
       expect(aircraft).toMatch('Embraer');
     });
     it('filters out aircraft details', function() {
-      loadFixtures('kayak_dtw_sfo_direct_flight.html');
-      var trs = $('.flightdetailstable').get(1).getElementsByTagName('tr');
-      var rows = Array.prototype.slice.call(trs);
-      var aircraft = KayakFlight.parseAircraft(rows.slice(1, 4));
-      rows[1].children[1].innerHTML = "hi|Embraer (Winglets) (Narrow-body)|man";
+      $('.inlineFlightDetailsLeg td.extra').html('hi|Embraer (Winglets) (Narrow-body)|man');
+      var aircraft = KayakFlight.parseAircraft(table);
       expect(aircraft).not.toMatch(/\(/);
     });
     it('returns null if no aircraft found', function() {
-      loadFixtures('kayak_dtw_sfo_direct_flight.html');
-      var trs = $('.flightdetailstable').get(1).getElementsByTagName('tr');
-      var rows = Array.prototype.slice.call(trs);
-      var aircraft = KayakFlight.parseAircraft(rows.slice(1, 4));
-      rows[1].children[1].innerHTML = "hi|there|man";
+      $('.inlineFlightDetailsLeg td.extra').html('hi|there|man');
+      var aircraft = KayakFlight.parseAircraft(table);
       expect(aircraft).toMatch('Embraer');
     });
   });

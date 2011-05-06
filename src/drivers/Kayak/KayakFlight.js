@@ -6,18 +6,24 @@ KayakFlight = function(origin, destination, airline, aircraft) {
 };
 KayakFlight.prototype = Flight.prototype;
 
-KayakFlight.parse = function(segment) {
-  var basicDetails = segment[0].getElementsByTagName('td');
-  var airline = basicDetails[1].getElementsByTagName('nowrap')[0].innerHTML.replace('&nbsp;', '').trim();
-  var origin = basicDetails[2].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
-  var destination = basicDetails[4].innerHTML.match(/(\([A-Z]{3}\))/)[1].substr(1,3);
-  var aircraft = this.parseAircraft(segment);
+KayakFlight.parse = function(leg) {
+  var segments = $('tr', leg);
+  var basicDetails = segments[0].getElementsByTagName('td');
+  var airline = basicDetails[1].innerHTML.replace('&nbsp;', '').trim();
+  var airports = Array.prototype.map.call(segments, function(segment) {
+    return segment.getElementsByClassName('airportCode');
+  }).filter(function(item) {
+    return item != null;
+  });
+  var origin = airports[0];
+  var destination = airports[0];
+  var aircraft = this.parseAircraft(segments);
 
   return new KayakFlight(origin, destination, airline, aircraft);
 };
 
-KayakFlight.parseAircraft = function(segment) {
-  var extendedDetails = segment[1].getElementsByTagName('td');
+KayakFlight.parseAircraft = function(segments) {
+  var extendedDetails = segments[3].getElementsByTagName('td');
   var fields = extendedDetails[1].innerHTML.split('|');
   for(var i in fields) {
     var field = fields[i];
