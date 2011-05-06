@@ -1,7 +1,6 @@
 HipmunkTrip = function(tripElement) {
   this.tripElement = tripElement;
   this.id = tripElement.id;
-  this.klassName = 'HipmunkTrip';
 };
 HipmunkTrip.prototype = new Trip();
 

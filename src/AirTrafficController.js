@@ -73,7 +73,6 @@ AirTrafficController.prototype.scoreTrips = function() {
   for(var i in this.trips) {
     var trip = this.trips[i];
     if(trip.isScorable) {
-      Careplane.currentExtension.log('Scoring trip ' + trip.id);
       trip.score(this.events.flightEmissionsComplete,
                  this.events.tripEmissionsComplete(this));
     }
