@@ -16,13 +16,13 @@ HipmunkAirTrafficController.prototype.destination = function() {
 };
 
 HipmunkAirTrafficController.prototype.tripElements = function() {
-  var resultTable = this.doc.getElementsByClassName('results-table')[0];
-  return resultTable.getElementsByClassName('routing');
+  return $('.results-table .routing', this.doc);
 };
 
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView().updateRating(rating);
   trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
+  Careplane.currentExtension.log('trip is ' + trip.klassName);
   if(trip.embeddedInfoView())
     trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
   //trip.infoView().updateTripAverage(trip);  this is too difficult right now

@@ -49,13 +49,12 @@ AirTrafficController.prototype.clear = function() {
 };
 
 AirTrafficController.prototype.discoverTrips = function() {
-  var tripElements = this.tripElements();
-  for(var i = 0; i < tripElements.length; i++) {
-    var tripElement = tripElements.item(i);
-    if(!this.tripIsAlreadyDiscovered(tripElement)) {
-      this.createTrip(tripElement);
+  var controller = this;
+  this.tripElements().each(function(i, tripElement) {
+    if(!controller.tripIsAlreadyDiscovered(tripElement)) {
+      controller.createTrip(tripElement);
     }
-  }
+  });
 };
 
 AirTrafficController.prototype.tripIsAlreadyDiscovered = function(tripElement) {

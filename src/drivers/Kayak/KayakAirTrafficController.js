@@ -21,7 +21,7 @@ KayakAirTrafficController.prototype.destination = function() {
 };
 
 KayakAirTrafficController.prototype.tripElements = function() {
-  return this.doc.getElementsByClassName('flightresult');
+  return $('.flightresult', this.doc);
 };
 
 KayakAirTrafficController.prototype.sniffPurchases = function() {

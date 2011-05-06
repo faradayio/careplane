@@ -26,7 +26,7 @@ OrbitzAirTrafficController.prototype.destination = function() {
 };
 
 OrbitzAirTrafficController.prototype.tripElements = function() {
-  return this.doc.getElementsByClassName('result');
+  return $('.result', this.doc);
 };
 
 OrbitzAirTrafficController.prototype.sniffPurchases = function() {
