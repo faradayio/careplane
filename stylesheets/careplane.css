@@ -10,12 +10,9 @@
   bottom: 20px;
 }
 .orbitz.careplane-footprint {
-  background-color: #eee;
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 476px;
+  background-color: #fff;
+  margin: 10px 0;
+  position: relative;
   padding: 5px 15px 2px;
   border: none;
 }
