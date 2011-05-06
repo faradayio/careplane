@@ -64,37 +64,7 @@ KayakTrip.prototype.eachFlight = function(callback) {
 
 KayakTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
-    var outerTable = this.tripElement.getElementsByClassName('careplane-trip-details')[0];
-    if(outerTable) {
-      this._flights = [];
-      var trip = this;
-      $('.inlineFlightDetailsLeg', outerTable).each(function(leg) {
-        trip._flights = this._flights.concat(this.parseFlights(leg));
-      });
-    }
+    this._flights = KayakFlight.parse($('.inlineFlightDetailsLeg tr', this.tripElement));
   }
   return this._flights;
-}
-
-KayakTrip.prototype.parseFlights = function(leg) {
-  var rows = Array.prototype.slice.call(leg.getElementsByTagName('tr'));
-  return this.flightIndices(rows).map(function(i) {
-    var flight = rows.slice(i, i + 3);
-    return KayakFlight.parse(flight);
-  });
-};
-
-KayakTrip.prototype.flightIndices = function(rows) {
-  var list = [];
-  for(var i in rows) {
-    var row = rows[i];
-    if(row.children.length > 1) {
-      var firstTd = row.getElementsByTagName('td')[0];
-      var imgs = firstTd.getElementsByTagName('img');
-
-      if(imgs.length > 0)
-        list.push(i);
-    }
-  }
-  return list;
 };

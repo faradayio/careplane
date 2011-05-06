@@ -1,7 +1,7 @@
 describe('TripController', function() {
   var trip, footprintView, infoView;
   beforeEach(function() {
-    loadFixtures('kayak_dtw_sfo_direct_flight.html');
+    loadFixtures('kayak_dtw_sfo_flight.html');
     trip = new KayakTrip($('.flightresult').get(0));
     trip.initViews();
     spyOn(trip.infoView(), 'show');

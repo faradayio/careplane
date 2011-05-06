@@ -6,30 +6,37 @@ KayakFlight = function(origin, destination, airline, aircraft) {
 };
 KayakFlight.prototype = Flight.prototype;
 
-KayakFlight.parse = function(leg) {
-  var segments = $('tr', leg);
-  var basicDetails = segments[0].getElementsByTagName('td');
-  var airline = basicDetails[1].innerHTML.replace('&nbsp;', '').trim();
-  var airports = Array.prototype.map.call(segments, function(segment) {
-    return segment.getElementsByClassName('airportCode');
-  }).filter(function(item) {
-    return item != null;
+KayakFlight.parse = function(trs) {
+  var flights = [];
+  var currentFlight;
+  $(trs).each(function(i, tr) {
+    var airports = [], aircraft, airportCode, extra;
+    tr = $(tr);
+    if(tr.hasClass('first')) {
+      currentFlight = new KayakFlight;
+      var tds = $('td', tr);
+      currentFlight.airline = $(tds[tds.length - 2]).text().replace(/\s+/g, ' ').trim();
+      flights.push(currentFlight);
+    } else if(airportCode = $('td.airportCode', tr)[0]) {
+      var code = airportCode.innerHTML;
+      currentFlight.origin ?
+        currentFlight.destination = code :
+        currentFlight.origin = code;
+    } else if(extra = $('td.extra', tr)[0]) {
+      currentFlight.aircraft = KayakFlight.parseAircraft($(extra).text());
+    }
   });
-  var origin = airports[0];
-  var destination = airports[0];
-  var aircraft = this.parseAircraft(segments);
 
-  return new KayakFlight(origin, destination, airline, aircraft);
+  return flights;
 };
 
-KayakFlight.parseAircraft = function(segments) {
-  var extendedDetails = segments[3].getElementsByTagName('td');
-  var fields = extendedDetails[1].innerHTML.split('|');
+KayakFlight.parseAircraft = function(extra) {
+  var fields = extra.split('|');
   for(var i in fields) {
     var field = fields[i];
 
     if(Flight.isAircraftInfo(field)) {
-      return field.replace(/\([^)]*\)/g,'');
+      return field.replace(/\([^)]*\)/g,'').replace(/[\s]+/g,' ').trim();
     }
   }
 

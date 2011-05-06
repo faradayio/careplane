@@ -2,6 +2,10 @@ describe('KayakAirTrafficController', function() {
   describe('with fixtures', function() {
     beforeEach(function() {
       loadFixtures('kayak_dtw_sfo.html');
+      TestExtension.urlMap['http://www.kayak.com/s/run/inlineDetails/flight.*'] = {
+        'status': 0,
+        'message': kayakFlightDetails
+      };
       this.controller = new KayakAirTrafficController(document);
     });
 
@@ -9,7 +13,7 @@ describe('KayakAirTrafficController', function() {
 
     describe('#minCost', function() {
       it('returns the minimum cost amount', function() {
-        expect(this.controller.minCost()).toBe(411);
+        expect(this.controller.minCost()).toBe(415);
       });
     });
   });
