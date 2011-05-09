@@ -4,6 +4,9 @@
   </head>
   <body>
     <script>
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1667526-26']);
+
       function welcome() {
         chrome.tabs.create({ url: 'http://careplane.org/welcome.html' });
       }
@@ -16,6 +19,25 @@
           localStorage[key] = value;
         }
       };
+
+      var tracker = {
+        firstRun: function() {
+          _gaq.push(['_trackEvent', 'First Run', 'Welcome']);
+        },
+        search: function(site, origin, destination, averageCo2) {
+          _gaq.push(['_trackEvent', 'Search', site, origin + '-' + destination, averageCo2]);
+        },
+        purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
+          _gaq.push(['_trackEvent', 'Purchase', 'Route', origin + '-' + destination, cost]);
+
+          var pctCo2Difference = Math.round((co2 / averageCo2) * 100);
+          if(cost - minCost <= 0) {
+            _gaq.push(['_trackEvent', 'Purchase', 'Cheapest', 'CO2 % Difference', pctCo2Difference]);
+          } else {
+            _gaq.push(['_trackEvent', 'Purchase', 'Premium', 'CO2 % Difference', pctCo2Difference]);
+          }
+        }
+      }
 
       /**
        * Handles data sent via chrome.extension.sendRequest().
@@ -34,11 +56,21 @@
         case 'preferences.put':
           preferences.put(request.key, request.value);
           break;
+        case 'tracker.firstRun':
+          tracker.firstRun();
+          break;
+        case 'tracker.search':
+          tracker.search(request.site, request.origin, request.destination, request.averageCo2);
+          break;
+        case 'tracker.purchase':
+          tracker.purchase(request.origin, request.destination, request.cost, request.minCost, request.co2, request.averageCo2);
+          break;
         }
       }
 
       // Wire up the listener.
       chrome.extension.onRequest.addListener(onRequest);
     </script>
+    <script type="text/javascript" async="true" src="https://ssl.google-analytics.com/ga.js"></script>
   </body>
 </html>

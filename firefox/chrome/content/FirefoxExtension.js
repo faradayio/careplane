@@ -1,7 +1,7 @@
 FirefoxExtension = function(doc) {
   this.doc = doc;
   this.klass = FirefoxExtension;
-  this.tracker = Tracker(doc);
+  this.tracker = FirefoxTracker;
 };
 FirefoxExtension.prototype = new Careplane();
 
