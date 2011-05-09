@@ -1,6 +1,6 @@
 sharedExamplesFor('AirTrafficController', function() {
   beforeEach(function() {
-    TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
+    TestExtension.urlMap['carbon.brighterplanet.com/flights'] = { "emission": 234 };
   });
 
   describe('#trips', function() {
@@ -16,7 +16,7 @@ sharedExamplesFor('AirTrafficController', function() {
       expect(this.controller.tripCount).toBeGreaterThan(0);
       for(var i in this.controller.trips) {
         var p = this.controller.trips[i].footprintView().footprintParagraph();
-        expect(p).toContain(/[\d,]+/);
+        expect(p).toHaveText(/[\d,]+/);
       }
     });
   });

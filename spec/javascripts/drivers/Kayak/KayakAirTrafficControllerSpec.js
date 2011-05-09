@@ -27,7 +27,7 @@ describe('KayakAirTrafficController', function() {
       controller.scoreTrips();
       for(var i in controller.trips) {
         var p = controller.trips[i].footprintView().footprintParagraph();
-        expect(p).toContain(/[\d]+/);
+        expect(p).toHaveText(/[\d]+/);
       }
     });
   });

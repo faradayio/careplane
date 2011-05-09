@@ -3,7 +3,7 @@ describe('HipmunkAirTrafficController', function() {
     beforeEach(function() {
       loadFixtures('hipmunk_dtw_sfo.html');
       this.controller = new HipmunkAirTrafficController(document);
-      this.controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
+      this.controller.url = 'www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw';
     });
 
     itBehavesLikeAn('AirTrafficController');
