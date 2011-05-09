@@ -26,9 +26,13 @@ HipmunkTripFootprintView.prototype.leftmostLeg = function() {
 };
 
 HipmunkTripFootprintView.prototype.hasRoomOnLeft = function() {
-  var margin = parseFloat(this.leftmostLeg().css('margin-left').replace(/%/,''));
-  var pWidth = (100 / this.footprintParent().innerWidth()) * 100;
-  return margin >= pWidth;
+  if(this.leftmostLeg().css('margin-left').search(/%/) > 0) {  // some browsers use %, some px
+    var margin = parseFloat(this.leftmostLeg().css('margin-left').replace(/%/,''));
+    return margin >= 12;
+  } else {
+    var margin = parseFloat(this.leftmostLeg().css('margin-left'));
+    return margin >= 110;
+  }
 };
 
 HipmunkTripFootprintView.prototype.insertFootprintParagraph = function(footprintParagraph) {
