@@ -22,7 +22,6 @@ HipmunkAirTrafficController.prototype.tripElements = function() {
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView().updateRating(rating);
   trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
-  Careplane.currentExtension.log('trip is ' + trip.klassName);
   if(trip.embeddedInfoView())
     trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
   //trip.infoView().updateTripAverage(trip);  this is too difficult right now

@@ -26,16 +26,25 @@ HipmunkTripFootprintView.prototype.leftmostLeg = function() {
 };
 
 HipmunkTripFootprintView.prototype.hasRoomOnLeft = function() {
-  var margin = parseInt(this.leftmostLeg().css('margin-left'));
-  return margin >= 200;
+  var margin = parseFloat(this.leftmostLeg().css('margin-left').replace(/%/,''));
+  var pWidth = (100 / this.footprintParent().innerWidth()) * 100;
+  return margin >= pWidth;
 };
 
-HipmunkTripFootprintView.prototype.position = function() {
-  var footprint = $(this.footprintParagraph());
-  if(this.hasRoomOnLeft()) {
-    var fpOffset = parseInt(footprint.css('width')) + 10;
-    footprint.css('position', 'absolute');
-    var bar = this.leftmostLeg();
-    footprint.css('left', (parseInt(bar.css('margin-left')) - fpOffset).toString() + 'px');
-  }
+HipmunkTripFootprintView.prototype.insertFootprintParagraph = function(footprintParagraph) {
+  if(this.hasRoomOnLeft())
+    this.position = this.positionLeft;
+  this.footprintParent().append(footprintParagraph);
+};
+
+HipmunkTripFootprintView.prototype.positionLeft = function() {
+  var timebox = $('div.timebox:first', this.footprintParent());
+  this.footprintParagraph().css('right', timebox.css('right'));
+};
+
+HipmunkTripFootprintView.prototype.show = function() {
+  this.target().css('visibility','visible');
+};
+HipmunkTripFootprintView.prototype.hide = function() {
+  this.target().css('visibility','hidden');
 };
