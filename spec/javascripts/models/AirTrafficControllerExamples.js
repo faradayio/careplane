@@ -16,7 +16,7 @@ sharedExamplesFor('AirTrafficController', function() {
       expect(this.controller.tripCount).toBeGreaterThan(0);
       for(var i in this.controller.trips) {
         var p = this.controller.trips[i].footprintView().footprintParagraph();
-        expect(p.innerHTML).toMatch(/[\d,]+/);
+        expect(p).toContain(/[\d,]+/);
       }
     });
   });

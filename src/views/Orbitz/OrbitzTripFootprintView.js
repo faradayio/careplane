@@ -8,5 +8,5 @@ OrbitzTripFootprintView.prototype.driverName = function() {
 };
 
 OrbitzTripFootprintView.prototype.footprintParent = function() {
-  return this.tripElement;
+  return $(this.tripElement);
 };

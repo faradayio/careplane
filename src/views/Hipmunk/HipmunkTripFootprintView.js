@@ -14,7 +14,7 @@ HipmunkTripFootprintView.prototype.driverName = function() {
 };
 
 HipmunkTripFootprintView.prototype.footprintParent = function() {
-  return $('.graph', this.tripElement).get(0);
+  return $('.graph', this.tripElement);
 };
 
 HipmunkTripFootprintView.prototype.tripBarElements = function() {

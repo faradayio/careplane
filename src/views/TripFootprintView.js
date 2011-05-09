@@ -9,24 +9,28 @@ TripFootprintView.prototype.target = function() {
 };
 
 TripFootprintView.prototype.footprintParagraph = function() {
-  return $('.careplane-footprint', this.footprintParent()).get(0);
+  return $('.careplane-footprint', this.footprintParent());
 }
 
 TripFootprintView.prototype.loadingText = '<i>Loading Careplane footprint &hellip;</i>';
 
 TripFootprintView.prototype.init = function() {
-  var footprintParent = this.footprintParent();
-  if(footprintParent) {
+  if(this.footprintParent()) {
     var footprintParagraph = this.tripElement.ownerDocument.createElement('p');
     footprintParagraph.setAttribute('class', this.className());
     footprintParagraph.innerHTML = this.loadingText;
 
-    footprintParent.appendChild(footprintParagraph);
-    if(this.position)
-      this.position();
+    this.insertFootprintParagraph(footprintParagraph);
+    this.position();
   } else {
     Careplane.currentExtension.log('Could not find a footprintParent for ' + this.tripElement.id);
   }
+};
+
+TripFootprintView.prototype.position = function() { };
+
+TripFootprintView.prototype.insertFootprintParagraph = function(footprintParagraph) {
+  this.footprintParent().append(footprintParagraph);
 };
 
 TripFootprintView.prototype.className = function() {
@@ -37,18 +41,17 @@ TripFootprintView.prototype.updateRating = function(rating) {
   var hue = (rating < 0) ? 0 : 120;
   var saturation = Math.round(Math.abs(rating * 100));
   var hsl = 'hsl(' + hue + ', ' + saturation + '%, 50%)';
-  $(this.footprintParagraph()).css('color', hsl);
+  this.footprintParagraph().css('color', hsl);
 };
 
 TripFootprintView.prototype.update = function(footprint) {
-  this.footprintParagraph().innerHTML = Util.formatFootprint(footprint);
-  if(this.position)
-    this.position();
+  this.footprintParagraph().html(Util.formatFootprint(footprint));
+  this.position();
 };
 
 TripFootprintView.prototype.show = function() {
-  $(this.target()).show();
+  this.target().show();
 };
 TripFootprintView.prototype.hide = function() {
-  $(this.target()).hide();
+  this.target().hide();
 };

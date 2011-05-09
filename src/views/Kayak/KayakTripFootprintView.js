@@ -8,5 +8,5 @@ KayakTripFootprintView.prototype.driverName = function() {
 };
 
 KayakTripFootprintView.prototype.footprintParent = function() {
-  return this.tripElement.getElementsByClassName('resultbottom')[0];
+  return $(this.tripElement.getElementsByClassName('resultbottom')[0]);
 };
