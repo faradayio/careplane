@@ -221,6 +221,6 @@ desc 'Build all plugins and Jasmine'
 task :build => ['firefox:build:default', 'google_chrome:build:default', 'safari:build:default', 'jasmine:build']
 
 desc 'Package all plugins'
-task :package => ['firefox:package', 'google_chrome:package']
+task :package => ['firefox:package', 'google_chrome:package', 'safari:package']
 
 task :default => :build
