@@ -143,6 +143,28 @@ namespace :google_chrome do
   end
 end
 
+namespace :safari do
+  namespace :build do
+    task :templates do
+      puts 'Building Safari templates'
+      templates 'safari/careplane.safariextension'
+      puts 'Done'
+    end
+    task :default => 'safari:build:templates' do
+      puts 'Building Safari'
+      build 'safari', 'careplane.safariextension'
+      puts 'Done'
+    end
+  end
+
+  task :package => :build do
+    FileUtils.mkdir_p('safari/build')
+    Dir.chdir 'safari' do
+      puts `zip -r build/careplane.safariextensionz careplane.safariextension -x *~`
+    end
+  end
+end
+
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
   task :build do
@@ -196,7 +218,7 @@ test("Something",function(){
 end
 
 desc 'Build all plugins and Jasmine'
-task :build => ['firefox:build:default', 'google_chrome:build:default', 'jasmine:build']
+task :build => ['firefox:build:default', 'google_chrome:build:default', 'safari:build:default', 'jasmine:build']
 
 desc 'Package all plugins'
 task :package => ['firefox:package', 'google_chrome:package']

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Brighter Planet</string>
+	<key>CFBundleDisplayName</key>
+	<string>Careplane</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.brighterplanet.careplane</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+  <string><%= @version %></string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>Chrome</key>
+	<dict/>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>End</key>
+			<array>
+        <% @js_files.each do |file| %>
+        <string><%= file %></string><% end %>
+			</array>
+		</dict>
+		<key>Stylesheets</key>
+		<array>
+			<string>stylesheets/careplane.css</string>
+		</array>
+		<key>Whitelist</key>
+		<array>
+			<string>*://*.hipmunk.com/results*</string>
+			<string>*://hipmunk.com/results*</string>
+			<string>*://*.kayak.com/*</string>
+			<string>*://kayak.com/*</string>
+			<string>*://*.orbitz.com/*</string>
+			<string>*://orbitz.com/*</string>
+		</array>
+	</dict>
+	<key>Description</key>
+	<string>Real-time carbon footprints inserted into your favorite travel search sites</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Allowed Domains</key>
+			<array>
+				<string>kayak.com</string>
+				<string>carbon.brighterplanet.com</string>
+			</array>
+			<key>Level</key>
+			<string>Some</string>
+		</dict>
+	</dict>
+	<key>Website</key>
+	<string>http://careplane.org</string>
+</dict>
+</plist>
