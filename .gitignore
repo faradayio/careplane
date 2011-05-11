@@ -12,4 +12,7 @@ google_chrome/src
 google_chrome/stylesheets
 google_chrome/application.js
 safari/build
-safari/careplane.safariextension
+safari/careplane.safariextension/images
+safari/careplane.safariextension/lib
+safari/careplane.safariextension/src
+safari/careplane.safariextension/stylesheets
