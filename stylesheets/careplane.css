@@ -31,13 +31,13 @@
 }
 
 
-.careplane-info {
+div.careplane-info {
   position: absolute;
   border-top: 1px solid #eee;
   border-left: 1px solid #eee;
   border-bottom: 1px solid gray;
   border-right: 1px solid gray;
-  margin: 10px 0 0;
+  margin: 10px 0 0 !important;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -54,7 +54,7 @@
       rgb(255,255,255) 0%,
       rgb(237,237,237) 100%
   );
-  padding: 10px;
+  padding: 10px !important;
   width: 250px;
   z-index: 999;
 }
