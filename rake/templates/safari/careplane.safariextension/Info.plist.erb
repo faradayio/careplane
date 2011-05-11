@@ -15,7 +15,12 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chrome</key>
-	<dict/>
+	<dict>
+		<key>Database Quota</key>
+		<real>1048576</real>
+		<key>Global Page</key>
+		<string>background.html</string>
+	</dict>
 	<key>Content</key>
 	<dict>
 		<key>Scripts</key>
@@ -34,13 +39,20 @@
 		</array>
 		<key>Whitelist</key>
 		<array>
-			<string>*://*.hipmunk.com/results*</string>
-			<string>*://hipmunk.com/results*</string>
-			<string>*://*.kayak.com/*</string>
-			<string>*://kayak.com/*</string>
-			<string>*://*.orbitz.com/*</string>
-			<string>*://orbitz.com/*</string>
+			<string>http://www.hipmunk.com/results*</string>
+			<string>http://hipmunk.com/results*</string>
+			<string>http://www.kayak.com/*</string>
+			<string>http://kayak.com/*</string>
+			<string>http://kayak.com/</string>
+			<string>http://www.kayak.com/</string>
+      <string>http://www.orbitz.com/App/ViewFlightSearchResults*</string>
+			<string>http://orbitz.com/App/ViewFlightSearchResults*</string>
 		</array>
+    <key>Blacklist</key>
+    <array>
+      <string>*://*.kayak.com/*fbcdn.net*</string>
+      <string>*://kayak.com/*fbcdn.net*</string>
+    </array>
 	</dict>
 	<key>Description</key>
 	<string>Real-time carbon footprints inserted into your favorite travel search sites</string>
@@ -52,8 +64,12 @@
 		<dict>
 			<key>Allowed Domains</key>
 			<array>
+				<string>hipmunk.com</string>
+				<string>www.hipmunk.com</string>
 				<string>kayak.com</string>
-				<string>carbon.brighterplanet.com</string>
+				<string>www.kayak.com</string>
+				<string>orbitz.com</string>
+				<string>www.orbitz.com</string>
 			</array>
 			<key>Level</key>
 			<string>Some</string>
