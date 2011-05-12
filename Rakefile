@@ -3,14 +3,9 @@ require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
 def sh(cmd, cwd = '.')
-  output = ''
   puts cmd
   Dir.chdir(cwd) do
-    IO.popen(cmd) do |io|
-      chunk = io.read
-      output += chunk
-      print chunk
-    end
+    super
   end
 end
 
@@ -83,11 +78,21 @@ v#{current_version} #{datetime}
 version: #{current_version}
 categories: #{browser}
 filename: #{File.basename(@files["#{browser}_download".to_sym].call)}
+filesize: #{File.size(@files["#{browser}_package".to_sym]) / 1000}
 ---
 #{message}
       TXT
     end
     puts "Wrote Changelog entry for v#{current_version} to #{changelog_post(browser)}"
+  end
+
+  existing_changelog = File.read 'CHANGELOG'
+  unless existing_changelog =~ /v#{current_version}/
+    File.open 'CHANGELOG', 'w' do |f|
+      f.puts message
+      f.puts existing_changelog
+    end
+    puts 'Wrote CHANGELOG'
   end
 end
 
@@ -132,15 +137,12 @@ namespace :version do
 end
 
 
-desc 'Rebuild rocco docs'
 desc 'Update careplane.org with new version'
-task :site => 'pages:sync' do
-  rev = sh('git rev-parse --short HEAD').strip
-  sh "mv docs/lib/#{gemname}/carbon_model.html docs/"
-  sh 'git add *.markdown', 'docs'
-  git "commit -m 'rebuild pages from #{rev}'", 'docs' do |ok,res|
+task :site => 'pages/' do
+  sh 'git add _posts downloads', 'pages'
+  sh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
     verbose { puts "gh-pages updated" }
-    sh 'git push -q o HEAD:gh-pages', 'docs' unless ENV['NO_PUSH']
+    sh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
   end
 end
 
@@ -408,6 +410,9 @@ task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/dow
   end
   puts "Careplane v#{current_version} released!"
 end
+
+
+task :publish => [:release, :site]
 
 
 task :default => :build
