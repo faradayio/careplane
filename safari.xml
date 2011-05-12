@@ -1,0 +1,24 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Careplane for Safari</title>
+  <link href="http://careplane.org/safari.xml" rel="self"/>
+  <link href="http://careplane.org/"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>http://careplane.org/safari</id>
+  <author>
+    <name>Brighter Planet</name>
+    <email>info@brighterplanet.com</email>
+  </author>
+  {% for post in site.categories.safari %}
+    <entry>
+      <title>Careplane for Safari v{{ post.version }}</title>
+      <link href="http://careplane.org/downloads/{{ post.filename }}"/>
+      <updated>{{ post.date | date_to_xmlschema }}</updated>
+      <id>http://careplane.org{{ post.id }}</id>
+      <content type="html">{{ post.content | xml_escape }}</content>
+    </entry>
+  {% endfor %}
+</feed>
