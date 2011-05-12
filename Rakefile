@@ -1,6 +1,177 @@
-
+require 'rake/clean'
 require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
+
+def sh(cmd, cwd = '.')
+  output = ''
+  puts cmd
+  Dir.chdir(cwd) do
+    IO.popen(cmd) do |io|
+      chunk = io.read
+      output += chunk
+      print chunk
+    end
+  end
+end
+
+BROWSERS = %w{chrome firefox safari}
+
+def datetime
+  Time.now.strftime('%Y-%m-%d')
+end
+
+def versions
+  @versions ||= `git tag -l v*`.split("\n").map { |v| Gem::Version.new(v.sub('v','')) }.sort
+end
+
+def current_version
+  versions.last.to_s
+end
+def last_version
+  versions[versions.length - 2].to_s
+end
+
+def version
+  File.read('VERSION').gsub(/[\s\n]+$/,'')
+end
+
+def changelog_post(browser)
+  "pages/_posts/#{datetime}-careplane-#{browser}-#{current_version}.markdown"
+end
+
+@files = {
+  :chrome_package => 'google_chrome/build/careplane.zip',
+  :chrome_download => lambda { "pages/downloads/careplane-v#{current_version}.zip" },
+  :firefox_package => 'firefox/build/careplane.xpi',
+  :firefox_download => lambda { "pages/downloads/careplane-v#{current_version}.xpi" },
+  :safari_package => 'safari/build/careplane.safariextz',
+  :safari_download => lambda { "pages/downloads/careplane-v#{current_version}.safariextz" }
+}
+
+desc 'Update changelog (make sure you have run `rake version:bump` first)'
+task :changelog, :message do |t, args|
+  unless File.exist?('pages')
+    puts "Run `rake pages` first"
+    exit
+  end
+
+  message = args[:message]
+  unless message
+    commits = `git log --pretty=oneline v#{last_version}..v#{current_version}`
+    prelude = <<-TXT
+v#{current_version} #{datetime}
+  Enter the list of changes for version 
+  Here's a commit list to help jog your memory
+#{commits.split("\n").map { |c| "  #{c}" }.join("\n")}
+    TXT
+    tempfile = '/tmp/careplane-changelog-entry.txt'
+    FileUtils.rm_f tempfile
+    File.open(tempfile, 'w') { |f| f.puts prelude }
+    editor = ENV['GIT_EDITOR'] || ENV['VISUAL'] || ENV['EDITOR'] || 'vi'
+    Process.fork do
+      exec "#{editor} #{tempfile}"
+    end
+    Process.wait
+    message = File.read(tempfile)
+    FileUtils.rm_f tempfile
+  end
+
+  BROWSERS.each do |browser|
+    File.open(changelog_post(browser), 'w') do |f|
+      f.puts <<-TXT
+---
+version: #{current_version}
+categories: #{browser}
+filename: #{@files["#{browser}_download".to_sym].call}
+---
+#{message}
+      TXT
+    end
+    puts "Wrote Changelog entry for v#{current_version} to #{changelog_post(browser)}"
+  end
+end
+
+
+task :version do
+  puts version
+end
+namespace :version do
+
+  task :bump => 'version:bump:patch'
+
+  namespace :bump do
+    task :patch do
+      current = version
+      whole, major, minor, patch = current.match(/(\d+)\.(\d+)\.(\d+)$/).to_a
+      patch = patch.to_i + 1
+      task('version:set').invoke("#{major}.#{minor}.#{patch}")
+    end
+    task :minor do
+      current = version
+      whole, major, minor = current.match(/(\d+)\.(\d+)\.\d+$/).to_a
+      minor = minor.to_i + 1
+      task('version:set').invoke("#{major}.#{minor}.0")
+    end
+    task :major do
+      current = version
+      whole, major = current.match(/(\d+)\.\d+\.\d+$/).to_a
+      major = (major.to_i + 1)
+      task('version:set').invoke("#{major}.0.0")
+    end
+  end
+
+  task :set, :string do |t, args|
+    File.open('VERSION', 'w') { |f| f.puts args[:string] }
+    puts "Version set to #{args[:string]}"
+  end
+
+  task :tag do
+    sh "git tag v#{version}"
+    puts "Tagged #{`git log -n 1 --pretty=oneline`} with v#{version}"
+  end
+end
+
+
+desc 'Rebuild rocco docs'
+task :docs => 'pages:sync'
+directory 'pages/'
+
+desc 'Update careplane.org with new version'
+task :site => 'pages:sync' do
+  rev = sh('git rev-parse --short HEAD').strip
+  sh "mv docs/lib/#{gemname}/carbon_model.html docs/"
+  sh 'git add *.markdown', 'docs'
+  git "commit -m 'rebuild pages from #{rev}'", 'docs' do |ok,res|
+    verbose { puts "gh-pages updated" }
+    sh 'git push -q o HEAD:gh-pages', 'docs' unless ENV['NO_PUSH']
+  end
+end
+
+task :pages => 'pages:sync'
+# Update the pages/ directory clone
+namespace :pages do
+  desc 'Initialize the pages directory to allow versioning'
+  task :sync => ['.git/refs/heads/gh-pages', 'pages/.git/refs/remotes/o'] do |f|
+    sh 'git fetch -q o', 'pages'
+    sh 'git reset -q --hard o/gh-pages', 'pages'
+    sh 'touch pages'
+  end
+
+  file '.git/refs/heads/gh-pages' => 'pages/' do |f|
+    unless File.exist? f.name
+      sh 'git branch gh-pages'
+    end
+  end
+
+  file 'pages/.git/refs/remotes/o' => 'pages/' do |f|
+    unless File.exist? f.name
+      sh 'git init -q pages'
+      sh 'git remote add o ../.git', 'pages'
+    end
+  end
+end
+
+CLOBBER.include 'pages/.git'
 
 @js_files = %w{
   lib/jquery-1.5.2.min.js
@@ -82,7 +253,7 @@ def build_application_js(driver, target_dir = '')
 end
 
 def templates(target)
-  @version = File.read('VERSION').gsub(/[\s\n]+$/,'')
+  @version = version
   Dir.glob(File.join('rake', 'templates', target, '**/*.erb')).each do |template|
     erb = ERB.new File.read(template)
     filename = File.basename template, '.erb'
@@ -222,5 +393,18 @@ task :build => ['firefox:build:default', 'google_chrome:build:default', 'safari:
 
 desc 'Package all plugins'
 task :package => ['firefox:package', 'google_chrome:package', 'safari:package']
+
+
+BROWSERS.each do |browser|
+  file changelog_post(browser) => :changelog
+end
+directory 'pages/downloads'
+task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/downloads']) do
+  %w{chrome firefox safari}.each do |browser|
+    FileUtils.cp @files["#{browser}_package".to_sym], @files["#{browser}_download".to_sym].call
+  end
+  puts "Careplane v#{current_version} released!"
+end
+
 
 task :default => :build

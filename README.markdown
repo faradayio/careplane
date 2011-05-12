@@ -22,3 +22,16 @@ Driver checklist:
 4. Add an option for it in `chrome/content/options.xul`
 5. Name the option in `chrome/locale/en-US/options.dtd`
 6. Enable it by default in `chrome/defaults/preferences/prefs.js`
+
+## Versioning and releasing
+
+There are a few rake tasks for setting the plugin's current version that also tag the latest commit with the current version:
+* `rake version` displays the current version
+* `rake version:set[1.2.3]` will force a version
+* `rake version:bump` and `rake version:bump:patch` will bump the patch version, e.g., 0.2.3 => 0.2.4
+* `rake version:minor` will bump the minor version, e.g., 0.2.3 => 0.3.0
+* `rake version:major` will bump the major version, e.g., 0.2.3 => 1.0.0
+
+The `rake changelog` task will create a changelog entry for the latest version. The entry is included in the gh-pages atom feed for each browser (pages/safari.xml, etc.). You can either set the changelog message on the command line with `rake changelog[new stuff]` or if no parameter is given, it will prompt you to fill in a message with your favorite editor (e.g., vi).
+
+The `rake release` task runs the `changelog` task, then packages each plugin and copies it to the pages/downloads folder.
