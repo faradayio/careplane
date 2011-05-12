@@ -41,11 +41,11 @@ end
 
 @files = {
   :chrome_package => 'google_chrome/build/careplane.zip',
-  :chrome_download => lambda { "pages/downloads/careplane-v#{current_version}.zip" },
+  :chrome_download => lambda { "pages/downloads/careplane-#{current_version}.zip" },
   :firefox_package => 'firefox/build/careplane.xpi',
-  :firefox_download => lambda { "pages/downloads/careplane-v#{current_version}.xpi" },
+  :firefox_download => lambda { "pages/downloads/careplane-#{current_version}.xpi" },
   :safari_package => 'safari/build/careplane.safariextz',
-  :safari_download => lambda { "pages/downloads/careplane-v#{current_version}.safariextz" }
+  :safari_download => lambda { "pages/downloads/careplane-#{current_version}.safariextz" }
 }
 
 desc 'Update changelog (make sure you have run `rake version:bump` first)'
@@ -82,7 +82,7 @@ v#{current_version} #{datetime}
 ---
 version: #{current_version}
 categories: #{browser}
-filename: #{@files["#{browser}_download".to_sym].call}
+filename: #{File.basename(@files["#{browser}_download".to_sym].call)}
 ---
 #{message}
       TXT
@@ -133,9 +133,6 @@ end
 
 
 desc 'Rebuild rocco docs'
-task :docs => 'pages:sync'
-directory 'pages/'
-
 desc 'Update careplane.org with new version'
 task :site => 'pages:sync' do
   rev = sh('git rev-parse --short HEAD').strip
@@ -147,6 +144,7 @@ task :site => 'pages:sync' do
   end
 end
 
+directory 'pages/'
 task :pages => 'pages:sync'
 # Update the pages/ directory clone
 namespace :pages do
@@ -262,22 +260,25 @@ def templates(target)
   end
 end
 
+directory 'firefox/build'
 namespace :firefox do
+  desc 'Build Firefox extension'
+  task :build => 'firefox:build:templates' do
+    puts 'Building Firefox'
+    build 'firefox', 'chrome/content'
+    puts 'Done'
+  end
   namespace :build do
     task :templates do
       puts 'Building Firefox templates'
       templates 'firefox'
       puts 'Done'
     end
-    task :default => 'firefox:build:templates' do
-      puts 'Building Firefox'
-      build 'firefox', 'chrome/content'
-      puts 'Done'
-    end
   end
-  task :package => :build do
+  desc "Package Firefox extension into #{@files[:firefox_package]} file"
+  task :package => [:build, 'firefox/build'] do
     Dir.chdir 'firefox' do
-      puts `zip -r build/careplane.xpi chrome defaults chrome.manifest icon64.png install.rdf -x *~`
+      puts `zip -r build/careplane.xpi chrome defaults chrome.manifest icon.png install.rdf -x *~`
     end
   end
 
@@ -293,15 +294,15 @@ namespace :firefox do
 end
 
 namespace :google_chrome do
+  task :build => 'google_chrome:build:templates' do
+    puts 'Building Google Chrome'
+    build_application_js 'google_chrome'
+    puts 'Done'
+  end
   namespace :build do
     task :templates do
       puts 'Building Google Chrome templates'
       templates 'google_chrome'
-      puts 'Done'
-    end
-    task :default => 'google_chrome:build:templates' do
-      puts 'Building Google Chrome'
-      build_application_js 'google_chrome'
       puts 'Done'
     end
   end
@@ -315,23 +316,25 @@ namespace :google_chrome do
 end
 
 namespace :safari do
+  desc 'Build Safari extension'
+  task :build => 'safari:build:templates' do
+    puts 'Building Safari'
+    build 'safari', 'careplane.safariextension'
+    puts 'Done'
+  end
   namespace :build do
     task :templates do
       puts 'Building Safari templates'
       templates 'safari/careplane.safariextension'
       puts 'Done'
     end
-    task :default => 'safari:build:templates' do
-      puts 'Building Safari'
-      build 'safari', 'careplane.safariextension'
-      puts 'Done'
-    end
   end
 
+  desc "Package Safari extension into #{@files[:safari_package]} file"
   task :package => :build do
     FileUtils.mkdir_p('safari/build')
     Dir.chdir 'safari' do
-      puts `zip -r build/careplane.safariextensionz careplane.safariextension -x *~`
+      puts `zip -r build/careplane.safariextz careplane.safariextension -x *~`
     end
   end
 end
@@ -389,7 +392,7 @@ test("Something",function(){
 end
 
 desc 'Build all plugins and Jasmine'
-task :build => ['firefox:build:default', 'google_chrome:build:default', 'safari:build:default', 'jasmine:build']
+task :build => ['firefox:build', 'google_chrome:build', 'safari:build', 'jasmine:build']
 
 desc 'Package all plugins'
 task :package => ['firefox:package', 'google_chrome:package', 'safari:package']
