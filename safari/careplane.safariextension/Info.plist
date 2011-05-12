@@ -76,18 +76,12 @@
 		<array>
 			<string>http://www.hipmunk.com/results*</string>
 			<string>http://hipmunk.com/results*</string>
-			<string>http://www.kayak.com/*</string>
-			<string>http://kayak.com/*</string>
-			<string>http://kayak.com/</string>
 			<string>http://www.kayak.com/</string>
       <string>http://www.orbitz.com/App/ViewFlightSearchResults*</string>
 			<string>http://orbitz.com/App/ViewFlightSearchResults*</string>
 		</array>
     <key>Blacklist</key>
-    <array>
-      <string>*://*.kayak.com/*fbcdn.net*</string>
-      <string>*://kayak.com/*fbcdn.net*</string>
-    </array>
+    <array />
 	</dict>
 	<key>Description</key>
 	<string>Real-time carbon footprints inserted into your favorite travel search sites</string>
