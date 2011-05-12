@@ -27,24 +27,31 @@
     <div>
       <h1>Careplane</h1>
       <h2>Real-time carbon footprints inserted into your favorite travel search sites</h2>
+      
+      {% assign post = site.categories.firefox.first %}
       <p class="firefox available" style="display: none;">
         <a href="https://addons.mozilla.org/en-US/firefox/addon/careplane/">
-          <span class="major">Install Careplane <span>0.6.2</span></span>
-          <span class="minor"><strong>Free</strong> Firefox plugin, 30KB</span>
+          <span class="major">Install Careplane <span>{{ post.version }}</span></span>
+          <span class="minor"><strong>Free</strong> Firefox plugin, {{ post.filesize }}KB</span>
         </a>
       </p>
+      
+      {% assign post = site.categories.chrome.first %}
       <p class="chrome available" style="display: none;">
         <a href="https://chrome.google.com/webstore/detail/nnfhekhgpccbbfcklllodpnlfakndkgl?hl=en-US">
-          <span class="major">Install Careplane <span>0.6.2</span></span>
-          <span class="minor"><strong>Free</strong> Google Chrome plugin, 30KB</span>
+          <span class="major">Install Careplane <span>{{ post.version }}</span></span>
+          <span class="minor"><strong>Free</strong> Google Chrome plugin, {{ post.filesize }}KB</span>
         </a>
       </p>
+
+      {% assign post = site.categories.safari.first %}
       <p class="safari available" style="display: none;">
         <a href="">
-          <span class="major">Install Careplane <span>0.6.2</span></span>
-          <span class="minor"><strong>Free</strong> Safari plugin, 30KB</span>
+          <span class="major">Install Careplane <span>{{ post.version }}</span></span>
+          <span class="minor"><strong>Free</strong> Safari plugin, {{ post.filesize }}KB</span>
         </a>
       </p>
+
       <p class="other unavailable" style="display: none;">
         <span class="major">Sadly, Careplane isn't available for your browser</span>
         <span class="minor">We're working on a plugin&mdash;in the meantime, why not <a href="http://firefox.com">give Firefox a try</a>?</span>
