@@ -1,0 +1,29 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <RDF:Description about="urn:mozilla:extension:careplane@brighterplanet.com">
+    <em:updates>
+      <RDF:Seq>
+        {% for post in site.categories.firefox %}
+        <RDF:li>
+          <RDF:Description>
+            <em:version>{{ post.version }}</em:version>
+            <em:targetApplication>
+              <RDF:Description>
+                <em:id>http://careplane.org{{ post.id }}</em:id>
+                <em:minVersion>3.0</em:minVersion>
+                <em:maxVersion>4.0.*.*</em:maxVersion>
+                <em:updateLink>http://careplane.org/downloads/{{ post.filename }}</em:updateLink>
+                <em:updateInfoURL>https://github.com/brighterplanet/careplane/blob/master/CHANGELOG</em:updateInfoURL>
+              </RDF:Description>
+            </em:targetApplication>
+          </RDF:Description>
+        </RDF:li>
+        {% endfor %}
+      </RDF:Seq>
+    </em:updates>
+  </RDF:Description>
+</RDF:RDF>
