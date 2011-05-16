@@ -11,5 +11,5 @@ Feature: Orbitz
     And I fill in "airStartDate" with a departure date
     And I fill in "airEndDate" with a return date
     And I press "Find Flights"
-    Then I should see "Emission estimates provided by Brighter Planet"
-    And I should see "[\d,]+ CO2e"
+    Then I should see "Emission estimates powered by Brighter Planet"
+    And I should see "[\d]+,[\d]+ lbs CO2e"
