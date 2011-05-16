@@ -14,11 +14,12 @@ Capybara.register_driver :firefox_custom do |app|
   require 'selenium/webdriver'
   profile_path = '/Users/dkastner/Library/Application Support/Firefox/Profiles/vqj2tb9j.default'
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_path)
-  driver = Capybara::Selenium::Driver.new(app, :profile => profile, :browser => :firefox)
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 300
+  driver = Capybara::Selenium::Driver.new(app, :profile => profile, :browser => :firefox, :http_client => client)
   #driver = Capybara::Selenium::Driver.new(app, :browser => :remote,
                                  #:url => "http://127.0.0.1:4444/wd/hub",
                                  #:desired_capabilities => :firefox)
-  driver.timeout = 60000
 
   driver
 end
