@@ -4,12 +4,12 @@ function dateToString(date) {
 
 module("orbitz",{
   setup: function() {
-    S.open('http://www.orbitz.com')
+    $.open('http://www.orbitz.com')
   }
 });
 
 test("Basic Search",function(){
-  S('#flightsTab').click();
+  $('#flightsTab').click();
 
   $('#airOrigin').value('DTW');
   $('#airDestination').value('SFO');
