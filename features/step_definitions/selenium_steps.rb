@@ -5,7 +5,7 @@ Given /^I am visiting "(.*)"$/ do |domain|
     config.browsers = [
       ["Windows 2008", "firefox", "4."]
     ]
-    #config.firefox_profile_url = 'http://careplane.org'
+    config.firefox_profile_url = 'http://careplane.org/selenium_profile.zip'
   end
   Capybara.current_session.reset!
 end
