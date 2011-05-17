@@ -1,8 +1,11 @@
 source 'http://rubygems.org'
 
 gem 'activesupport'
+gem 'capybara', '1.0.0.beta1'
 gem 'cucumber'
+gem 'i18n'
 gem 'jasmine'
 gem 'Selenium'
 gem 'selenium-client'
 gem 'selenium-webdriver'
+gem 'sauce', :path => '~/sauce_ruby'

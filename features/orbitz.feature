@@ -2,8 +2,10 @@ Feature: Orbitz
   As a Careplane user
   I want to see flight footprints on Orbitz.com
 
-  Scenario: Basic domestic search
+  Background:
     Given I am visiting "www.orbitz.com"
+
+  Scenario: Basic Orbitz search
     When I go to the home page
     And I follow "flightsTab"
     And I fill in "airOrigin" with "DTW"
