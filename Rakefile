@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'rake/clean'
 require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
@@ -5,7 +6,7 @@ load 'jasmine/tasks/jasmine.rake'
 def sh(cmd, cwd = '.')
   puts cmd
   Dir.chdir(cwd) do
-    super
+    super(cmd)
   end
 end
 
@@ -409,6 +410,35 @@ task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/dow
     FileUtils.cp @files["#{browser}_package".to_sym], @files["#{browser}_download".to_sym].call
   end
   puts "Careplane v#{current_version} released!"
+end
+
+
+def profile_dir
+  Dir.glob('/Users/dkastner/Library/Application Support/Firefox/Profiles/*.Selenium').first
+end
+
+task :ensure_selenium_profile do
+  if profile_dir.nil?
+    puts 'Creating Selenium profile'
+    `/Applications/Firefox.app/Contents/MacOS/firefox-bin -CreateProfile Selenium`
+    Dir.glob('firefox_profile/*').each do |file|
+      FileUtils.cp file, profile_dir
+    end
+  end
+end
+
+desc 'Package a Firefox profile for running Selenium tests'
+task :selenium_profile => [:ensure_selenium_profile, 'pages/'] do
+  FileUtils.cp 'firefox/build/careplane.xpi', File.join(profile_dir, 'extensions', 'careplane@brighterplanet.com.xpi')
+  dir = Dir.pwd
+  Dir.chdir profile_dir do
+    puts `zip -r #{dir}/pages/selenium_profile.zip . -x *~`
+  end
+  sh 'git add selenium_profile.zip', 'pages'
+  sh "git commit -m 'Firefox Selenium profile for version #{current_version}'", 'pages' do |ok,res|
+    verbose { puts "gh-pages updated" }
+    sh 'git push -q o HEAD:gh-pages' unless ENV['NO_PUSH']
+  end
 end
 
 
