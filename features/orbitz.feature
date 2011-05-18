@@ -14,4 +14,4 @@ Feature: Orbitz
     And I fill in "airEndDate" with a return date
     And I press "Find Flights"
     Then I should see "Emission estimates powered by Brighter Planet"
-    And I should see "[\d]+,[\d]+ lbs CO2e"
+    And I should see carbon footprints
