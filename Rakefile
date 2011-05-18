@@ -435,7 +435,7 @@ task :selenium_profile => [:ensure_selenium_profile, 'pages/'] do
     puts `zip -r #{dir}/pages/selenium_profile.zip . -x *~`
   end
   sh 'git add selenium_profile.zip', 'pages'
-  sh "git commit -m 'Firefox Selenium profile for version #{current_version}'", 'pages' do |ok,res|
+  sh "git commit -m 'Updated Firefox Selenium profile'", 'pages' do |ok,res|
     verbose { puts "gh-pages updated" }
     sh 'git push -q o HEAD:gh-pages' unless ENV['NO_PUSH']
   end
