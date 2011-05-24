@@ -24,8 +24,16 @@ TestExtension.fetch = function(url, callback) {
 };
 
 TestExtension.log = function(str) {
-  jasmine.log(str);
+  if(typeof jasmine != 'undefined') {
+    jasmine.log(str);
+  } else if(typeof capy != 'undefined') {
+    capy.log(str);
+  } else {
+    throw 'Unable to log to anything';
+  }
 };
+
+TestExtension.prefs = new TestPreferences();
 
 TestExtension.prototype.fetch = function(url, callback) {
   TestExtension.fetch(url, callback);
