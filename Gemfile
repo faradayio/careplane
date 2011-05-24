@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'activesupport'
+gem 'activesupport', '3.0.0'
 gem 'capybara', '~> 0.4.1'
 gem 'capybara-mechanize'
 gem 'capybara-webkit'

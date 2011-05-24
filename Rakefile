@@ -1,8 +1,9 @@
 require './lib/careplane_config'
 require 'fileutils'
 require 'rake/clean'
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+#require 'jasmine'
+#load 'jasmine/tasks/jasmine.rake'
+require 'erb'
 
 def sh(cmd, cwd = '.')
   puts cmd
