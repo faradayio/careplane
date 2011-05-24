@@ -28,7 +28,7 @@
 			<key>End</key>
 			<array>
         
-        <string>lib/jquery-1.5.2.min.js</string>
+        <string>src/lib/jquery-1.5.2.min.js</string>
         <string>src/Preferences.js</string>
         <string>src/Util.js</string>
         <string>src/Tracker.js</string>
