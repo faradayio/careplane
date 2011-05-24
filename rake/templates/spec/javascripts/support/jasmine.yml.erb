@@ -2,7 +2,7 @@
 #
 # Return an array of filepaths relative to src_dir to include before jasmine specs.
 # Default: []
-src_files: <% @js_files.each do |file| %>
+src_files: <% CareplaneConfig.js_files.each do |file| %>
     - <%= file %><% end %>
 
 # helpers
