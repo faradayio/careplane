@@ -1,3 +1,4 @@
+require './lib/careplane_config'
 require 'fileutils'
 require 'rake/clean'
 require 'jasmine'
@@ -174,58 +175,12 @@ end
 
 CLOBBER.include 'pages/.git'
 
-@js_files = %w{
-  lib/jquery-1.5.2.min.js
-
-  src/Preferences.js
-  src/Util.js
-  src/Tracker.js
-  src/Driver.js
-  src/HallOfFame.js
-
-  src/Flight.js
-  src/Trip.js
-  src/TripEvents.js
-  src/AverageTrip.js
-  src/AirTrafficController.js
-
-  src/controllers/TripController.js
-
-  src/drivers/Hipmunk.js
-  src/drivers/Hipmunk/HipmunkFlight.js
-  src/drivers/Hipmunk/HipmunkTrip.js
-  src/drivers/Hipmunk/HipmunkAirTrafficController.js
-  src/drivers/Hipmunk/HipmunkTripController.js
-
-  src/drivers/Kayak.js
-  src/drivers/Kayak/KayakFlight.js
-  src/drivers/Kayak/KayakTrip.js
-  src/drivers/Kayak/KayakAirTrafficController.js
-
-  src/drivers/Orbitz.js
-  src/drivers/Orbitz/OrbitzFlight.js
-  src/drivers/Orbitz/OrbitzTrip.js
-  src/drivers/Orbitz/OrbitzAirTrafficController.js
-
-  src/views/TripInfoView.js
-  src/views/TripFootprintView.js
-  src/views/Orbitz/OrbitzTripFootprintView.js
-  src/views/Orbitz/OrbitzTripInfoView.js
-  src/views/Kayak/KayakTripFootprintView.js
-  src/views/Kayak/KayakTripInfoView.js
-  src/views/Hipmunk/HipmunkTripFootprintView.js
-  src/views/Hipmunk/HipmunkTripInfoView.js
-  src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
-
-  src/Careplane.js
-  src/ExtensionLoader.js
-}
 @css_files = ['stylesheets/careplane.css']
 @image_files = ['images/icon64.png']
 
 def build(driver, target_dir = '')
   puts 'Copying files...'
-  (@js_files + @css_files + @image_files).each do |file|
+  (CareplaneConfig.js_files + @css_files + @image_files).each do |file|
     destination = File.join(driver, target_dir, file)
     FileUtils.mkdir_p(File.dirname(destination))
     puts file
@@ -244,7 +199,7 @@ def build_application_js(driver, target_dir = '')
 
   puts 'Building application.js...'
   FileUtils.rm_f 'google_chrome/application.js'
-  (@js_files +
+  (Config.js_files +
    %w{google_chrome/GoogleChromePreferences.js google_chrome/GoogleChromeExtension.js
       google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
   ).each do |file|
