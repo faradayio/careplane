@@ -199,7 +199,7 @@ def build_application_js(driver, target_dir = '')
 
   puts 'Building application.js...'
   FileUtils.rm_f 'google_chrome/application.js'
-  (Config.js_files +
+  (CareplaneConfig.js_files +
    %w{google_chrome/GoogleChromePreferences.js google_chrome/GoogleChromeExtension.js
       google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
   ).each do |file|
