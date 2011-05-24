@@ -18,7 +18,7 @@ TripFootprintView.prototype.init = function() {
   if(this.footprintParent()) {
     var footprintParagraph = this.tripElement.ownerDocument.createElement('p');
     footprintParagraph.setAttribute('class', this.className());
-    footprintParagraph.innerHTML = this.loadingText;
+    $(footprintParagraph).html(this.loadingText);
 
     this.insertFootprintParagraph(footprintParagraph);
     this.position();

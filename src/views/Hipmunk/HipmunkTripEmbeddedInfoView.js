@@ -9,7 +9,7 @@ HipmunkTripEmbeddedInfoView.prototype.target = function() {
 
 HipmunkTripEmbeddedInfoView.prototype.init = function() {
   if(this.tripElement)
-    this.tripElement.innerHTML += this.content();
+    $(this.tripElement).append(this.content());
 };
 
 HipmunkTripEmbeddedInfoView.prototype.content = function() {

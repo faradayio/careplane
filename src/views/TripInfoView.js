@@ -5,7 +5,7 @@ TripInfoView.prototype.target = function() {
 };
 
 TripInfoView.prototype.init = function() {
-  this.tripElement.innerHTML += this.content();
+  $(this.tripElement).append(this.content());
   this.target().hide();
 };
 
