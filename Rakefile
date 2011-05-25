@@ -1,8 +1,6 @@
 require './lib/careplane_config'
 require 'fileutils'
 require 'rake/clean'
-#require 'jasmine'
-#load 'jasmine/tasks/jasmine.rake'
 require 'erb'
 
 def sh(cmd, cwd = '.')
@@ -296,6 +294,19 @@ namespace :safari do
       puts `zip -r build/careplane.safariextz careplane.safariextension -x *~`
     end
   end
+end
+
+task :jasmine do
+  module Gem  # monkey patch for jasmine, which tries to load rails
+    def self.available?(name, version)
+      false
+    end
+  end
+  require 'jasmine'
+  puts "your tests are here:"
+  puts "  http://localhost:8888/"
+
+  Jasmine::Config.new.start_server
 end
 
 namespace :jasmine do
