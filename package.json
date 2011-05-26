@@ -1,0 +1,19 @@
+{
+  "author": "Derek Kastner <dkastner@gmail.com>",
+  "name": "careplane",
+  "description": "Footprints for your flights",
+  "version": "0.6.4",
+  "homepage": "http://careplane.org",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brighterplanet/careplane.git"
+  },
+  "engines": {
+    "node": "~v0.4.7"
+  },
+  "dependencies": {
+    "yaml": "*",
+    "jsdom": "*"
+  },
+  "devDependencies": {}
+}

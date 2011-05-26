@@ -1,4 +1,4 @@
-var Flight = function(origin, destination, airline, aircraft) {
+Flight = function(origin, destination, airline, aircraft) {
   this.origin = origin;
   this.destination = destination;
   this.airline = airline;

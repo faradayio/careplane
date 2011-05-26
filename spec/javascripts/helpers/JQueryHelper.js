@@ -1,20 +1,20 @@
-var readFixtures = function() {
+readFixtures = function() {
   return jasmine.getFixtures().proxyCallTo_('read', arguments);
 };
 
-var loadFixtures = function() {
+loadFixtures = function() {
   jasmine.getFixtures().proxyCallTo_('load', arguments);
 };
 
-var setFixtures = function(html) {
+setFixtures = function(html) {
   jasmine.getFixtures().set(html);
 };
 
-var sandbox = function(attributes) {
+sandbox = function(attributes) {
   return jasmine.getFixtures().sandbox(attributes);
 };
 
-var spyOnEvent = function(selector, eventName) {
+spyOnEvent = function(selector, eventName) {
   jasmine.JQuery.events.spyOn(selector, eventName);
 }
 
@@ -76,17 +76,23 @@ jasmine.Fixtures.prototype.getFixtureHtml_ = function(url) {
 };
 
 jasmine.Fixtures.prototype.loadFixtureIntoCache_ = function(relativeUrl) {
-  var self = this;
   var url = this.fixturesPath.match('/$') ? this.fixturesPath + relativeUrl : this.fixturesPath + '/' + relativeUrl;
-  $.ajax({
-    async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
-    cache: false,
-    dataType: 'html',
-    url: url,
-    success: function(data) {
-      self.fixturesCache_[relativeUrl] = data;
-    }
-  });
+  if(typeof require != 'undefined') {
+    var fs = require('fs');
+    var source = fs.readFileSync(url);
+    this.fixturesCache_[relativeUrl] = source.toString();
+  } else {
+    var self = this;
+    $.ajax({
+      async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
+      cache: false,
+      dataType: 'html',
+      url: url,
+      success: function(data) {
+        self.fixturesCache_[relativeUrl] = data;
+      }
+    });
+  }
 };
 
 jasmine.Fixtures.prototype.proxyCallTo_ = function(methodName, passedArguments) {

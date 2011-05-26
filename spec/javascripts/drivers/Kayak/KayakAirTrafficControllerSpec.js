@@ -19,9 +19,9 @@ describe('KayakAirTrafficController', function() {
   });
 
   describe('#scoreTrips', function() {
-    it('scores redeye flights', function() {
+    it('scores standard flights', function() {
       TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
-      loadFixtures('kayak_dtw_sfo_redeye.html');
+      loadFixtures('kayak_dtw_sfo_flight.html');
       var controller = new KayakAirTrafficController(document);
       controller.discoverTrips();
       controller.scoreTrips();

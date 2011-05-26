@@ -301,17 +301,15 @@ namespace :safari do
   end
 end
 
-task :jasmine do
-  module Gem  # monkey patch for jasmine, which tries to load rails
-    def self.available?(name, version)
-      false
-    end
-  end
-  require 'jasmine'
-  puts "your tests are here:"
-  puts "  http://localhost:8888/"
+desc 'Run Jasmine unit tests (requires Node.js)'
+task :jasmine, :spec do |t, args|
+  ENV['NODE_PATH'] = 'src'
 
-  Jasmine::Config.new.start_server
+  if args[:spec]
+    exec "node spec/javascripts/support/jasmine-node/lib/jasmine-node/cli.js #{args[:spec]}"
+  else
+    exec 'node spec/javascripts/support/jasmine-node/lib/jasmine-node/cli.js'
+  end
 end
 
 namespace :jasmine do
@@ -374,4 +372,5 @@ end
 task :publish => [:release, :site]
 
 
-task :default => :build
+task :test => [:jasmine, :features]
+task :default => :test
