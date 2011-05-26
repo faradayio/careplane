@@ -8,11 +8,6 @@ end
 
 When /Careplane runs as soon as "(.+)" is visible/ do |selector|
   has_css?(selector)
-  all_files = CareplaneConfig.js_files + %w{
-    spec/javascripts/helpers/TestPreferences.js
-    spec/javascripts/helpers/TestExtension.js
-    spec/javascripts/helpers/TestExtensionLoader.js
-  }
 
   js = <<-JS
 var capy = {
@@ -25,7 +20,7 @@ var capy = {
 };
   JS
 
-  js += all_files.inject('') do |conglomerate, js_file|
+  js += Config.test_js_files.inject('') do |conglomerate, js_file|
     conglomerate += File.read(js_file)
   end
 

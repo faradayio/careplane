@@ -3,6 +3,11 @@ require 'fileutils'
 require 'rake/clean'
 require 'erb'
 
+require 'cucumber'
+require 'cucumber/rake/task'
+
+Cucumber::Rake::Task.new
+
 def sh(cmd, cwd = '.')
   puts cmd
   Dir.chdir(cwd) do

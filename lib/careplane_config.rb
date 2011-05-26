@@ -47,4 +47,12 @@ module CareplaneConfig
       src/ExtensionLoader.js
     }
   end
+
+  def self.test_js_files
+    self.js_files + %w{
+      src/TestPreferences.js
+      src/TestExtension.js
+      src/TestExtensionLoader.js
+    }
+  end
 end
