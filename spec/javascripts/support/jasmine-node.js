@@ -51,12 +51,13 @@ if(specMatch) {
     base = base + 'spec';
   }
 
-  match = new RegExp("(" + base + "|examples)\\.js$", 'i');
+  match = new RegExp(base + '\.js$', 'i');
 } else {
-  match = new RegExp(/(spec|examples)\.js$/i);
+  match = new RegExp(/spec\.js$/i);
 }
 
 jasmine.loadHelpersInFolder(specFolder, new RegExp(/[hH]elper\.js$/));
+jasmine.loadHelpersInFolder(specFolder, new RegExp(/examples\.js$/i));
 jasmine.executeSpecsInFolder(specFolder, function(runner, log){
   sys.print('\n');
   if (runner.results().failedCount == 0) {
