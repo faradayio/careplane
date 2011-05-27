@@ -10,15 +10,8 @@ Orbitz.driverName = 'Orbitz';
 
 Orbitz.monitorURL = 'orbitz.com/App/ViewFlightSearchResults';
 
-Orbitz.prototype.isActiveSearch = function() {
-  return this.doc.getElementById('matrix') != null;
-};
-
-Orbitz.prototype.load = function() {
-  this.extension.notify(this.klass);
-  this.extension.addStyleSheet();
-  this.insertAttribution();
-  this.atc.poll();
+Orbitz.prototype.isPollingEnabled = function() {
+  return false;
 };
 
 Orbitz.prototype.insertAttribution = function() {

@@ -5,8 +5,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.hipmunk.com/results*",
-        "*://hipmunk.com/results*",
+        "*://*.hipmunk.com/*",
+        "*://hipmunk.com/*",
         "*://*.kayak.com/*",
         "*://kayak.com/*",
         "*://*.orbitz.com/*",

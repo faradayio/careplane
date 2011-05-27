@@ -2,7 +2,6 @@ OrbitzAirTrafficController = function(doc) {
   this.doc = doc;
   this.url = this.doc.location.href;
   this.tripClass = OrbitzTrip;
-  this.driver = Orbitz;
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
 
@@ -13,7 +12,7 @@ OrbitzAirTrafficController.prototype.events.searchEmissionsComplete = function(c
   controller.rateTrips();
 };
 
-OrbitzAirTrafficController.prototype.poll = function() {
+OrbitzAirTrafficController.prototype.clear = function() {
   this.discoverTrips();
   this.scoreTrips();
 };

@@ -19,7 +19,7 @@ AirTrafficController.prototype.events = {
   },
 
   searchEmissionsComplete: function(controller) {
-    Careplane.currentExtension.tracker.search(controller.driver.driverName, controller.origin(), controller.destination(), HallOfFame.average());
+    Careplane.currentExtension.tracker.search(Careplane.currentDriver.driverName(), controller.origin(), controller.destination(), HallOfFame.average());
     
     controller.sniffPurchases();
   },

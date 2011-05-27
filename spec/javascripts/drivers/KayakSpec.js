@@ -1,4 +1,8 @@
 describe('Kayak', function() {
+  beforeEach(function() {
+    this.driverClass = Kayak;
+  });
+
   it('has a .driverName', function() {
     expect(Kayak.driverName).toBe('Kayak');
   });
@@ -17,4 +21,6 @@ describe('Kayak', function() {
       expect($('span.careplane-attribution-footer')).toHaveText(' · Emission estimates powered by Brighter Planet');
     });
   });
+
+  itBehavesLikeA('polling Driver');
 });

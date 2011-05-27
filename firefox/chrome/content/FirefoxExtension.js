@@ -24,7 +24,7 @@ FirefoxExtension.prototype.openWelcomeScreen = function() {
 FirefoxExtension.prototype.notify = function(driver) {
   var nb = gBrowser.getNotificationBox();
   var n = nb.getNotificationWithValue('careplane');
-  var message = 'Careplane is calculating the carbon footprint of your ' + driver.driverName + ' flight search results.'; 
+  var message = 'Careplane is calculating the carbon footprint of your ' + driver.driverName() + ' flight search results.'; 
   if(n) {
     n.label = message;
   } else {

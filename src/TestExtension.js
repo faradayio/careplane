@@ -35,6 +35,8 @@ TestExtension.log = function(str) {
 
 TestExtension.prefs = new TestPreferences();
 
+TestExtension.prototype.isPollingEnabled = false;
+
 TestExtension.prototype.fetch = function(url, callback) {
   TestExtension.fetch(url, callback);
 };

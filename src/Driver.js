@@ -1,26 +1,41 @@
 Driver = function() {};
 
-Driver.shouldMonitor = function(doc) {
-  var match = doc.location.href.search(driver.monitorURL);
-
-  if(driver.monitorExcludeURL) {
-    var staticMatch = doc.location.href.search(driver.monitorExcludeURL);
-    return match >=0 && staticMatch < 0;
-  } else {
-    return match >=0
+Driver.prototype.events = {
+  loadPoller: function(driver) {
+    return function() {
+      if(driver.isActiveSearch()) {
+        driver.prepare();
+        driver.atc.poll();
+        clearInterval(driver.loadInterval);
+      }
+    };
   }
+}
+
+Driver.prototype.driverName = function() {
+  return this.klass.driverName;
+};
+
+Driver.prototype.isPollingEnabled = function() {
+  return this.extension.isPollingEnabled;
+};
+
+Driver.prototype.isActiveSearch = function() {
+  return $(this.waitForElement, this.doc).get(0) != null;
+};
+
+Driver.prototype.prepare = function() {
+  this.extension.notify(this);
+  this.extension.addStyleSheet();
+  if(this.insertAttribution)
+    this.insertAttribution();
 };
 
 Driver.prototype.load = function() {
-  var driver = this;
-  var loadInterval = setInterval(function() {
-    if(driver.isActiveSearch()) {
-      driver.extension.notify(driver.klass);
-      driver.extension.addStyleSheet();
-      driver.insertAttribution();
-      driver.atc.poll();
-      clearInterval(loadInterval);
-    }
-  }, 500);
+  if(this.isPollingEnabled()) {
+    this.loadInterval = setInterval(this.events.loadPoller(this), 500);
+  } else {
+    this.prepare();
+    this.atc.clear();
+  }
 };
-

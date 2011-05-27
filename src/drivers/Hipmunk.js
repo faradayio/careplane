@@ -10,8 +10,4 @@ Hipmunk.driverName = 'Hipmunk';
 
 Hipmunk.monitorURL = 'hipmunk.com';
 
-Hipmunk.prototype.isActiveSearch = function() {
-  return this.doc.getElementsByClassName('info-panel').length > 0;
-};
-
-Hipmunk.prototype.insertAttribution = function() { };
+Hipmunk.prototype.waitForElement = '.info-panel';

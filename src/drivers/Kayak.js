@@ -11,9 +11,7 @@ Kayak.driverName = 'Kayak';
 Kayak.monitorURL = 'kayak.com';
 Kayak.monitorExcludeURL = 'fbcdn.net';
 
-Kayak.prototype.isActiveSearch = function() {
-  return this.doc.getElementsByClassName('flightlist').length > 0;
-};
+Kayak.prototype.waitForElement = '.flightlist';
 
 Kayak.prototype.insertAttribution = function() {
   // In the sidebar

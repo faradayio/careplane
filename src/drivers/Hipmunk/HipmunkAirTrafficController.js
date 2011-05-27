@@ -2,7 +2,6 @@ HipmunkAirTrafficController = function(doc) {
   this.doc = doc;
   this.url = this.doc.location.href;
   this.tripClass = HipmunkTrip;
-  this.driver = Hipmunk;
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
 
