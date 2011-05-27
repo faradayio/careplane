@@ -9,7 +9,7 @@
     "url": "git://github.com/brighterplanet/careplane.git"
   },
   "engines": {
-    "node": "~v0.4.7"
+    "node": "*"
   },
   "dependencies": {
     "yaml": "*",
