@@ -51,9 +51,9 @@ if(specMatch) {
     base = base + 'spec';
   }
 
-  match = new RegExp(base + "\\.js$", 'i');
+  match = new RegExp("(" + base + "|examples)\\.js$", 'i');
 } else {
-  match = new RegExp(/spec\.js$/i);
+  match = new RegExp(/(spec|examples)\.js$/i);
 }
 
 jasmine.loadHelpersInFolder(specFolder, new RegExp(/[hH]elper\.js$/));

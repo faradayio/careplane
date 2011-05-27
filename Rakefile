@@ -306,9 +306,9 @@ task :jasmine, :spec do |t, args|
   ENV['NODE_PATH'] = 'src'
 
   if args[:spec]
-    exec "node spec/javascripts/support/jasmine-node/lib/jasmine-node/cli.js #{args[:spec]}"
+    exec "node spec/javascripts/support/jasmine-node.js #{args[:spec]}"
   else
-    exec 'node spec/javascripts/support/jasmine-node/lib/jasmine-node/cli.js'
+    exec 'node spec/javascripts/support/jasmine-node.js'
   end
 end
 
