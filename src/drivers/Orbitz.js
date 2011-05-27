@@ -8,9 +8,10 @@ Orbitz.prototype = new Driver();
 
 Orbitz.driverName = 'Orbitz';
 
-Orbitz.shouldMonitor = function(doc) {
-  var match = doc.location.href.search('orbitz.com/App/ViewFlightSearchResults');
-  return match >= 0 && doc.getElementById('matrix');
+Orbitz.monitorURL = 'orbitz.com/App/ViewFlightSearchResults';
+
+Orbitz.prototype.isActiveSearch = function() {
+  return this.doc.getElementById('matrix') != null;
 };
 
 Orbitz.prototype.load = function() {

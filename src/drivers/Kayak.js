@@ -8,11 +8,8 @@ Kayak.prototype = new Driver();
 
 Kayak.driverName = 'Kayak';
 
-Kayak.shouldMonitor = function(doc) {
-  var match = doc.location.href.search('kayak.com');
-  var staticMatch = doc.location.href.search('fbcdn.net');
-  return match >=0 && staticMatch < 0
-};
+Kayak.monitorURL = 'kayak.com';
+Kayak.monitorExcludeURL = 'fbcdn.net';
 
 Kayak.prototype.isActiveSearch = function() {
   return this.doc.getElementsByClassName('flightlist').length > 0;
