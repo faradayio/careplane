@@ -3,6 +3,8 @@ Bundler.setup
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 
+require 'headless'
+
 require 'capybara'
 require 'capybara/cucumber'
 require 'capybara/driver/selenium_driver'
@@ -52,4 +54,10 @@ World(Capybara)
 
 Before do |scenario|
   @scenario = scenario
+  @headless = Headless.new
+  @headless.start
+end
+
+After do
+  @headless.destroy
 end

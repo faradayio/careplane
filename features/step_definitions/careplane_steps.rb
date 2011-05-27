@@ -20,7 +20,7 @@ var capy = {
 };
   JS
 
-  js += Config.test_js_files.inject('') do |conglomerate, js_file|
+  js += CareplaneConfig.test_js_files.inject('') do |conglomerate, js_file|
     conglomerate += File.read(js_file)
   end
 
