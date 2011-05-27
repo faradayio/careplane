@@ -50,7 +50,7 @@ TestExtension.prototype.welcome = function() {
 };
   
 TestExtension.prototype.notify = function(driver) {
-  TestExtension.log('Careplane is calculating the carbon footprint of your ' + driver.driverName + ' flight search results.'); 
+  TestExtension.log('Careplane is calculating the carbon footprint of your ' + driver.driverName() + ' flight search results.'); 
 };
 
 TestExtension.prototype.addStyleSheet = function() { /* NOOP */ };
