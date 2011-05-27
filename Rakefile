@@ -245,10 +245,11 @@ namespace :firefox do
   end
 
   namespace :develop do
+    desc 'Tell Firefox to use local careplane folder to load extension'
     task :mac do
       dir = File.join(Dir.pwd, 'firefox/')
-      profile = Dir.glob('~/Library/Application Support/Firefox/Profiles/*')[0]
-      File.open("Library/Application Support/Firefox/Profiles/#{profile}/extensions/careplane@brighterplanet.com", 'w') do |f|
+      profile = Dir.glob('/Users/dkastner/Library/Application Support/Firefox/Profiles/*.default').first
+      File.open("#{profile}/extensions/careplane@brighterplanet.com", 'w') do |f|
         f.puts dir
       end
     end
