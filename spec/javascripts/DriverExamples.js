@@ -8,10 +8,10 @@ sharedExamplesFor('polling Driver', function() {
         }
       };
       var driver = new this.driverClass(extension);
-      spyOn(driver.atc, 'poll');
+      spyOn(driver.events, 'loadPoller');
       driver.prepare = function() {};
       driver.load();
-      expect(driver.atc.poll).toHaveBeenCalled();
+      expect(driver.events.loadPoller).toHaveBeenCalled();
     });
     it('does not poll when using a testing extension', function() {
       var extension = new TestExtension();
