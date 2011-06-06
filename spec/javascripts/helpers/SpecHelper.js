@@ -8,7 +8,8 @@ if(typeof require != 'undefined') {
   };
   global.window = window;
   global.document = window.document;
-  global.location = "http://monitoring";
+  global.location = { href: "http://monitoring" };
+  global.document.location = global.location;
   
   var fs = require('fs');
   var path = require('path');
