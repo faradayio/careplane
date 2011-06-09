@@ -1,33 +1,35 @@
-if(typeof require != 'undefined') {
-  // Get Node.js caught up to speed
+(function() {
+  if(typeof require != 'undefined') {
+    // Get Node.js caught up to speed
 
-  var jsdom = require('jsdom');
-  window = jsdom.jsdom("<html><head></head><body></body></html>").createWindow();
-  global.navigator = {
-    userAgent: 'jasmine'
-  };
-  global.window = window;
-  global.document = window.document;
-  global.location = { href: "http://monitoring" };
-  global.document.location = global.location;
-  
-  var fs = require('fs');
-  var path = require('path');
-  var yaml = require('yaml');
+    var jsdom = require('jsdom');
+    window = jsdom.jsdom("<html><head></head><body></body></html>").createWindow();
+    global.navigator = {
+      userAgent: 'jasmine'
+    };
+    global.window = window;
+    global.document = window.document;
+    global.location = { href: "http://monitoring" };
+    global.document.location = global.location;
+    
+    var fs = require('fs');
+    var path = require('path');
+    var yaml = require('yaml');
 
-  var yamlSource = fs.readFileSync(path.resolve(__dirname, '../support/jasmine.yml'));
-  var jasmineConfig = yaml.eval(yamlSource.toString());
-  jasmineConfig.src_files.forEach(function(lib) {
-    require(lib.replace(/^src\//,'').replace(/\.[^\.]+$/, ''));
-  });
+    var yamlSource = fs.readFileSync(path.resolve(__dirname, '../support/jasmine.yml'));
+    var jasmineConfig = yaml.eval(yamlSource.toString());
+    jasmineConfig.src_files.forEach(function(lib) {
+      require(lib.replace(/^src\//,'').replace(/\.[^\.]+$/, ''));
+    });
 
-  if (window.$) { 
-    global.$ = window.$; 
-    global.jQuery = window.jQuery;
+    if (window.$) { 
+      global.$ = window.$; 
+      global.jQuery = window.jQuery;
+    }
+  } else {
+    require = function() { };
   }
-} else {
-  require = function() { };
-}
+})();
 
 beforeEach(function() {
   this.addMatchers({

@@ -26,11 +26,15 @@ HipmunkTripFootprintView.prototype.leftmostLeg = function() {
 };
 
 HipmunkTripFootprintView.prototype.hasRoomOnLeft = function() {
-  if(this.leftmostLeg().css('margin-left').search(/%/) > 0) {  // some browsers use %, some px
-    var margin = parseFloat(this.leftmostLeg().css('margin-left').replace(/%/,''));
+  var css = this.leftmostLeg().css('margin-left');
+  if(!css)
+    return true;  // tests don't need to worry about positioning
+
+  if(css.search(/%/) > 0) {  // some browsers use %, some px
+    var margin = parseFloat(css.replace(/%/,''));
     return margin >= 12;
   } else {
-    var margin = parseFloat(this.leftmostLeg().css('margin-left'));
+    var margin = parseFloat(css);
     return margin >= 110;
   }
 };

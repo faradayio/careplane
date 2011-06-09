@@ -3,7 +3,7 @@ sharedExamplesFor('AirTrafficController', function() {
     TestExtension.urlMap['carbon.brighterplanet.com/flights'] = { "emission": 234 };
   });
 
-  describe('#trips', function() {
+  describe('#scoreTrips', function() {
     it('keeps a list of trips', function() {
       this.controller.scoreTrips();
       expect(this.controller.trips[0]).not.toBeNull();
@@ -24,12 +24,8 @@ sharedExamplesFor('AirTrafficController', function() {
   describe('#discoverTrips', function() {
     it('creates a list of Trip objects', function() {
       this.controller.discoverTrips();
-      expect(this.controller.tripCount).toBeGreaterThan(0);
-    });
-    it('does not load duplicate trips', function() {
-      this.controller.discoverTrips();
       var numTrips = this.controller.tripCount;
-      this.controller.discoverTrips();
+      expect(this.controller.tripCount).toBeGreaterThan(0);
       expect(this.controller.tripCount).toBe(numTrips);
     });
   });
@@ -43,11 +39,8 @@ sharedExamplesFor('AirTrafficController', function() {
       this.controller.scoreTrips();
     });
 
-    it('scores each trip', function() {
+    it('scores each trip and provides methodologies', function() {
       expect($('.careplane-footprint')).toHaveText(/[\d,]+/)
-    });
-
-    it('reports methodologies for each trip', function() {
       for(var i in this.controller.trips) {
         var div = this.controller.trips[i].infoView().target();
         expect($(div).find('.careplane-methodologies li a').length).toBeGreaterThan(0);

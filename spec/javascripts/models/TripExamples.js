@@ -31,22 +31,10 @@ sharedExamplesFor('Trip', function() {
       this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
       expect(onFlightEmissionsComplete).toHaveBeenCalled();
     });
-    it('sets isScorable to false', function() {
-      this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
-      expect(this.trip.isScorable).toBeFalsy();
-    });
-  });
-
-  describe('#rate', function() {
-    it('sets the rating', function() {
-      this.trip.rate(0.8);
-      expect(this.trip.rating).toBe(0.8);
-    });
   });
 
   describe('#flights', function() {
     it('returns a list of flights', function() {
-      this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
       expect(this.trip.flights().length).toBeGreaterThan(0);
       this.trip.eachFlight(function(flight) {
         expect(flight.origin).not.toBeNull();
