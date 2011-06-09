@@ -8,10 +8,9 @@ require 'cucumber/rake/task'
 
 Cucumber::Rake::Task.new
 
-def sh(cmd, cwd = '.')
-  puts cmd
+def psh(cmd, cwd = '.')
   Dir.chdir(cwd) do
-    super(cmd)
+    sh cmd
   end
 end
 
@@ -137,7 +136,7 @@ namespace :version do
   end
 
   task :tag do
-    sh "git tag v#{version}"
+    psh "git tag v#{version}"
     puts "Tagged #{`git log -n 1 --pretty=oneline`} with v#{version}"
   end
 end
@@ -145,10 +144,15 @@ end
 
 desc 'Update careplane.org with new version'
 task :site => 'pages/' do
-  sh 'git add _posts downloads', 'pages'
-  sh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
+  psh 'git add _posts downloads', 'pages'
+  psh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
     verbose { puts "gh-pages updated" }
-    sh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
+    Rake::Task['site:push'].invoke
+  end
+end
+namespace :site do
+  task :push do
+    psh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
   end
 end
 
@@ -158,21 +162,21 @@ task :pages => 'pages:sync'
 namespace :pages do
   desc 'Initialize the pages directory to allow versioning'
   task :sync => ['.git/refs/heads/gh-pages', 'pages/.git/refs/remotes/o'] do |f|
-    sh 'git fetch -q o', 'pages'
-    sh 'git reset -q --hard o/gh-pages', 'pages'
-    sh 'touch pages'
+    psh 'git fetch -q o', 'pages'
+    psh 'git reset -q --hard o/gh-pages', 'pages'
+    psh 'touch pages'
   end
 
   file '.git/refs/heads/gh-pages' => 'pages/' do |f|
     unless File.exist? f.name
-      sh 'git branch gh-pages'
+      psh 'git branch gh-pages'
     end
   end
 
   file 'pages/.git/refs/remotes/o' => 'pages/' do |f|
     unless File.exist? f.name
-      sh 'git init -q pages'
-      sh 'git remote add o ../.git', 'pages'
+      psh 'git init -q pages'
+      psh 'git remote add o ../.git', 'pages'
     end
   end
 end
@@ -362,10 +366,10 @@ task :selenium_profile => [:ensure_selenium_profile, 'pages/'] do
   Dir.chdir profile_dir do
     puts `zip -r #{dir}/pages/selenium_profile.zip . -x *~`
   end
-  sh 'git add selenium_profile.zip', 'pages'
-  sh "git commit -m 'Updated Firefox Selenium profile'", 'pages' do |ok,res|
+  psh 'git add selenium_profile.zip', 'pages'
+  psh "git commit -m 'Updated Firefox Selenium profile'", 'pages' do |ok,res|
     verbose { puts "gh-pages updated" }
-    sh 'git push -q o HEAD:gh-pages' unless ENV['NO_PUSH']
+    psh 'git push -q o HEAD:gh-pages' unless ENV['NO_PUSH']
   end
 end
 
