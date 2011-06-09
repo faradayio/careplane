@@ -1,3 +1,4 @@
+@functioning
 Feature: Kayak
   As a Careplane user
   I want to see flight footprints on Kayak.com

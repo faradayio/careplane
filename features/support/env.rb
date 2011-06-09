@@ -48,6 +48,8 @@ when 'webkit' then
   Capybara.current_driver = :mechanize
 end
 
+Capybara.default_wait_time = 3600
+
 Dir.glob('*.html') { |f| FileUtils.rm_f f }
 
 World(Capybara)
