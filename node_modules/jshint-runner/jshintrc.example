@@ -1,0 +1,8 @@
+{
+    // Enforce curlies around *all* blocks
+    "curly": true,
+    // Require === for comparisons
+    "eqeqeq": true,
+    // Allow eval
+    "evil": true
+}

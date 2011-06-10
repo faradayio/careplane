@@ -317,6 +317,10 @@ task :jasmine, :spec do |t, args|
   end
 end
 
+task :syntax do
+  exec "`npm bin`/jshint #{CareplaneConfig.js_files.join(' ')}"
+end
+
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
   task :build do
