@@ -7,18 +7,19 @@ describe('HipmunkTrip', function() {
 
     itBehavesLikeA('Trip');
   });
-
-  it('parses a multi-leg flight', function() {
-    loadFixtures('hipmunk_dtw_sfo_multileg_trip.html');
-    var trip = new HipmunkTrip($('.routing').get(0));
-
-    expect(trip.flights().length).toBe(2);
-  });
   
   it('gracefully handles trips with missing info-panels', function() {
     loadFixtures('hipmunk_dtw_sfo_missing_info_panel.html');
     var trip = new HipmunkTrip($('.routing').get(0));
 
     expect(trip.flights().length).toBe(0);
+  });
+
+  describe('#infoPanelElementId', function() {
+    it('converts a routing element id into an info-panel id', function() {
+      loadFixtures('hipmunk_dtw_sfo_trip.html');
+      var trip = new HipmunkTrip($('.routing').get(0));
+      expect(trip.infoPanelElementId()).toBe('info-panel-8443f61b2d');
+    });
   });
 });

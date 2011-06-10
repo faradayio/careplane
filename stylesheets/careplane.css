@@ -88,7 +88,8 @@ div.careplane-info {
 .info-panel .careplane-embedded {
   display: block;
   position: relative;
-  width: 278px;
+  width: auto;
+  white-space: normal;
 }
 .info-panel .careplane-embedded:before {
   content: "";

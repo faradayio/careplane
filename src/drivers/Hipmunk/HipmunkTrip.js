@@ -1,8 +1,15 @@
 HipmunkTrip = function(tripElement) {
   this.tripElement = tripElement;
   this.id = tripElement.id;
+  this.infoPanelElement = $('#' + this.infoPanelElementId(),
+                            this.tripElement.ownerDocument).get(0);
 };
 HipmunkTrip.prototype = new Trip();
+
+HipmunkTrip.prototype.infoPanelElementId = function() {
+  return this.tripElement.id.
+    replace(/routing(-[^-]+).*$/,"info-panel$1");
+};
 
 HipmunkTrip.prototype.cost = function() {
   if(!this._cost)
@@ -12,19 +19,7 @@ HipmunkTrip.prototype.cost = function() {
 };
 
 HipmunkTrip.prototype.isValid = function() {
-  return this.footprintView().isValid() && this.infoPanelElement() != null;
-};
-
-HipmunkTrip.prototype.infoPanelElement = function() {
-  if(!this._infoPanelElement) {
-    var uid = this.tripElement.id;
-    uid = uid.replace('routing','info-panel');
-    uid = uid.replace(/_.+_.+$/,'');
-    
-    this._infoPanelElement = $('#' + uid, this.tripElement.ownerDocument).get(0);
-  }
-
-  return this._infoPanelElement;
+  return this.footprintView().isValid() && this.infoPanelElement;
 };
 
 HipmunkTrip.prototype.footprintParent = function() {
@@ -46,8 +41,8 @@ HipmunkTrip.prototype.infoView = function() {
 };
 
 HipmunkTrip.prototype.embeddedInfoView = function() {
-  if(!this._embeddedInfoView && this.infoPanelElement()) {
-    this._embeddedInfoView = new HipmunkTripEmbeddedInfoView(this.infoPanelElement());
+  if(!this._embeddedInfoView && this.infoPanelElement) {
+    this._embeddedInfoView = new HipmunkTripEmbeddedInfoView(this.infoPanelElement);
   }
   return this._embeddedInfoView;
 };
@@ -60,12 +55,8 @@ HipmunkTrip.prototype.controller = function() {
 };
 
 HipmunkTrip.prototype.flights = function() {
-  var infoPanel = this.infoPanelElement();
   if(!this._flights || this._flights.length == 0) {
-    var legs = $('.leg', infoPanel);
-    legs = $(legs).filter(function(i, leg) {
-      return $('.facts', leg).length > 0;
-    });
+    var legs = $('.details-padding', this.infoPanelElement);
     this._flights = [];
     var trip = this;
     $(legs).each(function(i, leg) {
