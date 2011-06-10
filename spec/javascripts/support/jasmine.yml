@@ -11,7 +11,6 @@ src_files:
   - src/HallOfFame.js
   - src/Flight.js
   - src/Trip.js
-  - src/TripEvents.js
   - src/AverageTrip.js
   - src/AirTrafficController.js
   - src/controllers/TripController.js

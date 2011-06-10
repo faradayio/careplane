@@ -36,7 +36,6 @@
         <string>src/HallOfFame.js</string>
         <string>src/Flight.js</string>
         <string>src/Trip.js</string>
-        <string>src/TripEvents.js</string>
         <string>src/AverageTrip.js</string>
         <string>src/AirTrafficController.js</string>
         <string>src/controllers/TripController.js</string>

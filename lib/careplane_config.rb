@@ -11,7 +11,6 @@ module CareplaneConfig
 
       src/Flight.js
       src/Trip.js
-      src/TripEvents.js
       src/AverageTrip.js
       src/AirTrafficController.js
 

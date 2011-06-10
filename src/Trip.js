@@ -7,6 +7,17 @@ Trip.prototype.isValid = function() {
   return this.footprintView().isValid();
 };
 
+Trip.events = {
+  flightEmissionsComplete: function(trip, callback, onTripEmissionsComplete) {
+    return function(cm1Response, flight) {
+      trip.tallyFootprint(cm1Response.emission);
+      callback(trip, cm1Response, flight);
+      if(onTripEmissionsComplete && trip.isDone())
+        onTripEmissionsComplete(trip, cm1Response, flight);
+    };
+  }
+};
+
 Trip._averages = [];
 Trip.average = function(origin, destination, callback) {
   var trip = Array.prototype.filter.call(this._averages, function(trip) {
@@ -45,7 +56,7 @@ Trip.prototype.score = function(flightEmissionsCallback, tripEmissionsCallback) 
   var trip = this;
   this.eachFlight(function(flight) {
     flight.emissionEstimate(
-      TripEvents.flightEmissionsComplete(trip, flightEmissionsCallback, tripEmissionsCallback));
+      Trip.events.flightEmissionsComplete(trip, flightEmissionsCallback, tripEmissionsCallback));
   });
 }
 
