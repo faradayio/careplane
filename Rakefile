@@ -317,8 +317,14 @@ task :jasmine, :spec do |t, args|
   end
 end
 
-task :syntax do
-  exec "`npm bin`/jshint #{CareplaneConfig.js_files.join(' ')}"
+desc 'Check the syntax of all Careplane source files (requires Node.js)'
+task :syntax, :file do |t, args|
+  if args[:file]
+    exec "`npm bin`/jshint #{args[:file]}"
+  else
+    files = CareplaneConfig.js_files.reject { |f| f =~ /jquery-.*\.js/ }
+    exec "`npm bin`/jshint #{files.join(' ')}"
+  end
 end
 
 namespace :jasmine do
