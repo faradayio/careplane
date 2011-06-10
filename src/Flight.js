@@ -5,6 +5,14 @@ Flight = function(origin, destination, airline, aircraft) {
   this.aircraft = aircraft;
 }
 
+Flight.events = {
+  emissionEstimateSuccess: function(flight, callback) {
+    return function(response) {
+      callback(response, flight);
+    };
+  }
+};
+
 Flight.isAircraftInfo = function(text) {
   for(var i in Flight.aircraftManufacturers) {
     var mfg = new RegExp(Flight.aircraftManufacturers[i],'im');
@@ -42,7 +50,7 @@ Flight.prototype.emissionEstimate = function(callback) {
   }
   var url = Util.urlFor('http://carbon.brighterplanet.com/flights.json', params);
 
-  Careplane.fetch(url, FlightEvents.emissionEstimateSuccess(this, callback));
+  Careplane.fetch(url, Flight.events.emissionEstimateSuccess(this, callback));
 }
 
 Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIALE',
@@ -56,10 +64,3 @@ Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIA
 
 
 
-FlightEvents = {
-  emissionEstimateSuccess: function(flight, callback) {
-    return function(response) {
-      callback(response, flight);
-    };
-  }
-};
