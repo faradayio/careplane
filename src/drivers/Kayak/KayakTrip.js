@@ -64,7 +64,7 @@ KayakTrip.prototype.eachFlight = function(callback) {
 
 KayakTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
-    this._flights = KayakFlight.parse($('.inlineFlightDetailsLeg tr', this.tripElement));
+    this._flights = KayakFlight.parse($('.inlineflightitinerarylegs tr', this.tripElement));
   }
   return this._flights;
 };
