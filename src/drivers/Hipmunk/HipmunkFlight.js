@@ -13,7 +13,7 @@ HipmunkFlight.parse = function(leg) {
   var origin = $(airports[0]).text().match(/\(([^\)]+)\)/)[1];
   var destination = $(airports[1]).text().match(/\(([^\)]+)\)/)[1];
 
-  var aircraft = $('.ridetype', leg).text();
+  var aircraft = $('.ridetype a', leg).text();
 
   return new HipmunkFlight(origin, destination, airline, aircraft);
 };
