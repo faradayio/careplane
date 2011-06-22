@@ -42,7 +42,7 @@ Trip.prototype.destination = function() {
 
 Trip.prototype.initViews = function() {
   this.footprintView.init();
-  this.infoView().init();
+  this.infoView.init();
 };
 
 Trip.prototype.eachFlight = function(callback) {

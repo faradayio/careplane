@@ -5,6 +5,7 @@ HipmunkTrip = function(tripElement) {
                             this.tripElement.ownerDocument).get(0);
   this.controller = new HipmunkTripController(this);
   this.footprintView = new HipmunkTripFootprintView(this.tripElement);
+  this.infoView = new HipmunkTripInfoView(this.tripElement);
 };
 HipmunkTrip.prototype = new Trip();
 
@@ -28,13 +29,6 @@ HipmunkTrip.prototype.footprintParent = function() {
   return $('.graph', this.tripElement).get(0);
 };
 
-HipmunkTrip.prototype.infoView = function() {
-  if(!this._infoView) {
-    this._infoView = new HipmunkTripInfoView(this.tripElement);
-  }
-  return this._infoView;
-};
-
 HipmunkTrip.prototype.embeddedInfoView = function() {
   if(!this._embeddedInfoView && this.infoPanelElement) {
     this._embeddedInfoView = new HipmunkTripEmbeddedInfoView(this.infoPanelElement);
@@ -56,7 +50,7 @@ HipmunkTrip.prototype.flights = function() {
 
 HipmunkTrip.prototype.initViews = function() {
   this.footprintView.init();
-  this.infoView().init();
+  this.infoView.init();
   if(this.embeddedInfoView())
     this.embeddedInfoView().init();
 };

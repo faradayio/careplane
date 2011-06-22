@@ -20,10 +20,10 @@ HipmunkAirTrafficController.prototype.tripElements = function() {
 
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView.updateRating(rating);
-  trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
+  trip.infoView.updateSearchAverage(HallOfFame.average(), trip);
   if(trip.embeddedInfoView())
     trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
-  //trip.infoView().updateTripAverage(trip);  this is too difficult right now
+  //trip.infoView.updateTripAverage(trip);  this is too difficult right now
 };
 
 HipmunkAirTrafficController.prototype.sniffPurchases = function() {
