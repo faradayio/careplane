@@ -7,16 +7,13 @@ sharedExamplesFor('AirTrafficController', function() {
     it('discovers, scores, and rates each trip, provides methodologies, and calls searchEmissionsComplete', function() {
       var searchEmissionsComplete = jasmine.createSpy('searchEmissionsComplete');
       this.controller.events.searchEmissionsComplete = searchEmissionsComplete;
-      console.log('discovery');
       this.controller.discoverTrips();
 
       var numTrips = this.controller.trips.length;
       expect(this.controller.tripCount).toBeGreaterThan(0);
       expect(this.controller.tripCount).toBe(numTrips);
 
-      console.log('score');
       this.controller.scoreTrips();
-      console.log('rate');
       this.controller.rateTrips();
 
       for(var i in this.controller.trips) {

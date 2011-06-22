@@ -5,6 +5,10 @@ KayakAirTrafficController = function(doc) {
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
 
+KayakAirTrafficController.create = function(doc) {
+  return KayakAirTrafficController.prototype.create(KayakAirTrafficController, doc);
+};
+
 KayakAirTrafficController.prototype.routeMatches = function() {
   if(!this._routeMatches && this.url)
     this._routeMatches = this.url.match(/#flights\/([^\-]+)-([^\/]+)\//);

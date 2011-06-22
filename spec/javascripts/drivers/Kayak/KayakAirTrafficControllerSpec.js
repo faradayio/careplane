@@ -6,7 +6,7 @@ describe('KayakAirTrafficController', function() {
         'status': 0,
         'message': kayakFlightDetails
       };
-      this.controller = new KayakAirTrafficController(document);
+      this.controller = KayakAirTrafficController.create(document);
     });
 
     itBehavesLikeAn('AirTrafficController');
@@ -16,7 +16,7 @@ describe('KayakAirTrafficController', function() {
     it('scores standard flights', function() {
       TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
       loadFixtures('kayak_dtw_sfo_flight.html');
-      var controller = new KayakAirTrafficController(document);
+      var controller = KayakAirTrafficController.create(document);
       controller.discoverTrips();
       controller.scoreTrips();
       for(var i in controller.trips) {
@@ -28,14 +28,14 @@ describe('KayakAirTrafficController', function() {
 
   describe('#origin', function() {
     it("returns the search's origin airport", function() {
-      var controller = new KayakAirTrafficController(document);
+      var controller = KayakAirTrafficController.create(document);
       controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
       expect(controller.origin()).toBe('DTW');
     });
   });
   describe('#destination', function() {
     it("returns the search's origin airport", function() {
-      var controller = new KayakAirTrafficController(document);
+      var controller = KayakAirTrafficController.create(document);
       controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
       expect(controller.destination()).toBe('SFO');
     });

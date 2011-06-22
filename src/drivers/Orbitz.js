@@ -2,7 +2,7 @@ Orbitz = function(extension) {
   this.klass = Orbitz;
   this.extension = extension;
   this.doc = extension.doc;
-  this.atc = new OrbitzAirTrafficController(this.doc);
+  this.atc = OrbitzAirTrafficController.create(this.doc);
 };
 Orbitz.prototype = new Driver();
 

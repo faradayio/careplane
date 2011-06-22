@@ -5,6 +5,10 @@ HipmunkAirTrafficController = function(doc) {
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
 
+HipmunkAirTrafficController.create = function(doc) {
+  return HipmunkAirTrafficController.prototype.create(HipmunkAirTrafficController, doc);
+};
+
 HipmunkAirTrafficController.prototype.origin = function() {
   var match = this.url.match(/from=([^&]+)/);
   return match ? match[1].toUpperCase() : '';

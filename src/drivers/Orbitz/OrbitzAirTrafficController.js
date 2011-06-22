@@ -5,6 +5,10 @@ OrbitzAirTrafficController = function(doc) {
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
 
+OrbitzAirTrafficController.create = function(doc) {
+  return OrbitzAirTrafficController.prototype.create(OrbitzAirTrafficController, doc);
+};
+
 OrbitzAirTrafficController.prototype.events.searchEmissionsComplete = function(controller) {
   Careplane.currentExtension.tracker.search(controller.origin(), controller.destination(), HallOfFame.average());
   controller.sniffPurchases();

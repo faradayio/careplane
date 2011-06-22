@@ -1,7 +1,14 @@
 AirTrafficController = function() {};
-AirTrafficController.prototype.trips = [];
-AirTrafficController.prototype.tripCount = 0;
-AirTrafficController.prototype.completedTrips = 0;
+
+AirTrafficController.prototype.create = function(klass, doc) {
+  var controller = new klass(doc);
+  controller.trips = [];
+  controller.tripCount = 0;
+  controller.completedTrips = 0;
+
+  return controller;
+};
+
 AirTrafficController.prototype.events = {
   flightEmissionsComplete: function(trip, cm1Response, flight) {
     trip.footprintView.update(trip.totalFootprint);
