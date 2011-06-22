@@ -1,6 +1,8 @@
 OrbitzTrip = function(tripElement) {
   this.tripElement = tripElement;
   this.id = ++OrbitzTrip.count;
+  this.controller = new TripController(this);
+  this.footprintView = new OrbitzTripFootprintView(this.tripElement);
 };
 OrbitzTrip.prototype = new Trip();
 
@@ -11,13 +13,6 @@ OrbitzTrip.prototype.cost = function() {
     this._cost = parseInt($('.totalPrice', this.tripElement).text().replace(/[^0-9]/g,''));
 
   return this._cost;
-};
-
-OrbitzTrip.prototype.footprintView = function() {
-  if(!this._footprintView) {
-    this._footprintView = new OrbitzTripFootprintView(this.tripElement);
-  }
-  return this._footprintView;
 };
 
 OrbitzTrip.prototype.infoView = function() {

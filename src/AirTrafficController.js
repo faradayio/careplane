@@ -4,7 +4,7 @@ AirTrafficController.prototype.tripCount = 0;
 AirTrafficController.prototype.completedTrips = 0;
 AirTrafficController.prototype.events = {
   flightEmissionsComplete: function(trip, cm1Response, flight) {
-    trip.footprintView().update(trip.totalFootprint);
+    trip.footprintView.update(trip.totalFootprint);
     trip.infoView().reportFlightMethodology(cm1Response.methodology, flight);
   },
 
@@ -66,7 +66,7 @@ AirTrafficController.prototype.createTrip = function(tripElement) {
   var trip = new this.tripClass(tripElement);
   this.trips.push(trip);
   this.tripCount++;
-  trip.controller().init();
+  trip.controller.init();
 };
 
 AirTrafficController.prototype.scoreTrips = function() {
@@ -89,7 +89,7 @@ AirTrafficController.prototype.rateTrips = function() {
 };
 
 AirTrafficController.prototype.updateViews = function(trip, rating) {
-  trip.footprintView().updateRating(rating);
+  trip.footprintView.updateRating(rating);
   trip.infoView().updateSearchAverage(HallOfFame.average(), trip);
   //trip.infoView().updateTripAverage(trip);  this is too difficult right now
 };

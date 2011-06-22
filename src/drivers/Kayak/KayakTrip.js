@@ -2,6 +2,8 @@ KayakTrip = function(tripElement) {
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
   this.id = this.tripElement.id.match(/\d+/)[0];
+  this.controller = new TripController(this);
+  this.footprintView = new KayakTripFootprintView(this.tripElement);
 };
 KayakTrip.prototype = new Trip();
 
@@ -10,13 +12,6 @@ KayakTrip.prototype.cost = function() {
     this._cost = parseInt($('#priceAnchor' + this.id, this.tripElement).text().replace(/[^0-9]/g,''));
 
   return this._cost;
-};
-
-KayakTrip.prototype.footprintView = function() {
-  if(!this._footprintView) {
-    this._footprintView = new KayakTripFootprintView(this.tripElement);
-  }
-  return this._footprintView;
 };
 
 KayakTrip.prototype.infoView = function() {

@@ -4,7 +4,7 @@ Trip.prototype.completedFlightCount = 0;
 Trip.prototype.isScorable = true;
 
 Trip.prototype.isValid = function() {
-  return this.footprintView().isValid();
+  return this.footprintView.isValid();
 };
 
 Trip.events = {
@@ -41,7 +41,7 @@ Trip.prototype.destination = function() {
 };
 
 Trip.prototype.initViews = function() {
-  this.footprintView().init();
+  this.footprintView.init();
   this.infoView().init();
 };
 
@@ -66,13 +66,6 @@ Trip.prototype.rate = function(rating) {
 
 Trip.prototype.isDone = function() {
   return this.flights() != null && this.completedFlightCount == this.flights().length;
-};
-
-Trip.prototype.controller = function() {
-  if(!this._controller) {
-    this._controller = new TripController(this);
-  }
-  return this._controller;
 };
 
 Trip.prototype.tallyFootprint = function(emission) {

@@ -3,6 +3,8 @@ HipmunkTrip = function(tripElement) {
   this.id = tripElement.id;
   this.infoPanelElement = $('#' + this.infoPanelElementId(),
                             this.tripElement.ownerDocument).get(0);
+  this.controller = new HipmunkTripController(this);
+  this.footprintView = new HipmunkTripFootprintView(this.tripElement);
 };
 HipmunkTrip.prototype = new Trip();
 
@@ -19,18 +21,11 @@ HipmunkTrip.prototype.cost = function() {
 };
 
 HipmunkTrip.prototype.isValid = function() {
-  return this.footprintView().isValid() && this.infoPanelElement;
+  return this.footprintView.isValid() && this.infoPanelElement;
 };
 
 HipmunkTrip.prototype.footprintParent = function() {
   return $('.graph', this.tripElement).get(0);
-};
-
-HipmunkTrip.prototype.footprintView = function() {
-  if(!this._footprintView) {
-    this._footprintView = new HipmunkTripFootprintView(this.tripElement);
-  }
-  return this._footprintView;
 };
 
 HipmunkTrip.prototype.infoView = function() {
@@ -47,13 +42,6 @@ HipmunkTrip.prototype.embeddedInfoView = function() {
   return this._embeddedInfoView;
 };
 
-HipmunkTrip.prototype.controller = function() {
-  if(!this._controller) {
-    this._controller = new HipmunkTripController(this);
-  }
-  return this._controller;
-};
-
 HipmunkTrip.prototype.flights = function() {
   if(!this._flights || this._flights.length == 0) {
     var legs = $('.details-padding', this.infoPanelElement);
@@ -67,7 +55,7 @@ HipmunkTrip.prototype.flights = function() {
 }
 
 HipmunkTrip.prototype.initViews = function() {
-  this.footprintView().init();
+  this.footprintView.init();
   this.infoView().init();
   if(this.embeddedInfoView())
     this.embeddedInfoView().init();

@@ -6,7 +6,7 @@ TripController.events = {
   tripFootprintHoverIn: function(trip) {
     return function(ev) {
       trip.infoView().show();
-      trip.infoView().positionRelativeTo(trip.footprintView().target());
+      trip.infoView().positionRelativeTo(trip.footprintView.target());
     };
   },
   tripFootprintHoverOut: function(trip) {
@@ -22,7 +22,7 @@ TripController.prototype.init = function() {
 };
 
 TripController.prototype.showInfoViewPopupOnFootprintHover = function() {
-  var target = $(this.trip.footprintView().target());
+  var target = $(this.trip.footprintView.target());
   target.hover(TripController.events.tripFootprintHoverIn(this.trip),
                TripController.events.tripFootprintHoverOut(this.trip));
 };
