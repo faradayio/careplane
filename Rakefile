@@ -6,6 +6,10 @@ require 'erb'
 require 'cucumber'
 require 'cucumber/rake/task'
 
+require 'jasmine/base'
+require 'jasmine/config'
+require 'jasmine/server'
+
 Cucumber::Rake::Task.new
 
 def psh(cmd, cwd = '.')
@@ -333,6 +337,17 @@ namespace :jasmine do
     puts 'Building Jasmine templates'
     templates 'spec'
     puts 'Done'
+  end
+
+  desc 'Run Jasmine spec server'
+  task :server do
+    jasmine_config_overrides = 'spec/javascripts/support/jasmine_config.rb'
+    require jasmine_config_overrides if File.exist?(jasmine_config_overrides)
+
+    puts "your tests are here:"
+    puts "  http://localhost:8888/"
+
+    Jasmine::Config.new.start_server
   end
 end
 
