@@ -311,7 +311,7 @@ namespace :safari do
 end
 
 desc 'Run Jasmine unit tests (requires Node.js)'
-task :jasmine, :spec do |t, args|
+task :examples, :spec do |t, args|
   ENV['NODE_PATH'] = 'src'
 
   if args[:spec]
@@ -369,38 +369,7 @@ task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/dow
   puts "Careplane v#{current_version} released!"
 end
 
-
-def profile_dir
-  Dir.glob('/Users/dkastner/Library/Application Support/Firefox/Profiles/*.Selenium').first
-end
-
-task :ensure_selenium_profile do
-  if profile_dir.nil?
-    puts 'Creating Selenium profile'
-    `/Applications/Firefox.app/Contents/MacOS/firefox-bin -CreateProfile Selenium`
-    Dir.glob('firefox_profile/*').each do |file|
-      FileUtils.cp file, profile_dir
-    end
-  end
-end
-
-desc 'Package a Firefox profile for running Selenium tests'
-task :selenium_profile => [:ensure_selenium_profile, 'pages/'] do
-  FileUtils.cp 'firefox/build/careplane.xpi', File.join(profile_dir, 'extensions', 'careplane@brighterplanet.com.xpi')
-  dir = Dir.pwd
-  Dir.chdir profile_dir do
-    puts `zip -r #{dir}/pages/selenium_profile.zip . -x *~`
-  end
-  psh 'git add selenium_profile.zip', 'pages'
-  psh "git commit -m 'Updated Firefox Selenium profile'", 'pages' do |ok,res|
-    verbose { puts "gh-pages updated" }
-    psh 'git push -q o HEAD:gh-pages' unless ENV['NO_PUSH']
-  end
-end
-
-
 task :publish => [:release, :site]
 
-
-task :test => [:jasmine, :features]
+task :test => [:examples, :features]
 task :default => :test
