@@ -26,10 +26,6 @@ Flight.isAircraftInfo = function(text) {
 Flight.prototype.segments_per_trip = 1;
 Flight.prototype.trips = 1;
 
-Flight.prototype.inspect = function() {
-  return(this.origin + this.destination + this.airline + this.aircraft);
-};
-
 Flight.prototype.sanitizedAircraft = function() {
   return this.aircraft.
     replace(/\s+$/,'').
