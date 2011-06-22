@@ -6,7 +6,7 @@ describe('HipmunkAirTrafficController', function() {
       this.controller.url = 'www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw';
     });
 
-    //itBehavesLikeAn('AirTrafficController');
+    itBehavesLikeAn('AirTrafficController');
   });
 
   describe('#origin', function() {
