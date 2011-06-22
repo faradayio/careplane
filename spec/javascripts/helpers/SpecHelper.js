@@ -1,5 +1,5 @@
 (function() {
-  if(typeof require != 'undefined') {
+  if(typeof window == 'undefined') {
     // Get Node.js caught up to speed
 
     var jsdom = require('jsdom');
@@ -26,8 +26,6 @@
       global.$ = window.$; 
       global.jQuery = window.jQuery;
     }
-  } else {
-    require = function() { };
   }
 })();
 
