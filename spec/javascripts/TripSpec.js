@@ -2,9 +2,7 @@ describe('Trip', function() {
   describe('#score', function() {
     it('sets isScorable to false', function() {
       var trip = new Trip();
-      trip.flights = function() {
-        return [];
-      };
+      trip.flights = [];
       trip.score(function() {}, function() {});
       expect(trip.isScorable).toBeFalsy();
     });

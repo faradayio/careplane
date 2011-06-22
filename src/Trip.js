@@ -33,11 +33,14 @@ Trip.average = function(origin, destination, callback) {
 };
 
 Trip.prototype.origin = function() {
-  return this.flights()[0].origin;
+  return this.flights[0].origin;
 };
 Trip.prototype.destination = function() {
-  var flights = this.flights();
-  return flights[flights.length - 1].destination;
+  return this.flights[this.flights.length - 1].destination;
+};
+
+Trip.prototype.init = function() {
+  this.loadFlights();
 };
 
 Trip.prototype.initViews = function() {
@@ -46,8 +49,8 @@ Trip.prototype.initViews = function() {
 };
 
 Trip.prototype.eachFlight = function(callback) {
-  for(var i in this.flights()) {
-    callback(this.flights()[i]);
+  for(var i in this.flights) {
+    callback(this.flights[i]);
   }
 };
 
@@ -65,7 +68,7 @@ Trip.prototype.rate = function(rating) {
 };
 
 Trip.prototype.isDone = function() {
-  return this.flights() != null && this.completedFlightCount == this.flights().length;
+  return this.flights != null && this.completedFlightCount == this.flights.length;
 };
 
 Trip.prototype.tallyFootprint = function(emission) {

@@ -36,17 +36,14 @@ HipmunkTrip.prototype.embeddedInfoView = function() {
   return this._embeddedInfoView;
 };
 
-HipmunkTrip.prototype.flights = function() {
-  if(!this._flights || this._flights.length == 0) {
-    var legs = $('.details-padding', this.infoPanelElement);
-    this._flights = [];
-    var trip = this;
-    $(legs).each(function(i, leg) {
-      trip._flights.push(HipmunkFlight.parse(leg));
-    });
-  }
-  return this._flights;
-}
+HipmunkTrip.prototype.loadFlights = function() {
+  var legs = $('.details-padding', this.infoPanelElement);
+  this.flights = [];
+  var trip = this;
+  $(legs).each(function(i, leg) {
+    trip.flights.push(HipmunkFlight.parse(leg));
+  });
+};
 
 HipmunkTrip.prototype.initViews = function() {
   this.footprintView.init();

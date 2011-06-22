@@ -66,6 +66,7 @@ AirTrafficController.prototype.createTrip = function(tripElement) {
   var trip = new this.tripClass(tripElement);
   this.trips.push(trip);
   this.tripCount++;
+  trip.init();
   trip.controller.init();
 };
 

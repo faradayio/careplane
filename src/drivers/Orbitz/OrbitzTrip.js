@@ -16,13 +16,10 @@ OrbitzTrip.prototype.cost = function() {
   return this._cost;
 };
 
-OrbitzTrip.prototype.flights = function() {
-  if(!this._flights) {
-    this._flights = [];
-    var legs = this.tripElement.getElementsByClassName('resultLeg');
-    for(var i = 0; i < legs.length; i++) {
-      this._flights.push(OrbitzFlight.parse(legs[i]));
-    }
+OrbitzTrip.prototype.loadFlights = function() {
+  this.flights = [];
+  var legs = this.tripElement.getElementsByClassName('resultLeg');
+  for(var i = 0; i < legs.length; i++) {
+    this.flights.push(OrbitzFlight.parse(legs[i]));
   }
-  return this._flights;
-}
+};

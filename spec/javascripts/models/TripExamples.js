@@ -28,14 +28,16 @@ sharedExamplesFor('Trip', function() {
 
   describe('#score', function() {
     it('parses each flight and runs the onFlightEmissionsComplete callback', function() {
+      this.trip.loadFlights();
       this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
       expect(onFlightEmissionsComplete).toHaveBeenCalled();
     });
   });
 
-  describe('#flights', function() {
-    it('returns a list of flights', function() {
-      expect(this.trip.flights().length).toBeGreaterThan(0);
+  describe('#loadFlights', function() {
+    it('gathers a list of flights', function() {
+      this.trip.loadFlights();
+      expect(this.trip.flights.length).toBeGreaterThan(0);
       this.trip.eachFlight(function(flight) {
         expect(flight.origin).not.toBeNull();
       });

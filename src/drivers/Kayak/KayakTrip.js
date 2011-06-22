@@ -8,6 +8,20 @@ KayakTrip = function(tripElement) {
 };
 KayakTrip.prototype = new Trip();
 
+KayakTrip.events = {
+  tripDetailsSuccess: function(trip) {
+    return function(result) {
+      var div = trip.doc.createElement('div');
+      div.setAttribute('class', 'careplane-trip-details');
+      div.innerHTML = result['message'];
+      div.style.display = 'none';
+      trip.tripElement.appendChild(div);
+
+      trip.flights = KayakFlight.parse($('.inlineflightitinerarylegs tr', trip.tripElement));
+    };
+  }
+};
+
 KayakTrip.prototype.cost = function() {
   if(!this._cost)
     this._cost = parseInt($('#priceAnchor' + this.id, this.tripElement).text().replace(/[^0-9]/g,''));
@@ -29,31 +43,9 @@ KayakTrip.prototype.searchIdentifier = function() {
   }
 };
 
-KayakTrip.prototype.eachFlight = function(callback) {
-  if(this.tripDetailsContainer()) {
-    for(var i in this.flights()) {
-      var flight = this.flights()[i];
-      callback(flight);
-    }
-  } else {
-    var trip = this;
-    var resultIdentifier = this.doc.getElementById('resultid' + this.id).innerHTML;
-    var detailUrl = 'http://www.kayak.com/s/run/inlineDetails/flight?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + this.id + '&fs=;';
+KayakTrip.prototype.loadFlights = function() {
+  var resultIdentifier = this.doc.getElementById('resultid' + this.id).innerHTML;
+  var detailUrl = 'http://www.kayak.com/s/run/inlineDetails/flight?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + this.id + '&fs=;';
 
-    Careplane.fetch(detailUrl, function(result) {
-      var div = trip.doc.createElement('div');
-      div.setAttribute('class', 'careplane-trip-details');
-      div.innerHTML = result['message'];
-      div.style.display = 'none';
-      trip.tripElement.appendChild(div);
-      trip.eachFlight(callback);
-    });
-  }
-};
-
-KayakTrip.prototype.flights = function() {
-  if(!this._flights || this._flights.length == 0) {
-    this._flights = KayakFlight.parse($('.inlineflightitinerarylegs tr', this.tripElement));
-  }
-  return this._flights;
+  Careplane.fetch(detailUrl, KayakTrip.events.tripDetailsSuccess(this));
 };

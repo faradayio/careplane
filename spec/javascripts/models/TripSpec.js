@@ -29,7 +29,7 @@ describe('Trip', function() {
       var trip, flightEmissionsComplete, onTripEmissionsComplete, callback;
       beforeEach(function() {
         trip = new Trip();
-        trip.flights = function() { return []; };
+        trip.flights = [];
         onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
         callback = jasmine.createSpy('callback');
         flightEmissionsComplete = Trip.events.

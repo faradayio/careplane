@@ -8,11 +8,14 @@ describe('HipmunkTrip', function() {
     itBehavesLikeA('Trip');
   });
   
-  it('gracefully handles trips with missing info-panels', function() {
-    loadFixtures('hipmunk_dtw_sfo_missing_info_panel.html');
-    var trip = new HipmunkTrip($('.routing').get(0));
+  describe('#loadFlights', function() {
+    it('gracefully handles trips with missing info-panels', function() {
+      loadFixtures('hipmunk_dtw_sfo_missing_info_panel.html');
+      var trip = new HipmunkTrip($('.routing').get(0));
+      trip.loadFlights();
 
-    expect(trip.flights().length).toBe(0);
+      expect(trip.flights.length).toBe(0);
+    });
   });
 
   describe('#infoPanelElementId', function() {
