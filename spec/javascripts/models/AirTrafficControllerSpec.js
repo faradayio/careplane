@@ -26,17 +26,17 @@ describe('AirTrafficController', function() {
     for(var i in list) {
       var trip = list[i];
       trip.completedFlightCount = 1;
-      trip.footprintView = function() { return {
+      trip.footprintView = {
         init: function() {},
         update: function() {},
         updateRating: function() {}
-      } };
-      trip.infoView = function() { return {
+      };
+      trip.infoView = {
         init: function() {},
         updateSearchAverage: function() {},
         updateTripAverage: function() {},
         updateTripTotal: function() {}
-      } };
+      };
     }
   });
 
