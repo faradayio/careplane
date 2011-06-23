@@ -355,30 +355,34 @@ end
 directory 'pages/downloads'
 
 desc 'Build all packages and copy them to gh-pages'
-task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/downloads']) do
+task :publish_packages => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/downloads']) do
   %w{chrome firefox safari}.each do |browser|
     FileUtils.cp @files["#{browser}_package".to_sym], @files["#{browser}_download".to_sym].call
   end
   puts "Careplane v#{current_version} released!"
 end
 
-desc 'Commit changes to gh-pages'
-task :site => 'pages/' do
-  psh 'git add _posts downloads', 'pages'
-  psh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
-    verbose { puts "gh-pages updated" }
-    Rake::Task['site:push'].invoke
-  end
-end
 namespace :site do
-  desc 'Push site updates to gh-pages'
+  task :commit => 'pages/' do
+    psh 'git add _posts downloads', 'pages'
+    psh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
+      verbose { puts "gh-pages updated" }
+      Rake::Task['site:push'].invoke
+    end
+  end
+
   task :push do
     psh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
+    puts 'Pushed gh-pages to HEAD'
   end
 end
 
-desc 'Build packages, copy them to gh-pages, update website links'
-task :publish => [:release, :site, 'site:push']
+task :push do
+  psh 'git push origin'
+end
+
+desc 'Build packages, copy them to gh-pages, update website links, push'
+task :release => [:publish_packages, 'site:commit', :push]
 
 task :test => [:examples, :features]
 task :default => :test
