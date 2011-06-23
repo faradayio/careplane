@@ -2,7 +2,7 @@ describe('OrbitzAirTrafficController', function() {
   beforeEach(function() {
     this.controller = null;
     loadFixtures('orbitz_dtw_sfo.html');
-    this.controller = OrbitzAirTrafficController.create(document);
+    this.controller = new OrbitzAirTrafficController(document);
   });
 
   itBehavesLikeAn('AirTrafficController');

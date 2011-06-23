@@ -1,13 +1,9 @@
 KayakAirTrafficController = function(doc) {
   this.doc = doc;
-  this.url = this.doc.location.href;
+  this.url = doc ? this.doc.location.href : null;
   this.tripClass = KayakTrip;
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
-
-KayakAirTrafficController.create = function(doc) {
-  return KayakAirTrafficController.prototype.create(KayakAirTrafficController, doc);
-};
 
 KayakAirTrafficController.prototype.routeMatches = function() {
   if(!this._routeMatches && this.url)

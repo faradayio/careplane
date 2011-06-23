@@ -1,13 +1,9 @@
 HipmunkAirTrafficController = function(doc) {
   this.doc = doc;
-  this.url = this.doc.location.href;
+  this.url = doc ? this.doc.location.href : null;
   this.tripClass = HipmunkTrip;
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
-
-HipmunkAirTrafficController.create = function(doc) {
-  return HipmunkAirTrafficController.prototype.create(HipmunkAirTrafficController, doc);
-};
 
 HipmunkAirTrafficController.prototype.origin = function() {
   var match = this.url.match(/from=([^&]+)/);

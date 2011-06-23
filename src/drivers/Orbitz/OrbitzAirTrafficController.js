@@ -1,13 +1,9 @@
 OrbitzAirTrafficController = function(doc) {
   this.doc = doc;
-  this.url = this.doc.location.href;
+  this.url = doc ? this.doc.location.href : null;
   this.tripClass = OrbitzTrip;
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
-
-OrbitzAirTrafficController.create = function(doc) {
-  return OrbitzAirTrafficController.prototype.create(OrbitzAirTrafficController, doc);
-};
 
 OrbitzAirTrafficController.prototype.events.searchEmissionsComplete = function(controller) {
   Careplane.currentExtension.tracker.search(controller.origin(), controller.destination(), HallOfFame.average());

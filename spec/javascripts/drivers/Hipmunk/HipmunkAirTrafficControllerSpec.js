@@ -2,7 +2,7 @@ describe('HipmunkAirTrafficController', function() {
   describe('with fixtures', function() {
     beforeEach(function() {
       loadFixtures('hipmunk_dtw_sfo.html');
-      this.controller = HipmunkAirTrafficController.create(document);
+      this.controller = new HipmunkAirTrafficController(document);
       this.controller.url = 'www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw';
     });
 
