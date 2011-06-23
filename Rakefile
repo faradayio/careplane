@@ -146,20 +146,6 @@ namespace :version do
 end
 
 
-desc 'Update careplane.org with new version'
-task :site => 'pages/' do
-  psh 'git add _posts downloads', 'pages'
-  psh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
-    verbose { puts "gh-pages updated" }
-    Rake::Task['site:push'].invoke
-  end
-end
-namespace :site do
-  task :push do
-    psh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
-  end
-end
-
 directory 'pages/'
 task :pages => 'pages:sync'
 # Update the pages/ directory clone
@@ -362,6 +348,8 @@ BROWSERS.each do |browser|
   file changelog_post(browser) => :changelog
 end
 directory 'pages/downloads'
+
+desc 'Build all packages and copy them to gh-pages'
 task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/downloads']) do
   %w{chrome firefox safari}.each do |browser|
     FileUtils.cp @files["#{browser}_package".to_sym], @files["#{browser}_download".to_sym].call
@@ -369,7 +357,23 @@ task :release => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/dow
   puts "Careplane v#{current_version} released!"
 end
 
-task :publish => [:release, :site]
+desc 'Commit changes to gh-pages'
+task :site => 'pages/' do
+  psh 'git add _posts downloads', 'pages'
+  psh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
+    verbose { puts "gh-pages updated" }
+    Rake::Task['site:push'].invoke
+  end
+end
+namespace :site do
+  desc 'Push site updates to gh-pages'
+  task :push do
+    psh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
+  end
+end
+
+desc 'Build packages, copy them to gh-pages, update website links'
+task :publish => [:release, :site, 'site:push']
 
 task :test => [:examples, :features]
 task :default => :test
