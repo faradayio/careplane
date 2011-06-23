@@ -22,7 +22,7 @@ describe('HipmunkTrip', function() {
     it('converts a routing element id into an info-panel id', function() {
       loadFixtures('hipmunk_dtw_sfo_trip.html');
       var trip = new HipmunkTrip($('.routing').get(0));
-      expect(trip.infoPanelElementId()).toBe('info-panel-8443f61b2d');
+      expect(trip.infoPanelElementId()).toBe('info-panel-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22');
     });
   });
 });

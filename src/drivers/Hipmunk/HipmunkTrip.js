@@ -11,7 +11,7 @@ HipmunkTrip.prototype = new Trip();
 
 HipmunkTrip.prototype.infoPanelElementId = function() {
   return this.tripElement.id.
-    replace(/routing(-[^-]+).*$/,"info-panel$1");
+    replace(/routing(.*)_\d+_\w+$/,"info-panel$1");
 };
 
 HipmunkTrip.prototype.cost = function() {
