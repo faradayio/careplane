@@ -1,7 +1,8 @@
-Trip = function() {};
-Trip.prototype.totalFootprint = 0;
-Trip.prototype.completedFlightCount = 0;
-Trip.prototype.isScorable = true;
+Trip = function(tripElement) {
+  this.totalFootprint = 0;
+  this.completedFlightCount = 0;
+  this.isScorable = true;
+};
 
 Trip.prototype.isValid = function() {
   return this.footprintView.isValid();
