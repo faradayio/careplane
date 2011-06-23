@@ -136,6 +136,11 @@ namespace :version do
 
   task :set, :string do |t, args|
     File.open('VERSION', 'w') { |f| f.puts args[:string] }
+
+    Rake::Task['build'].invoke
+    psh 'git add VERSION firefox/install.rdf google_chrome/manifest.json safari/careplane.safariextension/Info.plist'
+    psh "git commit -m 'Version bump to #{args[:string]}'"
+
     puts "Version set to #{args[:string]}"
   end
 
