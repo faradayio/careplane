@@ -9,7 +9,7 @@ KayakTrip = function(tripElement) {
 KayakTrip.prototype = new Trip();
 
 KayakTrip.events = {
-  tripDetailsSuccess: function(trip) {
+  tripDetailsSuccess: function(trip, success) {
     return function(result) {
       var div = trip.doc.createElement('div');
       div.setAttribute('class', 'careplane-trip-details');
@@ -18,6 +18,7 @@ KayakTrip.events = {
       trip.tripElement.appendChild(div);
 
       trip.flights = KayakFlight.parse($('.inlineflightitinerarylegs tr', trip.tripElement));
+      success(trip);
     };
   }
 };
@@ -43,9 +44,9 @@ KayakTrip.prototype.searchIdentifier = function() {
   }
 };
 
-KayakTrip.prototype.loadFlights = function() {
+KayakTrip.prototype.loadFlights = function(success) {
   var resultIdentifier = this.doc.getElementById('resultid' + this.id).innerHTML;
   var detailUrl = 'http://www.kayak.com/s/run/inlineDetails/flight?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + this.id + '&fs=;';
 
-  Careplane.fetch(detailUrl, KayakTrip.events.tripDetailsSuccess(this));
+  Careplane.fetch(detailUrl, KayakTrip.events.tripDetailsSuccess(this, success));
 };

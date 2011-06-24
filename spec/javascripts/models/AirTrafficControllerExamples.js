@@ -12,8 +12,15 @@ sharedExamplesFor('AirTrafficController', function() {
       var numTrips = this.controller.trips.length;
       expect(this.controller.tripCount).toBeGreaterThan(0);
       expect(this.controller.tripCount).toBe(numTrips);
+      this.controller.trips.forEach(function(trip) {
+        expect(trip.isScorable).toBeTruthy();
+      });
 
       this.controller.scoreTrips();
+      this.controller.trips.forEach(function(trip) {
+        expect(trip.isScorable).toBeFalsy();
+      });
+
       this.controller.rateTrips();
 
       for(var i in this.controller.trips) {

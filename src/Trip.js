@@ -1,7 +1,7 @@
 Trip = function(tripElement) {
   this.totalFootprint = 0;
   this.completedFlightCount = 0;
-  this.isScorable = true;
+  this.isScorable = false;
 };
 
 Trip.prototype.isValid = function() {
@@ -9,6 +9,10 @@ Trip.prototype.isValid = function() {
 };
 
 Trip.events = {
+  flightsLoaded: function(trip) {
+    trip.isScorable = true;
+  },
+
   flightEmissionsComplete: function(trip, callback, onTripEmissionsComplete) {
     return function(cm1Response, flight) {
       trip.tallyFootprint(cm1Response.emission);
@@ -41,7 +45,7 @@ Trip.prototype.destination = function() {
 };
 
 Trip.prototype.init = function() {
-  this.loadFlights();
+  this.loadFlights(Trip.events.flightsLoaded);
 };
 
 Trip.prototype.initViews = function() {

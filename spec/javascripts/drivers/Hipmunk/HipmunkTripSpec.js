@@ -10,9 +10,10 @@ describe('HipmunkTrip', function() {
   
   describe('#loadFlights', function() {
     it('gracefully handles trips with missing info-panels', function() {
+      var success = jasmine.createSpy('loadFlightsSuccess');
       loadFixtures('hipmunk_dtw_sfo_missing_info_panel.html');
       var trip = new HipmunkTrip($('.routing').get(0));
-      trip.loadFlights();
+      trip.loadFlights(success);
 
       expect(trip.flights.length).toBe(0);
     });

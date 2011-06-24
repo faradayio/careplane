@@ -1,5 +1,6 @@
 sharedExamplesFor('Trip', function() {
   var onFlightEmissionsComplete, onTripEmissionsComplete;
+
   beforeEach(function() {
     onFlightEmissionsComplete = jasmine.createSpy('onFlightEmissionsComplete');
     onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
@@ -28,19 +29,29 @@ sharedExamplesFor('Trip', function() {
 
   describe('#score', function() {
     it('parses each flight and runs the onFlightEmissionsComplete callback', function() {
-      this.trip.loadFlights();
+      this.trip.loadFlights(Trip.events.flightsLoaded);
       this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
       expect(onFlightEmissionsComplete).toHaveBeenCalled();
+    });
+    it('sets #isScorable to false', function() {
+      this.trip.loadFlights(Trip.events.flightsLoaded);
+      this.trip.isScorable = true;
+      this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
+      expect(this.trip.isScorable).toBeFalsy();
     });
   });
 
   describe('#loadFlights', function() {
     it('gathers a list of flights', function() {
-      this.trip.loadFlights();
+      this.trip.loadFlights(Trip.events.flightsLoaded);
       expect(this.trip.flights.length).toBeGreaterThan(0);
       this.trip.eachFlight(function(flight) {
         expect(flight.origin).not.toBeNull();
       });
+    });
+    it('sets #isScorable to true when complete', function() {
+      this.trip.loadFlights(Trip.events.flightsLoaded);
+      expect(this.trip.isScorable).toBeTruthy();
     });
   });
 });

@@ -16,10 +16,11 @@ OrbitzTrip.prototype.cost = function() {
   return this._cost;
 };
 
-OrbitzTrip.prototype.loadFlights = function() {
+OrbitzTrip.prototype.loadFlights = function(success) {
   this.flights = [];
   var legs = this.tripElement.getElementsByClassName('resultLeg');
   for(var i = 0; i < legs.length; i++) {
     this.flights.push(OrbitzFlight.parse(legs[i]));
   }
+  success(this);
 };

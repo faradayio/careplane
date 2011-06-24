@@ -36,13 +36,14 @@ HipmunkTrip.prototype.embeddedInfoView = function() {
   return this._embeddedInfoView;
 };
 
-HipmunkTrip.prototype.loadFlights = function() {
+HipmunkTrip.prototype.loadFlights = function(success) {
   var legs = $('.details-padding', this.infoPanelElement);
   this.flights = [];
   var trip = this;
   $(legs).each(function(i, leg) {
     trip.flights.push(HipmunkFlight.parse(leg));
   });
+  success(this);
 };
 
 HipmunkTrip.prototype.initViews = function() {
