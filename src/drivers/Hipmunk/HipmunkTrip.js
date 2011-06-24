@@ -1,8 +1,7 @@
 HipmunkTrip = function(tripElement) {
   this.tripElement = tripElement;
   this.id = tripElement.id;
-  this.infoPanelElement = $('#' + this.infoPanelElementId(),
-                            this.tripElement.ownerDocument).get(0);
+  this.infoPanelElement = $('#' + this.infoPanelElementId()).get(0);
   this.controller = new HipmunkTripController(this);
   this.footprintView = new HipmunkTripFootprintView(this.tripElement);
   this.infoView = new HipmunkTripInfoView(this.tripElement);
