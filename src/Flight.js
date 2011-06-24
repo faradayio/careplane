@@ -1,9 +1,4 @@
-Flight = function(origin, destination, airline, aircraft) {
-  this.origin = origin;
-  this.destination = destination;
-  this.airline = airline;
-  this.aircraft = aircraft;
-}
+Flight = function() {};
 
 Flight.events = {
   emissionEstimateSuccess: function(flight, callback) {

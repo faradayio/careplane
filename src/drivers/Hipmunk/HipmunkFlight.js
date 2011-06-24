@@ -4,7 +4,7 @@ HipmunkFlight = function(origin, destination, airline, aircraft) {
   this.airline = airline;
   this.aircraft = aircraft;
 };
-HipmunkFlight.prototype = Flight.prototype;
+HipmunkFlight.prototype = new Flight();
 
 HipmunkFlight.parse = function(leg) {
   var airline = $('.flightnum', leg).text();

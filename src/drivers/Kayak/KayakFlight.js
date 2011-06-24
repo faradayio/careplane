@@ -4,7 +4,7 @@ KayakFlight = function(origin, destination, airline, aircraft) {
   this.airline = airline;
   this.aircraft = aircraft;
 };
-KayakFlight.prototype = Flight.prototype;
+KayakFlight.prototype = new Flight();
 
 KayakFlight.parse = function(trs) {
   var flights = [];
