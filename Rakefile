@@ -359,7 +359,6 @@ task :publish_packages => (BROWSERS.map { |b| changelog_post(b) } + [:package, '
   %w{chrome firefox safari}.each do |browser|
     FileUtils.cp @files["#{browser}_package".to_sym], @files["#{browser}_download".to_sym].call
   end
-  puts "Careplane v#{current_version} released!"
 end
 
 namespace :site do
