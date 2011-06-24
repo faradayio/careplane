@@ -3,10 +3,8 @@
   <head>
   </head>
   <body>
+    <script type="text/javascript" src="CareplaneTrackerService.js"></script>
     <script>
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-1667526-26']);
-
       function welcome() {
         chrome.tabs.create({ url: 'http://careplane.org/welcome.html' });
       }
@@ -21,30 +19,13 @@
         }
       };
 
-      var tracker = {
-        firstRun: function() {
-          _gaq.push(['_trackEvent', 'First Run', 'Welcome']);
-        },
-        search: function(site, origin, destination, averageCo2) {
-          _gaq.push(['_trackEvent', 'Search', site, origin + '-' + destination, averageCo2]);
-        },
-        purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
-          _gaq.push(['_trackEvent', 'Purchase', 'Route', origin + '-' + destination, cost]);
-
-          var pctCo2Difference = Math.round((co2 / averageCo2) * 100);
-          if(cost - minCost <= 0) {
-            _gaq.push(['_trackEvent', 'Purchase', 'Cheapest', 'CO2 % Difference', pctCo2Difference]);
-          } else {
-            _gaq.push(['_trackEvent', 'Purchase', 'Premium', 'CO2 % Difference', pctCo2Difference]);
-          }
-        }
-      }
-
       /**
        * Handles data sent via safari.self.tab.dispatchMessage().
        * @param event Object Data sent in the message.
        */
       function onRequest(event) {
+        this.tracker = this.tracker ? this.tracker : new CareplaneTrackerService('Chrome');
+
         var message = event.message;
         switch(event.name) {
         case 'welcome':
@@ -57,13 +38,13 @@
           preferences.put(message.key, message.value);
           break;
         case 'tracker.firstRun':
-          tracker.firstRun();
+          this.tracker.firstRun();
           break;
         case 'tracker.search':
-          tracker.search(message.site, message.origin, message.destination, message.averageCo2);
+          this.tracker.search(message.site, message.origin, message.destination, message.averageCo2);
           break;
         case 'tracker.purchase':
-          tracker.purchase(message.origin, message.destination, message.cost, message.minCost, message.co2, message.averageCo2);
+          this.tracker.purchase(message.origin, message.destination, message.cost, message.minCost, message.co2, message.averageCo2);
           break;
         }
       }
@@ -71,6 +52,5 @@
       // Wire up the listener.
       safari.application.addEventListener('message', onRequest);
     </script>
-    <script type="text/javascript" async="true" src="https://ssl.google-analytics.com/ga.js"></script>
   </body>
 </html>

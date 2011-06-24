@@ -6,6 +6,7 @@
   <script src="src/lib/jquery-1.5.2.min.js"/>
   <script src="src/Preferences.js"/>
   <script src="src/Util.js"/>
+  <script src="src/CareplaneTrackerService.js"/>
   <script src="src/Tracker.js"/>
   <script src="src/Driver.js"/>
   <script src="src/HallOfFame.js"/>

@@ -12,14 +12,7 @@ GoogleTracker = {
   }
 };
 
-FirefoxTracker = {
-  firstRun: function() {
-  },
-  search: function(site, origin, destination, averageCo2) {
-  },
-  purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
-  }
-};
+FirefoxTracker = CareplaneTrackerService;
 
 SafariTracker = {
   firstRun: function() {

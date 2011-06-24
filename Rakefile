@@ -183,7 +183,7 @@ CLOBBER.include 'pages/.git'
 
 def build(driver, target_dir = '')
   puts 'Copying files...'
-  (CareplaneConfig.js_files + @css_files + @image_files).each do |file|
+  (CareplaneConfig.js_files(driver) + @css_files + @image_files).each do |file|
     destination = File.join(driver, target_dir, file)
     FileUtils.mkdir_p(File.dirname(destination))
     puts file
@@ -259,6 +259,7 @@ namespace :google_chrome do
   task :build => 'google_chrome:build:templates' do
     puts 'Building Google Chrome'
     build_application_js 'google_chrome'
+    FileUtils.cp 'src/CareplaneTrackerService.js', 'google_chrome/CareplaneTrackerService.js'
     puts 'Done'
   end
   namespace :build do
@@ -272,7 +273,7 @@ namespace :google_chrome do
   task :package => :build do
     FileUtils.mkdir_p('google_chrome/build')
     Dir.chdir 'google_chrome' do
-      puts `zip -r build/careplane.zip application.js background.html images manifest.json options.html stylesheets -x *~`
+      puts `zip -r build/careplane.zip application.js CareplaneTrackerService.js background.html images manifest.json options.html stylesheets -x *~`
     end
   end
 end
@@ -282,6 +283,7 @@ namespace :safari do
   task :build => 'safari:build:templates' do
     puts 'Building Safari'
     build 'safari', 'careplane.safariextension'
+    FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
     puts 'Done'
   end
   namespace :build do
@@ -317,7 +319,7 @@ task :syntax, :file do |t, args|
   if args[:file]
     exec "`npm bin`/jshint #{args[:file]}"
   else
-    files = CareplaneConfig.js_files.reject { |f| f =~ /jquery-.*\.js/ }
+    files = CareplaneConfig.js_files('firefox').reject { |f| f =~ /jquery-.*\.js/ }
     exec "`npm bin`/jshint #{files.join(' ')}"
   end
 end
