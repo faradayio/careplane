@@ -1,8 +1,0 @@
-<!ENTITY careplane.label "Your localized menuitem">
-<!ENTITY careplaneContext.label "Your Menuitem">
-<!ENTITY careplaneContext.accesskey "Y">
-<!ENTITY careplaneToolbarButton.label "Your Toolbar Button">
-<!ENTITY careplaneToolbarButton.tooltip "This is your toolbar button!">
-<!ENTITY careplaneSidebar.label "Your Sidebar">
-<!ENTITY careplaneToolbar.name  "example">
-<!ENTITY careplaneToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &careplaneToolbar.name;">
