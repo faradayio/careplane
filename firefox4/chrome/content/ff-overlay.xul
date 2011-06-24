@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://careplane/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://careplane/locale/overlay.dtd">
+<overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  
+  <script src="src/lib/jquery-1.5.2.min.js"/>
+  <script src="src/Preferences.js"/>
+  <script src="src/Util.js"/>
+  <script src="src/CareplaneTrackerService.js"/>
+  <script src="src/Tracker.js"/>
+  <script src="src/Driver.js"/>
+  <script src="src/HallOfFame.js"/>
+  <script src="src/Flight.js"/>
+  <script src="src/Trip.js"/>
+  <script src="src/AverageTrip.js"/>
+  <script src="src/AirTrafficController.js"/>
+  <script src="src/controllers/TripController.js"/>
+  <script src="src/drivers/Hipmunk.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkFlight.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkTrip.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkAirTrafficController.js"/>
+  <script src="src/drivers/Hipmunk/HipmunkTripController.js"/>
+  <script src="src/drivers/Kayak.js"/>
+  <script src="src/drivers/Kayak/KayakFlight.js"/>
+  <script src="src/drivers/Kayak/KayakTrip.js"/>
+  <script src="src/drivers/Kayak/KayakAirTrafficController.js"/>
+  <script src="src/drivers/Orbitz.js"/>
+  <script src="src/drivers/Orbitz/OrbitzFlight.js"/>
+  <script src="src/drivers/Orbitz/OrbitzTrip.js"/>
+  <script src="src/drivers/Orbitz/OrbitzAirTrafficController.js"/>
+  <script src="src/views/TripInfoView.js"/>
+  <script src="src/views/TripFootprintView.js"/>
+  <script src="src/views/Orbitz/OrbitzTripFootprintView.js"/>
+  <script src="src/views/Orbitz/OrbitzTripInfoView.js"/>
+  <script src="src/views/Kayak/KayakTripFootprintView.js"/>
+  <script src="src/views/Kayak/KayakTripInfoView.js"/>
+  <script src="src/views/Hipmunk/HipmunkTripFootprintView.js"/>
+  <script src="src/views/Hipmunk/HipmunkTripInfoView.js"/>
+  <script src="src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js"/>
+  <script src="src/Careplane.js"/>
+  <script src="src/ExtensionLoader.js"/>
+
+  <script src="FirefoxPreferences.js"/>
+  <script src="FirefoxExtension.js"/>
+  <script src="FirefoxExtensionLoader.js"/>
+  <script src="overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="careplane-strings" src="chrome://careplane/locale/overlay.properties"/>
+  </stringbundleset>
+</overlay>

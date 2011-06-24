@@ -48,6 +48,8 @@ end
   :chrome_download => lambda { "pages/downloads/careplane-#{current_version}.zip" },
   :firefox_package => 'firefox/build/careplane.xpi',
   :firefox_download => lambda { "pages/downloads/careplane-#{current_version}.xpi" },
+  :firefox4_package => 'firefox/build/careplane-ff4.xpi',
+  :firefox4_download => lambda { "pages/downloads/careplane-#{current_version}-ff4.xpi" },
   :safari_package => 'safari/build/careplane.safariextz',
   :safari_download => lambda { "pages/downloads/careplane-#{current_version}.safariextz" }
 }
@@ -218,6 +220,29 @@ def templates(target)
     filename = File.basename template, '.erb'
     target_dir = File.dirname(template).sub!(/^rake\/templates\//,'')
     File.open(File.join(target_dir, filename), 'w') { |f| f.puts erb.result(binding) }
+  end
+end
+
+directory 'firefox4/build'
+namespace :firefox4 do
+  desc 'Build Firefox 4.x extension'
+  task :build => 'firefox4:build:templates' do
+    puts 'Building Firefox 4.x'
+    build 'firefox4', 'chrome/content'
+    puts 'Done'
+  end
+  namespace :build do
+    task :templates do
+      puts 'Building Firefox 4.x templates'
+      templates 'firefox4'
+      puts 'Done'
+    end
+  end
+  desc "Package Firefox 4.x extension into #{@files[:firefox4_package]} file"
+  task :package => [:build, 'firefox4/build'] do
+    Dir.chdir 'firefox4' do
+      puts `zip -r build/careplane.xpi chrome defaults chrome.manifest icon.png install.rdf -x *~`
+    end
   end
 end
 

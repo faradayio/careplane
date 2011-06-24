@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>careplane@brighterplanet.com</em:id>
+    <em:type>2</em:type>
+    <em:name>Careplane</em:name>
+    <em:version><%= @version %></em:version>
+    <em:creator>Andy Rossmeissl</em:creator>
+    <em:contributor>Seamus Abshere</em:contributor>
+    <em:contributor>Derek Kastner</em:contributor>
+    <em:contributor>Ian Hough</em:contributor>
+    <em:description>Real-time carbon footprints inserted into your favorite travel search sites</em:description>
+    <em:homepageURL>http://www.careplane.org/</em:homepageURL>
+    <em:aboutURL>chrome://careplane/content/about.xul</em:aboutURL>
+    <em:optionsURL>chrome://careplane/content/options.xul</em:optionsURL>
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- Firefox -->
+        <em:minVersion>3.0</em:minVersion>
+        <em:maxVersion>4.0.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+  </Description>
+</RDF>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://careplane/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://careplane/locale/overlay.dtd">
+<overlay id="careplane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <% CareplaneConfig.js_files('firefox').each do |file| %>
+  <script src="<%= file %>"/><% end %>
+
+  <script src="FirefoxPreferences.js"/>
+  <script src="FirefoxExtension.js"/>
+  <script src="FirefoxExtensionLoader.js"/>
+  <script src="overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="careplane-strings" src="chrome://careplane/locale/overlay.properties"/>
+  </stringbundleset>
+</overlay>
