@@ -31,6 +31,7 @@
         <string>src/lib/jquery-1.5.2.min.js</string>
         <string>src/Preferences.js</string>
         <string>src/Util.js</string>
+        <string>src/CareplaneTrackerService.js</string>
         <string>src/Tracker.js</string>
         <string>src/Driver.js</string>
         <string>src/HallOfFame.js</string>

@@ -185,7 +185,7 @@ CLOBBER.include 'pages/.git'
 
 def build(driver, target_dir = '')
   puts 'Copying files...'
-  (CareplaneConfig.js_files(driver) + @css_files + @image_files).each do |file|
+  (CareplaneConfig.js_files + @css_files + @image_files).each do |file|
     destination = File.join(driver, target_dir, file)
     FileUtils.mkdir_p(File.dirname(destination))
     puts file
@@ -251,7 +251,7 @@ namespace :firefox do
   desc 'Build Firefox extension'
   task :build => 'firefox:build:templates' do
     puts 'Building Firefox'
-    build 'firefox', 'chrome/content'
+    build 'firefox', 'lib'
     puts 'Done'
   end
   namespace :build do
@@ -264,7 +264,14 @@ namespace :firefox do
   desc "Package Firefox extension into #{@files[:firefox_package]} file"
   task :package => [:build, 'firefox/build'] do
     Dir.chdir 'firefox' do
-      puts `zip -r build/careplane.xpi chrome defaults chrome.manifest icon.png install.rdf -x *~`
+      puts `../moz-addon-sdk/bin/cfx xpi`
+      FileUtils.mv 'careplane.xpi', 'build/careplane.xpi'
+    end
+  end
+
+  task :develop do
+    Dir.chdir 'firefox' do
+      puts `../moz-addon-sdk/bin/cfx run`
     end
   end
 
@@ -344,7 +351,7 @@ task :syntax, :file do |t, args|
   if args[:file]
     exec "`npm bin`/jshint #{args[:file]}"
   else
-    files = CareplaneConfig.js_files('firefox').reject { |f| f =~ /jquery-.*\.js/ }
+    files = CareplaneConfig.js_files.reject { |f| f =~ /jquery-.*\.js/ }
     exec "`npm bin`/jshint #{files.join(' ')}"
   end
 end
