@@ -17,3 +17,5 @@ safari/careplane.safariextension/lib
 safari/careplane.safariextension/src
 safari/careplane.safariextension/stylesheets
 pages
+
+*.pyc
