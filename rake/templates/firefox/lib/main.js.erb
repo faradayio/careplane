@@ -1,0 +1,16 @@
+var pageMod = require('page-mod');
+
+pageMod.PageMod({
+  include: [
+    '*://*.hipmunk.com/*',
+    '*://hipmunk.com/*',
+    '*://*.kayak.com/*',
+    '*://kayak.com/*',
+    '*://*.orbitz.com/*',
+    '*://orbitz.com/*'
+  ],
+  contentScriptWhen: 'ready',
+  contentScriptFile: [<% CareplaneConfig.js_files.each do |js_file| %>
+    '<%= js_file %>',<% end %>
+  ]
+});
