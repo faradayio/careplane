@@ -3,54 +3,14 @@
   <head>
   </head>
   <body>
-    <script type="text/javascript" src="CareplaneTrackerService.js"></script>
+    <script type="text/javascript" src="Tracker.js"></script>
+    <script type="text/javascript" src="Worker.js"></script>
     <script>
-      function welcome() {
-        chrome.tabs.create({ url: 'http://careplane.org/welcome.html' });
-      }
-
-      var preferences = {
-        get: function(key, callbackId, callbackTarget) {
-          var val = safari.extension.settings[key];
-          callbackTarget.dispatchMessage('preferences.get', { value: val, callbackId: callbackId });
-        },
-        put: function(key, value) {
-          safari.extension.settings[key] = value;
-        }
+      var worker;
+      window.onload = function() {
+        worker = new SafariWorker();
+        worker.init();
       };
-
-      /**
-       * Handles data sent via safari.self.tab.dispatchMessage().
-       * @param event Object Data sent in the message.
-       */
-      function onRequest(event) {
-        this.tracker = this.tracker ? this.tracker : new CareplaneTrackerService('Chrome');
-
-        var message = event.message;
-        switch(event.name) {
-        case 'welcome':
-          welcome();
-          break;
-        case 'preferences.get':
-          preferences.get(message.key, message.callbackId, event.target.page);
-          break;
-        case 'preferences.put':
-          preferences.put(message.key, message.value);
-          break;
-        case 'tracker.firstRun':
-          this.tracker.firstRun();
-          break;
-        case 'tracker.search':
-          this.tracker.search(message.site, message.origin, message.destination, message.averageCo2);
-          break;
-        case 'tracker.purchase':
-          this.tracker.purchase(message.origin, message.destination, message.cost, message.minCost, message.co2, message.averageCo2);
-          break;
-        }
-      }
-
-      // Wire up the listener.
-      safari.application.addEventListener('message', onRequest);
     </script>
   </body>
 </html>

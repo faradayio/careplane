@@ -38,10 +38,6 @@ Careplane.prototype.prefs = function() {
 
 Careplane.prototype.isPollingEnabled = true;
 
-Careplane.prototype.welcome = function() {
-  this.prefs().getBoolean('hasRunPreviously', CareplaneEvents.welcome(this), false);
-};
-
 Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
   var match = doc.location.href.search(driverClass.monitorURL);
 
@@ -74,17 +70,6 @@ CareplaneEvents = {
         var driver = new driverClass(extension);
         Careplane.setCurrentDriver(driver);
         driver.load();
-      }
-    };
-  },
-
-  welcome: function(extension) {
-    return function(hasRunPreviously) {
-      if(!hasRunPreviously) {
-        extension.prefs().putBoolean('hasRunPreviously', true);
-
-        extension.tracker.firstRun();
-        extension.openWelcomeScreen();
       }
     };
   },

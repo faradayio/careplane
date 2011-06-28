@@ -3,54 +3,14 @@
   <head>
   </head>
   <body>
-    <script type="text/javascript" src="CareplaneTrackerService.js"></script>
+    <script type="text/javascript" src="Tracker.js"></script>
+    <script type="text/javascript" src="Worker.js"></script>
     <script>
-      function welcome() {
-        chrome.tabs.create({ url: 'http://careplane.org/welcome.html' });
-      }
-
-      var preferences = {
-        get: function(key, callback) {
-          callback(localStorage[key]);
-        },
-        put: function(key, value) {
-          localStorage[key] = value;
-        }
+      var worker;
+      window.onload = function() {
+        worker = new GoogleChromeWorker();
+        worker.init();
       };
-
-      /**
-       * Handles data sent via chrome.extension.sendRequest().
-       * @param request Object Data sent in the request.
-       * @param sender Object Origin of the request.
-       * @param callback Function The method to call when the request completes.
-       */
-      function onRequest(request, sender, callback) {
-        this.tracker = this.tracker ? this.tracker : new CareplaneTrackerService('Chrome');
-
-        switch(request.action) {
-        case 'welcome':
-          welcome();
-          break;
-        case 'preferences.get':
-          preferences.get(request.key, callback);
-          break;
-        case 'preferences.put':
-          preferences.put(request.key, request.value);
-          break;
-        case 'tracker.firstRun':
-          this.tracker.firstRun();
-          break;
-        case 'tracker.search':
-          this.tracker.search(request.site, request.origin, request.destination, request.averageCo2);
-          break;
-        case 'tracker.purchase':
-          this.tracker.purchase(request.origin, request.destination, request.cost, request.minCost, request.co2, request.averageCo2);
-          break;
-        }
-      }
-
-      // Wire up the listener.
-      chrome.extension.onRequest.addListener(onRequest);
     </script>
   </body>
 </html>

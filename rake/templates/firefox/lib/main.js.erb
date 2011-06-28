@@ -1,4 +1,6 @@
 var pageMod = require('page-mod');
+var careplaneWorker = require('CareplaneWorker');
+var worker = new careplaneWorker.firefox();
 
 pageMod.PageMod({
   include: [
@@ -12,5 +14,6 @@ pageMod.PageMod({
   contentScriptWhen: 'ready',
   contentScriptFile: [<% CareplaneConfig.js_files.each do |js_file| %>
     '<%= js_file %>',<% end %>
-  ]
+  ],
+  onAttach: worker.init
 });
