@@ -6,6 +6,7 @@ firefox*/chrome/content/images
 firefox*/chrome/content/lib
 firefox*/chrome/content/src
 firefox*/chrome/content/stylesheets
+firefox/data
 firefox/lib
 google_chrome/build
 google_chrome/images
