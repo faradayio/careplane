@@ -19,7 +19,7 @@ HallOfFame = {
     var minFootprint = 0;
     for(var i in this.trips) {
       var footprint = this.trips[i].roundedTotalFootprint();
-      if(minFootprint == 0) {
+      if(minFootprint === 0) {
         minFootprint = footprint;
       } else {
         minFootprint = Math.min(minFootprint, footprint);
@@ -37,7 +37,7 @@ HallOfFame = {
   },
 
   average: function() {
-    if(this.count == 0) {
+    if(this.count === 0) {
       return 0;
     } else {
       var totalFootprint = 0;
@@ -76,7 +76,7 @@ HallOfFame = {
   },
 
   ratingFor: function(trip) {
-    if(this.scale == null) {
+    if(this.scale === null) {
       return 0;
     } else {
       return this.scale[trip.roundedTotalFootprint()];

@@ -1,7 +1,7 @@
 Worker = function() {};
 
 Worker.events = {
-  listen = function(worker) {
+  listen: function(worker) {
     return function() {
       worker.handleMessage(arguments);
     };
@@ -26,7 +26,7 @@ Worker.prototype.getPreference = function(params, caller) {
   var val = this.preferences[params.key];
   if(params.callbackId) {
     this.sendCallback(val, params.callbackId, caller);
-    
+  }
 };
 Worker.prototype.setPreference = function(key, value) {
   this.preferences[key] = value;
@@ -55,9 +55,10 @@ Worker.prototype.processMessage = function(message, params, caller) {
 
 
 
-FirefoxWorker = function() {
-  this.preferences = require("simple-storage").storage;
-  this.tracker = new FirefoxTracker();
+FirefoxWorker = function(addon) {
+  this.addon = addon;
+  this.preferences = require('simple-storage').storage;
+  this.tracker = new require('CareplaneTrackerService').tracker('firefox');
 };
 FirefoxWorker.prototype = new Worker();
 
@@ -76,16 +77,16 @@ FirefoxWorker.messageHandler = function(worker, message) {
   };
 };
 
-FirefoxWorker.prototype.addListeners = function(module) {
+FirefoxWorker.prototype.addListeners = function() {
   var worker = this;
   ['welcome', 'preferences.get', 'preferences.put',
    'tracker.firstRun', 'tracker.search', 'tracker.purchase'].each(function(message) {
-    module.port.on(message, FirefoxWorker.messageHandler(worker, message));
+    worker.addon.port.on(message, FirefoxWorker.messageHandler(worker, message));
   });
 };
 
 FirefoxWorker.prototype.sendCallback = function(val, id) {
-  self.postMessage('preferences.get.callback',
+  this.addon.postMessage('preferences.get.callback',
       { value: val, callbackId: callbackId });
 };
 
@@ -144,7 +145,7 @@ SafariWorker.prototype.sendCallback = function(val, id, target) {
 
 
 if(typeof exports != 'undefined') {
-  exports.firefox = FirefoxCareplaneWorker;
+  exports.firefox = FirefoxWorker;
   exports.google_chrome = GoogleChromeWorker;
   exports.safari = SafariWorker;
 }

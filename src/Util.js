@@ -26,7 +26,7 @@ Util = {
     var differentialInCarDays = Math.round(Math.abs(diff) / 30.6356);
     var result;
     var car = differentialInCarDays > 1 ? 'cars' : 'car';
-    if(differentialInCarDays == 0) {
+    if(differentialInCarDays === 0) {
       result = 'This is an average flight';
     } else if(current < average) {
       result = 'Choosing this trip over the average trip would be like <b>taking ' + differentialInCarDays + ' ' + car + ' off the road</b> for a day';
@@ -37,7 +37,8 @@ Util = {
   },
   
   numberWithDelimiter: function(number) { // hat tip http://kevinvaldek.com/number-with-delimiter-in-javascript
-    number = number + '', delimiter = ',';
+    number = number + '';
+    delimiter = ',';
     var split = number.split('.');
     split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
     return split.join('.');
@@ -46,7 +47,7 @@ Util = {
   urlFor: function(base, params) {
     var queryString = '?';
     for(var key in params) {
-      if(params[key] != null) {
+      if(params[key] !== null) {
         if(queryString != '?')
           queryString += '&';
         queryString += key + '=' + params[key];

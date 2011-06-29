@@ -12,7 +12,7 @@ TripController.events = {
   tripFootprintHoverOut: function(trip) {
     return function(ev) {
       trip.infoView.hide();
-    }
+    };
   }
 };
 

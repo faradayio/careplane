@@ -8,5 +8,5 @@ AverageTrip = function(origin, destination) {
 };
 AverageTrip.prototype = new Trip();
 
-AverageTrip.prototype.origin = function() { return this._origin };
-AverageTrip.prototype.destination = function() { return this._destination };
+AverageTrip.prototype.origin = function() { return this._origin; };
+AverageTrip.prototype.destination = function() { return this._destination; };

@@ -38,11 +38,11 @@ Flight.prototype.emissionEstimate = function(callback) {
     'aircraft': this.aircraft,
     'segments_per_trip': this.segments_per_trip,
     'trips': this.trips
-  }
+  };
   var url = Util.urlFor('http://carbon.brighterplanet.com/flights.json', params);
 
   Careplane.fetch(url, Flight.events.emissionEstimateSuccess(this, callback));
-}
+};
 
 Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIALE',
 'AIRBUS','ANTONOV','AVRO','BAE SYSTEMS','BOEING','BOMBARDIER','BRITISH AEROSPACE',

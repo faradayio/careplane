@@ -66,14 +66,14 @@ Trip.prototype.score = function(flightEmissionsCallback, tripEmissionsCallback) 
     flight.emissionEstimate(
       Trip.events.flightEmissionsComplete(trip, flightEmissionsCallback, tripEmissionsCallback));
   });
-}
+};
 
 Trip.prototype.rate = function(rating) {
   this.rating = rating;
 };
 
 Trip.prototype.isDone = function() {
-  return this.flights != null && this.completedFlightCount == this.flights.length;
+  return this.flights !== null && this.completedFlightCount == this.flights.length;
 };
 
 Trip.prototype.tallyFootprint = function(emission) {
