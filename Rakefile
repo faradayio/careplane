@@ -203,13 +203,14 @@ def build_application_js(driver, target_dir = '')
   end
 
   puts 'Building application.js...'
-  FileUtils.rm_f 'google_chrome/application.js'
-  (CareplaneConfig.js_files +
-   %w{google_chrome/GoogleChromePreferences.js google_chrome/GoogleChromeExtension.js
-      google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
-  ).each do |file|
-    puts "cat #{file} >> google_chrome/application.js"
-    `cat #{file} >> google_chrome/application.js`
+  File.open('google_chrome/application.js', 'w') do |application|
+    (CareplaneConfig.js_files +
+     %w{src/browser/google_chrome/GoogleChromePreferences.js src/browser/google_chrome/GoogleChromeExtension.js
+        src/browser/google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
+    ).each do |file|
+      puts "#{file} >> google_chrome/application.js"
+      application.puts File.read(file)
+    end
   end
 end
 
@@ -251,7 +252,24 @@ namespace :firefox do
   desc 'Build Firefox extension'
   task :build => 'firefox:build:templates' do
     puts 'Building Firefox'
-    build 'firefox', 'lib'
+
+    puts 'Copying files...'
+    (@css_files + @image_files).each do |asset|
+      destination = File.join('firefox', 'data', File.basename(asset))
+      FileUtils.cp asset, destination
+    end
+    CareplaneConfig.content_script_files('firefox').each do |file|
+      destination = File.join 'firefox', 'data', file.sub(/^src\//, '')
+      FileUtils.mkdir_p(File.dirname(destination))
+      puts file
+      FileUtils.cp file, destination
+    end
+    CareplaneConfig.worker_files.each do |file|
+      destination = File.join 'firefox', 'lib', file.sub(/^src\//, '')
+      FileUtils.mkdir_p(File.dirname(destination))
+      puts file
+      FileUtils.cp file, destination
+    end
     puts 'Done'
   end
   namespace :build do
@@ -272,17 +290,6 @@ namespace :firefox do
   task :develop do
     Dir.chdir 'firefox' do
       puts `../moz-addon-sdk/bin/cfx run`
-    end
-  end
-
-  namespace :develop do
-    desc 'Tell Firefox to use local careplane folder to load extension'
-    task :mac do
-      dir = File.join(Dir.pwd, 'firefox/')
-      profile = Dir.glob('/Users/dkastner/Library/Application Support/Firefox/Profiles/*.default').first
-      File.open("#{profile}/extensions/careplane@brighterplanet.com", 'w') do |f|
-        f.puts dir
-      end
     end
   end
 end
