@@ -1,4 +1,21 @@
 module CareplaneConfig 
+  def self.all_js_files
+    content_script_files + worker_files
+  end
+
+  def self.content_script_files(browser = nil)
+    list = js_files
+    list += Dir.glob(File.join('src','browser',browser,'*.js')) if browser
+    list
+  end
+
+  def self.worker_files
+    %w{
+      src/CareplaneTrackerService.js
+      src/Worker.js
+    }
+  end
+
   def self.js_files
     files = %w{
       src/lib/jquery-1.5.2.min.js

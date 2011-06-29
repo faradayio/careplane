@@ -358,7 +358,7 @@ task :syntax, :file do |t, args|
   if args[:file]
     exec "`npm bin`/jshint #{args[:file]}"
   else
-    files = CareplaneConfig.js_files.reject { |f| f =~ /jquery-.*\.js/ }
+    files = CareplaneConfig.all_js_files.reject { |f| f =~ /jquery-.*\.js/ }
     exec "`npm bin`/jshint #{files.join(' ')}"
   end
 end
