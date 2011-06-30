@@ -1,0 +1,5 @@
+<% CareplaneConfig.content_script_files('google_chrome').each do |file| %>
+<%= File.read(file) %>
+<% end %>
+
+GoogleChromeExtension.load();

@@ -193,27 +193,6 @@ def build(driver, target_dir = '')
   end
 end
 
-def build_application_js(driver, target_dir = '')
-  puts 'Copying assets...'
-  (@css_files + @image_files).each do |file|
-    destination = File.join(driver, target_dir, file)
-    FileUtils.mkdir_p(File.dirname(destination))
-    puts file
-    FileUtils.cp file, destination
-  end
-
-  puts 'Building application.js...'
-  File.open('google_chrome/application.js', 'w') do |application|
-    (CareplaneConfig.js_files +
-     %w{src/browser/google_chrome/GoogleChromePreferences.js src/browser/google_chrome/GoogleChromeExtension.js
-        src/browser/google_chrome/GoogleChromeExtensionLoader.js google_chrome/content.js}
-    ).each do |file|
-      puts "#{file} >> google_chrome/application.js"
-      application.puts File.read(file)
-    end
-  end
-end
-
 def templates(target)
   @version = version
   Dir.glob(File.join('rake', 'templates', target, '**/*.erb')).each do |template|
@@ -297,8 +276,21 @@ end
 namespace :google_chrome do
   task :build => 'google_chrome:build:templates' do
     puts 'Building Google Chrome'
-    build_application_js 'google_chrome'
-    FileUtils.cp 'src/CareplaneTrackerService.js', 'google_chrome/CareplaneTrackerService.js'
+
+    puts 'Copying assets...'
+    (@css_files + @image_files).each do |file|
+      destination = File.join('google_chrome', file)
+      FileUtils.mkdir_p File.dirname(destination)
+      puts "#{file} > #{destination}"
+      FileUtils.cp file, destination
+    end
+
+    CareplaneConfig.worker_files.each do |file|
+      destination = File.join('google_chrome', file.sub(/^src\//,''))
+      FileUtils.mkdir_p File.dirname(destination)
+      puts "#{file} > #{destination}"
+      FileUtils.cp file, destination
+    end
     puts 'Done'
   end
   namespace :build do
