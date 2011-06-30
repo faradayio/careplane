@@ -20,4 +20,7 @@ safari/careplane.safariextension/src
 safari/careplane.safariextension/stylesheets
 pages
 
+google_chrome/CareplaneTrackerService.js
+safari/careplane.safariextension/CareplaneTrackerService.js
+
 *.pyc
