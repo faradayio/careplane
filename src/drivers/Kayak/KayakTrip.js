@@ -13,7 +13,7 @@ KayakTrip.events = {
     return function(result) {
       var div = trip.doc.createElement('div');
       div.setAttribute('class', 'careplane-trip-details');
-      div.innerHTML = result['message'];
+      div.innerHTML = result.message;
       div.style.display = 'none';
       trip.tripElement.appendChild(div);
 
@@ -32,7 +32,7 @@ KayakTrip.prototype.cost = function() {
 
 KayakTrip.prototype.tripDetailsContainer = function() {
   if(!this._tripDetailsContainer)
-    this._tripDetailsContainer = this.tripElement.getElementsByClassName('careplane-trip-details')[0]
+    this._tripDetailsContainer = this.tripElement.getElementsByClassName('careplane-trip-details')[0];
 
   return this._tripDetailsContainer;
 };
