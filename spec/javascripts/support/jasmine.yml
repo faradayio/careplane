@@ -38,7 +38,6 @@ src_files:
   - src/views/Hipmunk/HipmunkTripInfoView.js
   - src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
   - src/Careplane.js
-  - src/ExtensionLoader.js
   - src/TestPreferences.js
   - src/TestExtension.js
   - src/TestExtensionLoader.js

@@ -6,12 +6,14 @@ GoogleChromeExtension = function(doc) {
 };
 GoogleChromeExtension.prototype = new Careplane();
 
-GoogleChromeExtension.log = function(str) {
-  console.log(str);
+GoogleChromeExtension.load = function() {
+  var extension = new GoogleChromeExtension(window.document);
+  extension.loadDriver();
+  return extension;
 };
 
-GoogleChromeExtension.prototype.openWelcomeScreen = function() {
-  chrome.extension.sendRequest({action : 'welcome'});
+GoogleChromeExtension.log = function(str) {
+  console.log(str);
 };
   
 GoogleChromeExtension.prototype.notify = function(driver) {

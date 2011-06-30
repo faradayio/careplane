@@ -45,12 +45,13 @@ Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
   }
 };
 
-Careplane.prototype.loadDriver = function(callback) {
-  var careplane = this;
+Careplane.prototype.loadDriver = function() {
+  Careplane.setCurrentExtension(this);
+  var extension = this;
   [Hipmunk, Kayak, Orbitz].forEach(function(driver) {
-    if(careplane.driverShouldMonitor(driver, careplane.doc)) {
-      careplane.prefs.getBoolean('sites.' + driver.driverName,
-                            CareplaneEvents.driverBecomesAvailable(careplane, driver, callback),
+    if(extension.driverShouldMonitor(driver, extension.doc)) {
+      extension.prefs.getBoolean('sites.' + driver.driverName,
+                            CareplaneEvents.driverBecomesAvailable(extension, driver),
                             true);
     }
   });
@@ -59,10 +60,9 @@ Careplane.prototype.loadDriver = function(callback) {
 
 
 CareplaneEvents = {
-  driverBecomesAvailable: function(extension, driverClass, callback) {
+  driverBecomesAvailable: function(extension, driverClass) {
     return function(driverEnabled) {
       if(driverEnabled) {
-        callback();
         var driver = new driverClass(extension);
         Careplane.setCurrentDriver(driver);
         driver.load();

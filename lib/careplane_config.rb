@@ -61,7 +61,6 @@ module CareplaneConfig
       src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
 
       src/Careplane.js
-      src/ExtensionLoader.js
     }
   end
 

@@ -45,7 +45,6 @@ pageMod.PageMod({
     data.url('views/Hipmunk/HipmunkTripInfoView.js'),
     data.url('views/Hipmunk/HipmunkTripEmbeddedInfoView.js'),
     data.url('Careplane.js'),
-    data.url('ExtensionLoader.js'),
     data.url('browser/firefox/FirefoxExtension.js'),
     data.url('browser/firefox/FirefoxExtensionLoader.js'),
     data.url('browser/firefox/FirefoxPreferences.js'),

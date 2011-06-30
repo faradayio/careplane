@@ -63,7 +63,6 @@
         <string>src/views/Hipmunk/HipmunkTripInfoView.js</string>
         <string>src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js</string>
         <string>src/Careplane.js</string>
-        <string>src/ExtensionLoader.js</string>
         <string>SafariPreferences.js</string>
         <string>SafariExtension.js</string>
 			</array>
