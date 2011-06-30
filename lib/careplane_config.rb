@@ -5,7 +5,13 @@ module CareplaneConfig
 
   def self.content_script_files(browser = nil)
     list = js_files
-    list += Dir.glob(File.join('src','browser',browser,'*.js')) if browser
+    if browser.nil?
+      %w{firefox4 firefox google_chrome safari}.each do |browser|
+        list += Dir.glob(File.join('src','browser',browser,'*.js'))
+      end
+    else
+      list += Dir.glob(File.join('src','browser',browser,'*.js'))
+    end
     list
   end
 
