@@ -15,10 +15,6 @@ SafariExtension.load = function() {
   extension.loadDriver(ExtensionLoader.driverLoaded(extension));
 };
 
-SafariExtension.prototype.openWelcomeScreen = function() {
-  safari.self.tab.dispatchMessage('welcome');
-};
-  
 SafariExtension.prototype.notify = function(driver) {
   // not sure if we want to use desktop notifications for this, no real alternative
 };
