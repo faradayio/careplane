@@ -21,6 +21,9 @@ safari/careplane.safariextension/stylesheets
 pages
 
 google_chrome/CareplaneTrackerService.js
+google_chrome/GoogleChromePreferences.js
+google_chrome/Worker.js
 safari/careplane.safariextension/CareplaneTrackerService.js
+safari/careplane.safariextension/SafariPreferences.js
 
 *.pyc
