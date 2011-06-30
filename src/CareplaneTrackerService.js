@@ -20,3 +20,7 @@ CareplaneTrackerService.prototype = {
     }
   }
 };
+
+if(typeof exports != 'undefined') {
+  exports.tracker = CareplaneTrackerService;
+}

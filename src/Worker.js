@@ -79,10 +79,12 @@ FirefoxWorker.messageHandler = function(worker, message) {
 
 FirefoxWorker.prototype.addListeners = function() {
   var worker = this;
-  ['welcome', 'preferences.get', 'preferences.put',
-   'tracker.firstRun', 'tracker.search', 'tracker.purchase'].each(function(message) {
+  var messages = ['welcome', 'preferences.get', 'preferences.put',
+   'tracker.firstRun', 'tracker.search', 'tracker.purchase'];
+  for(var i = 0; i < messages.length; i++) {
+    var message = messages[i];
     worker.addon.port.on(message, FirefoxWorker.messageHandler(worker, message));
-  });
+  }
 };
 
 FirefoxWorker.prototype.sendCallback = function(val, id) {

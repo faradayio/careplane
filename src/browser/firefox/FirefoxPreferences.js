@@ -8,7 +8,7 @@ FirefoxPreferences.events = {
   preferencesGetCallback: function(prefs) {
     return function(message, params) {
       if(message == 'preferences.get.callback') {
-        prefs.executeCallback(prefs, params.callbackId, params.value) {
+        prefs.executeCallback(prefs, params.callbackId, params.value);
       }
     };
   }

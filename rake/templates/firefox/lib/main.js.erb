@@ -1,19 +1,19 @@
 var pageMod = require('page-mod');
-var careplaneWorker = require('CareplaneWorker');
-var worker = new careplaneWorker.firefox();
+var careplaneWorker = require('Worker');
+var data = require("self").data;
 
 pageMod.PageMod({
   include: [
-    '*://*.hipmunk.com/*',
-    '*://hipmunk.com/*',
-    '*://*.kayak.com/*',
-    '*://kayak.com/*',
-    '*://*.orbitz.com/*',
-    '*://orbitz.com/*'
+    /.*hipmunk.com.*/,
+    /.*kayak.com.*/,
+    /.*orbitz.com.*/
   ],
   contentScriptWhen: 'ready',
-  contentScriptFile: [<% CareplaneConfig.js_files.each do |js_file| %>
-    '<%= js_file %>',<% end %>
+  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox').each do |js_file| %>
+    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
   ],
-  onAttach: worker.init
+  onAttach: function(addon) {
+    var worker = new careplaneWorker.firefox(addon);
+    worker.init();
+  }
 });
