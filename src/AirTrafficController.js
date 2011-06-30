@@ -114,7 +114,7 @@ AirTrafficController.prototype.eachFinishedTrip = function(callback) {
 AirTrafficController.prototype.minCost = function() {
   var min;
   this.eachTrip(function(trip) {
-    if(min === null) {
+    if(min == null) {
       min = trip.cost();
     } else {
       min = Math.min(min, trip.cost());
