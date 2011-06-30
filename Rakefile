@@ -351,7 +351,10 @@ task :syntax, :file do |t, args|
     exec "`npm bin`/jshint #{args[:file]}"
   else
     files = CareplaneConfig.all_js_files.reject { |f| f =~ /jquery-.*\.js/ }
-    exec "`npm bin`/jshint #{files.join(' ')}"
+    files.each do |file|
+      print file + '...' 
+      puts `\`npm bin\`/jshint #{file}`
+    end
   end
 end
 
