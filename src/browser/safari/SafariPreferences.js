@@ -9,7 +9,7 @@ GoogleChromePreferences.events = {
     return function(event) {
       var message = event.message;
       if(event.name == 'preferences.get.callback') {
-        prefs.executeCallback(message.callbackId, message.value) {
+        prefs.executeCallback(message.callbackId, message.value);
       }
     };
   }

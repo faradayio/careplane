@@ -3,7 +3,7 @@ Worker = function() {};
 Worker.events = {
   listen: function(worker) {
     return function() {
-      worker.handleMessage(arguments);
+      worker.handleMessage.apply(worker, arguments);
     };
   }
 };
@@ -24,8 +24,10 @@ Worker.prototype.welcomeOnFirstRun = function() {
 
 Worker.prototype.getPreference = function(params, caller) {
   var val = this.preferences[params.key];
-  if(params.callbackId) {
+  if(typeof params.callbackId != 'undefined') {
     this.sendCallback(val, params.callbackId, caller);
+  } else {
+    return val;
   }
 };
 Worker.prototype.setPreference = function(key, value) {
@@ -89,14 +91,14 @@ FirefoxWorker.prototype.addListeners = function() {
 
 FirefoxWorker.prototype.sendCallback = function(val, id) {
   this.addon.postMessage('preferences.get.callback',
-      { value: val, callbackId: callbackId });
+      { value: val, callbackId: id });
 };
 
 
 
 GoogleChromeWorker = function() {
   this.preferences = localStorage;
-  this.tracker = new GoogleChromeTracker();
+  this.tracker = new CareplaneTrackerService();
 };
 GoogleChromeWorker.prototype = new Worker();
 
@@ -109,12 +111,13 @@ GoogleChromeWorker.prototype.welcome = function() {
 };
 
 GoogleChromeWorker.prototype.handleMessage = function(request, sender, callback) { 
-  this.processMessage(request.action, request);
+  this.processMessage(request.action, request, sender);
 };
 
-GoogleChromeWorker.prototype.sendCallback = function(val, id) {
-  chrome.extension.sendRequest('preferences.get.callback',
-      { value: val, callbackId: callbackId });
+GoogleChromeWorker.prototype.sendCallback = function(val, id, caller) {
+  chrome.tabs.sendRequest(caller.tab.id,
+      { action: 'preferences.get.callback', value: val, callbackId: id },
+      function() {});
 };
 
 

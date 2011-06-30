@@ -9,14 +9,19 @@ GoogleChromePreferences.events = {
   preferencesGetCallback: function(prefs) {
     return function(request) {
       if(request.action == 'preferences.get.callback') {
-        prefs.executeCallback(prefs, request.callbackId, request.value) {
+        prefs.executeCallback(request.callbackId, request.value);
       }
     };
   }
 };
 
-GoogleChromePreferences.prototype.nativeGet = function(key, callback) {
-  chrome.extension.sendRequest({ action: 'preferences.get', key: key }, callback);
+GoogleChromePreferences.prototype.nativeGet = function(key, callbackId, defaultValue) {
+  chrome.extension.sendRequest({
+    action: 'preferences.get',
+    key: key,
+    callbackId: callbackId,
+    defaultValue: defaultValue
+  });
 };
 
 GoogleChromePreferences.prototype.nativePut = function(key, value) {
