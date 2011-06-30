@@ -2,10 +2,9 @@ FirefoxExtension = function(doc) {
   this.doc = doc;
   this.klass = FirefoxExtension;
   this.tracker = FirefoxTracker;
+  this.prefs = new FirefoxPreferences();
 };
 FirefoxExtension.prototype = new Careplane();
-
-FirefoxExtension.prefs = new FirefoxPreferences();
 
 FirefoxExtension.log = function(str) {
   console.log(str);

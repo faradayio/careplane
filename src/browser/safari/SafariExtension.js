@@ -2,10 +2,9 @@ SafariExtension = function(doc) {
   this.doc = doc;
   this.klass = SafariExtension;
   this.tracker = SafariTracker;
+  this.prefs = new SafariPreferences();
 };
 SafariExtension.prototype = new Careplane();
-
-SafariExtension.prefs = new SafariPreferences();
 
 SafariExtension.log = function(str) {
   console.log(str);

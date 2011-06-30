@@ -2,10 +2,9 @@ FirefoxExtension = function(doc) {
   this.doc = doc;
   this.klass = FirefoxExtension;
   this.tracker = FirefoxTracker;
+  this.prefs = new FirefoxPreferences();
 };
 FirefoxExtension.prototype = new Careplane();
-
-FirefoxExtension.prefs = new FirefoxPreferences();
 
 FirefoxExtension.logger = function() {
   return Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);

@@ -7,6 +7,7 @@ TestExtension = function(doc) {
     purchase: function() {},
     purchaseComparison: function() {}
   };
+  this.prefs = new TestPreferences();
 };
 TestExtension.prototype = new Careplane();
 
@@ -32,8 +33,6 @@ TestExtension.log = function(str) {
     throw 'Unable to log to anything';
   }
 };
-
-TestExtension.prefs = new TestPreferences();
 
 TestExtension.prototype.isPollingEnabled = false;
 

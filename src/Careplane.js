@@ -32,10 +32,6 @@ Careplane.prototype.log = function(str) {
   this.klass.log(str);
 };
 
-Careplane.prototype.prefs = function() {
-  return this.klass.prefs;
-};
-
 Careplane.prototype.isPollingEnabled = true;
 
 Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
@@ -53,7 +49,7 @@ Careplane.prototype.loadDriver = function(callback) {
   var careplane = this;
   [Hipmunk, Kayak, Orbitz].forEach(function(driver) {
     if(careplane.driverShouldMonitor(driver, careplane.doc)) {
-      careplane.prefs().getBoolean('sites.' + driver.driverName,
+      careplane.prefs.getBoolean('sites.' + driver.driverName,
                             CareplaneEvents.driverBecomesAvailable(careplane, driver, callback),
                             true);
     }

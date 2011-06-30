@@ -2,10 +2,9 @@ GoogleChromeExtension = function(doc) {
   this.doc = doc;
   this.klass = GoogleChromeExtension;
   this.tracker = GoogleTracker;
+  this.prefs = new GoogleChromePreferences();
 };
 GoogleChromeExtension.prototype = new Careplane();
-
-GoogleChromeExtension.prefs = new GoogleChromePreferences();
 
 GoogleChromeExtension.log = function(str) {
   console.log(str);
