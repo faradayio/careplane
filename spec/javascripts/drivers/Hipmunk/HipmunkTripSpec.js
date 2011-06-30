@@ -42,5 +42,12 @@ describe('HipmunkTrip', function() {
 
       expect(trip.flights.length).toBe(0);
     });
+    it('correctly loads wifi-enabled flights', function() {
+      loadFixtures('hipmunk_wifi_trip.html');
+      var trip = new HipmunkTrip($('.routing').get(0));
+      trip.loadFlights(success);
+
+      expect(trip.flights[0].origin).toBe('DTW');
+    });
   });
 });

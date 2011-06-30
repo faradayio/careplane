@@ -40,7 +40,9 @@ HipmunkTrip.prototype.loadFlights = function(success) {
   this.flights = [];
   var trip = this;
   $(legs).each(function(i, leg) {
-    trip.flights.push(HipmunkFlight.parse(leg));
+    if($('.place', leg).get(0)) {
+      trip.flights.push(HipmunkFlight.parse(leg));
+    }
   });
   success(this);
 };
