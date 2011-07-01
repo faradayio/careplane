@@ -266,9 +266,9 @@ namespace :firefox do
     end
   end
 
-  task :develop do
+  task :develop => 'firefox:build' do
     Dir.chdir 'firefox' do
-      puts `../moz-addon-sdk/bin/cfx run`
+      puts `../moz-addon-sdk/bin/cfx run --addons=../moz-addon-sdk/firebug-1.7.3.xpi`
     end
   end
 end
