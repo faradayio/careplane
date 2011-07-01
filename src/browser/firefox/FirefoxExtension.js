@@ -11,7 +11,6 @@ FirefoxExtension.events = {
       var style = extension.doc.createElement('link');
       style.setAttribute('rel','stylesheet');
       style.setAttribute('type','text/css');
-      console.log(self);
       style.setAttribute('href', url);
       extension.doc.head.appendChild(style);
     };
@@ -19,25 +18,25 @@ FirefoxExtension.events = {
 
   loadDriver: function(extension) {
     return function(driver) {
-      var driverClass;
-      switch(driver) {
-        case 'Hipmunk':
-          driverClass = Hipmunk;
-          break;
-        case 'Kayak':
-          driverClass = Kayak;
-          break;
-        case 'Orbitz':
-          driverClass = Orbitz;
-          break;
-      }
-      console.log('want to load ' + driver);
-      if(extension.driverShouldMonitor(driverClass, extension.doc)) {
-        console.log('driver ' + driver + ' enabled');
-        var driverInstance = new driverClass(extension);
-        Careplane.setCurrentDriver(driverInstance);
-        driverInstance.load();
-      }
+      $(extension.doc).ready(function() {
+        var driverClass;
+        switch(driver) {
+          case 'Hipmunk':
+            driverClass = Hipmunk;
+            break;
+          case 'Kayak':
+            driverClass = Kayak;
+            break;
+          case 'Orbitz':
+            driverClass = Orbitz;
+            break;
+        }
+        if(extension.driverShouldMonitor(driverClass, extension.doc)) {
+          var driverInstance = new driverClass(extension);
+          Careplane.setCurrentDriver(driverInstance);
+          driverInstance.load();
+        }
+      });
     };
   }
 };
