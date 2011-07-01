@@ -7,9 +7,7 @@
 watch(/^images\/.*/) { |md| build }
 watch(/^src\/.*/) { |md| build }
 watch(/^stylesheets\/.*/) { |md| build }
-watch(/^google_chrome\/Google[A-Za-z]+.js/) { |md| build }
-watch(/^firefox\/chrome\/content\/Firefox[A-Za-z]+.js/) { |md| build }
-watch(/^safari\/careplane.safariextension\/Safari[A-Za-z]+.js/) { |md| build }
+watch(/background.html/) { |md| build }
 watch(/Rakefile/) { |md| build }
 watch(/rake\/.*/) { |md| build }
 
