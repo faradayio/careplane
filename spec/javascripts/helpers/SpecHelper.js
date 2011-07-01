@@ -1,3 +1,9 @@
+self = {
+  port: {
+    on: function() {}
+  }
+};
+
 (function() {
   if(typeof window == 'undefined') {
     // Get Node.js caught up to speed
