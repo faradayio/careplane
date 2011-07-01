@@ -48,14 +48,21 @@
         <string>src/drivers/Hipmunk/HipmunkFlight.js</string>
         <string>src/drivers/Hipmunk/HipmunkTrip.js</string>
         <string>src/drivers/Hipmunk/HipmunkTripController.js</string>
+        <string>src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js</string>
+        <string>src/views/Hipmunk/HipmunkTripFootprintView.js</string>
+        <string>src/views/Hipmunk/HipmunkTripInfoView.js</string>
         <string>src/drivers/Kayak.js</string>
         <string>src/drivers/Kayak/KayakAirTrafficController.js</string>
         <string>src/drivers/Kayak/KayakFlight.js</string>
         <string>src/drivers/Kayak/KayakTrip.js</string>
+        <string>src/views/Kayak/KayakTripFootprintView.js</string>
+        <string>src/views/Kayak/KayakTripInfoView.js</string>
         <string>src/drivers/Orbitz.js</string>
         <string>src/drivers/Orbitz/OrbitzAirTrafficController.js</string>
         <string>src/drivers/Orbitz/OrbitzFlight.js</string>
         <string>src/drivers/Orbitz/OrbitzTrip.js</string>
+        <string>src/views/Orbitz/OrbitzTripFootprintView.js</string>
+        <string>src/views/Orbitz/OrbitzTripInfoView.js</string>
         <string>SafariPreferences.js</string>
         <string>SafariExtension.js</string>
 			</array>
