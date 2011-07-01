@@ -24,9 +24,7 @@ Worker.prototype.welcomeOnFirstRun = function() {
 
 Worker.prototype.getPreference = function(params, caller) {
   var val = this.preferences[params.key];
-  console.log('got ' + params.key + ': ' + val);
   if(val === null || typeof val == 'undefined') {
-    console.log('val is null, setting to default ' + params.defaultValue);
     val = params.defaultValue;
     this.preferences[params.key] = val;
   }
