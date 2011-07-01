@@ -57,7 +57,22 @@ FirefoxExtension.prototype.notify = function(driver) {
   //}
 };
 
+FirefoxExtension.fetch = function(url, callback) {
+  var req = new XMLHttpRequest();
+  req.open('GET', url, true);
+  req.onreadystatechange = function (e) {
+    if (req.readyState == 4) {
+      if(req.status == 200) {
+        var response = jQuery.parseJSON(req.responseText);
+        callback(response);
+      }
+    }
+  };
+  req.send(null);
+};
+
 FirefoxExtension.prototype.loadDriver = function() {
+  Careplane.fetch = FirefoxExtension.fetch;
   self.port.on('driver.load', FirefoxExtension.events.loadDriver(this), false);
   self.port.on('stylesheet.load', FirefoxExtension.events.loadStylesheet(this), false);
 };
