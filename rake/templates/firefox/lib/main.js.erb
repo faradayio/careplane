@@ -3,17 +3,37 @@ var careplaneWorker = require('Worker');
 var data = require("self").data;
 
 pageMod.PageMod({
-  include: [
-    /.*hipmunk.com.*/,
-    /.*kayak.com.*/,
-    /.*orbitz.com.*/
-  ],
+  include: /.*hipmunk.com.*/,
   contentScriptWhen: 'ready',
-  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox').each do |js_file| %>
+  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Hipmunk').each do |js_file| %>
     data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
   ],
   onAttach: function(addon) {
-    var worker = new careplaneWorker.firefox(addon);
+    var worker = new careplaneWorker.firefox(addon, 'Hipmunk');
+    worker.init();
+  }
+});
+
+pageMod.PageMod({
+  include: /.*kayak.com.*/,
+  contentScriptWhen: 'ready',
+  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Kayak').each do |js_file| %>
+    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
+  ],
+  onAttach: function(addon) {
+    var worker = new careplaneWorker.firefox(addon, 'Kayak');
+    worker.init();
+  }
+});
+
+pageMod.PageMod({
+  include: /.*orbitz.com.*/,
+  contentScriptWhen: 'ready',
+  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Orbitz').each do |js_file| %>
+    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
+  ],
+  onAttach: function(addon) {
+    var worker = new careplaneWorker.firefox(addon, 'Orbitz');
     worker.init();
   }
 });

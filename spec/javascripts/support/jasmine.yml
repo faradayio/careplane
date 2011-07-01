@@ -15,29 +15,40 @@ src_files:
   - src/AverageTrip.js
   - src/AirTrafficController.js
   - src/controllers/TripController.js
-  - src/drivers/Hipmunk.js
-  - src/drivers/Hipmunk/HipmunkFlight.js
-  - src/drivers/Hipmunk/HipmunkTrip.js
-  - src/drivers/Hipmunk/HipmunkAirTrafficController.js
-  - src/drivers/Hipmunk/HipmunkTripController.js
-  - src/drivers/Kayak.js
-  - src/drivers/Kayak/KayakFlight.js
-  - src/drivers/Kayak/KayakTrip.js
-  - src/drivers/Kayak/KayakAirTrafficController.js
-  - src/drivers/Orbitz.js
-  - src/drivers/Orbitz/OrbitzFlight.js
-  - src/drivers/Orbitz/OrbitzTrip.js
-  - src/drivers/Orbitz/OrbitzAirTrafficController.js
   - src/views/TripInfoView.js
   - src/views/TripFootprintView.js
-  - src/views/Orbitz/OrbitzTripFootprintView.js
-  - src/views/Orbitz/OrbitzTripInfoView.js
-  - src/views/Kayak/KayakTripFootprintView.js
-  - src/views/Kayak/KayakTripInfoView.js
+  - src/Careplane.js
+  - src/drivers/Hipmunk.js
+  - src/drivers/Hipmunk/HipmunkAirTrafficController.js
+  - src/drivers/Hipmunk/HipmunkFlight.js
+  - src/drivers/Hipmunk/HipmunkTrip.js
+  - src/drivers/Hipmunk/HipmunkTripController.js
+  - src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
   - src/views/Hipmunk/HipmunkTripFootprintView.js
   - src/views/Hipmunk/HipmunkTripInfoView.js
-  - src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
-  - src/Careplane.js
+  - src/drivers/Kayak.js
+  - src/drivers/Kayak/KayakAirTrafficController.js
+  - src/drivers/Kayak/KayakFlight.js
+  - src/drivers/Kayak/KayakTrip.js
+  - src/views/Kayak/KayakTripFootprintView.js
+  - src/views/Kayak/KayakTripInfoView.js
+  - src/drivers/Orbitz.js
+  - src/drivers/Orbitz/OrbitzAirTrafficController.js
+  - src/drivers/Orbitz/OrbitzFlight.js
+  - src/drivers/Orbitz/OrbitzTrip.js
+  - src/views/Orbitz/OrbitzTripFootprintView.js
+  - src/views/Orbitz/OrbitzTripInfoView.js
+  - src/browser/firefox4/FirefoxExtension.js
+  - src/browser/firefox4/FirefoxExtensionLoader.js
+  - src/browser/firefox4/FirefoxPreferences.js
+  - src/browser/firefox/FirefoxExtension.js
+  - src/browser/firefox/FirefoxExtensionLoader.js
+  - src/browser/google_chrome/GoogleChromeExtension.js
+  - src/browser/google_chrome/GoogleChromePreferences.js
+  - src/browser/safari/SafariExtension.js
+  - src/browser/safari/SafariPreferences.js
+  - src/CareplaneTrackerService.js
+  - src/Worker.js
   - src/TestPreferences.js
   - src/TestExtension.js
   - src/TestExtensionLoader.js

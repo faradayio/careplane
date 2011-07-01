@@ -26,7 +26,9 @@ Driver.prototype.isActiveSearch = function() {
 
 Driver.prototype.prepare = function() {
   this.extension.notify(this);
-  this.extension.addStyleSheet();
+  if(this.extension.addStyleSheet) {
+    this.extension.addStyleSheet();
+  }
   if(this.insertAttribution)
     this.insertAttribution();
 };

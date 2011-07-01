@@ -3,8 +3,8 @@ module CareplaneConfig
     content_script_files + worker_files
   end
 
-  def self.content_script_files(browser = nil)
-    list = js_files
+  def self.content_script_files(browser = nil, driver = nil)
+    list = js_files(driver)
     if browser.nil?
       %w{firefox4 firefox google_chrome safari}.each do |browser|
         list += Dir.glob(File.join('src','browser',browser,'*.js'))
@@ -22,7 +22,7 @@ module CareplaneConfig
     }
   end
 
-  def self.js_files
+  def self.js_files(driver = nil)
     files = %w{
       src/lib/jquery-1.5.2.min.js
 
@@ -39,39 +39,29 @@ module CareplaneConfig
       src/AirTrafficController.js
 
       src/controllers/TripController.js
-
-      src/drivers/Hipmunk.js
-      src/drivers/Hipmunk/HipmunkFlight.js
-      src/drivers/Hipmunk/HipmunkTrip.js
-      src/drivers/Hipmunk/HipmunkAirTrafficController.js
-      src/drivers/Hipmunk/HipmunkTripController.js
-
-      src/drivers/Kayak.js
-      src/drivers/Kayak/KayakFlight.js
-      src/drivers/Kayak/KayakTrip.js
-      src/drivers/Kayak/KayakAirTrafficController.js
-
-      src/drivers/Orbitz.js
-      src/drivers/Orbitz/OrbitzFlight.js
-      src/drivers/Orbitz/OrbitzTrip.js
-      src/drivers/Orbitz/OrbitzAirTrafficController.js
-
       src/views/TripInfoView.js
       src/views/TripFootprintView.js
-      src/views/Orbitz/OrbitzTripFootprintView.js
-      src/views/Orbitz/OrbitzTripInfoView.js
-      src/views/Kayak/KayakTripFootprintView.js
-      src/views/Kayak/KayakTripInfoView.js
-      src/views/Hipmunk/HipmunkTripFootprintView.js
-      src/views/Hipmunk/HipmunkTripInfoView.js
-      src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
 
       src/Careplane.js
     }
+
+    if driver.nil?
+      %w{Hipmunk Kayak Orbitz}.each do |driver|
+        files << "src/drivers/#{driver}.js"
+        files += Dir.glob("src/drivers/#{driver}/**/*.js").map { |f| f.sub(/^.*src/,'src') }
+        files += Dir.glob("src/views/#{driver}/*.js").map { |f| f.sub(/^.*src/,'src') }
+      end
+    else
+      files << "src/drivers/#{driver}.js"
+      files += Dir.glob("src/drivers/#{driver}/**/*.js").map { |f| f.sub(/^.*src/,'src') }
+      files += Dir.glob("src/views/#{driver}/*.js").map { |f| f.sub(/^.*src/,'src') }
+    end
+
+    files
   end
 
   def self.test_js_files
-    self.js_files + %w{
+    self.all_js_files + %w{
       src/TestPreferences.js
       src/TestExtension.js
       src/TestExtensionLoader.js
