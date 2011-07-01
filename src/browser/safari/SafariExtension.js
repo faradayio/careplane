@@ -25,5 +25,6 @@ SafariExtension.prototype.addStyleSheet = function() {
 
 
 
-
-SafariExtension.load();
+if(!jasmine) {
+  SafariExtension.load();
+}
