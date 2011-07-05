@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-  <string>0.6.7</string>
+  <string>0.7.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chrome</key>
@@ -27,6 +27,7 @@
 		<dict>
 			<key>End</key>
 			<array>
+        <string>src/CareplaneTrackerService.js</string>
         
         <string>src/lib/jquery-1.5.2.min.js</string>
         <string>src/Preferences.js</string>
@@ -63,8 +64,8 @@
         <string>src/drivers/Orbitz/OrbitzTrip.js</string>
         <string>src/views/Orbitz/OrbitzTripFootprintView.js</string>
         <string>src/views/Orbitz/OrbitzTripInfoView.js</string>
-        <string>SafariPreferences.js</string>
-        <string>SafariExtension.js</string>
+        <string>src/browser/safari/SafariExtension.js</string>
+        <string>src/browser/safari/SafariPreferences.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>
@@ -73,8 +74,8 @@
 		</array>
 		<key>Whitelist</key>
 		<array>
-			<string>http://www.hipmunk.com/results*</string>
-			<string>http://hipmunk.com/results*</string>
+			<string>http://www.hipmunk.com/</string>
+			<string>http://hipmunk.com/</string>
 			<string>http://www.kayak.com/</string>
       <string>http://www.orbitz.com/App/ViewFlightSearchResults*</string>
 			<string>http://orbitz.com/App/ViewFlightSearchResults*</string>
