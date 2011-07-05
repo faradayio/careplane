@@ -12,7 +12,7 @@ SafariExtension.log = function(str) {
 
 SafariExtension.load = function() {
   var extension = new SafariExtension(window.document);
-  extension.loadDriver(ExtensionLoader.driverLoaded(extension));
+  extension.loadDriver();
 };
 
 SafariExtension.prototype.notify = function(driver) {
@@ -25,6 +25,6 @@ SafariExtension.prototype.addStyleSheet = function() {
 
 
 
-if(!jasmine) {
-  SafariExtension.load();
+if(typeof jasmine == 'undefined') {
+  $(document).ready(SafariExtension.load);
 }

@@ -4,7 +4,7 @@ SafariPreferences = function() {
 };
 SafariPreferences.prototype = new Preferences();
 
-GoogleChromePreferences.events = {
+SafariPreferences.events = {
   preferencesGetCallback: function(prefs) {
     return function(event) {
       var message = event.message;
