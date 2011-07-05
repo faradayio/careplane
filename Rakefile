@@ -185,7 +185,7 @@ CLOBBER.include 'pages/.git'
 
 def build(driver, target_dir = '')
   puts 'Copying files...'
-  (CareplaneConfig.js_files + @css_files + @image_files).each do |file|
+  (CareplaneConfig.content_script_files(driver) + @css_files + @image_files).each do |file|
     destination = File.join(driver, target_dir, file)
     FileUtils.mkdir_p(File.dirname(destination))
     puts file
