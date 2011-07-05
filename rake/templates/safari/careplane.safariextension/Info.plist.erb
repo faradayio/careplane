@@ -27,10 +27,9 @@
 		<dict>
 			<key>End</key>
 			<array>
-        <% CareplaneConfig.js_files.each do |file| %>
+        <string>src/CareplaneTrackerService.js</string>
+        <% CareplaneConfig.content_script_files('safari').each do |file| %>
         <string><%= file %></string><% end %>
-        <string>SafariPreferences.js</string>
-        <string>SafariExtension.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>
@@ -39,8 +38,8 @@
 		</array>
 		<key>Whitelist</key>
 		<array>
-			<string>http://www.hipmunk.com/results*</string>
-			<string>http://hipmunk.com/results*</string>
+			<string>http://www.hipmunk.com/</string>
+			<string>http://hipmunk.com/</string>
 			<string>http://www.kayak.com/</string>
       <string>http://www.orbitz.com/App/ViewFlightSearchResults*</string>
 			<string>http://orbitz.com/App/ViewFlightSearchResults*</string>
