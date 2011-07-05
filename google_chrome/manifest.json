@@ -17,5 +17,6 @@
     }
   ],
   "background_page": "background.html",
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "icons": { "48": "images/icon64.png" }
 }
