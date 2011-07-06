@@ -1,6 +1,36 @@
 var pageMod = require('page-mod');
 var careplaneWorker = require('Worker');
-var data = require("self").data;
+var data = require('self').data;
+var Widget = require('widget').Widget;
+var Panel = require('panel').Panel;
+
+var widget, careplanePanel, panelWorker, modWorker;
+
+careplanePanel = Panel({
+  id: 'careplane-panel',
+  contentURL: data.url('widget.html'),
+  contentScriptFile: data.url('widget.js'),
+  onShow: function() {
+    careplanePanel.port.emit('preferences.load', {
+      'sites.Kayak': panelWorker.getPreference({ key: 'sites.Kayak', defaultValue: true }),
+      'sites.Hipmunk': panelWorker.getPreference({ key: 'sites.Hipmunk', defaultValue: true }),
+      'sites.Orbitz': panelWorker.getPreference({ key: 'sites.Orbitz', defaultValue: true }),
+    });
+  }
+});
+
+panelWorker = new careplaneWorker.firefoxPanel(careplanePanel);
+panelWorker.init();
+
+widget = Widget({
+  id: 'careplane-widget',
+  label: 'Configure Careplane',
+  panel: careplanePanel,
+  contentURL: data.url('icon.png'),
+  onClick: function() {
+    careplanePanel.port.emit('info');
+  }
+});
 
 pageMod.PageMod({
   include: /.*hipmunk.com.*/,
@@ -33,8 +63,8 @@ pageMod.PageMod({
     data.url('browser/firefox/FirefoxExtensionLoader.js'),
   ],
   onAttach: function(addon) {
-    var worker = new careplaneWorker.firefox(addon, 'Hipmunk');
-    worker.init();
+    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+    modWorker.init('Hipmunk');
   }
 });
 
@@ -67,8 +97,8 @@ pageMod.PageMod({
     data.url('browser/firefox/FirefoxExtensionLoader.js'),
   ],
   onAttach: function(addon) {
-    var worker = new careplaneWorker.firefox(addon, 'Kayak');
-    worker.init();
+    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+    modWorker.init('Kayak');
   }
 });
 
@@ -101,7 +131,9 @@ pageMod.PageMod({
     data.url('browser/firefox/FirefoxExtensionLoader.js'),
   ],
   onAttach: function(addon) {
-    var worker = new careplaneWorker.firefox(addon, 'Orbitz');
-    worker.init();
+    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+    modWorker.init('Orbitz');
   }
 });
+
+

@@ -32,6 +32,7 @@ FirefoxExtension.events = {
             break;
         }
         if(extension.driverShouldMonitor(driverClass, extension.doc)) {
+          self.port.emit('notify');
           var driverInstance = new driverClass(extension);
           Careplane.setCurrentDriver(driverInstance);
           driverInstance.load();
@@ -43,18 +44,6 @@ FirefoxExtension.events = {
 
 FirefoxExtension.log = function(str) {
   console.log(str);
-};
- 
-FirefoxExtension.prototype.notify = function(driver) {
-  //var nb = gBrowser.getNotificationBox();
-  //var n = nb.getNotificationWithValue('careplane');
-  //var message = 'Careplane is calculating the carbon footprint of your ' + driver.driverName() + ' flight search results.'; 
-  //if(n) {
-    //n.label = message;
-  //} else {
-    //const priority = nb.PRIORITY_INFO_LOW;
-    //nb.appendNotification(message, 'careplane', null, priority, [{accessKey: 'H', callback: CareplaneEvents.hideEmissionEstimates(this.doc), label: 'Hide footprints'}]);
-  //}
 };
 
 FirefoxExtension.fetch = function(url, callback) {
@@ -75,4 +64,5 @@ FirefoxExtension.prototype.loadDriver = function() {
   Careplane.fetch = FirefoxExtension.fetch;
   self.port.on('driver.load', FirefoxExtension.events.loadDriver(this), false);
   self.port.on('stylesheet.load', FirefoxExtension.events.loadStylesheet(this), false);
+  self.port.on('footprints.hide', CareplaneEvents.hideEmissionEstimates(this.doc));
 };
