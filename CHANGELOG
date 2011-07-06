@@ -1,3 +1,6 @@
+v0.7.0 2011-07-06
+  * Added Firefox 5/Jetpack support
+  * Fixed Orbitz driver loading
 v0.6.7 2011-06-24
   Fix for asynchronous Kayak flight details
 v0.6.6 2011-06-23
