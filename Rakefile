@@ -310,8 +310,10 @@ namespace :google_chrome do
 end
 
 namespace :safari do
+  directory 'safari/build'
+
   desc 'Build Safari extension'
-  task :build => 'safari:build:templates' do
+  task :build => ['safari/build', 'safari:build:templates'] do
     puts 'Building Safari'
     build 'safari', 'careplane.safariextension'
     FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
