@@ -9,6 +9,7 @@ Orbitz.prototype = new Driver();
 Orbitz.driverName = 'Orbitz';
 
 Orbitz.monitorURL = 'orbitz.com/App/ViewFlightSearchResults';
+Orbitz.monitorExcludeURL = 'track.pubmatic.com';
 
 Orbitz.prototype.isPollingEnabled = function() {
   return false;
