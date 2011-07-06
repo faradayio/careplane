@@ -25,10 +25,10 @@ Driver.prototype.isActiveSearch = function() {
 };
 
 Driver.prototype.prepare = function() {
-  this.extension.notify(this);
-  if(this.extension.addStyleSheet) {
+  if(this.extension.notify)
+    this.extension.notify(this);
+  if(this.extension.addStyleSheet)
     this.extension.addStyleSheet();
-  }
   if(this.insertAttribution)
     this.insertAttribution();
 };
