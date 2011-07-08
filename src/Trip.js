@@ -73,7 +73,7 @@ Trip.prototype.rate = function(rating) {
 };
 
 Trip.prototype.isDone = function() {
-  return this.flights !== null && this.completedFlightCount == this.flights.length;
+  return this.flights != null && this.completedFlightCount == this.flights.length;
 };
 
 Trip.prototype.tallyFootprint = function(emission) {
