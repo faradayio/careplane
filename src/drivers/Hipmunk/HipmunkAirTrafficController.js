@@ -4,6 +4,7 @@ HipmunkAirTrafficController = function(doc) {
   this.tripClass = HipmunkTrip;
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
+HipmunkAirTrafficController.events = AirTrafficControllerEvents();
 
 HipmunkAirTrafficController.prototype.origin = function() {
   var match = this.url.match(/from=([^&]+)/);
@@ -29,6 +30,7 @@ HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
 HipmunkAirTrafficController.prototype.sniffPurchases = function() {
   var controller = this;
   this.eachTrip(function(trip) {
-    $('', trip.tripElement).click(controller.events.purchase(this, trip));
+    $('', trip.tripElement).
+      click(controller.events.purchase(this, trip));
   });
 };

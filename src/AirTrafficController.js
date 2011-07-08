@@ -4,42 +4,6 @@ AirTrafficController = function() {
   this.completedTrips = 0;
 };
 
-AirTrafficController.prototype.events = {
-  flightEmissionsComplete: function(trip, cm1Response, flight) {
-    trip.footprintView.update(trip.totalFootprint);
-    trip.infoView.reportFlightMethodology(cm1Response.methodology, flight);
-  },
-
-  tripEmissionsComplete: function(controller) {
-    return function(trip, cm1Response, flight) {
-      HallOfFame.induct(trip);
-
-      if(++controller.completedTrips == controller.tripCount) {
-        controller.events.searchEmissionsComplete(controller);
-      }
-    };
-  },
-
-  searchEmissionsComplete: function(controller) {
-    Careplane.currentExtension.tracker.search(Careplane.currentDriver.driverName(), controller.origin(), controller.destination(), HallOfFame.average());
-    
-    controller.sniffPurchases();
-  },
-
-  pollInterval: function(controller) {
-    return function() {
-      controller.clear();
-    };
-  },
-
-  purchase: function(controller, trip) {
-    return function() {
-      Careplane.currentExtension.tracker.purchase(controller.origin(), controller.destination(),
-                                                  trip.cost(), controller.minCost(), trip.totalFootprint, HallOfFame.average());
-    };
-  }
-};
-
 AirTrafficController.prototype.poll = function() {
   setInterval(this.events.pollInterval(this), 1000);   // every 1 second
 };
@@ -122,3 +86,42 @@ AirTrafficController.prototype.minCost = function() {
   });
   return min;
 };
+
+
+
+AirTrafficControllerEvents = function() {};
+AirTrafficControllerEvents.prototype.flightEmissionsComplete = function(trip, cm1Response, flight) {
+  trip.footprintView.update(trip.totalFootprint);
+  trip.infoView.reportFlightMethodology(cm1Response.methodology, flight);
+};
+
+AirTrafficControllerEvents.prototype.tripEmissionsComplete = function(controller) {
+  return function(trip, cm1Response, flight) {
+    HallOfFame.induct(trip);
+
+    if(++controller.completedTrips == controller.tripCount) {
+      controller.events.searchEmissionsComplete(controller);
+    }
+  };
+};
+
+AirTrafficControllerEvents.prototype.searchEmissionsComplete = function(controller) {
+  Careplane.currentExtension.tracker.search(Careplane.currentDriver.driverName(), controller.origin(), controller.destination(), HallOfFame.average());
+  
+  controller.sniffPurchases();
+};
+
+AirTrafficControllerEvents.prototype.pollInterval = function(controller) {
+  return function() {
+    controller.clear();
+  };
+};
+
+AirTrafficControllerEvents.prototype.purchase = function(controller, trip) {
+  return function() {
+    Careplane.currentExtension.tracker.purchase(controller.origin(), controller.destination(),
+                                                trip.cost(), controller.minCost(), trip.totalFootprint, HallOfFame.average());
+  };
+};
+
+AirTrafficController.prototype.events = new AirTrafficControllerEvents();

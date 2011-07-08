@@ -4,6 +4,7 @@ KayakAirTrafficController = function(doc) {
   this.tripClass = KayakTrip;
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
+KayakAirTrafficController.events = new AirTrafficControllerEvents();
 
 KayakAirTrafficController.prototype.routeMatches = function() {
   if(!this._routeMatches && this.url)
@@ -26,6 +27,7 @@ KayakAirTrafficController.prototype.tripElements = function() {
 KayakAirTrafficController.prototype.sniffPurchases = function() {
   var controller = this;
   this.eachTrip(function(trip) {
-    $('.results_price', trip.tripElement).click(controller.events.purchase(controller, trip));
+    $('.results_price', trip.tripElement).
+      click(controller.events.purchase(controller, trip));
   });
 };
