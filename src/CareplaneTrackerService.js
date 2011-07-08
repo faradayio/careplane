@@ -2,23 +2,41 @@ CareplaneTrackerService = function(browser) {
   this.browser = browser;
 };
 
-CareplaneTrackerService.prototype = {
-  firstRun: function() {
-    _gaq.push(['_trackEvent', 'First Run', 'Welcome']);
-  },
-  search: function(site, origin, destination, averageCo2) {
-    _gaq.push(['_trackEvent', 'Search', site, origin + '-' + destination, averageCo2]);
-  },
-  purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
-    _gaq.push(['_trackEvent', 'Purchase', 'Route', origin + '-' + destination, cost]);
+CareplaneTrackerService.prototype.postStatistic = function(params) {
+  params.date = Date.now();
+  params.browser = this.browser;
+  Worker.post('http://careplane-stats-rest.herokuapp.com/main', params);
+};
 
-    var pctCo2Difference = Math.round((co2 / averageCo2) * 100);
-    if(cost - minCost <= 0) {
-      _gaq.push(['_trackEvent', 'Purchase', 'Cheapest', 'CO2 % Difference', pctCo2Difference]);
-    } else {
-      _gaq.push(['_trackEvent', 'Purchase', 'Premium', 'CO2 % Difference', pctCo2Difference]);
-    }
+CareplaneTrackerService.prototype.firstRun = function() {
+  this.postStatistic({ event: 'firstRun' });
+};
+
+CareplaneTrackerService.prototype.search = function(site, origin, destination, averageCo2) {
+  this.postStatistic({
+    event: 'search',
+    origin: origin,
+    destination: destination,
+    averageCo2: averageCo2
+  });
+};
+
+CareplaneTrackerService.prototype.purchase = function(origin, destination, cost, minCost, co2, averageCo2) {
+  params = {
+    event: 'purchase/route',
+    origin: origin,
+    destination: destination,
+    cost: cost,
+    pctCo2Difference: Math.round((co2 / averageCo2) * 100)
+  };
+
+  if(cost - minCost <= 0) {
+    params.cheapest = true
+  } else {
+    params.premium = true
   }
+
+  this.postStatistic(params);
 };
 
 if(typeof exports != 'undefined') {

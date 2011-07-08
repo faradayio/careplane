@@ -12,7 +12,19 @@ GoogleTracker = {
   }
 };
 
-FirefoxTracker = CareplaneTrackerService;
+FirefoxTracker = {
+  firstRun: function() {
+    self.port.emit({ action: 'tracker.firstRun' });
+  },
+  search: function(site, origin, destination, averageCo2) {
+    self.port.emit({ action: 'tracker.search',
+      site: site, origin: origin, destination: destination, averageCo2: averageCo2 });
+  },
+  purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
+    self.port.emit({ action: 'tracker.purchase',
+      origin: origin, destination: destination, cost: cost, minCost: minCost, co2: co2, averageCo2: averageCo2 });
+  }
+};
 
 SafariTracker = {
   firstRun: function() {

@@ -10,6 +10,13 @@ Worker.events = {
 
 Worker.prototype.url = 'http://careplane.org/welcome.html';
 
+Worker.post = function(url, params) {
+  var req = new XMLHttpRequest();
+  req.open('POST', url, true);
+  req.setRequestHeader('Content-Type', 'application/json');
+  req.send(JSON.stringify(params));
+};
+
 Worker.prototype.init = function() {
   this.welcomeOnFirstRun();
   this.addListener(Worker.events.listen(this));
