@@ -27,3 +27,5 @@ safari/careplane.safariextension/CareplaneTrackerService.js
 safari/careplane.safariextension/SafariPreferences.js
 
 *.pyc
+
+bin
