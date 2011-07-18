@@ -18,6 +18,7 @@ safari/careplane.safariextension/images
 safari/careplane.safariextension/lib
 safari/careplane.safariextension/src
 safari/careplane.safariextension/stylesheets
+safari/careplane.safariextension/Worker.js
 pages
 
 google_chrome/CareplaneTrackerService.js
