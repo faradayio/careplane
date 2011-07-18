@@ -47,11 +47,11 @@ src_files:
   - src/browser/google_chrome/GoogleChromePreferences.js
   - src/browser/safari/SafariExtension.js
   - src/browser/safari/SafariPreferences.js
+  - src/browser/test/TestExtension.js
+  - src/browser/test/TestExtensionLoader.js
+  - src/browser/test/TestPreferences.js
   - src/CareplaneTrackerService.js
   - src/Worker.js
-  - src/TestPreferences.js
-  - src/TestExtension.js
-  - src/TestExtensionLoader.js
 
 # helpers
 #

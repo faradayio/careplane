@@ -20,18 +20,22 @@ var capy = {
 };
   JS
 
-  js += CareplaneConfig.test_js_files.inject('') do |conglomerate, js_file|
+  js += CareplaneConfig.cucumber_js_files.inject('') do |conglomerate, js_file|
     conglomerate += File.read(js_file)
   end
 
   js += <<-JS
-TestExtension.prefs.putBoolean('hasRunPreviously', true);
-TestExtension.prefs.putBoolean('sites.Kayak', true);
-TestExtension.prefs.putBoolean('sites.Orbitz', true);
-TestExtension.prefs.putBoolean('sites.Hipmunk', true);
+
+var tmpPrefs = new TestPreferences();
+tmpPrefs.putBoolean('hasRunPreviously', true);
+tmpPrefs.putBoolean('sites.Kayak', true);
+tmpPrefs.putBoolean('sites.Orbitz', true);
+tmpPrefs.putBoolean('sites.Hipmunk', true);
 
 TestExtensionLoader.load();
   JS
+
+  File.open('webkit.js', 'w') { |f| f.puts js }
 
   begin
     Capybara.current_session.driver.execute_script js
