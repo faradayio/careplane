@@ -304,7 +304,7 @@ namespace :google_chrome do
   task :package => :build do
     FileUtils.mkdir_p('google_chrome/build')
     Dir.chdir 'google_chrome' do
-      puts `zip -r build/careplane.zip application.js CareplaneTrackerService.js background.html images manifest.json options.html stylesheets -x *~`
+      puts `zip -r build/careplane.zip application.js CareplaneTrackerService.js Worker.js background.html images manifest.json options.html stylesheets -x *~`
     end
   end
 end
@@ -317,6 +317,7 @@ namespace :safari do
     puts 'Building Safari'
     build 'safari', 'careplane.safariextension'
     FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
+    FileUtils.cp 'src/Worker.js', 'safari/careplane.safariextension/Worker.js'
     puts 'Done'
   end
   namespace :build do
