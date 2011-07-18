@@ -1,6 +1,5 @@
 require './lib/careplane_config'
 require 'fileutils'
-require 'rake/clean'
 require 'erb'
 
 require 'cucumber'
@@ -40,25 +39,20 @@ def version
 end
 
 def changelog_post(browser)
-  "pages/_posts/#{datetime}-careplane-#{browser}-#{current_version}.markdown"
+  "_posts/#{datetime}-careplane-#{browser}-#{current_version}.markdown"
 end
 
 @files = {
   :chrome_package => 'google_chrome/build/careplane.zip',
-  :chrome_download => lambda { "pages/downloads/careplane-#{current_version}.zip" },
+  :chrome_download => lambda { "downloads/careplane-#{current_version}.zip" },
   :firefox_package => 'firefox/build/careplane.xpi',
-  :firefox_download => lambda { "pages/downloads/careplane-#{current_version}.xpi" },
+  :firefox_download => lambda { "downloads/careplane-#{current_version}.xpi" },
   :safari_package => 'safari/build/careplane.safariextz',
-  :safari_download => lambda { "pages/downloads/careplane-#{current_version}.safariextz" }
+  :safari_download => lambda { "downloads/careplane-#{current_version}.safariextz" }
 }
 
 desc 'Update changelog (make sure you have run `rake version:bump` first)'
 task :changelog, :message do |t, args|
-  unless File.exist?('pages')
-    puts "Run `rake pages` first"
-    exit
-  end
-
   message = args[:message]
   unless message
     commits = `git log --pretty=oneline v#{last_version}..v#{current_version}`
@@ -151,32 +145,41 @@ namespace :version do
 end
 
 
-directory 'pages/'
-task :pages => 'pages:sync'
+task :pages => 'pages:publish'
 # Update the pages/ directory clone
 namespace :pages do
   desc 'Initialize the pages directory to allow versioning'
-  task :sync => ['.git/refs/heads/gh-pages', 'pages/.git/refs/remotes/o'] do |f|
-    psh 'git fetch -q o', 'pages'
-    psh 'git reset -q --hard o/gh-pages', 'pages'
-    psh 'touch pages'
+  task :sync => '.git/refs/heads/gh-pages' do |f|
+    psh 'git checkout gh-pages'
+    psh 'git pull'
+    psh 'git checkout master'
   end
 
-  file '.git/refs/heads/gh-pages' => 'pages/' do |f|
+  file '.git/refs/heads/gh-pages' do |f|
     unless File.exist? f.name
-      psh 'git branch gh-pages'
+      psh 'git fetch origin'
+      psh 'git checkout -b gh-pages --track origin/gh-pages'
     end
   end
 
-  file 'pages/.git/refs/remotes/o' => 'pages/' do |f|
-    unless File.exist? f.name
-      psh 'git init -q pages'
-      psh 'git remote add o ../.git', 'pages'
+  desc 'Build all packages and copy them to gh-pages'
+  task :publish => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages:sync']) do
+    packages = {};
+    %w{chrome firefox safari}.each do |browser|
+      packages[browser] = File.read @files["#{browser}_package".to_sym]
     end
+
+    psh 'git checkout gh-pages'
+
+    %w{chrome firefox safari}.each do |browser|
+      File.open(@files["#{browser}_download".to_sym].call, 'w') { |f| f.puts packages[browser] }
+    end
+
+    psh 'git add _posts downloads'
+    psh "git commit -m 'Release for version #{current_version}'"
+    psh 'git checkout master'
   end
 end
-
-CLOBBER.include 'pages/.git'
 
 @css_files = ['stylesheets/careplane.css']
 @image_files = ['images/icon64.png']
@@ -249,6 +252,7 @@ namespace :firefox do
 end
 
 namespace :google_chrome do
+  desc 'Build Google Chrome extension'
   task :build => 'google_chrome:build:templates' do
     puts 'Building Google Chrome'
 
@@ -276,6 +280,7 @@ namespace :google_chrome do
     end
   end
 
+  desc "Package Google Chrome extension into #{@files[:chrome_package]} file"
   task :package => :build do
     FileUtils.mkdir_p('google_chrome/build')
     Dir.chdir 'google_chrome' do
@@ -366,36 +371,13 @@ task :package => ['firefox:package', 'google_chrome:package', 'safari:package']
 BROWSERS.each do |browser|
   file changelog_post(browser) => :changelog
 end
-directory 'pages/downloads'
-
-desc 'Build all packages and copy them to gh-pages'
-task :publish_packages => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages/downloads']) do
-  %w{chrome firefox safari}.each do |browser|
-    FileUtils.cp @files["#{browser}_package".to_sym], @files["#{browser}_download".to_sym].call
-  end
-end
-
-namespace :site do
-  task :commit => 'pages/' do
-    psh 'git add _posts downloads', 'pages'
-    psh "git commit -m 'Release for version #{current_version}'", 'pages' do |ok,res|
-      verbose { puts "gh-pages updated" }
-      Rake::Task['site:push'].invoke
-    end
-  end
-
-  task :push do
-    psh 'git push -q o HEAD:gh-pages', 'pages' unless ENV['NO_PUSH']
-    puts 'Pushed gh-pages to HEAD'
-  end
-end
 
 task :push do
   psh 'git push origin'
 end
 
 desc 'Build packages, copy them to gh-pages, update website links, push'
-task :release => [:publish_packages, 'site:commit', :push]
+task :release => ['site:publish', :push]
 
 task :test => [:examples, :features]
 task :default => :test
