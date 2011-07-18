@@ -38,9 +38,6 @@ src_files:
   - src/drivers/Orbitz/OrbitzTrip.js
   - src/views/Orbitz/OrbitzTripFootprintView.js
   - src/views/Orbitz/OrbitzTripInfoView.js
-  - src/browser/firefox4/FirefoxExtension.js
-  - src/browser/firefox4/FirefoxExtensionLoader.js
-  - src/browser/firefox4/FirefoxPreferences.js
   - src/browser/firefox/FirefoxExtension.js
   - src/browser/firefox/FirefoxExtensionLoader.js
   - src/browser/google_chrome/GoogleChromeExtension.js
