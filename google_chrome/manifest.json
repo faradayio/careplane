@@ -1,6 +1,6 @@
 {
   "name": "Careplane",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Real-time carbon footprints inserted into your favorite travel search sites",
   "content_scripts": [
     {
