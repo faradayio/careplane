@@ -16,10 +16,19 @@ AirTrafficController.prototype.clear = function() {
 
 AirTrafficController.prototype.discoverTrips = function() {
   var controller = this;
-  this.tripElements().each(function(i, tripElement) {
-    if(!controller.tripIsAlreadyDiscovered(tripElement)) {
-      controller.createTrip(tripElement);
-    }
+  this.undiscoveredTripElements().each(function(i, tripElement) {
+    var count = tripElement.getElementsByClassName('careplane-info').length;
+    controller.createTrip(tripElement);
+  });
+};
+
+AirTrafficController.prototype.undiscoveredTripElements = function() {
+  return this.tripElements().not(this.discoveredTripElements());
+};
+
+AirTrafficController.prototype.discoveredTripElements = function() {
+  return $(this.trips).map(function(i, trip) {
+    return trip.tripElement;
   });
 };
 
