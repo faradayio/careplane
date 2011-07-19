@@ -35,7 +35,7 @@ tmpPrefs.putBoolean('sites.Hipmunk', true);
 TestExtensionLoader.load();
   JS
 
-  File.open('webkit.js', 'w') { |f| f.puts js }
+  #File.open('webkit.js', 'w') { |f| f.puts js }
 
   begin
     Capybara.current_session.driver.execute_script js
