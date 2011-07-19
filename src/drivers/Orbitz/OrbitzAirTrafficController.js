@@ -25,7 +25,7 @@ OrbitzAirTrafficController.prototype.sniffPurchases = function() {
   var controller = this;
   this.eachTrip(function(trip) {
     $('.bookIt a', trip.tripElement).
-      click(AirTrafficController.events.purchase(controller, trip));
+      click(controller.events.purchase(controller, trip));
   });
 };
 
@@ -41,4 +41,4 @@ OrbitzAirTrafficControllerEvents.prototype.searchEmissionsComplete = function(co
   controller.rateTrips();
 };
 
-OrbitzAirTrafficController.events = new OrbitzAirTrafficControllerEvents();
+OrbitzAirTrafficController.prototype.events = new OrbitzAirTrafficControllerEvents();
