@@ -136,7 +136,6 @@ FirefoxModWorker.prototype.init = function(driver) {
     this.loadDriver();
     this.addStylesheet();
     this.notifyOnFirstRun();
-    this.notifyOnFirstRun();
   }
 };
 
