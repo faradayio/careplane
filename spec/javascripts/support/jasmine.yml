@@ -6,7 +6,6 @@ src_files:
   - src/lib/jquery-1.5.2.min.js
   - src/Preferences.js
   - src/Util.js
-  - src/CareplaneTrackerService.js
   - src/Tracker.js
   - src/Driver.js
   - src/HallOfFame.js

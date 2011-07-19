@@ -28,7 +28,6 @@ module CareplaneConfig
 
       src/Preferences.js
       src/Util.js
-      src/CareplaneTrackerService.js
       src/Tracker.js
       src/Driver.js
       src/HallOfFame.js
@@ -60,13 +59,11 @@ module CareplaneConfig
     files
   end
 
-  def self.test_js_files
+  def self.jasmine_js_files
     self.all_js_files
   end
 
   def self.cucumber_js_files
-    self.content_script_files('test') - %w{
-      src/CareplaneTrackerService.js
-    }
+    self.content_script_files 'test'
   end
 end
