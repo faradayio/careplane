@@ -11,13 +11,12 @@ Careplane.setCurrentDriver = function(driver) {
 Careplane.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
   
 Careplane.insertBadge = function(parentElement, referenceElement, badgeStyles) {
-  var badgeHtml = '<div class="brighter_planet_cm1_badge"><p><a href="http://brighterplanet.com"><span class="setup">Carbon powered by</span> <span class="punchline">Brighter Planet</span></a></p></div>';
-  var badge;
+  var badge = $('<div class="brighter_planet_cm1_badge"><p><a href="http://brighterplanet.com"><span class="setup">Carbon powered by</span> <span class="punchline">Brighter Planet</span></a></p></div>');
 
   if(referenceElement) {
-    badge = referenceElement.before(badgeHtml);
+    referenceElement.before(badge);
   } else {
-    badge = parentElement.append(badgeHtml);
+    parentElement.append(badge);
   }
 
   if(badgeStyles) {

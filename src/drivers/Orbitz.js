@@ -25,7 +25,7 @@ Orbitz.prototype.insertAttribution = function() {
     parentElement.append(attributionElement);
     
     // In the footer
-    var footer = $('#footer', doc);
+    var footer = $('#footer', this.doc);
     var container = $(this.doc.createElement('div'));
     container.addClass('careplane-attribution-footer orbitz');
     footer.append(container);
