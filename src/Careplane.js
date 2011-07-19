@@ -10,15 +10,22 @@ Careplane.setCurrentDriver = function(driver) {
 
 Careplane.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
   
-Careplane.insertBadge = function(doc, parentElement, referenceElement, badgeStyle) {
-  var styleElement = doc.createElement('style');
-  styleElement.setAttribute('type', 'text/css');
-  styleElement.innerHTML = '.brighter_planet_cm1_badge { ' + badgeStyle + ' }';
-  parentElement.insertBefore(styleElement, referenceElement);
-  var brandingElement = doc.createElement('script');
-  brandingElement.setAttribute('src', 'http://carbon.brighterplanet.com/badge.js');
-  brandingElement.setAttribute('type', 'text/javascript');
-  parentElement.insertBefore(brandingElement, referenceElement);
+Careplane.insertBadge = function(parentElement, referenceElement, badgeStyles) {
+  var badgeHtml = '<div class="brighter_planet_cm1_badge"><p><a href="http://brighterplanet.com"><span class="setup">Carbon powered by</span> <span class="punchline">Brighter Planet</span></a></p></div>';
+  var badge;
+
+  if(referenceElement) {
+    badge = referenceElement.before(badgeHtml);
+  } else {
+    badge = parentElement.append(badgeHtml);
+  }
+
+  if(badgeStyles) {
+    for(var name in badgeStyles) {
+      badge.css(name, badgeStyles[name]);
+    }
+  }
+
 };
 
 Careplane.fetch = function(url, callback) {

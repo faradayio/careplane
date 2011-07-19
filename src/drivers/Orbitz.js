@@ -18,17 +18,17 @@ Orbitz.prototype.isPollingEnabled = function() {
 Orbitz.prototype.insertAttribution = function() {
   if(this.doc.getElementsByClassName('careplane-attribution').length == 0) {
     // In the matrix
-    var parentElement = this.doc.getElementById('matrix');
-    var attributionElement = this.doc.createElement('div');
-    attributionElement.setAttribute('class', 'matrixFooterAir careplane-attribution orbitz');
-    attributionElement.innerHTML = Careplane.standardTextAttribution;
-    parentElement.appendChild(attributionElement);
+    var parentElement = $('#matrix', this.doc);
+    var attributionElement = $(this.doc.createElement('div'));
+    attributionElement.addClass('matrixFooterAir careplane-attribution orbitz');
+    attributionElement.html(Careplane.standardTextAttribution);
+    parentElement.append(attributionElement);
     
     // In the footer
-    var footer = this.doc.getElementById('footer');
-    var container = this.doc.createElement('div');
-    container.setAttribute('class', 'careplane-attribution-footer orbitz');
-    footer.appendChild(container);
-    Careplane.insertBadge(this.doc, container, null, '');
+    var footer = $('#footer', doc);
+    var container = $(this.doc.createElement('div'));
+    container.addClass('careplane-attribution-footer orbitz');
+    footer.append(container);
+    Careplane.insertBadge(container);
   }
 };

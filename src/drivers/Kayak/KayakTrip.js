@@ -11,11 +11,11 @@ KayakTrip.prototype = new Trip();
 KayakTrip.events = {
   tripDetailsSuccess: function(trip, success) {
     return function(result) {
-      var div = trip.doc.createElement('div');
-      div.setAttribute('class', 'careplane-trip-details');
-      div.innerHTML = result.message;
-      div.style.display = 'none';
-      trip.tripElement.appendChild(div);
+      var div = $(trip.doc.createElement('div'));
+      div.addClass('careplane-trip-details');
+      div.html(result.message);
+      div.css('display', 'none');
+      $(trip.tripElement).append(div);
 
       trip.flights = KayakFlight.parse($('.inlineflightitinerarylegs tr', trip.tripElement));
       success(trip);

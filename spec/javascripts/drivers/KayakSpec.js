@@ -15,7 +15,7 @@ describe('Kayak', function() {
       kayak.insertAttribution();
     });
     it('inserts a badge in the top area', function() {
-      expect($('div#rightads')).toContain('script[src$="badge.js"]');
+      expect($('div#rightads .punchline')).toHaveText('Brighter Planet');
     });
     it('inserts a text attribution in the footer', function() {
       expect($('span.careplane-attribution-footer')).toHaveText(' · Emission estimates powered by Brighter Planet');
