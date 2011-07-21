@@ -150,7 +150,7 @@ FirefoxModWorker.prototype.addListeners = function() {
 
 GoogleChromeWorker = function() {
   this.preferences = localStorage;
-  this.tracker = new CareplaneTrackerService();
+  this.tracker = new CareplaneTrackerService('google_chrome');
 };
 GoogleChromeWorker.prototype = new Worker();
 
@@ -176,7 +176,7 @@ GoogleChromeWorker.prototype.sendCallback = function(message, val, id, caller) {
 
 SafariWorker = function() {
   this.preferences = safari.extension.settings;
-  this.tracker = new SafariTracker();
+  this.tracker = new SafariTracker('safari');
   this.addListener = safari.application.addEventListener;
 };
 SafariWorker.prototype = new Worker();
