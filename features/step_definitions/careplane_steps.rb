@@ -32,7 +32,8 @@ tmpPrefs.putBoolean('sites.Kayak', true);
 tmpPrefs.putBoolean('sites.Orbitz', true);
 tmpPrefs.putBoolean('sites.Hipmunk', true);
 
-TestExtensionLoader.load();
+var extension = new TestExtension(window.document);
+extension.loadDriver();
   JS
 
   #File.open('webkit.js', 'w') { |f| f.puts js }

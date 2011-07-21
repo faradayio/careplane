@@ -59,8 +59,9 @@ pageMod.PageMod({
     data.url('views/Hipmunk/HipmunkTripFootprintView.js'),
     data.url('views/Hipmunk/HipmunkTripInfoView.js'),
     data.url('browser/firefox/FirefoxExtension.js'),
-    data.url('browser/firefox/FirefoxExtensionLoader.js'),
+    data.url('browser/firefox/FirefoxTracker.js'),
   ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Hipmunk');
@@ -92,8 +93,9 @@ pageMod.PageMod({
     data.url('views/Kayak/KayakTripFootprintView.js'),
     data.url('views/Kayak/KayakTripInfoView.js'),
     data.url('browser/firefox/FirefoxExtension.js'),
-    data.url('browser/firefox/FirefoxExtensionLoader.js'),
+    data.url('browser/firefox/FirefoxTracker.js'),
   ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Kayak');
@@ -125,8 +127,9 @@ pageMod.PageMod({
     data.url('views/Orbitz/OrbitzTripFootprintView.js'),
     data.url('views/Orbitz/OrbitzTripInfoView.js'),
     data.url('browser/firefox/FirefoxExtension.js'),
-    data.url('browser/firefox/FirefoxExtensionLoader.js'),
+    data.url('browser/firefox/FirefoxTracker.js'),
   ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Orbitz');

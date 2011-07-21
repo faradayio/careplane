@@ -1,7 +1,7 @@
 GoogleChromeExtension = function(doc) {
   this.doc = doc;
   this.klass = GoogleChromeExtension;
-  this.tracker = GoogleTracker;
+  this.tracker = GoogleChromeTracker;
   this.prefs = new GoogleChromePreferences();
 };
 GoogleChromeExtension.prototype = new Careplane();

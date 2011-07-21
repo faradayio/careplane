@@ -1,41 +1,13 @@
-GoogleTracker = {
+Tracker = {
   firstRun: function() {
-    chrome.extension.sendRequest({ action: 'tracker.firstRun' });
+    this.sendRequest('tracker.firstRun');
   },
   search: function(site, origin, destination, averageCo2) {
-    chrome.extension.sendRequest({ action: 'tracker.search',
+    this.sendRequest('tracker.search', {
       site: site, origin: origin, destination: destination, averageCo2: averageCo2 });
   },
   purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
-    chrome.extension.sendRequest({ action: 'tracker.purchase',
-      origin: origin, destination: destination, cost: cost, minCost: minCost, co2: co2, averageCo2: averageCo2 });
-  }
-};
-
-FirefoxTracker = {
-  firstRun: function() {
-    self.port.emit({ action: 'tracker.firstRun' });
-  },
-  search: function(site, origin, destination, averageCo2) {
-    self.port.emit({ action: 'tracker.search',
-      site: site, origin: origin, destination: destination, averageCo2: averageCo2 });
-  },
-  purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
-    self.port.emit({ action: 'tracker.purchase',
-      origin: origin, destination: destination, cost: cost, minCost: minCost, co2: co2, averageCo2: averageCo2 });
-  }
-};
-
-SafariTracker = {
-  firstRun: function() {
-    safari.self.tab.dispatchMessage('tracker.firstRun');
-  },
-  search: function(site, origin, destination, averageCo2) {
-    safari.self.tab.dispatchMessage('tracker.search',
-        { site: site, origin: origin, destination: destination, averageCo2: averageCo2 });
-  },
-  purchase: function(origin, destination, cost, minCost, co2, averageCo2) {
-    safari.self.tab.dispatchMessage('tracker.purchase', {
+    this.sendRequest('tracker.purchase', {
       origin: origin, destination: destination, cost: cost, minCost: minCost, co2: co2, averageCo2: averageCo2 });
   }
 };

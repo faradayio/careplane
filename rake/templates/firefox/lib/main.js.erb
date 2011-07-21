@@ -38,6 +38,7 @@ pageMod.PageMod({
   contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Hipmunk').each do |js_file| %>
     data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
   ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Hipmunk');
@@ -50,6 +51,7 @@ pageMod.PageMod({
   contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Kayak').each do |js_file| %>
     data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
   ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Kayak');
@@ -62,6 +64,7 @@ pageMod.PageMod({
   contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Orbitz').each do |js_file| %>
     data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
   ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Orbitz');

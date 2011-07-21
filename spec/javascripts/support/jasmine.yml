@@ -38,13 +38,14 @@ src_files:
   - src/views/Orbitz/OrbitzTripFootprintView.js
   - src/views/Orbitz/OrbitzTripInfoView.js
   - src/browser/firefox/FirefoxExtension.js
-  - src/browser/firefox/FirefoxExtensionLoader.js
+  - src/browser/firefox/FirefoxTracker.js
   - src/browser/google_chrome/GoogleChromeExtension.js
   - src/browser/google_chrome/GoogleChromePreferences.js
+  - src/browser/google_chrome/GoogleChromeTracker.js
   - src/browser/safari/SafariExtension.js
   - src/browser/safari/SafariPreferences.js
+  - src/browser/safari/SafariTracker.js
   - src/browser/test/TestExtension.js
-  - src/browser/test/TestExtensionLoader.js
   - src/browser/test/TestPreferences.js
   - src/CareplaneTrackerService.js
   - src/Worker.js

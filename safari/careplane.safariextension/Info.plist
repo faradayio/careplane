@@ -65,6 +65,7 @@
         <string>src/views/Orbitz/OrbitzTripInfoView.js</string>
         <string>src/browser/safari/SafariExtension.js</string>
         <string>src/browser/safari/SafariPreferences.js</string>
+        <string>src/browser/safari/SafariTracker.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>

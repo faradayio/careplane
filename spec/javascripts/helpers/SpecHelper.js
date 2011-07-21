@@ -35,6 +35,10 @@ self = {
   }
 })();
 
+safari = { self: { tab: { dispatchMessage: function() {} } } };
+chrome = { extension: { sendRequest: function() {} } };
+self = { port: { emit: function() {} } };
+
 beforeEach(function() {
   this.addMatchers({
     toBeInstanceOf: function(klass) {
