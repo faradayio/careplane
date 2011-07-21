@@ -76,10 +76,10 @@ HallOfFame = {
   },
 
   ratingFor: function(trip) {
-    if(this.scale === null) {
-      return 0;
-    } else {
+    if(this.scale) {
       return this.scale[trip.roundedTotalFootprint()];
+    } else {
+      return 0;
     }
   },
 

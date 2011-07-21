@@ -1,13 +1,5 @@
 Careplane = function() {};
 
-Careplane.setCurrentExtension = function(extension) {
-  Careplane.currentExtension = extension;
-};
-
-Careplane.setCurrentDriver = function(driver) {
-  Careplane.currentDriver = driver;
-};
-
 Careplane.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
   
 Careplane.insertBadge = function(parentElement, referenceElement, badgeStyles) {
@@ -52,7 +44,7 @@ Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
 };
 
 Careplane.prototype.loadDriver = function() {
-  Careplane.setCurrentExtension(this);
+  Careplane.currentExtension = this;
   var extension = this;
   [Hipmunk, Kayak, Orbitz].forEach(function(driver) {
     if(extension.driverShouldMonitor(driver, extension.doc)) {
@@ -69,9 +61,8 @@ CareplaneEvents = {
   driverBecomesAvailable: function(extension, driverClass) {
     return function(driverEnabled) {
       if(driverEnabled) {
-        var driver = new driverClass(extension);
-        Careplane.setCurrentDriver(driver);
-        driver.load();
+        Careplane.currentDriver = new driverClass(extension);
+        Careplane.currentDriver.load();
       }
     };
   },

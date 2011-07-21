@@ -10,13 +10,6 @@ Worker.events = {
 
 Worker.prototype.url = 'http://careplane.org/welcome.html';
 
-Worker.post = function(url, params) {
-  var req = new XMLHttpRequest();
-  req.open('POST', url, true);
-  req.setRequestHeader('Content-Type', 'application/json');
-  req.send(JSON.stringify(params));
-};
-
 Worker.prototype.init = function() {
   this.welcomeOnFirstRun();
   this.addListener(Worker.events.listen(this));
@@ -26,11 +19,12 @@ Worker.prototype.welcomeOnFirstRun = function() {
   if(!this.getPreference({ key: 'hasRunPreviously', defaultValue: false })) {
     this.welcome();
     this.setPreference('hasRunPreviously', true);
+    this.tracker.firstRun();
   }
 };
 
 Worker.prototype.notifyOnFirstRun = function() {
-  if(!this.getPreference({ key: 'hasRunNotificationPreviously', defaultValue: false })) {
+  if(this.notify && !this.getPreference({ key: 'hasRunNotificationPreviously', defaultValue: false })) {
     this.notify();
     this.setPreference('hasRunNotificationPreviously', true);
   }
@@ -72,24 +66,20 @@ Worker.prototype.processMessage = function(message, params, caller) {
     this.tracker.purchase(params.origin, params.destination, params.cost, params.minCost, params.co2, params.averageCo2);
     break;
   case 'notify':
-    this.notify();
+    if(this.notify)
+      this.notify();
     break;
   }
 };
 
 
 
-FirefoxWorker = function() {};
-FirefoxWorker.prototype = new Worker();
-
-FirefoxWorker.messageHandler = function(worker, message) {
-  return function(params) {
-    worker.processMessage(message, params);
-  };
-};
-
-FirefoxWorker.prototype.welcome = function() {
-  require('tabs').open(this.url);
+FirefoxWorker = {
+  messageHandler: function(worker, message) {
+    return function(params) {
+      worker.processMessage(message, params);
+    };
+  }
 };
 
 
@@ -98,8 +88,10 @@ FirefoxPanelWorker = function(panel) {
   this.panel = panel;
   this.preferences = require('simple-storage').storage;
   this.data = require('self').data;
+  var cpTracker = require('CareplaneTrackerService').tracker;
+  this.tracker = new cpTracker('firefox');
 };
-FirefoxPanelWorker.prototype = new FirefoxWorker();
+FirefoxPanelWorker.prototype = new Worker();
 
 FirefoxPanelWorker.prototype.init = function() {
   this.addListeners();
@@ -108,14 +100,13 @@ FirefoxPanelWorker.prototype.init = function() {
 
 FirefoxPanelWorker.prototype.addListeners = function() {
   this.panel.port.on('preferences.put', FirefoxWorker.messageHandler(this, 'preferences.put'));
-  this.panel.port.on('tracker.firstRun', FirefoxWorker.messageHandler(this, 'tracker.firstRun'));
   this.panel.port.on('tracker.search',   FirefoxWorker.messageHandler(this, 'tracker.search'));
   this.panel.port.on('tracker.purchase', FirefoxWorker.messageHandler(this, 'tracker.purchase'));
   this.panel.port.on('notify', FirefoxWorker.messageHandler(this, 'notify'));
 };
 
-FirefoxPanelWorker.prototype.notify = function() {
-  this.panel.port.emit('notify');
+FirefoxPanelWorker.prototype.welcome = function() {
+  require('tabs').open(this.url);
 };
 
 
@@ -124,10 +115,11 @@ FirefoxModWorker = function(mod, panel) {
   this.mod = mod;
   this.panel = panel;
   this.preferences = require('simple-storage').storage;
-  this.tracker = new require('CareplaneTrackerService').tracker('firefox');
+  var cpTracker = require('CareplaneTrackerService').tracker;
+  this.tracker = new cpTracker('firefox');
   this.data = require('self').data;
 };
-FirefoxModWorker.prototype = new FirefoxWorker();
+FirefoxModWorker.prototype = new Worker();
 
 FirefoxModWorker.prototype.init = function(driver) {
   this.driver = driver;
@@ -135,7 +127,6 @@ FirefoxModWorker.prototype.init = function(driver) {
     this.addListeners();
     this.loadDriver();
     this.addStylesheet();
-    this.notifyOnFirstRun();
   }
 };
 
@@ -153,11 +144,6 @@ FirefoxModWorker.prototype.addListeners = function() {
   this.mod.port.on('tracker.search',   FirefoxWorker.messageHandler(this, 'tracker.search'));
   this.mod.port.on('tracker.purchase', FirefoxWorker.messageHandler(this, 'tracker.purchase'));
   this.mod.port.on('notify', FirefoxWorker.messageHandler(this, 'notify'));
-};
-
-FirefoxModWorker.prototype.notify = function() {
-  //this.panel.port.emit('notify');
-  //this.panel.show();
 };
 
 

@@ -18,6 +18,7 @@ FirefoxExtension.events = {
 
   loadDriver: function(extension) {
     return function(driver) {
+      Careplane.currentExtension = extension;
       $(extension.doc).ready(function() {
         var driverClass;
         switch(driver) {
@@ -32,9 +33,8 @@ FirefoxExtension.events = {
             break;
         }
         if(extension.driverShouldMonitor(driverClass, extension.doc)) {
-          self.port.emit('notify');
           var driverInstance = new driverClass(extension);
-          Careplane.setCurrentDriver(driverInstance);
+          Careplane.currentDriver = driverInstance;
           driverInstance.load();
         }
       });
