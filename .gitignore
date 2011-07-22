@@ -1,4 +1,5 @@
 *~
+*application.js
 _site
 Gemfile.lock
 firefox*/build
@@ -12,13 +13,12 @@ google_chrome/build
 google_chrome/images
 google_chrome/src
 google_chrome/stylesheets
-google_chrome/application.js
 safari/build
 safari/careplane.safariextension/images
-safari/careplane.safariextension/lib
-safari/careplane.safariextension/src
-safari/careplane.safariextension/stylesheets
+safari/careplane.safariextension/Info.plist
+safari/careplane.safariextension/CareplaneTrackerService.js
 safari/careplane.safariextension/Worker.js
+safari/careplane.safariextension/stylesheets
 pages
 
 google_chrome/CareplaneTrackerService.js

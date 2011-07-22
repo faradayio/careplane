@@ -1,0 +1,5 @@
+<% CareplaneConfig.content_script_files('safari').each do |file| %>
+<%= File.read(file) %>
+<% end %>
+
+SafariExtension.load();

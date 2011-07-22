@@ -295,7 +295,6 @@ namespace :safari do
   desc 'Build Safari extension'
   task :build => ['safari/build', 'safari:build:templates'] do
     puts 'Building Safari'
-    build 'safari', 'careplane.safariextension'
     FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
     FileUtils.cp 'src/Worker.js', 'safari/careplane.safariextension/Worker.js'
     puts 'Done'
