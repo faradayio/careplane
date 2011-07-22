@@ -132,6 +132,8 @@ Here's a commit list to help jog your memory
     end
     Process.wait
 
+    message = File.read tempfile
+
     psh "cat CHANGELOG >> #{tempfile}"
     psh "cp #{tempfile} CHANGELOG"
     FileUtils.rm_f tempfile
@@ -160,15 +162,6 @@ filesize: #{File.size(@files["#{browser}_package".to_sym]) / 1000}
         TXT
       end
       puts "Wrote Changelog entry for v#{current_version} to #{changelog_post(browser)}"
-    end
-
-    existing_changelog = File.read 'CHANGELOG'
-    unless existing_changelog =~ /v#{current_version}/
-      File.open 'CHANGELOG', 'w' do |f|
-        f.puts message
-        f.puts existing_changelog
-      end
-      puts 'Wrote CHANGELOG'
     end
 
     %w{chrome firefox safari}.each do |browser|
