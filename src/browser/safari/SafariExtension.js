@@ -14,17 +14,3 @@ SafariExtension.load = function() {
   var extension = new SafariExtension(window.document);
   extension.loadDriver();
 };
-
-SafariExtension.prototype.notify = function(driver) {
-  // not sure if we want to use desktop notifications for this, no real alternative
-};
-
-SafariExtension.prototype.addStyleSheet = function() {
-  // this is handled by Info.plist
-};
-
-
-
-if(typeof jasmine == 'undefined') {
-  $(document).ready(SafariExtension.load);
-}

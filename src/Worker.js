@@ -176,8 +176,7 @@ GoogleChromeWorker.prototype.sendCallback = function(message, val, id, caller) {
 
 SafariWorker = function() {
   this.preferences = safari.extension.settings;
-  this.tracker = new SafariTracker('safari');
-  this.addListener = safari.application.addEventListener;
+  this.tracker = new CareplaneTrackerService('safari');
 };
 SafariWorker.prototype = new Worker();
 
