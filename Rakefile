@@ -51,55 +51,6 @@ end
   :safari_download => lambda { "downloads/careplane-#{current_version}.safariextz" }
 }
 
-desc 'Update changelog (make sure you have run `rake version:bump` first)'
-task :changelog, :message do |t, args|
-  message = args[:message]
-  unless message
-    commits = `git log --pretty=oneline v#{last_version}..v#{current_version}`
-    prelude = <<-TXT
-v#{current_version} #{datetime}
-  Enter the list of changes for version 
-  Here's a commit list to help jog your memory
-#{commits.split("\n").map { |c| "  #{c}" }.join("\n")}
-    TXT
-    tempfile = '/tmp/careplane-changelog-entry.txt'
-    FileUtils.rm_f tempfile
-    File.open(tempfile, 'w') { |f| f.puts prelude }
-    editor = ENV['GIT_EDITOR'] || ENV['VISUAL'] || ENV['EDITOR'] || 'vi'
-    Process.fork do
-      exec "#{editor} #{tempfile}"
-    end
-    Process.wait
-    message = File.read(tempfile)
-    FileUtils.rm_f tempfile
-  end
-
-  BROWSERS.each do |browser|
-    File.open(changelog_post(browser), 'w') do |f|
-      f.puts <<-TXT
----
-version: #{current_version}
-categories: #{browser}
-filename: #{File.basename(@files["#{browser}_download".to_sym].call)}
-filesize: #{File.size(@files["#{browser}_package".to_sym]) / 1000}
----
-#{message}
-      TXT
-    end
-    puts "Wrote Changelog entry for v#{current_version} to #{changelog_post(browser)}"
-  end
-
-  existing_changelog = File.read 'CHANGELOG'
-  unless existing_changelog =~ /v#{current_version}/
-    File.open 'CHANGELOG', 'w' do |f|
-      f.puts message
-      f.puts existing_changelog
-    end
-    puts 'Wrote CHANGELOG'
-  end
-end
-
-
 task :version do
   puts version
 end
@@ -134,6 +85,7 @@ namespace :version do
     Rake::Task['build'].invoke
     psh 'git add VERSION'
     psh "git commit -m 'Version bump to #{args[:string]}'"
+    Rake::Task['version:tag'].invoke
 
     puts "Version set to #{args[:string]}"
   end
@@ -163,13 +115,61 @@ namespace :pages do
   end
 
   desc 'Build all packages and copy them to gh-pages'
-  task :publish => (BROWSERS.map { |b| changelog_post(b) } + [:package, 'pages:sync']) do
+  task :publish => [:package, 'pages:sync'] do
+    commits = `git log --pretty=oneline v#{last_version}..v#{current_version}`
+    prelude = <<-TXT
+v#{current_version} #{datetime}
+Enter the list of changes for version 
+Here's a commit list to help jog your memory
+#{commits.split("\n").map { |c| "  #{c}" }.join("\n")}
+    TXT
+    tempfile = '/tmp/careplane-changelog-entry.txt'
+    FileUtils.rm_f tempfile
+    File.open(tempfile, 'w') { |f| f.puts prelude }
+    editor = ENV['GIT_EDITOR'] || ENV['VISUAL'] || ENV['EDITOR'] || 'vi'
+    Process.fork do
+      exec "#{editor} #{tempfile}"
+    end
+    Process.wait
+
+    psh "cat CHANGELOG >> #{tempfile}"
+    psh "cp #{tempfile} CHANGELOG"
+    FileUtils.rm_f tempfile
+
+    psh 'git add CHANGELOG'
+    psh 'git commit -m "Updated CHANGELOG"'
+    psh 'git push origin master'
+
     packages = {};
     %w{chrome firefox safari}.each do |browser|
       packages[browser] = File.read @files["#{browser}_package".to_sym]
     end
 
-    psh 'git checkout gh-pages'
+    puts `git checkout gh-pages`
+
+    BROWSERS.each do |browser|
+      File.open(changelog_post(browser), 'w') do |f|
+        f.puts <<-TXT
+---
+version: #{current_version}
+categories: #{browser}
+filename: #{File.basename(@files["#{browser}_download".to_sym].call)}
+filesize: #{File.size(@files["#{browser}_package".to_sym]) / 1000}
+---
+#{message}
+        TXT
+      end
+      puts "Wrote Changelog entry for v#{current_version} to #{changelog_post(browser)}"
+    end
+
+    existing_changelog = File.read 'CHANGELOG'
+    unless existing_changelog =~ /v#{current_version}/
+      File.open 'CHANGELOG', 'w' do |f|
+        f.puts message
+        f.puts existing_changelog
+      end
+      puts 'Wrote CHANGELOG'
+    end
 
     %w{chrome firefox safari}.each do |browser|
       File.open(@files["#{browser}_download".to_sym].call, 'w') { |f| f.puts packages[browser] }
@@ -177,6 +177,8 @@ namespace :pages do
 
     psh 'git add _posts downloads'
     psh "git commit -m 'Release for version #{current_version}'"
+    psh 'git push origin gh-pages'
+
     psh 'git checkout master'
   end
 end
@@ -369,17 +371,8 @@ task :build => ['firefox:build', 'google_chrome:build', 'safari:build', 'jasmine
 desc 'Package all plugins'
 task :package => ['firefox:package', 'google_chrome:package', 'safari:package']
 
-
-BROWSERS.each do |browser|
-  file changelog_post(browser) => :changelog
-end
-
-task :push do
-  psh 'git push origin'
-end
-
 desc 'Build packages, copy them to gh-pages, update website links, push'
-task :release => ['pages:publish', :push]
+task :release => 'pages:publish'
 
 task :test => [:examples, :features]
 task :default => :test
