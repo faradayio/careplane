@@ -311,7 +311,10 @@ namespace :safari do
   task :package => :build do
     FileUtils.mkdir_p('safari/build')
     Dir.chdir 'safari' do
-      puts `zip -r build/careplane.safariextz careplane.safariextension -x *~`
+      #puts `xar -cvf build/careplane.safariextz careplane.safariextension`
+      #puts `xar -f build/careplane.safariextz --sign --data-to-sign careplane_sha1_hash.dat --sig-size \`cat ~/documents1/technology/careplane/siglen.txt\` --cert-loc ~/documents1/technology/careplane/careplane.der --cert-loc certs/cert01 --cert-loc certs/cert02`
+      #puts `(echo "3021300906052B0E03021A05000414" | xxd -r -p; cat careplane_sha1_hash.dat) | openssl rsautl -sign -inkey ~/documents1/technology/careplane.pem > signature.dat`
+      #puts `xar --inject-sig signature.dat -f build/careplane.safariextz`
     end
   end
 end
