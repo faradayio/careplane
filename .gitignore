@@ -9,10 +9,12 @@ firefox*/chrome/content/src
 firefox*/chrome/content/stylesheets
 firefox/data
 firefox/lib
+firefox/package.json
 google_chrome/build
 google_chrome/images
 google_chrome/src
 google_chrome/stylesheets
+google_chrome/manifest.json
 safari/build
 safari/careplane.safariextension/images
 safari/careplane.safariextension/Info.plist
