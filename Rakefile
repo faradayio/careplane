@@ -379,7 +379,7 @@ task :push do
 end
 
 desc 'Build packages, copy them to gh-pages, update website links, push'
-task :release => ['site:publish', :push]
+task :release => ['pages:publish', :push]
 
 task :test => [:examples, :features]
 task :default => :test
