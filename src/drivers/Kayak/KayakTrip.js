@@ -1,10 +1,12 @@
 KayakTrip = function(tripElement) {
-  this.tripElement = tripElement;
-  this.doc = this.tripElement.ownerDocument;
-  this.id = this.tripElement.id.match(/\d+/)[0];
-  this.controller = new TripController(this);
-  this.footprintView = new KayakTripFootprintView(this.tripElement);
-  this.infoView = new KayakTripInfoView(this.tripElement);
+  if(tripElement) {
+    this.tripElement = tripElement;
+    this.doc = this.tripElement.ownerDocument;
+    this.id = this.tripElement.id.match(/\d+/)[0];
+    this.controller = new TripController(this);
+    this.footprintView = new KayakTripFootprintView(this.tripElement);
+    this.infoView = new KayakTripInfoView(this.tripElement);
+  }
 };
 KayakTrip.prototype = new Trip();
 
@@ -44,9 +46,14 @@ KayakTrip.prototype.searchIdentifier = function() {
   }
 };
 
-KayakTrip.prototype.loadFlights = function(success) {
-  var resultIdentifier = this.doc.getElementById('resultid' + this.id).innerHTML;
-  var detailUrl = 'http://www.kayak.com/s/run/inlineDetails/flight?searchid=' + this.searchIdentifier() + '&resultid=' + resultIdentifier + '&localidx=' + this.id + '&fs=;';
+KayakTrip.prototype.resultIdentifier = function() {
+  return this.doc.getElementById('resultid' + this.id).innerHTML;
+};
 
-  Careplane.fetch(detailUrl, KayakTrip.events.tripDetailsSuccess(this, success));
+KayakTrip.prototype.detailUrl = function() {
+  return 'http://www.kayak.com/s/run/inlineDetails/flight?searchid=' + this.searchIdentifier() + '&resultid=' + this.resultIdentifier() + '&localidx=' + this.id + '&fs=;';
+};
+
+KayakTrip.prototype.loadFlights = function(success) {
+  Careplane.fetch(this.detailUrl(), KayakTrip.events.tripDetailsSuccess(this, success));
 };

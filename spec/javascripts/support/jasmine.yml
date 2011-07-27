@@ -31,6 +31,9 @@ src_files:
   - src/drivers/Kayak/KayakTrip.js
   - src/views/Kayak/KayakTripFootprintView.js
   - src/views/Kayak/KayakTripInfoView.js
+  - src/drivers/KayakUK.js
+  - src/drivers/KayakUK/KayakUKAirTrafficController.js
+  - src/drivers/KayakUK/KayakUKTrip.js
   - src/drivers/Orbitz.js
   - src/drivers/Orbitz/OrbitzAirTrafficController.js
   - src/drivers/Orbitz/OrbitzFlight.js

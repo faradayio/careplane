@@ -28,6 +28,9 @@ FirefoxExtension.events = {
           case 'Kayak':
             driverClass = Kayak;
             break;
+          case 'KayakUK':
+            driverClass = KayakUK;
+            break;
           case 'Orbitz':
             driverClass = Orbitz;
             break;

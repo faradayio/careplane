@@ -1,8 +1,10 @@
 Kayak = function(extension) {
-  this.klass = Kayak;
-  this.extension = extension;
-  this.doc = extension.doc;
-  this.atc = new KayakAirTrafficController(this.doc);
+  if(extension) {
+    this.klass = Kayak;
+    this.extension = extension;
+    this.doc = extension.doc;
+    this.atc = new KayakAirTrafficController(this.doc);
+  }
 };
 Kayak.prototype = new Driver();
 

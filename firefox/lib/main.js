@@ -13,6 +13,7 @@ careplanePanel = Panel({
   onShow: function() {
     careplanePanel.port.emit('preferences.load', {
       'sites.Kayak': panelWorker.getPreference({ key: 'sites.Kayak', defaultValue: true }),
+      'sites.KayakUK': panelWorker.getPreference({ key: 'sites.KayakUK', defaultValue: true }),
       'sites.Hipmunk': panelWorker.getPreference({ key: 'sites.Hipmunk', defaultValue: true }),
       'sites.Orbitz': panelWorker.getPreference({ key: 'sites.Orbitz', defaultValue: true }),
     });
@@ -99,6 +100,43 @@ pageMod.PageMod({
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Kayak');
+  }
+});
+
+pageMod.PageMod({
+  include: /.*kayak.co.uk.*/,
+  contentScriptWhen: 'ready',
+  contentScriptFile: [
+    data.url('lib/jquery-1.5.2.min.js'),
+    data.url('Preferences.js'),
+    data.url('Util.js'),
+    data.url('Tracker.js'),
+    data.url('Driver.js'),
+    data.url('HallOfFame.js'),
+    data.url('Flight.js'),
+    data.url('Trip.js'),
+    data.url('AverageTrip.js'),
+    data.url('AirTrafficController.js'),
+    data.url('controllers/TripController.js'),
+    data.url('views/TripInfoView.js'),
+    data.url('views/TripFootprintView.js'),
+    data.url('Careplane.js'),
+    data.url('drivers/Kayak.js'),
+    data.url('drivers/Kayak/KayakAirTrafficController.js'),
+    data.url('drivers/Kayak/KayakFlight.js'),
+    data.url('drivers/Kayak/KayakTrip.js'),
+    data.url('views/Kayak/KayakTripFootprintView.js'),
+    data.url('views/Kayak/KayakTripInfoView.js'),
+    data.url('drivers/KayakUK.js'),
+    data.url('drivers/KayakUK/KayakUKAirTrafficController.js'),
+    data.url('drivers/KayakUK/KayakUKTrip.js'),
+    data.url('browser/firefox/FirefoxExtension.js'),
+    data.url('browser/firefox/FirefoxTracker.js'),
+  ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
+  onAttach: function(addon) {
+    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+    modWorker.init('KayakUK');
   }
 });
 

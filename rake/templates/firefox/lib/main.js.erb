@@ -13,6 +13,7 @@ careplanePanel = Panel({
   onShow: function() {
     careplanePanel.port.emit('preferences.load', {
       'sites.Kayak': panelWorker.getPreference({ key: 'sites.Kayak', defaultValue: true }),
+      'sites.KayakUK': panelWorker.getPreference({ key: 'sites.KayakUK', defaultValue: true }),
       'sites.Hipmunk': panelWorker.getPreference({ key: 'sites.Hipmunk', defaultValue: true }),
       'sites.Orbitz': panelWorker.getPreference({ key: 'sites.Orbitz', defaultValue: true }),
     });
@@ -55,6 +56,19 @@ pageMod.PageMod({
   onAttach: function(addon) {
     modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
     modWorker.init('Kayak');
+  }
+});
+
+pageMod.PageMod({
+  include: /.*kayak.co.uk.*/,
+  contentScriptWhen: 'ready',
+  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox',%w{Kayak KayakUK}).each do |js_file| %>
+    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
+  ],
+  contentScript: '(new FirefoxExtension(document)).loadDriver();',
+  onAttach: function(addon) {
+    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+    modWorker.init('KayakUK');
   }
 });
 
