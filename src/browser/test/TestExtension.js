@@ -25,7 +25,9 @@ TestExtension.fetch = function(url, callback) {
 };
 
 TestExtension.log = function(str) {
-  if(typeof jasmine != 'undefined') {
+  if(typeof console != 'undefined') {
+    console.log(str);
+  } else if(typeof jasmine != 'undefined') {
     jasmine.log(str);
   } else if(typeof capy != 'undefined') {
     capy.log(str);
