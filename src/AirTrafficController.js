@@ -17,7 +17,6 @@ AirTrafficController.prototype.clear = function() {
 AirTrafficController.prototype.discoverTrips = function() {
   var controller = this;
   this.undiscoveredTripElements().each(function(i, tripElement) {
-    var count = tripElement.getElementsByClassName('careplane-info').length;
     controller.createTrip(tripElement);
   });
 };
