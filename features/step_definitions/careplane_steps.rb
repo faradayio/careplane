@@ -26,13 +26,11 @@ var capy = {
 
   js += <<-JS
 
-var tmpPrefs = new TestPreferences();
-tmpPrefs.putBoolean('hasRunPreviously', true);
-tmpPrefs.putBoolean('sites.Kayak', true);
-tmpPrefs.putBoolean('sites.Orbitz', true);
-tmpPrefs.putBoolean('sites.Hipmunk', true);
-
 var extension = new TestExtension(window.document);
+extension.prefs.putBoolean('hasRunPreviously', true);
+extension.prefs.putBoolean('sites.Kayak', true);
+extension.prefs.putBoolean('sites.Orbitz', true);
+extension.prefs.putBoolean('sites.Hipmunk', true);
 extension.loadDriver();
   JS
 
