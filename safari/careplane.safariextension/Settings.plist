@@ -8,35 +8,61 @@
 		<key>Key</key>
 		<string>hasRunPreviously</string>
 	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>sites.hipmunk</string>
-		<key>Title</key>
-		<string>Hipmunk</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>sites.kayak</string>
-		<key>Title</key>
-		<string>Kayak</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<true/>
-		<key>Key</key>
-		<string>sites.orbitz</string>
-		<key>Title</key>
-		<string>Orbitz</string>
-		<key>Type</key>
-		<string>CheckBox</string>
-	</dict>
+
+  <dict>
+    <key>DefaultValue</key>
+    <true/>
+    <key>Key</key>
+    <string>sites.bing</string>
+    <key>Title</key>
+    <string></string>
+    <key>Type</key>
+    <string>CheckBox</string>
+  </dict>
+
+  <dict>
+    <key>DefaultValue</key>
+    <true/>
+    <key>Key</key>
+    <string>sites.hipmunk</string>
+    <key>Title</key>
+    <string></string>
+    <key>Type</key>
+    <string>CheckBox</string>
+  </dict>
+
+  <dict>
+    <key>DefaultValue</key>
+    <true/>
+    <key>Key</key>
+    <string>sites.kayak</string>
+    <key>Title</key>
+    <string></string>
+    <key>Type</key>
+    <string>CheckBox</string>
+  </dict>
+
+  <dict>
+    <key>DefaultValue</key>
+    <true/>
+    <key>Key</key>
+    <string>sites.kayakuk</string>
+    <key>Title</key>
+    <string></string>
+    <key>Type</key>
+    <string>CheckBox</string>
+  </dict>
+
+  <dict>
+    <key>DefaultValue</key>
+    <true/>
+    <key>Key</key>
+    <string>sites.orbitz</string>
+    <key>Title</key>
+    <string></string>
+    <key>Type</key>
+    <string>CheckBox</string>
+  </dict>
+
 </array>
 </plist>

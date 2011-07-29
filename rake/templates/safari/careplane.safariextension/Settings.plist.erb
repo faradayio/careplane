@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<false/>
+		<key>Key</key>
+		<string>hasRunPreviously</string>
+	</dict>
+<% CareplaneConfig.drivers.each do |driver| %>
+  <dict>
+    <key>DefaultValue</key>
+    <true/>
+    <key>Key</key>
+    <string>sites.<%= driver.downcase %></string>
+    <key>Title</key>
+    <string><% (driver == 'KayakUK' ? 'Kayak (UK)' : 'Kayak')  %></string>
+    <key>Type</key>
+    <string>CheckBox</string>
+  </dict>
+<% end %>
+</array>
+</plist>
