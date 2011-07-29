@@ -158,6 +158,7 @@ widget = Widget({
       data.url('drivers/KayakUK.js'),
       data.url('drivers/KayakUK/KayakUKAirTrafficController.js'),
       data.url('drivers/KayakUK/KayakUKTrip.js'),
+      data.url('views/KayakUK/KayakUKTripFootprintView.js'),
       data.url('drivers/Kayak.js'),
       data.url('drivers/Kayak/KayakAirTrafficController.js'),
       data.url('drivers/Kayak/KayakFlight.js'),

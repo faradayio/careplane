@@ -9,6 +9,10 @@
   left: 10px;
   bottom: 20px;
 }
+.kayakuk.careplane-footprint {
+  display: block;
+  margin-top: 1em;
+}
 .orbitz.careplane-footprint {
   background-color: #fff;
   margin: 10px 0;
