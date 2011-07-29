@@ -2,6 +2,9 @@ OrbitzAirTrafficController = function(doc) {
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;
   this.tripClass = OrbitzTrip;
+  this.trips = [];
+  this.tripCount = 0;
+  this.completedTrips = 0;
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
 

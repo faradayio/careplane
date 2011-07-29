@@ -2,6 +2,9 @@ KayakAirTrafficController = function(doc) {
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;
   this.tripClass = KayakTrip;
+  this.trips = [];
+  this.tripCount = 0;
+  this.completedTrips = 0;
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
 KayakAirTrafficController.events = new AirTrafficControllerEvents();
