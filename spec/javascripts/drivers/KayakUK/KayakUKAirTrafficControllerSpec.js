@@ -1,7 +1,7 @@
 describe('KayakUKAirTrafficController', function() {
   describe('with fixtures', function() {
     beforeEach(function() {
-      loadFixtures('kayak_dtw_sfo.html');
+      loadFixtures('kayak_uk_lhr_txl.html');
       TestExtension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight.*'] = {
         'status': 0,
         'message': kayakFlightDetails
@@ -15,7 +15,7 @@ describe('KayakUKAirTrafficController', function() {
   describe('#scoreTrips', function() {
     it('scores standard flights', function() {
       TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
-      loadFixtures('kayak_dtw_sfo_flight.html');
+      loadFixtures('kayak_uk_lhr_txl_flight.html');
       var controller = new KayakUKAirTrafficController(document);
       controller.discoverTrips();
       controller.scoreTrips();
