@@ -1,6 +1,6 @@
 Util = {
   formatFootprint: function(footprint) {
-    var roundedFootprint = Math.round((footprint * 2.2) * 10) / 10;
+    var roundedFootprint = Math.round(footprint * 2.2);
     var delimitedFootprint = Util.numberWithDelimiter(roundedFootprint);
     var labeledFootprint = delimitedFootprint + ' lbs CO<sub>2</sub>e';
     return labeledFootprint;
