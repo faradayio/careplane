@@ -1,3 +1,7 @@
+if(typeof require != 'undefined') {
+  var Driver = require('Driver').Driver;
+}
+
 Orbitz = function(extension) {
   this.klass = Orbitz;
   this.extension = extension;
@@ -8,8 +12,8 @@ Orbitz.prototype = new Driver();
 
 Orbitz.driverName = 'Orbitz';
 
-Orbitz.monitorURL = 'orbitz.com/App/ViewFlightSearchResults';
-Orbitz.monitorExcludeURL = 'track.pubmatic.com';
+Orbitz.monitorURL = /orbitz\.com\/App\/ViewFlightSearchResults/;
+Orbitz.monitorExcludeURL = /track\.pubmatic\.com/;
 
 Orbitz.prototype.isPollingEnabled = function() {
   return false;
@@ -32,3 +36,7 @@ Orbitz.prototype.insertAttribution = function() {
     Careplane.insertBadge(container);
   }
 };
+
+if(typeof exports != 'undefined') {
+  exports.Orbitz = Orbitz;
+}

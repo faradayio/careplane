@@ -1,4 +1,6 @@
 require './lib/careplane_config'
+require 'active_support'
+require 'active_support/inflector'
 require 'fileutils'
 require 'erb'
 
@@ -216,7 +218,7 @@ namespace :firefox do
       puts file
       FileUtils.cp file, destination
     end
-    CareplaneConfig.worker_files.each do |file|
+    CareplaneConfig.worker_files('firefox').each do |file|
       destination = File.join 'firefox', 'lib', file.sub(/^src\//, '')
       FileUtils.mkdir_p(File.dirname(destination))
       puts file

@@ -1,3 +1,7 @@
+if(typeof require != 'undefined') {
+  var Kayak = require('drivers/Kayak').Kayak;
+}
+
 KayakUK = function(extension) {
   this.klass = KayakUK;
   this.extension = extension;
@@ -8,5 +12,9 @@ KayakUK.prototype = new Kayak();
 
 KayakUK.driverName = 'KayakUK';
 
-KayakUK.monitorURL = 'kayak.co.uk';
-KayakUK.monitorExcludeURL = 'fbcdn.net';
+KayakUK.monitorURL = /.*kayak\.co\.uk.*/;
+KayakUK.monitorExcludeURL = /fbcdn\.net/;
+
+if(typeof exports != 'undefined') {
+  exports.KayakUK = KayakUK;
+}

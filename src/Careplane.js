@@ -33,13 +33,13 @@ Careplane.prototype.log = function(str) {
 Careplane.prototype.isPollingEnabled = true;
 
 Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
-  var match = doc.location.href.search(driverClass.monitorURL);
+  var match = doc.location.href.match(driverClass.monitorURL);
 
   if(driverClass.monitorExcludeURL) {
-    var staticMatch = doc.location.href.search(driverClass.monitorExcludeURL);
-    return match >=0 && staticMatch < 0;
+    var staticMatch = doc.location.href.match(driverClass.monitorExcludeURL);
+    return match && staticMatch == null;
   } else {
-    return match >=0;
+    return match != null;
   }
 };
 
@@ -72,4 +72,8 @@ CareplaneEvents = {
       $('.careplane-footprint', doc).hide();
     };
   }
+}
+
+if(typeof exports != 'undefined') {
+  exports.Careplane = Careplane;
 }

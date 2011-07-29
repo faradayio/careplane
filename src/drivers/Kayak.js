@@ -1,3 +1,7 @@
+if(typeof require != 'undefined') {
+  var Driver = require('Driver').Driver;
+}
+
 Kayak = function(extension) {
   if(extension) {
     this.klass = Kayak;
@@ -10,8 +14,8 @@ Kayak.prototype = new Driver();
 
 Kayak.driverName = 'Kayak';
 
-Kayak.monitorURL = 'kayak.com';
-Kayak.monitorExcludeURL = 'fbcdn.net';
+Kayak.monitorURL = /.*kayak\.com.*/;
+Kayak.monitorExcludeURL = /fbcdn\.net/;
 
 Kayak.prototype.waitForElement = '.flightlist';
 
@@ -30,3 +34,7 @@ Kayak.prototype.insertAttribution = function() {
   attributionElement.html(' &middot; ' + Careplane.standardTextAttribution);
   copyrightElement.append(attributionElement);
 };
+
+if(typeof exports != 'undefined') {
+  exports.Kayak = Kayak;
+}

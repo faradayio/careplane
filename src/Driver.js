@@ -41,3 +41,7 @@ Driver.prototype.load = function() {
     this.atc.clear();
   }
 };
+
+if(typeof exports != 'undefined') {
+  exports.Driver = Driver;
+}

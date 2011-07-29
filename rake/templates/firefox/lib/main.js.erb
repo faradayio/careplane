@@ -4,6 +4,8 @@ var data = require('self').data;
 var Widget = require('widget').Widget;
 var Panel = require('panel').Panel;
 
+var Careplane = require('Careplane').Careplane;
+
 var widget, careplanePanel, panelWorker, modWorker;
 
 careplanePanel = Panel({
@@ -11,11 +13,8 @@ careplanePanel = Panel({
   contentURL: data.url('widget.html'),
   contentScriptFile: data.url('widget.js'),
   onShow: function() {
-    careplanePanel.port.emit('preferences.load', {
-      'sites.Kayak': panelWorker.getPreference({ key: 'sites.Kayak', defaultValue: true }),
-      'sites.KayakUK': panelWorker.getPreference({ key: 'sites.KayakUK', defaultValue: true }),
-      'sites.Hipmunk': panelWorker.getPreference({ key: 'sites.Hipmunk', defaultValue: true }),
-      'sites.Orbitz': panelWorker.getPreference({ key: 'sites.Orbitz', defaultValue: true }),
+    careplanePanel.port.emit('preferences.load', {<% CareplaneConfig.drivers.each do |driver| %>
+      'sites.<%= driver %>': panelWorker.getPreference({ key: 'sites.<%= driver %>', defaultValue: true }), <% end %>
     });
   }
 });
@@ -33,56 +32,20 @@ widget = Widget({
   }
 });
 
-pageMod.PageMod({
-  include: /.*hipmunk.com.*/,
-  contentScriptWhen: 'ready',
-  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Hipmunk').each do |js_file| %>
-    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
-  ],
-  contentScript: '(new FirefoxExtension(document)).loadDriver();',
-  onAttach: function(addon) {
-    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
-    modWorker.init('Hipmunk');
-  }
-});
-
-pageMod.PageMod({
-  include: /.*kayak.com.*/,
-  contentScriptWhen: 'ready',
-  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Kayak').each do |js_file| %>
-    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
-  ],
-  contentScript: '(new FirefoxExtension(document)).loadDriver();',
-  onAttach: function(addon) {
-    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
-    modWorker.init('Kayak');
-  }
-});
-
-pageMod.PageMod({
-  include: /.*kayak.co.uk.*/,
-  contentScriptWhen: 'ready',
-  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox',%w{Kayak KayakUK}).each do |js_file| %>
-    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
-  ],
-  contentScript: '(new FirefoxExtension(document)).loadDriver();',
-  onAttach: function(addon) {
-    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
-    modWorker.init('KayakUK');
-  }
-});
-
-pageMod.PageMod({
-  include: /.*orbitz.com.*/,
-  contentScriptWhen: 'ready',
-  contentScriptFile: [<% CareplaneConfig.content_script_files('firefox','Orbitz').each do |js_file| %>
-    data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
-  ],
-  contentScript: '(new FirefoxExtension(document)).loadDriver();',
-  onAttach: function(addon) {
-    modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
-    modWorker.init('Orbitz');
-  }
-});
-
-
+<% CareplaneConfig.drivers.each do |driver| %>
+  var <%= driver %> = require('drivers/<%= driver %>').<%= driver %>;
+  <% content_scripts = CareplaneConfig.content_script_files('firefox', driver) %>
+  <% content_scripts = CareplaneConfig.content_script_files('firefox', 'Kayak') + content_scripts if driver == 'KayakUK' %>
+  pageMod.PageMod({
+    include: <%= driver %>.monitorURL,
+    contentScriptWhen: 'ready',
+    contentScriptFile: [<% content_scripts.each do |js_file| %>
+      data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
+    ],
+    contentScript: '(new FirefoxExtension(document)).loadDriver();',
+    onAttach: function(addon) {
+      modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+      modWorker.init('<%= driver %>');
+    }
+  });
+<% end %>

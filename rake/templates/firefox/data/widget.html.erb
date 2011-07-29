@@ -1,0 +1,30 @@
+<html>
+  <title>Careplane</title>
+  <body>
+    <section id="info">
+      <p>Careplane calculates the carbon footprints of flights on your favorite flight search sites.</p>
+      <button id="infoOptions">Options</a>
+    </section>
+
+    <section id="notification">
+      <p>Careplane is calculating the carbon footprint of your flight search results.</p>
+      <button id="hide">Hide footprints</button>
+      <button id="notificationOptions">Options</a>
+    </section>
+
+    <section id="preferences">
+      <h1>Choose the travel sites that Careplane will add carbon intelligence to:</h1>
+
+      <ul>
+        <% CareplaneConfig.drivers.each do |driver| %>
+          <li>
+            <input type="checkbox" name="sites" value="<%= driver %>">
+            <label for="sites"><%= (driver == 'KayakUK' ? 'Kayak (UK)' : driver.humanize) %></label>
+          </li>
+        <% end %>
+      </ul>
+
+      <p id="status" style="color: gray;"></p>
+    </section>
+  </body>
+</html>
