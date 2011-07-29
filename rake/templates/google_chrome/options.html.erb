@@ -33,19 +33,10 @@ function restore_options() {
   <p id="status" style="color: red; background: #FF9;"></p>
 
   Choose the travel sites that Careplane will add carbon intelligence to:
-  
-    <input id="hipmunk" type="checkbox" name="sites" value="Hipmunk">
-    <label for="hipmunk">Hipmunk</label>
-  
-    <input id="kayak" type="checkbox" name="sites" value="Kayak">
-    <label for="kayak">Kayak</label>
-  
-    <input id="kayak_uk" type="checkbox" name="sites" value="KayakUK">
-    <label for="kayak_uk">Kayak (UK)</label>
-  
-    <input id="orbitz" type="checkbox" name="sites" value="Orbitz">
-    <label for="orbitz">Orbitz</label>
-  
+  <% CareplaneConfig.drivers.each do |driver| %>
+    <input id="<%= driver.underscore %>" type="checkbox" name="sites" value="<%= driver %>">
+    <label for="<%= driver.underscore %>"><%= (driver == 'KayakUK' ? 'Kayak (UK)' : driver) %></label>
+  <% end %>
 
   <br>
   <button onclick="save_options()">Save</button>
