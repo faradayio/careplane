@@ -36,6 +36,7 @@ module CareplaneConfig
 
     def js_files(selected_drivers = nil)
       files = %w{
+        src/lib/node_modules.js
         src/lib/jquery-1.5.2.min.js
 
         src/Preferences.js

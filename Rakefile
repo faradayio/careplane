@@ -11,6 +11,8 @@ require 'jasmine/base'
 require 'jasmine/config'
 require 'jasmine/server'
 
+ENV['NODE_PATH'] = 'src'
+
 Cucumber::Rake::Task.new
 
 def psh(cmd, cwd = '.')
@@ -204,7 +206,7 @@ end
 directory 'firefox/build'
 namespace :firefox do
   desc 'Build Firefox extension'
-  task :build => 'firefox:build:templates' do
+  task :build => [:browserify, 'firefox:build:templates'] do
     puts 'Building Firefox'
 
     puts 'Copying files...'
@@ -250,7 +252,7 @@ end
 
 namespace :google_chrome do
   desc 'Build Google Chrome extension'
-  task :build => 'google_chrome:build:templates' do
+  task :build => [:browserify, 'google_chrome:build:templates'] do
     puts 'Building Google Chrome'
 
     puts 'Copying assets...'
@@ -290,7 +292,7 @@ namespace :safari do
   directory 'safari/build'
 
   desc 'Build Safari extension'
-  task :build => ['safari/build', 'safari:build:templates'] do
+  task :build => [:browserify, 'safari/build', 'safari:build:templates'] do
     puts 'Building Safari'
     FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
     FileUtils.cp 'src/Worker.js', 'safari/careplane.safariextension/Worker.js'
@@ -317,14 +319,9 @@ namespace :safari do
 end
 
 desc 'Run Jasmine unit tests (requires Node.js)'
-task :examples, :spec do |t, args|
-  ENV['NODE_PATH'] = 'src'
-
-  if args[:spec]
-    exec "node spec/javascripts/support/jasmine-node.js #{args[:spec]}"
-  else
-    exec 'node spec/javascripts/support/jasmine-node.js'
-  end
+task :examples, [:spec] => 'jasmine:build' do |t, args|
+  args.with_defaults :spec => ''
+  exec "node spec/javascripts/support/jasmine-node.js #{args[:spec]}"
 end
 
 desc 'Check the syntax of all Careplane source files (requires Node.js)'
@@ -342,14 +339,14 @@ end
 
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
-  task :build do
+  task :build => :browserify do
     puts 'Building Jasmine templates'
     templates 'spec'
     puts 'Done'
   end
 
   desc 'Run Jasmine spec server'
-  task :server do
+  task :server => :browserify do
     jasmine_config_overrides = 'spec/javascripts/support/jasmine_config.rb'
     require jasmine_config_overrides if File.exist?(jasmine_config_overrides)
 
@@ -357,6 +354,17 @@ namespace :jasmine do
     puts "  http://localhost:8888/"
 
     Jasmine::Config.new.start_server
+  end
+end
+
+task :browserify do
+  if File.exist?('src/lib/node_modules.js') && ARGV.join(' ') !~ /browserify/
+    puts 'src/lib/node_modules.js already built'
+  else
+    puts 'Compiling Node.js modules into src/lib/node_modules.js...'
+    FileUtils.rm_f 'src/lib/node_modules.js'
+    puts `node_modules/.bin/browserify --require JSONPath -o src/lib/node_modules.js`
+    puts 'Done'
   end
 end
 
