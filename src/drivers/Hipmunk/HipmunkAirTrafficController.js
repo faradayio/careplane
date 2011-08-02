@@ -9,6 +9,10 @@ HipmunkAirTrafficController = function(doc) {
 HipmunkAirTrafficController.prototype = new AirTrafficController();
 HipmunkAirTrafficController.events = AirTrafficControllerEvents();
 
+HipmunkAirTrafficController.prototype.tripId = function(tripElement) {
+  return tripElement.id;
+};
+
 HipmunkAirTrafficController.prototype.origin = function() {
   var match = this.url.match(/from=([^&]+)/);
   return match ? match[1].toUpperCase() : '';

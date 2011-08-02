@@ -36,12 +36,18 @@ AirTrafficController.prototype.tripIsAlreadyDiscovered = function(tripElement) {
   return p.length > 0;
 };
 
+AirTrafficController.prototype.tripId = function(tripElement) {
+  return tripElement.id.match(/\d+/)[0];
+};
+
 AirTrafficController.prototype.createTrip = function(tripElement) {
-  var trip = new this.tripClass(tripElement);
+  var id = this.tripId(tripElement);
+  var trip = new this.tripClass(id, tripElement);
   this.trips.push(trip);
   this.tripCount++;
   trip.init();
   trip.controller.init();
+  return trip;
 };
 
 AirTrafficController.prototype.scoreTrips = function() {

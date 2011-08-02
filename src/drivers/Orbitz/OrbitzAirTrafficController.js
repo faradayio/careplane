@@ -13,6 +13,10 @@ OrbitzAirTrafficController.prototype.clear = function() {
   this.scoreTrips();
 };
 
+OrbitzAirTrafficController.prototype.tripId = function() {
+  return this.trips.length;
+};
+
 OrbitzAirTrafficController.prototype.origin = function() {
   return $('#airchgOrigin', this.doc)[0].value;
 };

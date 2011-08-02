@@ -1,13 +1,11 @@
-OrbitzTrip = function(tripElement) {
+OrbitzTrip = function(id, tripElement) {
+  this.id = id;
   this.tripElement = tripElement;
-  this.id = ++OrbitzTrip.count;
   this.controller = new TripController(this);
   this.footprintView = new OrbitzTripFootprintView(this.tripElement);
   this.infoView = new OrbitzTripInfoView(this.tripElement);
 };
 OrbitzTrip.prototype = new Trip();
-
-OrbitzTrip.count = 0;
 
 OrbitzTrip.prototype.cost = function() {
   if(!this._cost)

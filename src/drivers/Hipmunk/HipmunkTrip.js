@@ -1,6 +1,6 @@
-HipmunkTrip = function(tripElement) {
+HipmunkTrip = function(id, tripElement) {
+  this.id = id;
   this.tripElement = tripElement;
-  this.id = tripElement.id;
   this.infoPanelElement = $('#' + this.infoPanelElementId()).get(0);
   this.controller = new HipmunkTripController(this);
   this.footprintView = new HipmunkTripFootprintView(this.tripElement);

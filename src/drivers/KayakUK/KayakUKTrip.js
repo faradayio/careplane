@@ -1,7 +1,7 @@
-KayakUKTrip = function(tripElement) {
+KayakUKTrip = function(id, tripElement) {
+  this.id = id;
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
-  this.id = this.tripElement.id.match(/\d+/)[0];
   this.controller = new TripController(this);
   this.footprintView = new KayakUKTripFootprintView(this.tripElement);
   this.infoView = new KayakTripInfoView(this.tripElement);

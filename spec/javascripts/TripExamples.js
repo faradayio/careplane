@@ -8,8 +8,11 @@ sharedExamplesFor('Trip', function() {
     TestExtension.urlMap['carbon.brighterplanet.com/flights'] = 123.0;
   });
 
-  it('provides #this.tripElement', function() {
-    expect(this.tripElement).not.toBeNull();
+  it('provides #id', function() {
+    expect(this.trip.id).not.toBeNull();
+  });
+  it('provides #tripElement', function() {
+    expect(this.trip.tripElement).not.toBeNull();
   });
   it('provides #totalFootprint', function() {
     expect(this.trip.totalFootprint).toBeDefined();
