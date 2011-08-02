@@ -46,7 +46,7 @@ Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
 Careplane.prototype.loadDriver = function() {
   Careplane.currentExtension = this;
   var extension = this;
-  [Hipmunk, Kayak, KayakUK, Orbitz].forEach(function(driver) {
+  [Bing, Hipmunk, Kayak, KayakUK, Orbitz].forEach(function(driver) {
     if(extension.driverShouldMonitor(driver, extension.doc)) {
       extension.prefs.getBoolean('sites.' + driver.driverName,
                             CareplaneEvents.driverBecomesAvailable(extension, driver),

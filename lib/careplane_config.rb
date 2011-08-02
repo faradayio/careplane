@@ -77,7 +77,7 @@ module CareplaneConfig
     end
 
     def drivers
-      %w{Hipmunk Kayak KayakUK Orbitz}
+      %w{Bing Hipmunk Kayak KayakUK Orbitz}
     end
   end
 end

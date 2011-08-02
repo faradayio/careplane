@@ -3,6 +3,7 @@
 # Return an array of filepaths relative to src_dir to include before jasmine specs.
 # Default: []
 src_files: 
+  - src/lib/node_modules.js
   - src/lib/jquery-1.5.2.min.js
   - src/Preferences.js
   - src/Util.js
@@ -17,6 +18,12 @@ src_files:
   - src/views/TripInfoView.js
   - src/views/TripFootprintView.js
   - src/Careplane.js
+  - src/drivers/Bing.js
+  - src/drivers/Bing/BingAirTrafficController.js
+  - src/drivers/Bing/BingFlight.js
+  - src/drivers/Bing/BingTrip.js
+  - src/views/Bing/BingTripFootprintView.js
+  - src/views/Bing/BingTripInfoView.js
   - src/drivers/Hipmunk.js
   - src/drivers/Hipmunk/HipmunkAirTrafficController.js
   - src/drivers/Hipmunk/HipmunkFlight.js

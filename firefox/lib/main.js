@@ -14,6 +14,7 @@ careplanePanel = Panel({
   contentScriptFile: data.url('widget.js'),
   onShow: function() {
     careplanePanel.port.emit('preferences.load', {
+      'sites.Bing': panelWorker.getPreference({ key: 'sites.Bing', defaultValue: true }), 
       'sites.Hipmunk': panelWorker.getPreference({ key: 'sites.Hipmunk', defaultValue: true }), 
       'sites.Kayak': panelWorker.getPreference({ key: 'sites.Kayak', defaultValue: true }), 
       'sites.KayakUK': panelWorker.getPreference({ key: 'sites.KayakUK', defaultValue: true }), 
@@ -36,6 +37,44 @@ widget = Widget({
 });
 
 
+  var Bing = require('drivers/Bing').Bing;
+  
+  
+  pageMod.PageMod({
+    include: Bing.monitorURL,
+    contentScriptWhen: 'ready',
+    contentScriptFile: [
+      data.url('lib/node_modules.js'),
+      data.url('lib/jquery-1.5.2.min.js'),
+      data.url('Preferences.js'),
+      data.url('Util.js'),
+      data.url('Tracker.js'),
+      data.url('Driver.js'),
+      data.url('HallOfFame.js'),
+      data.url('Flight.js'),
+      data.url('Trip.js'),
+      data.url('AverageTrip.js'),
+      data.url('AirTrafficController.js'),
+      data.url('controllers/TripController.js'),
+      data.url('views/TripInfoView.js'),
+      data.url('views/TripFootprintView.js'),
+      data.url('Careplane.js'),
+      data.url('drivers/Bing.js'),
+      data.url('drivers/Bing/BingAirTrafficController.js'),
+      data.url('drivers/Bing/BingFlight.js'),
+      data.url('drivers/Bing/BingTrip.js'),
+      data.url('views/Bing/BingTripFootprintView.js'),
+      data.url('views/Bing/BingTripInfoView.js'),
+      data.url('browser/firefox/FirefoxExtension.js'),
+      data.url('browser/firefox/FirefoxTracker.js'),
+    ],
+    contentScript: '(new FirefoxExtension(document)).loadDriver();',
+    onAttach: function(addon) {
+      modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+      modWorker.init('Bing');
+    }
+  });
+
   var Hipmunk = require('drivers/Hipmunk').Hipmunk;
   
   
@@ -43,6 +82,7 @@ widget = Widget({
     include: Hipmunk.monitorURL,
     contentScriptWhen: 'ready',
     contentScriptFile: [
+      data.url('lib/node_modules.js'),
       data.url('lib/jquery-1.5.2.min.js'),
       data.url('Preferences.js'),
       data.url('Util.js'),
@@ -82,6 +122,7 @@ widget = Widget({
     include: Kayak.monitorURL,
     contentScriptWhen: 'ready',
     contentScriptFile: [
+      data.url('lib/node_modules.js'),
       data.url('lib/jquery-1.5.2.min.js'),
       data.url('Preferences.js'),
       data.url('Util.js'),
@@ -119,6 +160,7 @@ widget = Widget({
     include: KayakUK.monitorURL,
     contentScriptWhen: 'ready',
     contentScriptFile: [
+      data.url('lib/node_modules.js'),
       data.url('lib/jquery-1.5.2.min.js'),
       data.url('Preferences.js'),
       data.url('Util.js'),
@@ -141,6 +183,7 @@ widget = Widget({
       data.url('views/Kayak/KayakTripInfoView.js'),
       data.url('browser/firefox/FirefoxExtension.js'),
       data.url('browser/firefox/FirefoxTracker.js'),
+      data.url('lib/node_modules.js'),
       data.url('lib/jquery-1.5.2.min.js'),
       data.url('Preferences.js'),
       data.url('Util.js'),
@@ -182,6 +225,7 @@ widget = Widget({
     include: Orbitz.monitorURL,
     contentScriptWhen: 'ready',
     contentScriptFile: [
+      data.url('lib/node_modules.js'),
       data.url('lib/jquery-1.5.2.min.js'),
       data.url('Preferences.js'),
       data.url('Util.js'),
