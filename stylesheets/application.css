@@ -47,7 +47,7 @@ header h1, header h2 {
   display: none;
 }
 
-header p {
+header p.browser {
   width: 340px;
   position: absolute; 
   top: 380px;
@@ -147,6 +147,22 @@ header p.unavailable .major {
 header p.unavailable .minor {
   padding-top: 0;
   font-size: 11px;
+}
+
+header p.attribution {
+  position: absolute;
+  top: 339px;
+  left: 137px;
+  width: 127px;
+}
+
+header p.attribution a {
+  display: block;
+  height: 68px;
+}
+
+header p.attribution a span {
+  display: none;
 }
 
 article>div {
