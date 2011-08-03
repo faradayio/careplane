@@ -1,4 +1,8 @@
-KayakFlight = function(origin, destination, airline, aircraft) {
+var $ = require('jquery-browserify');
+var Flight = require('../../Flight');
+
+KayakFlight = function(extension, origin, destination, airline, aircraft) {
+  this.extension = extension;
   this.origin = origin;
   this.destination = destination;
   this.airline = airline;
@@ -6,14 +10,14 @@ KayakFlight = function(origin, destination, airline, aircraft) {
 };
 KayakFlight.prototype = new Flight();
 
-KayakFlight.parse = function(trs) {
+KayakFlight.parse = function(extension, trs) {
   var flights = [];
   var currentFlight;
   $(trs).each(function(i, tr) {
     var airports = [], aircraft, airportCode, extra;
     tr = $(tr);
     if(tr.hasClass('first')) {
-      currentFlight = new KayakFlight();
+      currentFlight = new KayakFlight(extension);
       var tds = $('td', tr);
       currentFlight.airline = $(tds[tds.length - 2]).text().replace(/\s+/g, ' ').trim();
       flights.push(currentFlight);
@@ -42,3 +46,5 @@ KayakFlight.parseAircraft = function(extra) {
 
   return null;
 };
+
+module.exports = KayakFlight;

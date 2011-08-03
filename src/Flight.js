@@ -1,4 +1,10 @@
-Flight = function() {};
+var Util = require('./Util');
+
+Flight = function(extension, origin, destination) {
+  this.extension = extension;
+  this.origin = origin;
+  this.destination = destination;
+};
 
 Flight.events = {
   emissionEstimateSuccess: function(flight, callback) {
@@ -41,7 +47,7 @@ Flight.prototype.emissionEstimate = function(callback) {
   };
   var url = Util.urlFor('http://carbon.brighterplanet.com/flights.json', params);
 
-  Careplane.fetch(url, Flight.events.emissionEstimateSuccess(this, callback));
+  this.extension.fetch(url, Flight.events.emissionEstimateSuccess(this, callback));
 };
 
 Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIALE',
@@ -54,4 +60,4 @@ Flight.aircraftManufacturers = ['"AERO DESIGN & ENGINEERING CO, US"','AEROSPATIA
 'SWEARINGEN','TUPOLEV','VOLPAR','VULCANAIR','YAKOVLEV'];
 
 
-
+module.exports = Flight;

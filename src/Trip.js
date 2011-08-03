@@ -23,20 +23,6 @@ Trip.events = {
   }
 };
 
-Trip._averages = [];
-Trip.average = function(origin, destination, callback) {
-  var trip = Array.prototype.filter.call(this._averages, function(trip) {
-    return trip.origin() == origin && trip.destination() == destination;
-  });
-  if(trip.length > 0) {
-    callback(trip[0]);
-  } else {
-    trip = new AverageTrip(origin, destination);
-    this._averages.push(trip);
-    trip.score(function() {}, callback);
-  }
-};
-
 Trip.prototype.origin = function() {
   return this.flights[0].origin;
 };
@@ -84,3 +70,5 @@ Trip.prototype.tallyFootprint = function(emission) {
 Trip.prototype.roundedTotalFootprint = function() {
   return Math.round(this.totalFootprint);
 };
+
+module.exports = Trip;

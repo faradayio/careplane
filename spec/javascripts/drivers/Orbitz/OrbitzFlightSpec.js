@@ -4,7 +4,7 @@ describe('OrbitzFlight', function() {
       loadFixtures('orbitz_dtw_sfo_result.html');
       var node = $('.resultLeg').get(0);
 
-      var flight = OrbitzFlight.parse(node);
+      var flight = OrbitzFlight.parse({}, node);
       expect(flight.origin).toBe('DTW');
       expect(flight.destination).toBe('SFO');
       expect(flight.airline).toBe('Delta Air Lines');

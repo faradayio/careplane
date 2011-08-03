@@ -13,17 +13,6 @@
     <key>DefaultValue</key>
     <true/>
     <key>Key</key>
-    <string>sites.bing</string>
-    <key>Title</key>
-    <string></string>
-    <key>Type</key>
-    <string>CheckBox</string>
-  </dict>
-
-  <dict>
-    <key>DefaultValue</key>
-    <true/>
-    <key>Key</key>
     <string>sites.hipmunk</string>
     <key>Title</key>
     <string></string>

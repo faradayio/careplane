@@ -1,3 +1,7 @@
+var $ = require('jquery-browserify');
+var TripStatistics = require('../TripStatistics');
+var Util = require('../Util');
+
 TripInfoView = function() {};
 
 TripInfoView.prototype.target = function() {
@@ -22,7 +26,7 @@ TripInfoView.prototype.updateSearchAverage = function(average, trip) {
 };
 
 TripInfoView.prototype.updateTripAverage = function(trip) {
-  Trip.average(trip.origin(), trip.destination(), this.onTripAverageUpdateTripAverageInfo(this, trip));
+  TripStatistics.average(trip.origin(), trip.destination(), this.onTripAverageUpdateTripAverageInfo(this, trip));
 
   var origin = this.getElement('careplane-trip-average-origin');
   origin.html(trip.origin());
@@ -67,3 +71,5 @@ TripInfoView.prototype.onTripAverageUpdateTripAverageInfo = function(tripInfoVie
     avgAnalysis.html(Util.footprintAnalysis(avgTrip.totalFootprint, trip.totalFootprint));
   };
 };
+
+module.exports = TripInfoView;

@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripInfoView = require('../TripInfoView');
+
 OrbitzTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
@@ -21,3 +24,5 @@ OrbitzTripInfoView.prototype.positionRelativeTo = function(other) {
   this.target().css('left', (position.left + 20).toString() + 'px');
   this.target().css('top', (position.top + 20).toString() + 'px');
 };
+
+module.exports = OrbitzTripInfoView;

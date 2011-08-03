@@ -1,3 +1,5 @@
+var Preferences = require('../../Preferences');
+
 TestPreferences = function() {
   this.prefService = {};
   this.callbacks = [];
@@ -11,3 +13,5 @@ TestPreferences.prototype.nativeGet = function(key, callbackId, defaultValue) {
 TestPreferences.prototype.nativePut = function(key, value) {
   this.prefService[key] = value;
 };
+
+module.exports = TestPreferences;

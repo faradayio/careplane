@@ -1,12 +1,19 @@
 describe('KayakAirTrafficController', function() {
+  var kayak;
+
+  beforeEach(function() {
+    this.extension = new TestExtension(document);
+    this.extension.urlMap['http://www.kayak.com/s/run/inlineDetails/flight.*'] = {
+      'status': 0,
+      'message': kayakFlightDetails
+    };
+    kayak = new Kayak(this.extension);
+  });
+
   describe('with fixtures', function() {
     beforeEach(function() {
       loadFixtures('kayak_dtw_sfo.html');
-      TestExtension.urlMap['http://www.kayak.com/s/run/inlineDetails/flight.*'] = {
-        'status': 0,
-        'message': kayakFlightDetails
-      };
-      this.controller = new KayakAirTrafficController(document);
+      this.controller = new KayakAirTrafficController(kayak, document);
     });
 
     itBehavesLikeAn('AirTrafficController');
@@ -14,9 +21,9 @@ describe('KayakAirTrafficController', function() {
 
   describe('#scoreTrips', function() {
     it('scores standard flights', function() {
-      TestExtension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
+      this.extension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
       loadFixtures('kayak_dtw_sfo_flight.html');
-      var controller = new KayakAirTrafficController(document);
+      var controller = new KayakAirTrafficController(kayak, document);
       controller.discoverTrips();
       controller.scoreTrips();
       for(var i in controller.trips) {
@@ -28,14 +35,14 @@ describe('KayakAirTrafficController', function() {
 
   describe('#origin', function() {
     it("returns the search's origin airport", function() {
-      var controller = new KayakAirTrafficController(document);
+      var controller = new KayakAirTrafficController(kayak, document);
       controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
       expect(controller.origin()).toBe('DTW');
     });
   });
   describe('#destination', function() {
     it("returns the search's origin airport", function() {
-      var controller = new KayakAirTrafficController(document);
+      var controller = new KayakAirTrafficController(kayak, document);
       controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
       expect(controller.destination()).toBe('SFO');
     });

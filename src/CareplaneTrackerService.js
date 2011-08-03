@@ -61,6 +61,4 @@ CareplaneTrackerService.prototype.purchase = function(origin, destination, cost,
   this.postStatistic(params);
 };
 
-if(typeof exports != 'undefined') {
-  exports.tracker = CareplaneTrackerService;
-}
+module.exports = CareplaneTrackerService;

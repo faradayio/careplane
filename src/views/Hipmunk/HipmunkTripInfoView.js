@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripInfoView = require('../TripInfoView');
+
 HipmunkTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
 };
@@ -24,3 +27,5 @@ HipmunkTripInfoView.prototype.positionRelativeTo = function(other) {
   this.target().css('left', offset.left + 'px');
   this.target().css('top', (parseInt($(other).css('height')) + 10).toString() + 'px');
 };
+
+module.exports = HipmunkTripInfoView;

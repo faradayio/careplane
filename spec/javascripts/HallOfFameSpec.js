@@ -1,7 +1,6 @@
 describe('HallOfFame', function() {
-  var trip1, trip2, trip3, trip4, trip5;
+  var trip1, trip2, trip3, trip4, trip5, hallOfFame;
   beforeEach(function() {
-    controller = new AirTrafficController('abc123');
     trip1 = new Trip();
     trip1.id = '22';
     trip1.totalFootprint = 100;
@@ -17,49 +16,51 @@ describe('HallOfFame', function() {
     trip5 = new Trip();
     trip5.id = '66';
     trip5.totalFootprint = 500;
+
+    hallOfFame = new HallOfFame();
   });
 
   describe('.induct', function() {
     it('adds a new trip', function() {
-      HallOfFame.induct(trip1);
-      expect(HallOfFame.trips['22']).toEqual(trip1);
+      hallOfFame.induct(trip1);
+      expect(hallOfFame.trips['22']).toEqual(trip1);
     });
     it('does not add a duplicate trip', function() {
-      HallOfFame.induct(trip1);
-      HallOfFame.induct(trip1);
-      expect(HallOfFame.count).toBe(1);
+      hallOfFame.induct(trip1);
+      hallOfFame.induct(trip1);
+      expect(hallOfFame.count).toBe(1);
     });
   });
 
   describe('.average', function() {
     it('returns the average trip footprint', function() {
-      HallOfFame.induct(trip2);
-      HallOfFame.induct(trip3);
-      HallOfFame.induct(trip4);
-      expect(HallOfFame.average()).toBe(300);
+      hallOfFame.induct(trip2);
+      hallOfFame.induct(trip3);
+      hallOfFame.induct(trip4);
+      expect(hallOfFame.average()).toBe(300);
     });
     it('returns 0 if there are no trips', function() {
-      expect(HallOfFame.average()).toBe(0);
+      expect(hallOfFame.average()).toBe(0);
     });
   });
 
   describe('.updateRatingScale', function() {
     it('sets scale to null when min and max are the same', function() {
-      HallOfFame.induct(trip1);
+      hallOfFame.induct(trip1);
 
-      expect(HallOfFame.scale).toBeNull();
+      expect(hallOfFame.scale).toBeNull();
     });
     it('creates a rating scale for each footprint', function() {
       var tripList = [trip1, trip2, trip3, trip4, trip5];
       for(var i in tripList) {
-        HallOfFame.induct(tripList[i]);
+        hallOfFame.induct(tripList[i]);
       }
 
-      expect(HallOfFame.scale[100]).toBe(1);
-      expect(HallOfFame.scale[200]).toBe(0.5);
-      expect(HallOfFame.scale[300]).toBe(0);
-      expect(HallOfFame.scale[400]).toBe(-0.5);
-      expect(HallOfFame.scale[500]).toBe(-1);
+      expect(hallOfFame.scale[100]).toBe(1);
+      expect(hallOfFame.scale[200]).toBe(0.5);
+      expect(hallOfFame.scale[300]).toBe(0);
+      expect(hallOfFame.scale[400]).toBe(-0.5);
+      expect(hallOfFame.scale[500]).toBe(-1);
     });
   });
 });

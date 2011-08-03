@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripFootprintView = require('../TripFootprintView');
+
 OrbitzTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
 };
@@ -10,3 +13,5 @@ OrbitzTripFootprintView.prototype.driverName = function() {
 OrbitzTripFootprintView.prototype.footprintParent = function() {
   return $(this.tripElement);
 };
+
+module.exports = OrbitzTripFootprintView;

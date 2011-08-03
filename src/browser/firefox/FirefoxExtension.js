@@ -1,3 +1,9 @@
+var $ = require('jquery-browserify');
+var jQuery = $;
+var Careplane = require('../../Careplane');
+var CareplaneEvents = require('../../CareplaneEvents');
+var FirefoxTracker = require('./FirefoxTracker');
+
 FirefoxExtension = function(doc) {
   this.doc = doc;
   this.klass = FirefoxExtension;
@@ -18,7 +24,6 @@ FirefoxExtension.events = {
 
   loadDriver: function(extension) {
     return function(driver) {
-      Careplane.currentExtension = extension;
       $(extension.doc).ready(function() {
         var driverClass;
         switch(driver) {
@@ -37,7 +42,6 @@ FirefoxExtension.events = {
         }
         if(extension.driverShouldMonitor(driverClass, extension.doc)) {
           var driverInstance = new driverClass(extension);
-          Careplane.currentDriver = driverInstance;
           driverInstance.load();
         }
       });
@@ -49,7 +53,7 @@ FirefoxExtension.log = function(str) {
   console.log(str);
 };
 
-FirefoxExtension.fetch = function(url, callback) {
+FirefoxExtension.prototype.fetch = function(url, callback) {
   var req = new XMLHttpRequest();
   req.open('GET', url, true);
   req.onreadystatechange = function (e) {
@@ -64,8 +68,15 @@ FirefoxExtension.fetch = function(url, callback) {
 };
 
 FirefoxExtension.prototype.loadDriver = function() {
-  Careplane.fetch = FirefoxExtension.fetch;
   self.port.on('driver.load', FirefoxExtension.events.loadDriver(this), false);
   self.port.on('stylesheet.load', FirefoxExtension.events.loadStylesheet(this), false);
   self.port.on('footprints.hide', CareplaneEvents.hideEmissionEstimates(this.doc));
 };
+
+FirefoxExtension.load = function() {
+  var extension = new FirefoxExtension(window.document);
+  extension.loadDriver();
+  return extension;
+};
+
+module.exports = FirefoxExtension;

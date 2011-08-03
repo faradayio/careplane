@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripFootprintView = require('../TripFootprintView');
+
 HipmunkTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
 };
@@ -56,3 +59,5 @@ HipmunkTripFootprintView.prototype.show = function() {
 HipmunkTripFootprintView.prototype.hide = function() {
   this.target().css('visibility','hidden');
 };
+
+module.exports = HipmunkTripFootprintView;

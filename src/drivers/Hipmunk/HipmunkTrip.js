@@ -1,4 +1,13 @@
-HipmunkTrip = function(id, tripElement) {
+var $ = require('jquery-browserify');
+var Trip = require('../../Trip');
+var HipmunkTripController = require('./HipmunkTripController');
+var HipmunkTripFootprintView = require('../../views/Hipmunk/HipmunkTripFootprintView');
+var HipmunkTripInfoView = require('../../views/Hipmunk/HipmunkTripInfoView');
+var HipmunkTripEmbeddedInfoView = require('../../views/Hipmunk/HipmunkTripEmbeddedInfoView');
+var HipmunkFlight = require('./HipmunkFlight');
+
+HipmunkTrip = function(extension, id, tripElement) {
+  this.extension = extension;
   this.id = id;
   this.tripElement = tripElement;
   this.infoPanelElement = $('#' + this.infoPanelElementId()).get(0);
@@ -41,7 +50,7 @@ HipmunkTrip.prototype.loadFlights = function(success) {
   var trip = this;
   $(legs).each(function(i, leg) {
     if($('.place', leg).get(0)) {
-      trip.flights.push(HipmunkFlight.parse(leg));
+      trip.flights.push(HipmunkFlight.parse(trip.extension, leg));
     }
   });
   success(this);
@@ -53,3 +62,5 @@ HipmunkTrip.prototype.initViews = function() {
   if(this.embeddedInfoView())
     this.embeddedInfoView().init();
 };
+
+module.exports = HipmunkTrip;

@@ -8,3 +8,5 @@ Tracker = {
       origin: origin, destination: destination, cost: cost, minCost: minCost, co2: co2, averageCo2: averageCo2 });
   }
 };
+
+module.exports = Tracker;

@@ -1,3 +1,12 @@
+var Hipmunk = require('../../drivers/Hipmunk');
+var Kayak = require('../../drivers/Kayak');
+var KayakUK = require('../../drivers/KayakUK');
+var Orbitz = require('../../drivers/Orbitz');
+
+var TestPreferences = require('./TestPreferences');
+
+var Careplane = require('../../Careplane');
+
 TestExtension = function(doc) {
   this.doc = doc;
   this.klass = TestExtension;
@@ -8,16 +17,15 @@ TestExtension = function(doc) {
     purchaseComparison: function() {}
   };
   this.prefs = new TestPreferences();
+  this.urlMap = {};
 };
 TestExtension.prototype = new Careplane();
 
-TestExtension.urlMap = {};
-
-TestExtension.fetch = function(url, callback) {
-  for(var pattern in TestExtension.urlMap) {
+TestExtension.prototype.fetch = function(url, callback) {
+  for(var pattern in this.urlMap) {
     var regex = new RegExp(pattern);
     if(regex.test(url)) {
-      callback(TestExtension.urlMap[pattern]);
+      callback(this.urlMap[pattern]);
       return;
     }
   }
@@ -38,10 +46,6 @@ TestExtension.log = function(str) {
 
 TestExtension.prototype.isPollingEnabled = false;
 
-TestExtension.prototype.fetch = function(url, callback) {
-  TestExtension.fetch(url, callback);
-};
-
 TestExtension.prototype.log = function(str) {
   TestExtension.log(str);
 };
@@ -55,3 +59,5 @@ TestExtension.prototype.notify = function(driver) {
 };
 
 TestExtension.prototype.addStyleSheet = function() { /* NOOP */ };
+
+module.exports = TestExtension;

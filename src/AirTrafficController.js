@@ -1,8 +1,23 @@
-AirTrafficController = function() {
+var $ = require('jquery-browserify');
+
+var HallOfFame = require('./HallOfFame');
+
+var HipmunkTrip = require('./drivers/Hipmunk/HipmunkTrip');
+var KayakTrip = require('./drivers/Kayak/KayakTrip');
+var KayakUKTrip = require('./drivers/KayakUK/KayakUKTrip');
+var OrbitzTrip = require('./drivers/Orbitz/OrbitzTrip');
+
+var AirTrafficControllerEvents = require('./AirTrafficControllerEvents');
+
+AirTrafficController = function() { };
+
+AirTrafficController.prototype.init = function() {
   this.trips = [];
   this.tripCount = 0;
   this.completedTrips = 0;
+  this.hallOfFame = new HallOfFame();
 };
+AirTrafficController.prototype.events = new AirTrafficControllerEvents();
 
 AirTrafficController.prototype.poll = function() {
   setInterval(this.events.pollInterval(this), 1000);   // every 1 second
@@ -42,7 +57,7 @@ AirTrafficController.prototype.tripId = function(tripElement) {
 
 AirTrafficController.prototype.createTrip = function(tripElement) {
   var id = this.tripId(tripElement);
-  var trip = new this.tripClass(id, tripElement);
+  var trip = new this.tripClass(this.driver.extension, id, tripElement);
   this.trips.push(trip);
   this.tripCount++;
   trip.init();
@@ -63,7 +78,7 @@ AirTrafficController.prototype.scoreTrips = function() {
 AirTrafficController.prototype.rateTrips = function() {
   var controller = this;
   this.eachFinishedTrip(function(trip) {
-    var rating = HallOfFame.ratingFor(trip);
+    var rating = controller.hallOfFame.ratingFor(trip);
     trip.rate(rating);
     controller.updateViews(trip, rating);
   });
@@ -71,7 +86,7 @@ AirTrafficController.prototype.rateTrips = function() {
 
 AirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView.updateRating(rating);
-  trip.infoView.updateSearchAverage(HallOfFame.average(), trip);
+  trip.infoView.updateSearchAverage(this.hallOfFame.average(), trip);
   //trip.infoView.updateTripAverage(trip);  this is too difficult right now
 };
 
@@ -101,41 +116,4 @@ AirTrafficController.prototype.minCost = function() {
   return min;
 };
 
-
-
-AirTrafficControllerEvents = function() {};
-AirTrafficControllerEvents.prototype.flightEmissionsComplete = function(trip, cm1Response, flight) {
-  trip.footprintView.update(trip.totalFootprint);
-  trip.infoView.reportFlightMethodology(cm1Response.methodology, flight);
-};
-
-AirTrafficControllerEvents.prototype.tripEmissionsComplete = function(controller) {
-  return function(trip, cm1Response, flight) {
-    HallOfFame.induct(trip);
-
-    if(++controller.completedTrips == controller.tripCount) {
-      controller.events.searchEmissionsComplete(controller);
-    }
-  };
-};
-
-AirTrafficControllerEvents.prototype.searchEmissionsComplete = function(controller) {
-  Careplane.currentExtension.tracker.search(Careplane.currentDriver.driverName(), controller.origin(), controller.destination(), HallOfFame.average());
-  
-  controller.sniffPurchases();
-};
-
-AirTrafficControllerEvents.prototype.pollInterval = function(controller) {
-  return function() {
-    controller.clear();
-  };
-};
-
-AirTrafficControllerEvents.prototype.purchase = function(controller, trip) {
-  return function() {
-    Careplane.currentExtension.tracker.purchase(controller.origin(), controller.destination(),
-                                                trip.cost(), controller.minCost(), trip.totalFootprint, HallOfFame.average());
-  };
-};
-
-AirTrafficController.prototype.events = new AirTrafficControllerEvents();
+module.exports = AirTrafficController;

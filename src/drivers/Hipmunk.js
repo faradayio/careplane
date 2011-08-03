@@ -1,12 +1,11 @@
-if(typeof require != 'undefined') {
-  var Driver = require('Driver').Driver;
-}
+var Driver = require('../Driver');
+var HipmunkAirTrafficController = require('./Hipmunk/HipmunkAirTrafficController');
 
 Hipmunk = function(extension) {
   this.klass = Hipmunk;
   this.extension = extension;
   this.doc = extension.doc;
-  this.atc = new HipmunkAirTrafficController(this.doc);
+  this.atc = new HipmunkAirTrafficController(this, this.doc);
 };
 Hipmunk.prototype = new Driver();
 
@@ -16,6 +15,4 @@ Hipmunk.monitorURL = /.*hipmunk\.com.*/;
 
 Hipmunk.prototype.waitForElement = '.info-panel';
 
-if(typeof exports != 'undefined') {
-  exports.Hipmunk = Hipmunk;
-}
+module.exports = Hipmunk;

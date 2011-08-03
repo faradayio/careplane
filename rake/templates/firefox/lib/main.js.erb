@@ -4,8 +4,6 @@ var data = require('self').data;
 var Widget = require('widget').Widget;
 var Panel = require('panel').Panel;
 
-var Careplane = require('Careplane').Careplane;
-
 var widget, careplanePanel, panelWorker, modWorker;
 
 careplanePanel = Panel({
@@ -33,16 +31,13 @@ widget = Widget({
 });
 
 <% CareplaneConfig.drivers.each do |driver| %>
-  var <%= driver %> = require('drivers/<%= driver %>').<%= driver %>;
+  <% monitorURL = CareplaneConfig.monitorURL(driver) %>
   <% content_scripts = CareplaneConfig.content_script_files('firefox', driver) %>
   <% content_scripts = CareplaneConfig.content_script_files('firefox', 'Kayak') + content_scripts if driver == 'KayakUK' %>
   pageMod.PageMod({
-    include: <%= driver %>.monitorURL,
+    include: <%= monitorURL %>,
     contentScriptWhen: 'ready',
-    contentScriptFile: [<% content_scripts.each do |js_file| %>
-      data.url('<%= js_file.sub /^src\//,'' %>'),<% end %>
-    ],
-    contentScript: '(new FirefoxExtension(document)).loadDriver();',
+    contentScriptFile: data.url('application.js'),
     onAttach: function(addon) {
       modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
       modWorker.init('<%= driver %>');

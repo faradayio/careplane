@@ -3,56 +3,6 @@
 # Return an array of filepaths relative to src_dir to include before jasmine specs.
 # Default: []
 src_files: 
-  - src/lib/jquery-1.5.2.min.js
-  - src/Preferences.js
-  - src/Util.js
-  - src/Tracker.js
-  - src/Driver.js
-  - src/HallOfFame.js
-  - src/Flight.js
-  - src/Trip.js
-  - src/AverageTrip.js
-  - src/AirTrafficController.js
-  - src/controllers/TripController.js
-  - src/views/TripInfoView.js
-  - src/views/TripFootprintView.js
-  - src/Careplane.js
-  - src/drivers/Hipmunk.js
-  - src/drivers/Hipmunk/HipmunkAirTrafficController.js
-  - src/drivers/Hipmunk/HipmunkFlight.js
-  - src/drivers/Hipmunk/HipmunkTrip.js
-  - src/drivers/Hipmunk/HipmunkTripController.js
-  - src/views/Hipmunk/HipmunkTripEmbeddedInfoView.js
-  - src/views/Hipmunk/HipmunkTripFootprintView.js
-  - src/views/Hipmunk/HipmunkTripInfoView.js
-  - src/drivers/Kayak.js
-  - src/drivers/Kayak/KayakAirTrafficController.js
-  - src/drivers/Kayak/KayakFlight.js
-  - src/drivers/Kayak/KayakTrip.js
-  - src/views/Kayak/KayakTripFootprintView.js
-  - src/views/Kayak/KayakTripInfoView.js
-  - src/drivers/KayakUK.js
-  - src/drivers/KayakUK/KayakUKAirTrafficController.js
-  - src/drivers/KayakUK/KayakUKTrip.js
-  - src/views/KayakUK/KayakUKTripFootprintView.js
-  - src/drivers/Orbitz.js
-  - src/drivers/Orbitz/OrbitzAirTrafficController.js
-  - src/drivers/Orbitz/OrbitzFlight.js
-  - src/drivers/Orbitz/OrbitzTrip.js
-  - src/views/Orbitz/OrbitzTripFootprintView.js
-  - src/views/Orbitz/OrbitzTripInfoView.js
-  - src/browser/firefox/FirefoxExtension.js
-  - src/browser/firefox/FirefoxTracker.js
-  - src/browser/google_chrome/GoogleChromeExtension.js
-  - src/browser/google_chrome/GoogleChromePreferences.js
-  - src/browser/google_chrome/GoogleChromeTracker.js
-  - src/browser/safari/SafariExtension.js
-  - src/browser/safari/SafariPreferences.js
-  - src/browser/safari/SafariTracker.js
-  - src/browser/test/TestExtension.js
-  - src/browser/test/TestPreferences.js
-  - src/CareplaneTrackerService.js
-  - src/Worker.js
 
 # helpers
 #
@@ -65,6 +15,9 @@ src_files:
 #   - helpers/**/*.js
 #
 helpers:
+  - helpers/browserify.js
+  - helpers/SpecHelper.js
+  - helpers/**/*.js
 
 # spec_files
 #

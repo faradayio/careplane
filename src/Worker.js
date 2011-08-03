@@ -88,7 +88,7 @@ FirefoxPanelWorker = function(panel) {
   this.panel = panel;
   this.preferences = require('simple-storage').storage;
   this.data = require('self').data;
-  var cpTracker = require('CareplaneTrackerService').tracker;
+  var cpTracker = require('CareplaneTrackerService');
   this.tracker = new cpTracker('firefox');
 };
 FirefoxPanelWorker.prototype = new Worker();
@@ -115,7 +115,7 @@ FirefoxModWorker = function(mod, panel) {
   this.mod = mod;
   this.panel = panel;
   this.preferences = require('simple-storage').storage;
-  var cpTracker = require('CareplaneTrackerService').tracker;
+  var cpTracker = require('CareplaneTrackerService');
   this.tracker = new cpTracker('firefox');
   this.data = require('self').data;
 };
@@ -203,5 +203,6 @@ if(typeof exports != 'undefined') {
   exports.firefoxPanel = FirefoxPanelWorker;
   exports.firefoxMod = FirefoxModWorker;
   exports.google_chrome = GoogleChromeWorker;
+  exports.GoogleChromeWorker = GoogleChromeWorker;
   exports.safari = SafariWorker;
 }

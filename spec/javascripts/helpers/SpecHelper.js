@@ -17,23 +17,20 @@ self = {
     global.document = window.document;
     global.location = { href: "http://monitoring" };
     global.document.location = global.location;
-    
-    var fs = require('fs');
+
     var path = require('path');
-    var yaml = require('yaml');
+    require.paths.push(path.resolve(__dirname, '..', '..', 'src'));
 
-    var yamlSource = fs.readFileSync(path.resolve(__dirname, '../support/jasmine.yml'));
-    var jasmineConfig = yaml.eval(yamlSource.toString());
-    jasmineConfig.src_files.forEach(function(lib) {
-      require(lib.replace(/^src\//,'').replace(/\.[^\.]+$/, ''));
-    });
-
-    if (window.$) { 
-      global.$ = window.$; 
-      global.jQuery = window.jQuery;
-    }
+    var SafariExtension = require('browser/safari/SafariExtension');
+    var TestExtension = require('browser/test/TestExtension');
+    var Worker = require('Worker');
   }
 })();
+
+$ = require('jquery-browserify');
+window.$ = $;
+jQuery = $;
+window.jQuery = jQuery;
 
 safari = { self: { tab: { dispatchMessage: function() {} } } };
 chrome = { extension: { sendRequest: function() {} } };
@@ -45,9 +42,6 @@ beforeEach(function() {
       return typeof this.actual == klass;
     }
   });
-  Careplane.currentExtension = new TestExtension(window.document);
-  Careplane.fetch = TestExtension.fetch;
-  HallOfFame.clear();
 });
 
 jasmine.exampleGroups = {};

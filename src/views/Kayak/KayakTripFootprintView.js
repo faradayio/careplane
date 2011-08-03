@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripFootprintView = require('../TripFootprintView');
+
 KayakTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
 };
@@ -10,3 +13,5 @@ KayakTripFootprintView.prototype.driverName = function() {
 KayakTripFootprintView.prototype.footprintParent = function() {
   return $(this.tripElement.getElementsByClassName('resultbottom')[0]);
 };
+
+module.exports = KayakTripFootprintView;

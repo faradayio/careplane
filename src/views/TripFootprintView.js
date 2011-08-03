@@ -1,3 +1,5 @@
+var $ = require('jquery-browserify');
+
 TripFootprintView = function() {};
 
 TripFootprintView.prototype.isValid = function() {
@@ -22,8 +24,6 @@ TripFootprintView.prototype.init = function() {
 
     this.insertFootprintParagraph(footprintParagraph);
     this.position();
-  } else {
-    Careplane.currentExtension.log('Could not find a footprintParent for ' + this.tripElement.id);
   }
 };
 
@@ -55,3 +55,5 @@ TripFootprintView.prototype.show = function() {
 TripFootprintView.prototype.hide = function() {
   this.target().hide();
 };
+
+module.exports = TripFootprintView;

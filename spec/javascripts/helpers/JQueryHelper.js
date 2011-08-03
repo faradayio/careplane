@@ -77,7 +77,7 @@ jasmine.Fixtures.prototype.getFixtureHtml_ = function(url) {
 
 jasmine.Fixtures.prototype.loadFixtureIntoCache_ = function(relativeUrl) {
   var url = this.fixturesPath.match('/$') ? this.fixturesPath + relativeUrl : this.fixturesPath + '/' + relativeUrl;
-  if(typeof require != 'undefined') {
+  if(typeof Browserify == 'undefined' && typeof require != 'undefined') {
     var fs = require('fs');
     var source = fs.readFileSync(url);
     this.fixturesCache_[relativeUrl] = source.toString();

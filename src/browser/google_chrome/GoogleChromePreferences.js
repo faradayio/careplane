@@ -1,3 +1,5 @@
+var Preferences = require('../../Preferences');
+
 GoogleChromePreferences = function() {
   chrome.extension.onRequest.
     addListener(GoogleChromePreferences.events.preferencesGetCallback(this));
@@ -29,3 +31,5 @@ GoogleChromePreferences.prototype.nativePut = function(key, value) {
   chrome.extension.sendRequest({ action: 'preferences.put', key: key, value: value });
   return value;
 };
+
+module.exports = GoogleChromePreferences;

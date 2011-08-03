@@ -1,3 +1,5 @@
+var $ = require('jquery-browserify');
+
 TripController = function(trip) {
   this.trip = trip;
 };
@@ -26,3 +28,5 @@ TripController.prototype.showInfoViewPopupOnFootprintHover = function() {
   target.hover(TripController.events.tripFootprintHoverIn(this.trip),
                TripController.events.tripFootprintHoverOut(this.trip));
 };
+
+module.exports = TripController;

@@ -46,6 +46,13 @@ def changelog_post(browser)
   "_posts/#{datetime}-careplane-#{browser}-#{current_version}.markdown"
 end
 
+def browserify(entry_point_path, output_path)
+  puts "Browserifying #{entry_point_path} into #{output_path}"
+  FileUtils.rm_f output_path
+  `./node_modules/.bin/browserify -r JSONPath -r jquery-browserify -o #{output_path} -e #{entry_point_path}`
+  puts 'Done'
+end
+
 @files = {
   :chrome_package => 'google_chrome/build/careplane.zip',
   :chrome_download => lambda { "downloads/careplane-#{current_version}.zip" },
@@ -206,7 +213,7 @@ end
 directory 'firefox/build'
 namespace :firefox do
   desc 'Build Firefox extension'
-  task :build => [:browserify, 'firefox:build:templates'] do
+  task :build => 'firefox:build:templates' do
     puts 'Building Firefox'
 
     puts 'Copying files...'
@@ -214,12 +221,10 @@ namespace :firefox do
       destination = File.join('firefox', 'data', File.basename(asset))
       FileUtils.cp asset, destination
     end
-    CareplaneConfig.content_script_files('firefox').each do |file|
-      destination = File.join 'firefox', 'data', file.sub(/^src\//, '')
-      FileUtils.mkdir_p(File.dirname(destination))
-      puts file
-      FileUtils.cp file, destination
-    end
+    puts 'Done'
+
+    browserify 'src/firefox.js', 'firefox/data/application.js'
+
     CareplaneConfig.worker_files('firefox').each do |file|
       destination = File.join 'firefox', 'lib', file.sub(/^src\//, '')
       FileUtils.mkdir_p(File.dirname(destination))
@@ -252,7 +257,7 @@ end
 
 namespace :google_chrome do
   desc 'Build Google Chrome extension'
-  task :build => [:browserify, 'google_chrome:build:templates'] do
+  task :build => 'google_chrome:build:templates' do
     puts 'Building Google Chrome'
 
     puts 'Copying assets...'
@@ -263,6 +268,7 @@ namespace :google_chrome do
       FileUtils.cp file, destination
     end
 
+    puts 'Copying background scripts'
     CareplaneConfig.worker_files.each do |file|
       destination = File.join('google_chrome', file.sub(/^src\//,''))
       FileUtils.mkdir_p File.dirname(destination)
@@ -270,6 +276,9 @@ namespace :google_chrome do
       FileUtils.cp file, destination
     end
     puts 'Done'
+
+    browserify 'src/google_chrome.js', 'google_chrome/application.js'
+    browserify 'src/google_chrome_background.js', 'google_chrome/background.js'
   end
   namespace :build do
     task :templates do
@@ -292,7 +301,7 @@ namespace :safari do
   directory 'safari/build'
 
   desc 'Build Safari extension'
-  task :build => [:browserify, 'safari/build', 'safari:build:templates'] do
+  task :build => ['safari/build', 'safari:build:templates'] do
     puts 'Building Safari'
     FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
     FileUtils.cp 'src/Worker.js', 'safari/careplane.safariextension/Worker.js'
@@ -303,6 +312,7 @@ namespace :safari do
       puts 'Building Safari templates'
       templates 'safari/careplane.safariextension'
       puts 'Done'
+      browserify 'src/safari.js', 'safari/careplane.safariextension/application.js'
     end
   end
 
@@ -339,14 +349,12 @@ end
 
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
-  task :build => :browserify do
-    puts 'Building Jasmine templates'
-    templates 'spec'
-    puts 'Done'
+  task :build do
+    browserify 'src/jasmine-web.js', 'spec/javascripts/helpers/browserify.js'
   end
 
   desc 'Run Jasmine spec server'
-  task :server => :browserify do
+  task :server => 'jasmine:build' do
     jasmine_config_overrides = 'spec/javascripts/support/jasmine_config.rb'
     require jasmine_config_overrides if File.exist?(jasmine_config_overrides)
 
@@ -354,17 +362,6 @@ namespace :jasmine do
     puts "  http://localhost:8888/"
 
     Jasmine::Config.new.start_server
-  end
-end
-
-task :browserify do
-  if File.exist?('src/lib/node_modules.js') && ARGV.join(' ') !~ /browserify/
-    puts 'src/lib/node_modules.js already built'
-  else
-    puts 'Compiling Node.js modules into src/lib/node_modules.js...'
-    FileUtils.rm_f 'src/lib/node_modules.js'
-    puts `node_modules/.bin/browserify --require JSONPath -o src/lib/node_modules.js`
-    puts 'Done'
   end
 end
 

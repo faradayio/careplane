@@ -1,4 +1,8 @@
-HipmunkFlight = function(origin, destination, airline, aircraft) {
+var $ = require('jquery-browserify');
+var Flight = require('../../Flight');
+
+HipmunkFlight = function(extension, origin, destination, airline, aircraft) {
+  this.extension = extension;
   this.origin = origin;
   this.destination = destination;
   this.airline = airline;
@@ -6,7 +10,7 @@ HipmunkFlight = function(origin, destination, airline, aircraft) {
 };
 HipmunkFlight.prototype = new Flight();
 
-HipmunkFlight.parse = function(leg) {
+HipmunkFlight.parse = function(extension, leg) {
   var airline = $('.flightnum', leg).text();
 
   var airports = $('.place', leg);
@@ -15,5 +19,7 @@ HipmunkFlight.parse = function(leg) {
 
   var aircraft = $('.ridetype a', leg).text();
 
-  return new HipmunkFlight(origin, destination, airline, aircraft);
+  return new HipmunkFlight(extension, origin, destination, airline, aircraft);
 };
+
+module.exports = HipmunkFlight;

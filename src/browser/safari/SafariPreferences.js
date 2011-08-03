@@ -1,3 +1,5 @@
+var Preferences = require('../../Preferences');
+
 SafariPreferences = function() {
   safari.self.addEventListener('message', SafariPreferences.events.preferencesGetCallback(this), false);
   this.callbacks = [];
@@ -24,3 +26,5 @@ SafariPreferences.prototype.nativePut = function(key, value) {
   safari.self.tab.dispatchMessage('preferences.put', { key: key, value: value });
   return value;
 };
+
+module.exports = SafariPreferences;

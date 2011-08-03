@@ -1,3 +1,5 @@
+var $ = require('jquery-browserify');
+
 Util = {
   formatFootprint: function(footprint) {
     var roundedFootprint = Math.round(footprint * 2.2);
@@ -65,3 +67,5 @@ Util = {
     return newObject;
   }
 };
+
+module.exports = Util;

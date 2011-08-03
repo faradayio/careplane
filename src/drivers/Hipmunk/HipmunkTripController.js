@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripController = require('../../controllers/TripController');
+
 HipmunkTripController = function(trip) {
   this.trip = trip;
 };
@@ -31,3 +34,5 @@ HipmunkTripController.prototype.hideFootprintOnTripHover = function() {
                  HipmunkTripController.events.tripFootprintShow(trip));
   });
 };
+
+module.exports = HipmunkTripController;

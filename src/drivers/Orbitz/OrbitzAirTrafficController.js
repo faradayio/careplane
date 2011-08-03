@@ -1,12 +1,18 @@
-OrbitzAirTrafficController = function(doc) {
+var $ = require('jquery-browserify');
+var AirTrafficController = require('../../AirTrafficController');
+var OrbitzTrip = require('./OrbitzTrip');
+var OrbitzAirTrafficControllerEvents = require('./OrbitzAirTrafficControllerEvents');
+
+OrbitzAirTrafficController = function(driver, doc) {
+  this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;
   this.tripClass = OrbitzTrip;
-  this.trips = [];
-  this.tripCount = 0;
-  this.completedTrips = 0;
+  this.init();
 };
 OrbitzAirTrafficController.prototype = new AirTrafficController();
+
+OrbitzAirTrafficController.prototype.events = new OrbitzAirTrafficControllerEvents();
 
 OrbitzAirTrafficController.prototype.clear = function() {
   this.discoverTrips();
@@ -36,16 +42,4 @@ OrbitzAirTrafficController.prototype.sniffPurchases = function() {
   });
 };
 
-
-
-OrbitzAirTrafficControllerEvents = function() {};
-OrbitzAirTrafficControllerEvents.prototype = new AirTrafficControllerEvents();
-
-OrbitzAirTrafficControllerEvents.prototype.searchEmissionsComplete = function(controller) {
-  Careplane.currentExtension.tracker.search('Orbitz', controller.origin(), controller.destination(), HallOfFame.average());
-  controller.sniffPurchases();
-
-  controller.rateTrips();
-};
-
-OrbitzAirTrafficController.prototype.events = new OrbitzAirTrafficControllerEvents();
+module.exports = OrbitzAirTrafficController;

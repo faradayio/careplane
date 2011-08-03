@@ -1,12 +1,12 @@
-if(typeof require != 'undefined') {
-  var Driver = require('Driver').Driver;
-}
+var $ = require('jquery-browserify');
+var Driver = require('../Driver');
+var OrbitzAirTrafficController = require('./Orbitz/OrbitzAirTrafficController');
 
 Orbitz = function(extension) {
   this.klass = Orbitz;
   this.extension = extension;
   this.doc = extension.doc;
-  this.atc = new OrbitzAirTrafficController(this.doc);
+  this.atc = new OrbitzAirTrafficController(this, this.doc);
 };
 Orbitz.prototype = new Driver();
 
@@ -25,7 +25,7 @@ Orbitz.prototype.insertAttribution = function() {
     var parentElement = $('#matrix', this.doc);
     var attributionElement = $(this.doc.createElement('div'));
     attributionElement.addClass('matrixFooterAir careplane-attribution orbitz');
-    attributionElement.html(Careplane.standardTextAttribution);
+    attributionElement.html(this.extension.standardTextAttribution);
     parentElement.append(attributionElement);
     
     // In the footer
@@ -33,10 +33,8 @@ Orbitz.prototype.insertAttribution = function() {
     var container = $(this.doc.createElement('div'));
     container.addClass('careplane-attribution-footer orbitz');
     footer.append(container);
-    Careplane.insertBadge(container);
+    this.extension.insertBadge(container);
   }
 };
 
-if(typeof exports != 'undefined') {
-  exports.Orbitz = Orbitz;
-}
+module.exports = Orbitz;

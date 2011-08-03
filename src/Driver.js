@@ -1,3 +1,5 @@
+var $ = require('jquery-browserify');
+
 Driver = function() {};
 
 Driver.prototype.events = {
@@ -42,6 +44,4 @@ Driver.prototype.load = function() {
   }
 };
 
-if(typeof exports != 'undefined') {
-  exports.Driver = Driver;
-}
+module.exports = Driver;

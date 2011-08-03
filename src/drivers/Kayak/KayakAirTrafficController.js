@@ -1,13 +1,15 @@
-KayakAirTrafficController = function(doc) {
+var $ = require('jquery-browserify');
+var AirTrafficController = require('../../AirTrafficController');
+var KayakTrip = require('./KayakTrip');
+
+KayakAirTrafficController = function(driver, doc) {
+  this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;
   this.tripClass = KayakTrip;
-  this.trips = [];
-  this.tripCount = 0;
-  this.completedTrips = 0;
+  this.init();
 };
 KayakAirTrafficController.prototype = new AirTrafficController();
-KayakAirTrafficController.events = new AirTrafficControllerEvents();
 
 KayakAirTrafficController.prototype.routeMatches = function() {
   if(!this._routeMatches && this.url)
@@ -34,3 +36,5 @@ KayakAirTrafficController.prototype.sniffPurchases = function() {
       click(controller.events.purchase(controller, trip));
   });
 };
+
+module.exports = KayakAirTrafficController;

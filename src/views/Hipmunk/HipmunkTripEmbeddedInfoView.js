@@ -1,3 +1,6 @@
+var $ = require('jquery-browserify');
+var TripInfoView = require('../TripInfoView');
+
 HipmunkTripEmbeddedInfoView = function(tripElement) {
   this.tripElement = tripElement;
 };
@@ -22,3 +25,5 @@ HipmunkTripEmbeddedInfoView.prototype.content = function() {
       </section>\
     </div>";
 };
+
+module.exports = HipmunkTripEmbeddedInfoView;

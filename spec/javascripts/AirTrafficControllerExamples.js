@@ -1,6 +1,6 @@
 sharedExamplesFor('AirTrafficController', function() {
   beforeEach(function() {
-    TestExtension.urlMap['carbon.brighterplanet.com/flights'] = { "emission": 234 };
+    this.extension.urlMap['carbon.brighterplanet.com/flights'] = { "emission": 234 };
   });
 
   describe('#discoverTrips, #scoreTrips, #rateTrips', function() {

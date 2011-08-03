@@ -1,4 +1,12 @@
-KayakTrip = function(id, tripElement) {
+var $ = require('jquery-browserify');
+var Trip = require('../../Trip');
+var TripController = require('../../controllers/TripController');
+var KayakTripFootprintView = require('../../views/Kayak/KayakTripFootprintView');
+var KayakTripInfoView = require('../../views/Kayak/KayakTripInfoView');
+var KayakFlight = require('./KayakFlight');
+
+KayakTrip = function(extension, id, tripElement) {
+  this.extension = extension;
   this.id = id;
   if(tripElement) {
     this.tripElement = tripElement;
@@ -19,7 +27,7 @@ KayakTrip.events = {
       div.css('display', 'none');
       $(trip.tripElement).append(div);
 
-      trip.flights = KayakFlight.parse($('.inlineflightitinerarylegs tr', trip.tripElement));
+      trip.flights = KayakFlight.parse(trip.extension, $('.inlineflightitinerarylegs tr', trip.tripElement));
       success(trip);
     };
   }
@@ -55,5 +63,7 @@ KayakTrip.prototype.detailUrl = function() {
 };
 
 KayakTrip.prototype.loadFlights = function(success) {
-  Careplane.fetch(this.detailUrl(), KayakTrip.events.tripDetailsSuccess(this, success));
+  this.extension.fetch(this.detailUrl(), KayakTrip.events.tripDetailsSuccess(this, success));
 };
+
+module.exports = KayakTrip;

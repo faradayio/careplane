@@ -23,12 +23,8 @@ module CareplaneConfig
       }
       if browser == 'firefox'
         files += %w{
-          src/Driver.js
-          src/drivers/Hipmunk.js
-          src/drivers/Kayak.js
-          src/drivers/KayakUK.js
-          src/drivers/Orbitz.js
           src/Careplane.js
+          src/CareplaneEvents.js
         }
       end
       files
@@ -78,6 +74,11 @@ module CareplaneConfig
 
     def drivers
       %w{Hipmunk Kayak KayakUK Orbitz}
+    end
+
+    def monitorURL(driverName)
+      str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./src/drivers/#{driverName}').monitorURL);"`
+      str.split.first
     end
   end
 end

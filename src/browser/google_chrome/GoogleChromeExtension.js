@@ -1,3 +1,7 @@
+var Careplane = require('../../Careplane');
+var GoogleChromeTracker = require('./GoogleChromeTracker');
+var GoogleChromePreferences = require('./GoogleChromePreferences');
+
 GoogleChromeExtension = function(doc) {
   this.doc = doc;
   this.klass = GoogleChromeExtension;
@@ -23,3 +27,5 @@ GoogleChromeExtension.prototype.notify = function(driver) {
 GoogleChromeExtension.prototype.addStyleSheet = function() {
   // this is handled by manifest.json
 };
+
+module.exports = GoogleChromeExtension;

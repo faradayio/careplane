@@ -1,7 +1,9 @@
 describe('AirTrafficController', function() {
   var controller, trip1, trip2, trip3, trip4, trip5, list;
   beforeEach(function() {
-    controller = new AirTrafficController('abc123');
+    driver = {};
+    controller = new AirTrafficController(driver, 'abc123');
+    controller.init();
     trip1 = new Trip();
     trip1.id = '22';
     trip1.totalFootprint = 100;
@@ -44,7 +46,7 @@ describe('AirTrafficController', function() {
     it('rates each trip on a scale of -1 to 1', function() {
       controller.finishedTrips = function() { return list; };
       for(var i in list) {
-        HallOfFame.induct(list[i]);
+        controller.hallOfFame.induct(list[i]);
       }
 
       controller.rateTrips();
@@ -56,7 +58,7 @@ describe('AirTrafficController', function() {
     });
     it('gives an average rating for a single trip', function() {
       controller.finishedTrips = function() { return [trip1]; };
-      HallOfFame.induct(trip1);
+      controller.hallOfFame.induct(trip1);
 
       controller.rateTrips();
       expect(controller.finishedTrips()[0].rating).toBe(0);
@@ -66,7 +68,7 @@ describe('AirTrafficController', function() {
       for(var i in list) {
         var trip = list[i];
         trip.totalFootprint = 300;
-        HallOfFame.induct(trip);
+        controller.hallOfFame.induct(trip);
       }
 
       controller.rateTrips();

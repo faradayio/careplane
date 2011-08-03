@@ -5,7 +5,7 @@ sharedExamplesFor('Trip', function() {
     onFlightEmissionsComplete = jasmine.createSpy('onFlightEmissionsComplete');
     onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
 
-    TestExtension.urlMap['carbon.brighterplanet.com/flights'] = 123.0;
+    this.extension.urlMap['carbon.brighterplanet.com/flights'] = 123.0;
   });
 
   it('provides #id', function() {

@@ -1,13 +1,17 @@
-HipmunkAirTrafficController = function(doc) {
+var $ = require('jquery-browserify');
+var AirTrafficController = require('../../AirTrafficController');
+var AirTrafficControllerEvents = require('../../AirTrafficControllerEvents');
+var HipmunkTrip = require('./HipmunkTrip');
+
+HipmunkAirTrafficController = function(driver, doc) {
+  this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;
   this.tripClass = HipmunkTrip;
-  this.trips = [];
-  this.tripCount = 0;
-  this.completedTrips = 0;
+  this.init();
 };
 HipmunkAirTrafficController.prototype = new AirTrafficController();
-HipmunkAirTrafficController.events = AirTrafficControllerEvents();
+HipmunkAirTrafficController.events = new AirTrafficControllerEvents();
 
 HipmunkAirTrafficController.prototype.tripId = function(tripElement) {
   return tripElement.id;
@@ -28,9 +32,9 @@ HipmunkAirTrafficController.prototype.tripElements = function() {
 
 HipmunkAirTrafficController.prototype.updateViews = function(trip, rating) {
   trip.footprintView.updateRating(rating);
-  trip.infoView.updateSearchAverage(HallOfFame.average(), trip);
+  trip.infoView.updateSearchAverage(this.hallOfFame.average(), trip);
   if(trip.embeddedInfoView())
-    trip.embeddedInfoView().updateSearchAverage(HallOfFame.average(), trip);
+    trip.embeddedInfoView().updateSearchAverage(this.hallOfFame.average(), trip);
   //trip.infoView.updateTripAverage(trip);  this is too difficult right now
 };
 
@@ -41,3 +45,5 @@ HipmunkAirTrafficController.prototype.sniffPurchases = function() {
       click(controller.events.purchase(this, trip));
   });
 };
+
+module.exports = HipmunkAirTrafficController;

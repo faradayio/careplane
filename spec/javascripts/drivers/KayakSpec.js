@@ -1,5 +1,8 @@
 describe('Kayak', function() {
+  var extension;
+
   beforeEach(function() {
+    extension = new TestExtension(document);
     this.driverClass = Kayak;
   });
 
@@ -11,7 +14,7 @@ describe('Kayak', function() {
     var kayak;
     beforeEach(function() {
       loadFixtures('kayak_dtw_sfo.html');
-      kayak = new Kayak(Careplane.currentExtension);
+      kayak = new Kayak(extension);
       kayak.insertAttribution();
     });
     it('inserts a badge in the top area', function() {

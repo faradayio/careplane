@@ -1,11 +1,12 @@
 describe('KayakUKTrip', function() {
   beforeEach(function() {
-    loadFixtures('kayak_dtw_sfo_flight.html');
-    this.trip = new KayakUKTrip('53', $('.flightresult').get(0));
-    TestExtension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight'] = {
+    this.extension = new TestExtension(document);
+    this.extension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight'] = {
       'status': 0,
       'message': kayakFlightDetails
     };
+    loadFixtures('kayak_dtw_sfo_flight.html');
+    this.trip = new KayakUKTrip(this.extension, '53', $('.flightresult').get(0));
   });
 
   itBehavesLikeA('Trip');

@@ -1,3 +1,5 @@
+var TripInfoView = require('../TripInfoView');
+
 KayakTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
@@ -15,3 +17,5 @@ KayakTripInfoView.prototype.content = function() {
       </section>\
     </div>";
 };
+
+module.exports = KayakTripInfoView;

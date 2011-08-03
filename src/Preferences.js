@@ -29,3 +29,5 @@ Preferences.prototype.put = function(key, value) {
   return value;
 };
 Preferences.prototype.putBoolean = Preferences.prototype.put;
+
+module.exports = Preferences;

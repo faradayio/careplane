@@ -5,7 +5,7 @@
 # Rules
 # --------------------------------------------------
 watch(/^src\/.*/) { |md| examples }
-watch(/^spec\/.*/) { |md| examples }
+watch(/^spec\/.*/) { |md| examples unless md =~ /browserify/ }
 
 # --------------------------------------------------
 # Signal Handling

@@ -1,4 +1,7 @@
-OrbitzFlight = function(origin, destination, airline, aircraft) {
+var Flight = require('../../Flight');
+
+OrbitzFlight = function(extension, origin, destination, airline, aircraft) {
+  this.extension = extension;
   this.origin = origin;
   this.destination = destination;
   this.airline = airline;
@@ -6,7 +9,7 @@ OrbitzFlight = function(origin, destination, airline, aircraft) {
 };
 OrbitzFlight.prototype = new Flight();
 
-OrbitzFlight.parse = function(legElement) {
+OrbitzFlight.parse = function(extension, legElement) {
   var origin, destination, airline, aircraft;
 
   var airCodes = legElement.getElementsByClassName('airCode');
@@ -22,7 +25,6 @@ OrbitzFlight.parse = function(legElement) {
   airline = airline.replace(/[\s]+$/,'');
   airline = airline.replace(/^[\s]+/,'');
   airline = airline.replace('&nbsp;','');
-  //Careplane.log('Using airline "' + airline + '"');
 
   var extraInfo = legElement.getElementsByClassName('legExtraInfo')[0];
   var aircraftLi = extraInfo.getElementsByTagName('li')[2];
@@ -30,5 +32,7 @@ OrbitzFlight.parse = function(legElement) {
     aircraft = aircraftLi.innerHTML;
   }
 
-  return new OrbitzFlight(origin, destination, airline, aircraft);
+  return new OrbitzFlight(extension, origin, destination, airline, aircraft);
 };
+
+module.exports = OrbitzFlight;
