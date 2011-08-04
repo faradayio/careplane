@@ -4,6 +4,11 @@
   cursor: pointer;
   border-bottom: 1px solid #ddd;
 }
+.bing.careplane-footprint {
+  display: block;
+  text-align: center;
+  border-bottom: none;
+}
 .kayak.careplane-footprint {
   position: absolute;
   left: 10px;
@@ -61,6 +66,7 @@ div.careplane-info {
   padding: 10px !important;
   width: 250px;
   z-index: 999;
+  text-align: left;
 }
 
 .careplane-info:before {

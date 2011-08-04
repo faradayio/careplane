@@ -1,27 +1,13 @@
 CareplaneTrackerService = function(browser) {
   this.browser = browser;
-  if(this.browser == 'firefox') {
-    this.Request = require('request').Request;
-    this.post = this.firefoxPost;
-  } else {
-    this.post = this.xhrPost;
-  }
 };
 
 // Can't use jQuery with some browsers, so just use old fashioned XHR
-CareplaneTrackerService.prototype.xhrPost = function(url, params) {
+CareplaneTrackerService.prototype.post = function(url, params) {
   var req = new XMLHttpRequest();
   req.open('POST', url, true);
   req.setRequestHeader('Content-Type', 'application/json');
   req.send(JSON.stringify(params));
-};
-
-CareplaneTrackerService.prototype.firefoxPost = function(url, params) {
-  var req = this.Request({
-    url: url,
-    content: params
-  });
-  req.post();
 };
 
 CareplaneTrackerService.prototype.postStatistic = function(params) {

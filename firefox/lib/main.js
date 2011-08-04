@@ -1,5 +1,5 @@
 var pageMod = require('page-mod');
-var careplaneWorker = require('Worker');
+var workers = require('./browser/firefox/FirefoxWorker');
 var data = require('self').data;
 var Widget = require('widget').Widget;
 var Panel = require('panel').Panel;
@@ -12,6 +12,7 @@ careplanePanel = Panel({
   contentScriptFile: data.url('widget.js'),
   onShow: function() {
     careplanePanel.port.emit('preferences.load', {
+      'sites.Bing': panelWorker.getPreference({ key: 'sites.Bing', defaultValue: true }), 
       'sites.Hipmunk': panelWorker.getPreference({ key: 'sites.Hipmunk', defaultValue: true }), 
       'sites.Kayak': panelWorker.getPreference({ key: 'sites.Kayak', defaultValue: true }), 
       'sites.KayakUK': panelWorker.getPreference({ key: 'sites.KayakUK', defaultValue: true }), 
@@ -20,7 +21,7 @@ careplanePanel = Panel({
   }
 });
 
-panelWorker = new careplaneWorker.firefoxPanel(careplanePanel);
+panelWorker = new workers.FirefoxPanelWorker(careplanePanel);
 panelWorker.init();
 
 widget = Widget({
@@ -38,11 +39,24 @@ widget = Widget({
   
   
   pageMod.PageMod({
+    include: /.*bing\.com\/travel\/flight\/flightSearch/,
+    contentScriptWhen: 'ready',
+    contentScriptFile: data.url('application.js'),
+    onAttach: function(addon) {
+      modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
+      modWorker.init('Bing');
+    }
+  });
+
+  
+  
+  
+  pageMod.PageMod({
     include: /.*hipmunk\.com.*/,
     contentScriptWhen: 'ready',
     contentScriptFile: data.url('application.js'),
     onAttach: function(addon) {
-      modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+      modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('Hipmunk');
     }
   });
@@ -55,7 +69,7 @@ widget = Widget({
     contentScriptWhen: 'ready',
     contentScriptFile: data.url('application.js'),
     onAttach: function(addon) {
-      modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+      modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('Kayak');
     }
   });
@@ -68,7 +82,7 @@ widget = Widget({
     contentScriptWhen: 'ready',
     contentScriptFile: data.url('application.js'),
     onAttach: function(addon) {
-      modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+      modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('KayakUK');
     }
   });
@@ -81,7 +95,7 @@ widget = Widget({
     contentScriptWhen: 'ready',
     contentScriptFile: data.url('application.js'),
     onAttach: function(addon) {
-      modWorker = new careplaneWorker.firefoxMod(addon, careplanePanel);
+      modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('Orbitz');
     }
   });

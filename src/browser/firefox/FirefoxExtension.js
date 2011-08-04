@@ -53,7 +53,7 @@ FirefoxExtension.log = function(str) {
   console.log(str);
 };
 
-FirefoxExtension.prototype.fetch = function(url, callback) {
+FirefoxExtension.prototype.fetch = function(url, callback, options) {
   var req = new XMLHttpRequest();
   req.open('GET', url, true);
   req.onreadystatechange = function (e) {

@@ -1,6 +1,7 @@
 var $ = require('jquery-browserify');
 var CareplaneEvents = require('./CareplaneEvents');
 
+var Bing = require('./drivers/Bing');
 var Hipmunk = require('./drivers/Hipmunk');
 var Kayak = require('./drivers/Kayak');
 var KayakUK = require('./drivers/KayakUK');
@@ -27,11 +28,16 @@ Careplane.prototype.insertBadge = function(parentElement, referenceElement, badg
 
 };
 
-Careplane.prototype.fetch = function(url, callback) {
-  $.ajax({
+Careplane.prototype.fetch = function(url, callback, options) {
+  var params = {
     url: url,
     success: callback
-  });
+  };
+
+  if(options)
+    $.extend(params, options);
+
+  $.ajax(params);
 };
 
 Careplane.prototype.log = function(str) {
@@ -53,7 +59,7 @@ Careplane.prototype.driverShouldMonitor = function(driverClass, doc) {
 
 Careplane.prototype.loadDriver = function() {
   var extension = this;
-  [Hipmunk, Kayak, KayakUK, Orbitz].forEach(function(driver) {
+  [Bing, Hipmunk, Kayak, KayakUK, Orbitz].forEach(function(driver) {
     if(extension.driverShouldMonitor(driver, extension.doc)) {
       extension.prefs.getBoolean('sites.' + driver.driverName,
                             CareplaneEvents.driverBecomesAvailable(extension, driver),

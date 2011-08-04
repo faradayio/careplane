@@ -23,7 +23,7 @@ Driver.prototype.isPollingEnabled = function() {
 };
 
 Driver.prototype.isActiveSearch = function() {
-  return $(this.waitForElement, this.doc).get(0) !== null;
+  return $(this.waitForElement, this.doc).get(0) != null;
 };
 
 Driver.prototype.prepare = function() {
