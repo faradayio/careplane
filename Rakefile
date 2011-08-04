@@ -303,16 +303,30 @@ namespace :safari do
   desc 'Build Safari extension'
   task :build => ['safari/build', 'safari:build:templates'] do
     puts 'Building Safari'
-    FileUtils.cp 'src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'
-    FileUtils.cp 'src/Worker.js', 'safari/careplane.safariextension/Worker.js'
-    puts 'Done'
+
+    puts 'Copying assets...'
+    (@css_files + @image_files).each do |file|
+      destination = File.join('safari/careplane.safariextension', file)
+      FileUtils.mkdir_p File.dirname(destination)
+      puts "#{file} > #{destination}"
+      FileUtils.cp file, destination
+    end
+
+    puts 'Copying worker files'
+    [['src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'],
+     ['src/Worker.js', 'safari/careplane.safariextension/Worker.js']].each do |pair|
+      puts pair.join(' > ')
+      FileUtils.cp *pair
+    end
+
+    browserify 'src/safari.js', 'safari/careplane.safariextension/application.js'
+    browserify 'src/safari_background.js', 'safari/careplane.safariextension/background.js'
   end
   namespace :build do
     task :templates do
       puts 'Building Safari templates'
       templates 'safari/careplane.safariextension'
       puts 'Done'
-      browserify 'src/safari.js', 'safari/careplane.safariextension/application.js'
     end
   end
 

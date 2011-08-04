@@ -15,7 +15,7 @@
     <key>Key</key>
     <string>sites.bing</string>
     <key>Title</key>
-    <string></string>
+    <string>Bing</string>
     <key>Type</key>
     <string>CheckBox</string>
   </dict>
@@ -26,7 +26,7 @@
     <key>Key</key>
     <string>sites.hipmunk</string>
     <key>Title</key>
-    <string></string>
+    <string>Hipmunk</string>
     <key>Type</key>
     <string>CheckBox</string>
   </dict>
@@ -37,7 +37,7 @@
     <key>Key</key>
     <string>sites.kayak</string>
     <key>Title</key>
-    <string></string>
+    <string>Kayak</string>
     <key>Type</key>
     <string>CheckBox</string>
   </dict>
@@ -48,7 +48,7 @@
     <key>Key</key>
     <string>sites.kayakuk</string>
     <key>Title</key>
-    <string></string>
+    <string>Kayak (UK)</string>
     <key>Type</key>
     <string>CheckBox</string>
   </dict>
@@ -59,7 +59,7 @@
     <key>Key</key>
     <string>sites.orbitz</string>
     <key>Title</key>
-    <string></string>
+    <string>Orbitz</string>
     <key>Type</key>
     <string>CheckBox</string>
   </dict>

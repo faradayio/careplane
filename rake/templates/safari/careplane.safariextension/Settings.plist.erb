@@ -15,7 +15,7 @@
     <key>Key</key>
     <string>sites.<%= driver.downcase %></string>
     <key>Title</key>
-    <string><% (driver == 'KayakUK' ? 'Kayak (UK)' : 'Kayak')  %></string>
+    <string><%= (driver == 'KayakUK' ? 'Kayak (UK)' : driver)  %></string>
     <key>Type</key>
     <string>CheckBox</string>
   </dict>

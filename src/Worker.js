@@ -129,5 +129,5 @@ if(typeof exports != 'undefined') {
   exports.Worker = Worker;
   exports.google_chrome = GoogleChromeWorker;
   exports.GoogleChromeWorker = GoogleChromeWorker;
-  exports.safari = SafariWorker;
+  exports.SafariWorker = SafariWorker;
 }

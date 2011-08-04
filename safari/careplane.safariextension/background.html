@@ -3,9 +3,10 @@
   <head>
   </head>
   <body>
-    <script type="text/javascript" src="CareplaneTrackerService.js"></script>
-    <script type="text/javascript" src="Worker.js"></script>
+    <script type="text/javascript" src="background.js"></script>
     <script>
+      var CareplaneTrackerService = require('./CareplaneTrackerService');
+      var SafariWorker = require('./Worker').SafariWorker;
       var worker;
       window.onload = function() {
         worker = new SafariWorker();
