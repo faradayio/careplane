@@ -27,6 +27,9 @@ FirefoxExtension.events = {
       $(extension.doc).ready(function() {
         var driverClass;
         switch(driver) {
+          case 'Bing':
+            driverClass = Bing;
+            break;
           case 'Hipmunk':
             driverClass = Hipmunk;
             break;
