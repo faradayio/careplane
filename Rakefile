@@ -268,15 +268,6 @@ namespace :google_chrome do
       FileUtils.cp file, destination
     end
 
-    puts 'Copying background scripts'
-    CareplaneConfig.worker_files.each do |file|
-      destination = File.join('google_chrome', file.sub(/^src\//,''))
-      FileUtils.mkdir_p File.dirname(destination)
-      puts "#{file} > #{destination}"
-      FileUtils.cp file, destination
-    end
-    puts 'Done'
-
     browserify 'src/google_chrome.js', 'google_chrome/application.js'
     browserify 'src/google_chrome_background.js', 'google_chrome/background.js'
   end
@@ -292,7 +283,7 @@ namespace :google_chrome do
   task :package => :build do
     FileUtils.mkdir_p('google_chrome/build')
     Dir.chdir 'google_chrome' do
-      puts `zip -r build/careplane.zip application.js CareplaneTrackerService.js Worker.js background.html images manifest.json options.html stylesheets -x *~`
+      puts `zip -r build/careplane.zip application.js background.js CareplaneTrackerService.js Worker.js background.html images manifest.json options.html stylesheets -x *~`
     end
   end
 end
@@ -310,13 +301,6 @@ namespace :safari do
       FileUtils.mkdir_p File.dirname(destination)
       puts "#{file} > #{destination}"
       FileUtils.cp file, destination
-    end
-
-    puts 'Copying worker files'
-    [['src/CareplaneTrackerService.js', 'safari/careplane.safariextension/CareplaneTrackerService.js'],
-     ['src/Worker.js', 'safari/careplane.safariextension/Worker.js']].each do |pair|
-      puts pair.join(' > ')
-      FileUtils.cp *pair
     end
 
     browserify 'src/safari.js', 'safari/careplane.safariextension/application.js'
