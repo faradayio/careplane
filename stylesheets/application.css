@@ -211,12 +211,7 @@ body.welcome #description {
 #description ul.sites li {
   float: left;
   width: 160px;
-  margin: 0 15px 0 0;
-}
-
-#description ul.sites li.hipmunk {
-  width: 335px;
-  margin-bottom: 10px;
+  margin: 0 15px 10px 0;
 }
 
 #description ul.sites li:last-child {
@@ -235,6 +230,7 @@ body.welcome #description {
 #description ul.sites li.kayak a { background-image: url(images/kayak.png) }
 #description ul.sites li.orbitz a { background-image: url(images/orbitz.png) }
 #description ul.sites li.hipmunk a { background-image: url(images/hipmunk.png) }
+#description ul.sites li.bing a { background-image: url(images/bing.png) }
 
 #screencast {
   position: absolute;
