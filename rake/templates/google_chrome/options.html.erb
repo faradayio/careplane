@@ -1,5 +1,8 @@
 <html>
 <head><title>Careplane Options</title></head>
+<style>
+  li { list-style-type: none; }
+</style>
 <script type="text/javascript">
 function save_options() {
   var checkboxes = document.getElementsByTagName('input');
@@ -33,10 +36,14 @@ function restore_options() {
   <p id="status" style="color: red; background: #FF9;"></p>
 
   Choose the travel sites that Careplane will add carbon intelligence to:
-  <% CareplaneConfig.drivers.each do |driver| %>
-    <input id="<%= driver.underscore %>" type="checkbox" name="sites" value="<%= driver %>">
-    <label for="<%= driver.underscore %>"><%= (driver == 'KayakUK' ? 'Kayak (UK)' : driver) %></label>
-  <% end %>
+  <ul>
+    <% CareplaneConfig.drivers.each do |driver| %>
+      <li>
+        <input id="<%= driver.underscore %>" type="checkbox" name="sites" value="<%= driver %>">
+        <label for="<%= driver.underscore %>"><%= (driver == 'KayakUK' ? 'Kayak (UK)' : driver) %></label>
+      </li>
+    <% end %>
+  </ul>
 
   <br>
   <button onclick="save_options()">Save</button>
