@@ -12,9 +12,12 @@ Bing.prototype = new Driver();
 
 Bing.driverName = 'Bing';
 
-Bing.monitorURL = /.*bing\.com\/travel\/flight\/flightSearch/;
+Bing.monitorURL = /.*bing\.com\/travel\/flight\/flightSearch.*/;
 
-Bing.prototype.waitForElement = '.predictorDetails';
+Bing.prototype.isActiveSearch = function() {
+  return $('#searching', this.doc).is(':hidden') &&
+    $('#stillSearching', this.doc).is(':hidden');
+};
 
 Bing.prototype.insertAttribution = function() {
   // In the sidebar
