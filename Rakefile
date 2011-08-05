@@ -1,4 +1,3 @@
-require './lib/careplane_config'
 require 'active_support'
 require 'active_support/inflector'
 require 'fileutils'
@@ -11,18 +10,22 @@ require 'jasmine/base'
 require 'jasmine/config'
 require 'jasmine/server'
 
-ENV['NODE_PATH'] = 'src'
+ENV['NODE_PATH'] = 'lib'
 
 Cucumber::Rake::Task.new
 
 module CareplaneConfig 
   class << self
+    def browsers
+      %w{chrome firefox safari}
+    end
+
     def drivers
       %w{Bing Hipmunk Kayak KayakUK Orbitz}
     end
 
     def monitorURL(driverName)
-      str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./src/drivers/#{driverName}').monitorURL);"`
+      str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./lib/drivers/#{driverName}').monitorURL);"`
       str.split.first
     end
   end
@@ -33,8 +36,6 @@ def psh(cmd, cwd = '.')
     sh cmd
   end
 end
-
-BROWSERS = %w{chrome firefox safari}
 
 def datetime
   Time.now.strftime('%Y-%m-%d')
@@ -173,7 +174,7 @@ Here's a commit list to help jog your memory
 
     puts `git checkout gh-pages`
 
-    BROWSERS.each do |browser|
+    CareplaneConfig.browsers.each do |browser|
       File.open(changelog_post(browser), 'w') do |f|
         f.puts <<-TXT
 ---
@@ -226,17 +227,17 @@ namespace :firefox do
     end
     puts 'Done'
 
-    browserify 'src/firefox.js', 'firefox/data/application.js'
+    browserify 'lib/firefox.js', 'firefox/data/application.js'
 
     %w{
-      src/CareplaneTrackerService.js
-      src/Worker.js
-      src/browser/firefox/FirefoxCareplaneTrackerService.js
-      src/browser/firefox/FirefoxWorker.js
-      src/Careplane.js
-      src/CareplaneEvents.js
+      lib/CareplaneTrackerService.js
+      lib/Worker.js
+      lib/browser/firefox/FirefoxCareplaneTrackerService.js
+      lib/browser/firefox/FirefoxWorker.js
+      lib/Careplane.js
+      lib/CareplaneEvents.js
     }.each do |file|
-      destination = File.join 'firefox', 'lib', file.sub(/^src\//, '')
+      destination = File.join 'firefox', 'lib', file.sub(/^lib\//, '')
       FileUtils.mkdir_p(File.dirname(destination))
       puts [file, destination].join(' > ')
       FileUtils.cp file, destination
@@ -278,8 +279,8 @@ namespace :google_chrome do
       FileUtils.cp file, destination
     end
 
-    browserify 'src/google_chrome.js', 'google_chrome/application.js'
-    browserify 'src/google_chrome_background.js', 'google_chrome/background.js'
+    browserify 'lib/google_chrome.js', 'google_chrome/application.js'
+    browserify 'lib/google_chrome_background.js', 'google_chrome/background.js'
   end
   namespace :build do
     task :templates do
@@ -313,8 +314,8 @@ namespace :safari do
       FileUtils.cp file, destination
     end
 
-    browserify 'src/safari.js', 'safari/careplane.safariextension/application.js'
-    browserify 'src/safari_background.js', 'safari/careplane.safariextension/background.js'
+    browserify 'lib/safari.js', 'safari/careplane.safariextension/application.js'
+    browserify 'lib/safari_background.js', 'safari/careplane.safariextension/background.js'
   end
   namespace :build do
     task :templates do
@@ -347,7 +348,7 @@ task :syntax, :file do |t, args|
   if args[:file]
     exec "`npm bin`/jshint #{args[:file]}"
   else
-    files = Dir.glob('src/**/*.js') + Dir.glob('spec/**/*.js')
+    files = Dir.glob('lib/**/*.js') + Dir.glob('spec/**/*.js')
     files.each do |file|
       print file + '...' 
       puts `\`npm bin\`/jshint #{file}`
@@ -358,7 +359,7 @@ end
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
   task :build do
-    browserify 'src/spec.js', 'spec/helpers/application.js'
+    browserify 'lib/spec.js', 'spec/helpers/application.js'
   end
 
   desc 'Run Jasmine spec server'
@@ -378,7 +379,7 @@ task :features => 'features:build' do
 end
 namespace :features do
   task :build do
-    browserify 'src/features.js', 'features/support/application.js'
+    browserify 'lib/features.js', 'features/support/application.js'
   end
 end
 
