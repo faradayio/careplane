@@ -15,6 +15,19 @@ ENV['NODE_PATH'] = 'src'
 
 Cucumber::Rake::Task.new
 
+module CareplaneConfig 
+  class << self
+    def drivers
+      %w{Bing Hipmunk Kayak KayakUK Orbitz}
+    end
+
+    def monitorURL(driverName)
+      str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./src/drivers/#{driverName}').monitorURL);"`
+      str.split.first
+    end
+  end
+end
+
 def psh(cmd, cwd = '.')
   Dir.chdir(cwd) do
     sh cmd
@@ -215,10 +228,17 @@ namespace :firefox do
 
     browserify 'src/firefox.js', 'firefox/data/application.js'
 
-    CareplaneConfig.worker_files('firefox').each do |file|
+    %w{
+      src/CareplaneTrackerService.js
+      src/Worker.js
+      src/browser/firefox/FirefoxCareplaneTrackerService.js
+      src/browser/firefox/FirefoxWorker.js
+      src/Careplane.js
+      src/CareplaneEvents.js
+    }.each do |file|
       destination = File.join 'firefox', 'lib', file.sub(/^src\//, '')
       FileUtils.mkdir_p(File.dirname(destination))
-      puts file
+      puts [file, destination].join(' > ')
       FileUtils.cp file, destination
     end
     puts 'Done'
@@ -327,7 +347,7 @@ task :syntax, :file do |t, args|
   if args[:file]
     exec "`npm bin`/jshint #{args[:file]}"
   else
-    files = CareplaneConfig.all_js_files.reject { |f| f =~ /jquery-.*\.js/ }
+    files = Dir.glob('src/**/*.js') + Dir.glob('spec/**/*.js')
     files.each do |file|
       print file + '...' 
       puts `\`npm bin\`/jshint #{file}`
