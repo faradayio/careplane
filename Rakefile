@@ -329,7 +329,7 @@ end
 desc 'Run Jasmine unit tests (requires Node.js)'
 task :examples, [:spec] => 'jasmine:build' do |t, args|
   args.with_defaults :spec => ''
-  exec "node spec/javascripts/support/jasmine-node.js #{args[:spec]}"
+  exec "node spec/support/jasmine-node.js #{args[:spec]}"
 end
 
 desc 'Check the syntax of all Careplane source files (requires Node.js)'
@@ -348,12 +348,12 @@ end
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
   task :build do
-    browserify 'src/jasmine-web.js', 'spec/javascripts/helpers/browserify.js'
+    browserify 'src/jasmine-web.js', 'spec/helpers/browserify.js'
   end
 
   desc 'Run Jasmine spec server'
   task :server => 'jasmine:build' do
-    jasmine_config_overrides = 'spec/javascripts/support/jasmine_config.rb'
+    jasmine_config_overrides = 'spec/support/jasmine_config.rb'
     require jasmine_config_overrides if File.exist?(jasmine_config_overrides)
 
     puts "your tests are here:"

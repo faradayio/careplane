@@ -30,7 +30,7 @@ google_chrome/Worker.js
 safari/careplane.safariextension/CareplaneTrackerService.js
 safari/careplane.safariextension/SafariPreferences.js
 
-spec/javascripts/helpers/browserify.js
+spec/helpers/browserify.js
 
 *.pyc
 
