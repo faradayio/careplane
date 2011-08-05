@@ -1,4 +1,4 @@
-HallOfFame = function() {
+var HallOfFame = function() {
   this.trips = {};
   this.count = 0;
 };

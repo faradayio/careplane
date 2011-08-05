@@ -1,4 +1,6 @@
 describe('Preferences', function() {
+  var Preferences = require('Preferences');
+
   var preferences;
   beforeEach(function() {
     preferences = new Preferences();

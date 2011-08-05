@@ -1,4 +1,7 @@
 describe('AirTrafficController', function() {
+  var AirTrafficController = require('AirTrafficController');
+  var Trip = require('Trip');
+
   var controller, trip1, trip2, trip3, trip4, trip5, list;
   beforeEach(function() {
     driver = {};

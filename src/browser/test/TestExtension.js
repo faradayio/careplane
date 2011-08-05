@@ -7,7 +7,7 @@ var TestPreferences = require('./TestPreferences');
 
 var Careplane = require('../../Careplane');
 
-TestExtension = function(doc) {
+var TestExtension = function(doc) {
   this.doc = doc;
   this.klass = TestExtension;
   this.tracker = {

@@ -1,6 +1,6 @@
 var Util = require('./Util');
 
-Flight = function(extension, origin, destination) {
+var Flight = function(extension, origin, destination) {
   this.extension = extension;
   this.origin = origin;
   this.destination = destination;

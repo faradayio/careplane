@@ -1,6 +1,6 @@
 var AirTrafficControllerEvents = require('../../AirTrafficControllerEvents');
 
-OrbitzAirTrafficControllerEvents = function(extension) {
+var OrbitzAirTrafficControllerEvents = function(extension) {
   this.extension = extension;
 };
 OrbitzAirTrafficControllerEvents.prototype = new AirTrafficControllerEvents();

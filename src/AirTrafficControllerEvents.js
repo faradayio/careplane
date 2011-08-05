@@ -1,4 +1,4 @@
-AirTrafficControllerEvents = function() {};
+var AirTrafficControllerEvents = function() {};
 
 AirTrafficControllerEvents.prototype.flightEmissionsComplete = function(trip, cm1Response, flight) {
   trip.footprintView.update(trip.totalFootprint);

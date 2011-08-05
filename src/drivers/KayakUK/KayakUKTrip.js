@@ -3,7 +3,7 @@ var TripController = require('../../controllers/TripController');
 var KayakUKTripFootprintView = require('../../views/KayakUK/KayakUKTripFootprintView');
 var KayakTripInfoView = require('../../views/Kayak/KayakTripInfoView');
 
-KayakUKTrip = function(extension, id, tripElement) {
+var KayakUKTrip = function(extension, id, tripElement) {
   this.extension = extension;
   this.id = id;
   this.tripElement = tripElement;

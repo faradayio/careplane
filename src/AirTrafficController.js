@@ -9,7 +9,7 @@ var OrbitzTrip = require('./drivers/Orbitz/OrbitzTrip');
 
 var AirTrafficControllerEvents = require('./AirTrafficControllerEvents');
 
-AirTrafficController = function() { };
+var AirTrafficController = function() { };
 
 AirTrafficController.prototype.init = function() {
   this.trips = [];

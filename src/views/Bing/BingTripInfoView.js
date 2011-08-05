@@ -1,6 +1,6 @@
 var TripInfoView = require('../TripInfoView');
 
-BingTripInfoView = function(tripElement) {
+var BingTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
 };

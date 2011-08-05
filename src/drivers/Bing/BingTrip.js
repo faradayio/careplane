@@ -6,7 +6,7 @@ var BingTripFootprintView = require('../../views/Bing/BingTripFootprintView');
 var BingTripInfoView = require('../../views/Bing/BingTripInfoView');
 var BingFlight = require('./BingFlight');
 
-BingTrip = function(extension, id, tripElement, searchData) {
+var BingTrip = function(extension, id, tripElement, searchData) {
   this.extension = extension;
   this.id = id;
   this.tripElement = tripElement;

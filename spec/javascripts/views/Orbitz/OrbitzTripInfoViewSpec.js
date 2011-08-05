@@ -1,4 +1,6 @@
 describe('OrbitzTripInfoView', function() {
+  var OrbitzTripInfoView = require('views/Orbitz/OrbitzTripInfoView');
+
   beforeEach(function() {
     this.trip = {
       totalFootprint: 143.2,

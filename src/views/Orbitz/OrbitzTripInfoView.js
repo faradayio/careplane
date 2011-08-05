@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var TripInfoView = require('../TripInfoView');
 
-OrbitzTripInfoView = function(tripElement) {
+var OrbitzTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
 };

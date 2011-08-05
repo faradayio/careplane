@@ -1,4 +1,6 @@
 describe('SafariTracker', function() {
+  var SafariTracker = require('browser/safari/SafariTracker');
+
   describe('.sendRequest', function() {
     it('sends a message to the worker', function() {
       spyOn(safari.self.tab, 'dispatchMessage');

@@ -1,4 +1,6 @@
 describe('Util', function() {
+  var Util = require('Util');
+
   describe('.footprintAnalysis', function() {
     it('reports a better-than-average footprint', function() {
       var result = Util.footprintAnalysis(1500,1100);

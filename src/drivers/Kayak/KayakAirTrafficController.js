@@ -2,7 +2,7 @@ var $ = require('jquery-browserify');
 var AirTrafficController = require('../../AirTrafficController');
 var KayakTrip = require('./KayakTrip');
 
-KayakAirTrafficController = function(driver, doc) {
+var KayakAirTrafficController = function(driver, doc) {
   this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;

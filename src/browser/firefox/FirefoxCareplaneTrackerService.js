@@ -1,6 +1,6 @@
 var CareplaneTrackerService = require('CareplaneTrackerService');
 
-FirefoxCareplaneTrackerService = function() {
+var FirefoxCareplaneTrackerService = function() {
   this.browser = 'firefox';
   this.Request = require('request').Request;
 };

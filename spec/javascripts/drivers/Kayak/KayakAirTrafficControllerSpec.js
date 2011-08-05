@@ -1,6 +1,9 @@
 describe('KayakAirTrafficController', function() {
-  var kayak;
+  var TestExtension = require('browser/test/TestExtension');
+  var Kayak = require('drivers/Kayak');
+  var KayakAirTrafficController = require('drivers/Kayak/KayakAirTrafficController');
 
+  var kayak;
   beforeEach(function() {
     this.extension = new TestExtension(document);
     this.extension.urlMap['http://www.kayak.com/s/run/inlineDetails/flight.*'] = {

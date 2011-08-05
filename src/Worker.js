@@ -1,4 +1,4 @@
-Worker = function() {};
+var Worker = function() {};
 
 Worker.events = {
   listen: function(worker) {
@@ -74,7 +74,7 @@ Worker.prototype.processMessage = function(message, params, caller) {
 
 
 
-GoogleChromeWorker = function() {
+var GoogleChromeWorker = function() {
   this.preferences = localStorage;
   this.tracker = new CareplaneTrackerService('google_chrome');
 };
@@ -100,7 +100,7 @@ GoogleChromeWorker.prototype.sendCallback = function(message, val, id, caller) {
 
 
 
-SafariWorker = function() {
+var SafariWorker = function() {
   this.preferences = safari.extension.settings;
   this.tracker = new CareplaneTrackerService('safari');
 };
@@ -125,9 +125,6 @@ SafariWorker.prototype.sendCallback = function(message, val, id, target) {
 
 
 
-if(typeof exports != 'undefined') {
-  exports.Worker = Worker;
-  exports.google_chrome = GoogleChromeWorker;
-  exports.GoogleChromeWorker = GoogleChromeWorker;
-  exports.SafariWorker = SafariWorker;
-}
+exports.Worker = Worker;
+exports.GoogleChromeWorker = GoogleChromeWorker;
+exports.SafariWorker = SafariWorker;

@@ -5,7 +5,7 @@ var KayakTripFootprintView = require('../../views/Kayak/KayakTripFootprintView')
 var KayakTripInfoView = require('../../views/Kayak/KayakTripInfoView');
 var KayakFlight = require('./KayakFlight');
 
-KayakTrip = function(extension, id, tripElement) {
+var KayakTrip = function(extension, id, tripElement) {
   this.extension = extension;
   this.id = id;
   if(tripElement) {

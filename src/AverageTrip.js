@@ -1,7 +1,7 @@
 var Flight = require('./Flight');
 var Trip = require('./Trip');
 
-AverageTrip = function(extension, origin, destination) {
+var AverageTrip = function(extension, origin, destination) {
   this.extension = extension;
   this._origin = origin;
   this._destination = destination;

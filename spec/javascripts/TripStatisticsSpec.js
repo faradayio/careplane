@@ -1,4 +1,8 @@
 describe('TripStatistics', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var AverageTrip = require('AverageTrip');
+  var TripStatistics = require('TripStatistics');
+
   describe('.average', function() {
     var trip, extension;
     beforeEach(function() {

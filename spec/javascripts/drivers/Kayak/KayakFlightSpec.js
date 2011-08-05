@@ -1,4 +1,6 @@
 describe('KayakFlight', function() {
+  var KayakFlight = require('drivers/Kayak/KayakFlight');
+
   describe('.parse', function() {
     var flights;
     beforeEach(function() {

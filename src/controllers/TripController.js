@@ -1,6 +1,6 @@
 var $ = require('jquery-browserify');
 
-TripController = function(trip) {
+var TripController = function(trip) {
   this.trip = trip;
 };
 

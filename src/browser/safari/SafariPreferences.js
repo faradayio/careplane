@@ -1,6 +1,6 @@
 var Preferences = require('../../Preferences');
 
-SafariPreferences = function() {
+var SafariPreferences = function() {
   safari.self.addEventListener('message', SafariPreferences.events.preferencesGetCallback(this), false);
   this.callbacks = [];
 };

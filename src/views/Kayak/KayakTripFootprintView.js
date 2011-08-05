@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var TripFootprintView = require('../TripFootprintView');
 
-KayakTripFootprintView = function(tripElement) {
+var KayakTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
 };
 KayakTripFootprintView.prototype = new TripFootprintView();

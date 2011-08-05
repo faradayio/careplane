@@ -1,4 +1,8 @@
 describe('TripController', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var KayakTrip = require('drivers/Kayak/KayakTrip');
+  var TripController = require('controllers/TripController');
+
   var trip, footprintView, infoView;
   beforeEach(function() {
     var extension = new TestExtension(document);

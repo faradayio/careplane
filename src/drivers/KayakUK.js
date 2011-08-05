@@ -1,7 +1,7 @@
 var Kayak = require('./Kayak');
 var KayakUKAirTrafficController = require('./KayakUK/KayakUKAirTrafficController');
 
-KayakUK = function(extension) {
+var KayakUK = function(extension) {
   this.klass = KayakUK;
   this.extension = extension;
   this.doc = extension.doc;

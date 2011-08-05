@@ -1,4 +1,6 @@
 describe('Flight', function() {
+  var Flight = require('Flight');
+
   describe('.isAircraftInfo', function() {
     it('returns true if text matches an aircraft manufacturer', function() {
       expect(Flight.isAircraftInfo('Boeing 737-800 (Narrow-body Jet)')).toBeTruthy();

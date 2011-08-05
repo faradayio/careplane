@@ -1,4 +1,4 @@
-CareplaneTrackerService = function(browser) {
+var CareplaneTrackerService = function(browser) {
   this.browser = browser;
 };
 

@@ -1,4 +1,7 @@
 sharedExamplesFor('polling Driver', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var Careplane = require('Careplane');
+
   describe('load', function() {
     it('polls when using a non-testing extension', function() {
       var extension = new Careplane();
@@ -30,6 +33,9 @@ sharedExamplesFor('polling Driver', function() {
 });
 
 sharedExamplesFor('non-polling Driver', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var Careplane = require('Careplane');
+
   describe('load', function() {
     it('does not poll when using a non-testing extension', function() {
       var extension = new Careplane();

@@ -1,6 +1,6 @@
 var AverageTrip = require('./AverageTrip');
 
-TripStatistics = {
+var TripStatistics = {
   averages: [],
   average: function(extension, origin, destination, callback) {
     var trip = Array.prototype.filter.call(this.averages, function(trip) {

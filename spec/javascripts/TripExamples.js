@@ -1,6 +1,7 @@
 sharedExamplesFor('Trip', function() {
-  var onFlightEmissionsComplete, onTripEmissionsComplete;
+  var Trip = require('Trip');
 
+  var onFlightEmissionsComplete, onTripEmissionsComplete;
   beforeEach(function() {
     onFlightEmissionsComplete = jasmine.createSpy('onFlightEmissionsComplete');
     onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');

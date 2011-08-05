@@ -3,7 +3,7 @@ var AirTrafficController = require('../../AirTrafficController');
 var OrbitzTrip = require('./OrbitzTrip');
 var OrbitzAirTrafficControllerEvents = require('./OrbitzAirTrafficControllerEvents');
 
-OrbitzAirTrafficController = function(driver, doc) {
+var OrbitzAirTrafficController = function(driver, doc) {
   this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;

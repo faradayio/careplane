@@ -2,7 +2,7 @@ var $ = require('jquery-browserify');
 var Driver = require('../Driver');
 var KayakAirTrafficController = require('./Kayak/KayakAirTrafficController');
 
-Kayak = function(extension) {
+var Kayak = function(extension) {
   if(extension) {
     this.klass = Kayak;
     this.extension = extension;

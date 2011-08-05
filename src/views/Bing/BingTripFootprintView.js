@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var TripFootprintView = require('../TripFootprintView');
 
-BingTripFootprintView = function(tripElement) {
+var BingTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
 };
 BingTripFootprintView.prototype = new TripFootprintView();

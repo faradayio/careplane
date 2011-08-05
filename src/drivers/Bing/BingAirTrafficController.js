@@ -1,8 +1,9 @@
 var $ = require('jquery-browserify');
 var AirTrafficController = require('../../AirTrafficController');
+var AirTrafficControllerEvents = require('../../AirTrafficControllerEvents');
 var BingTrip = require('./BingTrip');
 
-BingAirTrafficController = function(driver, doc) {
+var BingAirTrafficController = function(driver, doc) {
   this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;

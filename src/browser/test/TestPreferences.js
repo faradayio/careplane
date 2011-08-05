@@ -1,6 +1,6 @@
 var Preferences = require('../../Preferences');
 
-TestPreferences = function() {
+var TestPreferences = function() {
   this.prefService = {};
   this.callbacks = [];
 };

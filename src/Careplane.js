@@ -7,7 +7,7 @@ var Kayak = require('./drivers/Kayak');
 var KayakUK = require('./drivers/KayakUK');
 var Orbitz = require('./drivers/Orbitz');
 
-Careplane = function() {};
+var Careplane = function() {};
 
 Careplane.prototype.standardTextAttribution = 'Emission estimates powered by <a href="http://brighterplanet.com">Brighter Planet</a>';
   

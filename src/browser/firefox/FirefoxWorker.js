@@ -1,6 +1,6 @@
 var Worker = require('../../Worker').Worker;
 
-FirefoxWorker = {
+var FirefoxWorker = {
   messageHandler: function(worker, message) {
     return function(params) {
       worker.processMessage(message, params);

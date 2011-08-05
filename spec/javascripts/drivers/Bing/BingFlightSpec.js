@@ -1,6 +1,8 @@
-var jsonpath = require('JSONPath');
-
 describe('BingFlight', function() {
+  var jsonpath = require('JSONPath');
+  var TestExtension = require('browser/test/TestExtension');
+  var BingFlight = require('drivers/Bing/BingFlight');
+  
   describe('.parse', function() {
     var flights, extension, searchData;
     beforeEach(function() {

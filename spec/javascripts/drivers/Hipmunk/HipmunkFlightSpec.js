@@ -1,4 +1,6 @@
 describe('HipmunkFlight', function() {
+  var HipmunkFlight = require('drivers/Hipmunk/HipmunkFlight');
+
   describe('.parse', function() {
     var flight;
     beforeEach(function() {

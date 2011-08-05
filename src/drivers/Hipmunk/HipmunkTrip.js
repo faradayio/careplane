@@ -6,7 +6,7 @@ var HipmunkTripInfoView = require('../../views/Hipmunk/HipmunkTripInfoView');
 var HipmunkTripEmbeddedInfoView = require('../../views/Hipmunk/HipmunkTripEmbeddedInfoView');
 var HipmunkFlight = require('./HipmunkFlight');
 
-HipmunkTrip = function(extension, id, tripElement) {
+var HipmunkTrip = function(extension, id, tripElement) {
   this.extension = extension;
   this.id = id;
   this.tripElement = tripElement;

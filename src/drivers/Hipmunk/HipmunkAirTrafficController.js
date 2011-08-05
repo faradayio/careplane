@@ -3,7 +3,7 @@ var AirTrafficController = require('../../AirTrafficController');
 var AirTrafficControllerEvents = require('../../AirTrafficControllerEvents');
 var HipmunkTrip = require('./HipmunkTrip');
 
-HipmunkAirTrafficController = function(driver, doc) {
+var HipmunkAirTrafficController = function(driver, doc) {
   this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;

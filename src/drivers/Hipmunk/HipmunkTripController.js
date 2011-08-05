@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var TripController = require('../../controllers/TripController');
 
-HipmunkTripController = function(trip) {
+var HipmunkTripController = function(trip) {
   this.trip = trip;
 };
 HipmunkTripController.prototype = new TripController();

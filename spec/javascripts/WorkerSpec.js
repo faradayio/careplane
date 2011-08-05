@@ -1,4 +1,6 @@
 describe('Worker', function() {
+  var Worker = require('Worker').Worker;
+
   describe('#getPreference', function() {
     var worker;
     beforeEach(function() {

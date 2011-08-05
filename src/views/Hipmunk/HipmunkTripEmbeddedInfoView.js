@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var TripInfoView = require('../TripInfoView');
 
-HipmunkTripEmbeddedInfoView = function(tripElement) {
+var HipmunkTripEmbeddedInfoView = function(tripElement) {
   this.tripElement = tripElement;
 };
 HipmunkTripEmbeddedInfoView.prototype = new TripInfoView();

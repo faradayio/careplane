@@ -2,7 +2,7 @@ var Careplane = require('../../Careplane');
 var SafariTracker = require('./SafariTracker');
 var SafariPreferences = require('./SafariPreferences');
 
-SafariExtension = function(doc) {
+var SafariExtension = function(doc) {
   this.doc = doc;
   this.klass = SafariExtension;
   this.tracker = SafariTracker;

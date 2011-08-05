@@ -1,4 +1,7 @@
 describe('HipmunkTrip', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var HipmunkTrip = require('drivers/Hipmunk/HipmunkTrip');
+
   var routingId = 'routing-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22_0_wide';
 
   beforeEach(function() {

@@ -1,6 +1,6 @@
 var Preferences = require('../../Preferences');
 
-GoogleChromePreferences = function() {
+var GoogleChromePreferences = function() {
   chrome.extension.onRequest.
     addListener(GoogleChromePreferences.events.preferencesGetCallback(this));
   this.callbacks = [];

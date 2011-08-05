@@ -1,6 +1,6 @@
 var Flight = require('../../Flight');
 
-OrbitzFlight = function(extension, origin, destination, airline, aircraft) {
+var OrbitzFlight = function(extension, origin, destination, airline, aircraft) {
   this.extension = extension;
   this.origin = origin;
   this.destination = destination;

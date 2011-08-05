@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var Flight = require('../../Flight');
 
-HipmunkFlight = function(extension, origin, destination, airline, aircraft) {
+var HipmunkFlight = function(extension, origin, destination, airline, aircraft) {
   this.extension = extension;
   this.origin = origin;
   this.destination = destination;

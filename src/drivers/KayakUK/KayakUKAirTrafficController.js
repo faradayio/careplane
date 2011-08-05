@@ -1,8 +1,9 @@
 var AirTrafficController = require('../../AirTrafficController');
+var AirTrafficControllerEvents = require('../../AirTrafficControllerEvents');
 var KayakAirTrafficController = require('../Kayak/KayakAirTrafficController');
 var KayakUKTrip = require('./KayakUKTrip');
 
-KayakUKAirTrafficController = function(driver, doc) {
+var KayakUKAirTrafficController = function(driver, doc) {
   this.driver = driver;
   this.doc = doc;
   this.url = doc ? this.doc.location.href : null;

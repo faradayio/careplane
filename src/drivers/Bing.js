@@ -2,7 +2,7 @@ var $ = require('jquery-browserify');
 var Driver = require('../Driver');
 var BingAirTrafficController = require('./Bing/BingAirTrafficController');
 
-Bing = function(extension) {
+var Bing = function(extension) {
   this.klass = Bing;
   this.extension = extension;
   this.doc = extension.doc;

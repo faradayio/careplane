@@ -1,6 +1,6 @@
 var $ = require('jquery-browserify');
 
-Driver = function() {};
+var Driver = function() {};
 
 Driver.prototype.events = {
   loadPoller: function(driver) {

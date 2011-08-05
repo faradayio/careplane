@@ -1,4 +1,6 @@
 describe('Hipmunk', function() {
+  var Hipmunk = require('drivers/Hipmunk');
+
   beforeEach(function() {
     this.driverClass = Hipmunk;
   });

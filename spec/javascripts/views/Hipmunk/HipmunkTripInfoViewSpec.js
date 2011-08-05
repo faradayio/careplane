@@ -1,4 +1,6 @@
 describe('HipmunkTripInfoView', function() {
+  var HipmunkTripInfoView = require('views/Hipmunk/HipmunkTripInfoView');
+
   beforeEach(function() {
     this.trip = {
       totalFootprint: 143.2,

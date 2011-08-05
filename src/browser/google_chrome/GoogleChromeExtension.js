@@ -2,7 +2,7 @@ var Careplane = require('../../Careplane');
 var GoogleChromeTracker = require('./GoogleChromeTracker');
 var GoogleChromePreferences = require('./GoogleChromePreferences');
 
-GoogleChromeExtension = function(doc) {
+var GoogleChromeExtension = function(doc) {
   this.doc = doc;
   this.klass = GoogleChromeExtension;
   this.tracker = GoogleChromeTracker;

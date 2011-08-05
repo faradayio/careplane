@@ -1,4 +1,4 @@
-Trip = function(id, tripElement) {
+var Trip = function(id, tripElement) {
   this.totalFootprint = 0;
   this.completedFlightCount = 0;
   this.isScorable = false;

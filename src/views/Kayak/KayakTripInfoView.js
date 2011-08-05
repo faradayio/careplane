@@ -1,6 +1,6 @@
 var TripInfoView = require('../TripInfoView');
 
-KayakTripInfoView = function(tripElement) {
+var KayakTripInfoView = function(tripElement) {
   this.tripElement = tripElement;
   this.doc = this.tripElement.ownerDocument;
 };

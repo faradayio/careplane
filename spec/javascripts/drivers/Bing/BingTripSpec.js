@@ -1,6 +1,8 @@
-var jsonpath = require('JSONPath');
-
 describe('BingTrip', function() {
+  var jsonpath = require('JSONPath');
+  var TestExtension = require('browser/test/TestExtension');
+  var BingTrip = require('drivers/Bing/BingTrip');
+
   beforeEach(function() {
     this.extension = new TestExtension(document);
     loadFixtures('bing_dtw_sfo.html');

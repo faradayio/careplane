@@ -1,6 +1,9 @@
 describe('HipmunkAirTrafficController', function() {
-  var hipmunk;
+  var TestExtension = require('browser/test/TestExtension');
+  var Hipmunk = require('drivers/Hipmunk');
+  var HipmunkAirTrafficController = require('drivers/Hipmunk/HipmunkAirTrafficController');
 
+  var hipmunk;
   beforeEach(function() {
     this.extension = new TestExtension(document);
     hipmunk = new Hipmunk(this.extension);

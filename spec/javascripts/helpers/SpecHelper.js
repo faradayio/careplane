@@ -22,11 +22,7 @@ chrome = { extension: { sendRequest: function() {} } };
     global.document.location = global.location;
 
     var path = require('path');
-    require.paths.push(path.resolve(__dirname, '..', '..', 'src'));
-
-    var SafariExtension = require('browser/safari/SafariExtension');
-    var TestExtension = require('browser/test/TestExtension');
-    var Worker = require('Worker');
+    require.paths.unshift(path.resolve(__dirname, '..', '..', 'src'));
   }
 })();
 

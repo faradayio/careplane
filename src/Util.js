@@ -1,6 +1,6 @@
 var $ = require('jquery-browserify');
 
-Util = {
+var Util = {
   formatFootprint: function(footprint) {
     var roundedFootprint = Math.round(footprint * 2.2);
     var delimitedFootprint = Util.numberWithDelimiter(roundedFootprint);

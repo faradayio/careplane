@@ -1,4 +1,7 @@
 describe('KayakUKTrip', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var KayakUKTrip = require('drivers/KayakUK/KayakUKTrip');
+
   beforeEach(function() {
     this.extension = new TestExtension(document);
     this.extension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight'] = {

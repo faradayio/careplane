@@ -1,6 +1,7 @@
 var $ = require('jquery-browserify');
+var Util = require('../Util');
 
-TripFootprintView = function() {};
+var TripFootprintView = function() {};
 
 TripFootprintView.prototype.isValid = function() {
   return true;

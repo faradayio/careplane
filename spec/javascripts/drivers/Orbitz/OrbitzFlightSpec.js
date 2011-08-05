@@ -1,4 +1,6 @@
 describe('OrbitzFlight', function() {
+  var OrbitzFlight = require('drivers/Orbitz/OrbitzFlight');
+
   describe('.parse', function() {
     it('parses an Orbitz leg', function() {
       loadFixtures('orbitz_dtw_sfo_result.html');

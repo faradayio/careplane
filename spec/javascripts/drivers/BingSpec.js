@@ -1,4 +1,7 @@
 describe('Bing', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var Bing = require('drivers/Bing');
+
   var extension;
 
   beforeEach(function() {

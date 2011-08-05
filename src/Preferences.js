@@ -1,4 +1,4 @@
-Preferences = function() {};
+var Preferences = function() {};
 
 Preferences.events = {
   convertStringPreferenceToBoolean: function(callback) {

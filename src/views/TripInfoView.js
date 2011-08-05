@@ -2,7 +2,7 @@ var $ = require('jquery-browserify');
 var TripStatistics = require('../TripStatistics');
 var Util = require('../Util');
 
-TripInfoView = function() {};
+var TripInfoView = function() {};
 
 TripInfoView.prototype.target = function() {
   return $('.careplane-info', this.tripElement);

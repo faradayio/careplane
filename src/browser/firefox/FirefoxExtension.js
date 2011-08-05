@@ -4,7 +4,7 @@ var Careplane = require('../../Careplane');
 var CareplaneEvents = require('../../CareplaneEvents');
 var FirefoxTracker = require('./FirefoxTracker');
 
-FirefoxExtension = function(doc) {
+var FirefoxExtension = function(doc) {
   this.doc = doc;
   this.klass = FirefoxExtension;
   this.tracker = FirefoxTracker;

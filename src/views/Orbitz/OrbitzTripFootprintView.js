@@ -1,7 +1,7 @@
 var $ = require('jquery-browserify');
 var TripFootprintView = require('../TripFootprintView');
 
-OrbitzTripFootprintView = function(tripElement) {
+var OrbitzTripFootprintView = function(tripElement) {
   this.tripElement = tripElement;
 };
 OrbitzTripFootprintView.prototype = new TripFootprintView();

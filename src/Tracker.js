@@ -1,4 +1,4 @@
-Tracker = {
+var Tracker = {
   search: function(site, origin, destination, averageCo2) {
     this.sendRequest('tracker.search', {
       site: site, origin: origin, destination: destination, averageCo2: averageCo2 });

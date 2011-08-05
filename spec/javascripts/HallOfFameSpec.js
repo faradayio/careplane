@@ -1,4 +1,7 @@
 describe('HallOfFame', function() {
+  var HallOfFame = require('HallOfFame');
+  var Trip = require('Trip');
+
   var trip1, trip2, trip3, trip4, trip5, hallOfFame;
   beforeEach(function() {
     trip1 = new Trip();

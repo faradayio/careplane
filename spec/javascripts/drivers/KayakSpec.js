@@ -1,4 +1,7 @@
 describe('Kayak', function() {
+  var TestExtension = require('browser/test/TestExtension');
+  var Kayak = require('drivers/Kayak');
+
   var extension;
 
   beforeEach(function() {

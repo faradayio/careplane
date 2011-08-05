@@ -5,7 +5,7 @@ var OrbitzTripFootprintView = require('../../views/Orbitz/OrbitzTripFootprintVie
 var OrbitzTripInfoView = require('../../views/Orbitz/OrbitzTripInfoView');
 var OrbitzFlight = require('./OrbitzFlight');
 
-OrbitzTrip = function(extension, id, tripElement) {
+var OrbitzTrip = function(extension, id, tripElement) {
   this.extension = extension;
   this.id = id;
   this.tripElement = tripElement;

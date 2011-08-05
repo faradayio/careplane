@@ -1,6 +1,9 @@
 describe('OrbitzAirTrafficController', function() {
-  var orbitz;
+  var TestExtension = require('browser/test/TestExtension');
+  var Orbitz = require('drivers/Orbitz');
+  var OrbitzAirTrafficController = require('drivers/Orbitz/OrbitzAirTrafficController');
 
+  var orbitz;
   beforeEach(function() {
     this.extension = new TestExtension(document);
     orbitz = new Orbitz(this.extension);

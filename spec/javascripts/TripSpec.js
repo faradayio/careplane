@@ -1,4 +1,6 @@
 describe('Trip', function() {
+  var Trip = require('Trip');
+
   describe('.events', function() {
     describe('.flightEmissionsComplete', function() {
       var trip, flightEmissionsComplete, onTripEmissionsComplete, callback;

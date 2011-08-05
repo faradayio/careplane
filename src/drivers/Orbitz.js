@@ -2,7 +2,7 @@ var $ = require('jquery-browserify');
 var Driver = require('../Driver');
 var OrbitzAirTrafficController = require('./Orbitz/OrbitzAirTrafficController');
 
-Orbitz = function(extension) {
+var Orbitz = function(extension) {
   this.klass = Orbitz;
   this.extension = extension;
   this.doc = extension.doc;

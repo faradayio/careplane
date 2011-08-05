@@ -1,6 +1,6 @@
 var $ = require('jquery-browserify');
 
-CareplaneEvents = {
+var CareplaneEvents = {
   driverBecomesAvailable: function(extension, driverClass) {
     return function(driverEnabled) {
       if(driverEnabled) {

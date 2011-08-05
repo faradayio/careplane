@@ -1,7 +1,7 @@
 var jsonpath = require('JSONPath');
 var Flight = require('../../Flight');
 
-BingFlight = function(extension, origin, destination, airline) {
+var BingFlight = function(extension, origin, destination, airline) {
   this.extension = extension;
   this.origin = origin;
   this.destination = destination;
