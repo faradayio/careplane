@@ -23,6 +23,16 @@ chrome = { extension: { sendRequest: function() {} } };
 
     var path = require('path');
     require.paths.unshift(path.resolve(__dirname, '..', '..', 'src'));
+  } else {
+    // Make modules requirable in jasmine
+    var modules = Object.keys(require.modules);
+    for(var i = 0; i < modules.length; i++) {
+      var module = modules[i];
+      if(module.match(/^\//)) {
+        var stripped = module.replace(/^\//, '');
+        require.modules[stripped] = require.modules[module];
+      }
+    }
   }
 })();
 
