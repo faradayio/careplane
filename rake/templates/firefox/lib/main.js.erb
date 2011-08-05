@@ -32,8 +32,6 @@ widget = Widget({
 
 <% CareplaneConfig.drivers.each do |driver| %>
   <% monitorURL = CareplaneConfig.monitorURL(driver) %>
-  <% content_scripts = CareplaneConfig.content_script_files('firefox', driver) %>
-  <% content_scripts = CareplaneConfig.content_script_files('firefox', 'Kayak') + content_scripts if driver == 'KayakUK' %>
   pageMod.PageMod({
     include: <%= monitorURL %>,
     contentScriptWhen: 'ready',

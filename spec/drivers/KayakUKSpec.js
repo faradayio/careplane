@@ -1,12 +1,12 @@
 describe('KayakUK', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var KayakUK = require('drivers/KayakUK');
 
   var extension;
 
   beforeEach(function() {
     this.driverClass = KayakUK;
-    extension = new TestExtension(document);
+    extension = new JasmineExtension(document);
   });
 
   it('has a .driverName', function() {

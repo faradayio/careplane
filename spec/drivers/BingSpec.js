@@ -1,11 +1,11 @@
 describe('Bing', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var Bing = require('drivers/Bing');
 
   var extension;
 
   beforeEach(function() {
-    extension = new TestExtension(document);
+    extension = new JasmineExtension(document);
     this.driverClass = Bing;
   });
 

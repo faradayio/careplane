@@ -1,11 +1,11 @@
 describe('KayakUKAirTrafficController', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var KayakUK = require('drivers/KayakUK');
   var KayakUKAirTrafficController = require('drivers/KayakUK/KayakUKAirTrafficController');
 
   var kayakuk;
   beforeEach(function() {
-    this.extension = new TestExtension(document);
+    this.extension = new JasmineExtension(document);
     this.extension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight.*'] = {
       'status': 0,
       'message': kayakFlightDetails

@@ -1,11 +1,11 @@
 describe('TripController', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var KayakTrip = require('drivers/Kayak/KayakTrip');
   var TripController = require('controllers/TripController');
 
   var trip, footprintView, infoView;
   beforeEach(function() {
-    var extension = new TestExtension(document);
+    var extension = new JasmineExtension(document);
     loadFixtures('kayak_dtw_sfo_flight.html');
     trip = new KayakTrip(extension, '0', $('.flightresult').get(0));
     trip.initViews();

@@ -1,11 +1,11 @@
 describe('OrbitzAirTrafficController', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var Orbitz = require('drivers/Orbitz');
   var OrbitzAirTrafficController = require('drivers/Orbitz/OrbitzAirTrafficController');
 
   var orbitz;
   beforeEach(function() {
-    this.extension = new TestExtension(document);
+    this.extension = new JasmineExtension(document);
     orbitz = new Orbitz(this.extension);
   });
 

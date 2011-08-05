@@ -9,32 +9,7 @@ end
 When /Careplane runs as soon as "(.+)" is visible/ do |selector|
   has_css?(selector)
 
-  js = <<-JS
-var capy = {
-  log: function(str) {
-    if(!$('#loggz').get(0)) {
-      $(window.document.body).append('<ul id="loggz"></ul>');
-    }
-    $('#loggz').append('<li>' + str + '</li>');
-  }
-};
-  JS
-
-  js += CareplaneConfig.cucumber_js_files.inject('') do |conglomerate, js_file|
-    conglomerate += File.read(js_file)
-  end
-
-  js += <<-JS
-
-var extension = new TestExtension(window.document);
-extension.prefs.putBoolean('hasRunPreviously', true);
-extension.prefs.putBoolean('sites.Kayak', true);
-extension.prefs.putBoolean('sites.Orbitz', true);
-extension.prefs.putBoolean('sites.Hipmunk', true);
-extension.loadDriver();
-  JS
-
-  #File.open('webkit.js', 'w') { |f| f.puts js }
+  js = File.read File.expand_path('../../support/application.js', __FILE__)
 
   begin
     Capybara.current_session.driver.execute_script js

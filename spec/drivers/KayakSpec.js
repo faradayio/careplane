@@ -1,11 +1,11 @@
 describe('Kayak', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var Kayak = require('drivers/Kayak');
 
   var extension;
 
   beforeEach(function() {
-    extension = new TestExtension(document);
+    extension = new JasmineExtension(document);
     this.driverClass = Kayak;
   });
 

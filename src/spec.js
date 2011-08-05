@@ -1,5 +1,5 @@
 var SafariExtension = require('./browser/safari/SafariExtension');
-var TestExtension = require('./browser/test/TestExtension');
+var JasmineExtension = require('./browser/jasmine/JasmineExtension');
 var Worker = require('./Worker');
 
 Browserify = {};

@@ -15,7 +15,7 @@ src_files:
 #   - helpers/**/*.js
 #
 helpers:
-  - helpers/browserify.js
+  - helpers/application.js
   - helpers/SpecHelper.js
   - helpers/**/*.js
 

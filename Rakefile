@@ -190,16 +190,6 @@ end
 @css_files = ['stylesheets/careplane.css']
 @image_files = ['images/icon64.png']
 
-def build(driver, target_dir = '')
-  puts 'Copying files...'
-  (CareplaneConfig.content_script_files(driver) + @css_files + @image_files).each do |file|
-    destination = File.join(driver, target_dir, file)
-    FileUtils.mkdir_p(File.dirname(destination))
-    puts file
-    FileUtils.cp file, destination
-  end
-end
-
 def templates(target)
   @version = version
   Dir.glob(File.join('rake', 'templates', target, '**/*.erb')).each do |template|
@@ -348,7 +338,7 @@ end
 namespace :jasmine do
   desc 'Build Jasmine spec setup'
   task :build do
-    browserify 'src/jasmine-web.js', 'spec/helpers/browserify.js'
+    browserify 'src/spec.js', 'spec/helpers/application.js'
   end
 
   desc 'Run Jasmine spec server'
@@ -360,6 +350,15 @@ namespace :jasmine do
     puts "  http://localhost:8888/"
 
     Jasmine::Config.new.start_server
+  end
+end
+
+task :features => 'features:build' do
+  exec 'bundle exec cucumber features'
+end
+namespace :features do
+  task :build do
+    browserify 'src/features.js', 'features/support/application.js'
   end
 end
 

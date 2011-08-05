@@ -1,12 +1,12 @@
 describe('TripStatistics', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var AverageTrip = require('AverageTrip');
   var TripStatistics = require('TripStatistics');
 
   describe('.average', function() {
     var trip, extension;
     beforeEach(function() {
-      extension = new TestExtension(document);
+      extension = new JasmineExtension(document);
       trip = new AverageTrip(extension, 'ORD', 'SEA', 143.5);
       trip.totalFootprint = 143.5;
       TripStatistics.averages = [trip];

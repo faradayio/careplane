@@ -1,5 +1,5 @@
 sharedExamplesFor('polling Driver', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var Careplane = require('Careplane');
 
   describe('load', function() {
@@ -17,7 +17,7 @@ sharedExamplesFor('polling Driver', function() {
       expect(driver.events.loadPoller).toHaveBeenCalled();
     });
     it('does not poll when using a testing extension', function() {
-      var extension = new TestExtension();
+      var extension = new JasmineExtension();
       extension.doc = {
         location: {
           href: ''
@@ -33,7 +33,7 @@ sharedExamplesFor('polling Driver', function() {
 });
 
 sharedExamplesFor('non-polling Driver', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var Careplane = require('Careplane');
 
   describe('load', function() {
@@ -51,7 +51,7 @@ sharedExamplesFor('non-polling Driver', function() {
       expect(driver.atc.clear).toHaveBeenCalled();
     });
     it('does not poll when using a testing extension', function() {
-      var extension = new TestExtension();
+      var extension = new JasmineExtension();
       extension.doc = {
         location: {
           href: ''

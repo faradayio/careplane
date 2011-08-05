@@ -1,11 +1,11 @@
 describe('HipmunkTrip', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var HipmunkTrip = require('drivers/Hipmunk/HipmunkTrip');
 
   var routingId = 'routing-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22_0_wide';
 
   beforeEach(function() {
-    this.extension = new TestExtension(document);
+    this.extension = new JasmineExtension(document);
   });
 
   describe('with DTW-SFO trip', function() {

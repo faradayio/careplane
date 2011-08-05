@@ -1,11 +1,11 @@
 describe('BingAirTrafficController', function() {
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var Bing = require('drivers/Bing');
   var BingAirTrafficController = require('drivers/Bing/BingAirTrafficController');
 
   var bing;
   beforeEach(function() {
-    this.extension = new TestExtension(document);
+    this.extension = new JasmineExtension(document);
     bing = new Bing(this.extension);
   });
 

@@ -1,12 +1,12 @@
 describe('BingFlight', function() {
   var jsonpath = require('JSONPath');
-  var TestExtension = require('browser/test/TestExtension');
+  var JasmineExtension = require('browser/jasmine/JasmineExtension');
   var BingFlight = require('drivers/Bing/BingFlight');
   
   describe('.parse', function() {
     var flights, extension, searchData;
     beforeEach(function() {
-      extension = new TestExtension(document);
+      extension = new JasmineExtension(document);
       searchData = JSON.parse(readFixtures('bing_dtw_sfo.json'));
     });
 
