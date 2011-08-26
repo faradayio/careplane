@@ -9701,7 +9701,7 @@ process.nextTick(function () {
     var module = { exports : {} };
     var exports = module.exports;
     var __dirname = "/";
-    var __filename = "//Users/dkastner/careplane/src";
+    var __filename = "//Users/dkastner/careplane/lib";
     
     var require = function (file) {
         return __require(file, "/");
