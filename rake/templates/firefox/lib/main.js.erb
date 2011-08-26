@@ -4,7 +4,7 @@ var data = require('self').data;
 var Widget = require('widget').Widget;
 var Panel = require('panel').Panel;
 
-var widget, careplanePanel, panelWorker, modWorker;
+var widget, careplanePanel, panelWorker;
 
 careplanePanel = Panel({
   id: 'careplane-panel',
@@ -30,6 +30,8 @@ widget = Widget({
   }
 });
 
+var modWorkers = [];
+
 <% CareplaneConfig.drivers.each do |driver| %>
   <% monitorURL = CareplaneConfig.monitorURL(driver) %>
   pageMod.PageMod({
@@ -37,8 +39,14 @@ widget = Widget({
     contentScriptWhen: 'ready',
     contentScriptFile: data.url('application.js'),
     onAttach: function(addon) {
-      modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
+      var modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('<%= driver %>');
+      modWorkers.push(modWorker);
+      var num = modWorkers.length;
+
+      addon.on('detach', function() {
+        modWorkers.splice(num, 1);
+      });
     }
   });
 <% end %>
