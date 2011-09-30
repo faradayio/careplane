@@ -17,8 +17,6 @@ require 'capybara/mechanize'
 require 'capybara/mechanize/cucumber'
 require 'capybara-webkit'
 
-require './lib/careplane_config'
-
 ENV['BROWSER'] ||= 'firefox'
 ENV['CAPY'] ||= 'webkit'
 ENV['PROFILE'] ||= Dir.glob('/Users/dkastner/Library/Application Support/Firefox/Profiles/*.Selenium').first ? Dir.glob('/Users/dkastner/Library/Application Support/Firefox/Profiles/*.Selenium').first : 'default'
