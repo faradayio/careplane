@@ -9467,11 +9467,11 @@ require.modules["/node_modules/jquery-browserify/lib/jquery-1.6.2.js"] = functio
     return module.exports;
 };
 
-require.modules["/CareplaneTrackerService.js"] = function () {
+require.modules["/careplane-tracker-service.js"] = function () {
     var module = { exports : {} };
     var exports = module.exports;
     var __dirname = "/";
-    var __filename = "/CareplaneTrackerService.js";
+    var __filename = "/careplane-tracker-service.js";
     
     var require = function (file) {
         return __require(file, "/");
@@ -9482,7 +9482,7 @@ require.modules["/CareplaneTrackerService.js"] = function () {
     };
     
     require.modules = __require.modules;
-    __require.modules["/CareplaneTrackerService.js"]._cached = module.exports;
+    __require.modules["/careplane-tracker-service.js"]._cached = module.exports;
     
     (function () {
         var CareplaneTrackerService = function(browser) {
@@ -9538,15 +9538,65 @@ module.exports = CareplaneTrackerService;
 ;
     }).call(module.exports);
     
-    __require.modules["/CareplaneTrackerService.js"]._cached = module.exports;
+    __require.modules["/careplane-tracker-service.js"]._cached = module.exports;
     return module.exports;
 };
 
-require.modules["/Worker.js"] = function () {
+require.modules["/browser/safari/safari-worker.js"] = function () {
+    var module = { exports : {} };
+    var exports = module.exports;
+    var __dirname = "/browser/safari";
+    var __filename = "/browser/safari/safari-worker.js";
+    
+    var require = function (file) {
+        return __require(file, "/browser/safari");
+    };
+    
+    require.resolve = function (file) {
+        return __require.resolve(name, "/browser/safari");
+    };
+    
+    require.modules = __require.modules;
+    __require.modules["/browser/safari/safari-worker.js"]._cached = module.exports;
+    
+    (function () {
+        var CareplaneTrackerService = require('../../careplane-tracker-service'),
+    Worker = require('../../worker');
+
+var SafariWorker = function() {
+  this.preferences = safari.extension.settings;
+  this.tracker = new CareplaneTrackerService('safari');
+};
+SafariWorker.prototype = new Worker();
+
+SafariWorker.prototype.addListener = function(listener) {
+  safari.application.addEventListener('message', listener);
+};
+
+SafariWorker.prototype.welcome = function() {
+  var tab = safari.application.activeBrowserWindow.openTab();
+  tab.url = this.url;
+};
+
+SafariWorker.prototype.handleMessage = function(event) { 
+  this.processMessage(event.name, event.message, event.target);
+};
+
+SafariWorker.prototype.sendCallback = function(message, val, id, target) {
+  target.page.dispatchMessage(message, { value: val, callbackId: id });
+};
+;
+    }).call(module.exports);
+    
+    __require.modules["/browser/safari/safari-worker.js"]._cached = module.exports;
+    return module.exports;
+};
+
+require.modules["/worker.js"] = function () {
     var module = { exports : {} };
     var exports = module.exports;
     var __dirname = "/";
-    var __filename = "/Worker.js";
+    var __filename = "/worker.js";
     
     var require = function (file) {
         return __require(file, "/");
@@ -9557,10 +9607,10 @@ require.modules["/Worker.js"] = function () {
     };
     
     require.modules = __require.modules;
-    __require.modules["/Worker.js"]._cached = module.exports;
+    __require.modules["/worker.js"]._cached = module.exports;
     
     (function () {
-        var Worker = function() {};
+        var Worker = module.exports = function() {};
 
 Worker.events = {
   listen: function(worker) {
@@ -9633,67 +9683,10 @@ Worker.prototype.processMessage = function(message, params, caller) {
     break;
   }
 };
-
-
-
-var GoogleChromeWorker = function() {
-  this.preferences = localStorage;
-  this.tracker = new CareplaneTrackerService('google_chrome');
-};
-GoogleChromeWorker.prototype = new Worker();
-
-GoogleChromeWorker.prototype.addListener = function(listener) {
-  chrome.extension.onRequest.addListener(listener);
-};
-
-GoogleChromeWorker.prototype.welcome = function() {
-  chrome.tabs.create({ url: this.url });
-};
-
-GoogleChromeWorker.prototype.handleMessage = function(request, sender, callback) { 
-  this.processMessage(request.action, request, sender);
-};
-
-GoogleChromeWorker.prototype.sendCallback = function(message, val, id, caller) {
-  chrome.tabs.sendRequest(caller.tab.id,
-      { action: message, value: val, callbackId: id },
-      function() {});
-};
-
-
-
-var SafariWorker = function() {
-  this.preferences = safari.extension.settings;
-  this.tracker = new CareplaneTrackerService('safari');
-};
-SafariWorker.prototype = new Worker();
-
-SafariWorker.prototype.addListener = function(listener) {
-  safari.application.addEventListener('message', listener);
-};
-
-SafariWorker.prototype.welcome = function() {
-  var tab = safari.application.activeBrowserWindow.openTab();
-  tab.url = this.url;
-};
-
-SafariWorker.prototype.handleMessage = function(event) { 
-  this.processMessage(event.name, event.message, event.target);
-};
-
-SafariWorker.prototype.sendCallback = function(message, val, id, target) {
-  target.page.dispatchMessage(message, { value: val, callbackId: id });
-};
-
-
-
-exports.Worker = Worker;
-exports.GoogleChromeWorker = GoogleChromeWorker;
-exports.SafariWorker = SafariWorker;
 ;
     }).call(module.exports);
     
-    __require.modules["/Worker.js"]._cached = module.exports;
+    __require.modules["/worker.js"]._cached = module.exports;
     return module.exports;
 };
 
@@ -9708,7 +9701,7 @@ process.nextTick(function () {
     };
     require.modules = __require.modules;
     
-    var CareplaneTrackerService = require('./CareplaneTrackerService');
-var SafariWorker = require('./Worker').SafariWorker;
+    var CareplaneTrackerService = require('./careplane-tracker-service');
+var SafariWorker = require('./browser/safari/safari-worker');
 ;
 });

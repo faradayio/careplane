@@ -230,12 +230,12 @@ namespace :firefox do
     browserify 'lib/firefox.js', 'firefox/data/application.js'
 
     %w{
-      lib/CareplaneTrackerService.js
-      lib/Worker.js
-      lib/browser/firefox/FirefoxCareplaneTrackerService.js
-      lib/browser/firefox/FirefoxWorker.js
-      lib/Careplane.js
-      lib/CareplaneEvents.js
+      lib/careplane-tracker-service.js
+      lib/worker.js
+      lib/browser/firefox/firefox-careplane-tracker-service.js
+      lib/browser/firefox/firefox-worker.js
+      lib/careplane.js
+      lib/careplane-events.js
     }.each do |file|
       destination = File.join 'firefox', 'lib', file.sub(/^lib\//, '')
       FileUtils.mkdir_p(File.dirname(destination))
@@ -279,8 +279,8 @@ namespace :google_chrome do
       FileUtils.cp file, destination
     end
 
-    browserify 'lib/google_chrome.js', 'google_chrome/application.js'
-    browserify 'lib/google_chrome_background.js', 'google_chrome/background.js'
+    browserify 'lib/google-chrome.js', 'google_chrome/application.js'
+    browserify 'lib/google-chrome-background.js', 'google_chrome/background.js'
   end
   namespace :build do
     task :templates do
@@ -315,7 +315,7 @@ namespace :safari do
     end
 
     browserify 'lib/safari.js', 'safari/careplane.safariextension/application.js'
-    browserify 'lib/safari_background.js', 'safari/careplane.safariextension/background.js'
+    browserify 'lib/safari-background.js', 'safari/careplane.safariextension/background.js'
   end
   namespace :build do
     task :templates do
