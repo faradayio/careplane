@@ -4,14 +4,5 @@
   </head>
   <body>
     <script type="text/javascript" src="background.js"></script>
-    <script>
-      var CareplaneTrackerService = require('./CareplaneTrackerService');
-      var GoogleChromeWorker = require('./Worker').GoogleChromeWorker;
-      var worker;
-      window.onload = function() {
-        worker = new GoogleChromeWorker();
-        worker.init();
-      };
-    </script>
   </body>
 </html>
