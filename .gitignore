@@ -35,3 +35,4 @@ spec/helpers/browserify.js
 *.pyc
 
 bin
+node_modules
