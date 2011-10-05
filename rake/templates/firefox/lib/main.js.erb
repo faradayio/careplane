@@ -1,5 +1,5 @@
 var pageMod = require('page-mod');
-var workers = require('./browser/firefox/FirefoxWorker');
+var workers = require('./browser/firefox/firefox-worker');
 var data = require('self').data;
 var Widget = require('widget').Widget;
 var Panel = require('panel').Panel;
@@ -37,7 +37,7 @@ var modWorkers = [];
   pageMod.PageMod({
     include: <%= monitorURL %>,
     contentScriptWhen: 'ready',
-    contentScriptFile: data.url('application.js'),
+    contentScriptFile: [data.url('browser/firefox/jquery-1.6.4.min.js'), data.url('application.js')],
     onAttach: function(addon) {
       var modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('<%= driver %>');
