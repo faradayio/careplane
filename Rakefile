@@ -15,19 +15,25 @@ ENV['NODE_PATH'] = 'lib'
 Cucumber::Rake::Task.new
 
 module CareplaneConfig 
-  class << self
-    def browsers
-      %w{chrome firefox safari}
-    end
+  extend self
 
-    def drivers
-      %w{Bing Hipmunk Kayak KayakUK Orbitz}
-    end
+  def dasherize(str)
+    str.gsub(/KayakUK/, 'kayak-uk').
+      gsub(/[a-z][A-Z]/) { |s| s[0] + '-' + s[1].downcase }.
+      gsub(/[A-Z]/) { |s| s.downcase }
+  end
 
-    def monitorURL(driverName)
-      str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./lib/drivers/#{driverName}').monitorURL);"`
-      str.split.first
-    end
+  def browsers
+    %w{chrome firefox safari}
+  end
+
+  def drivers
+    %w{Bing Hipmunk Kayak KayakUK Orbitz}
+  end
+
+  def monitorURL(driverName)
+    str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./lib/drivers/#{dasherize(driverName)}').monitorURL);"`
+    str.split.first
   end
 end
 
@@ -60,10 +66,25 @@ def changelog_post(browser)
   "_posts/#{datetime}-careplane-#{browser}-#{current_version}.markdown"
 end
 
-def browserify(entry_point_path, output_path)
+def browserify(entry_point_path, output_path, firefox = false)
   puts "Browserifying #{entry_point_path} into #{output_path}"
-  FileUtils.rm_f output_path
-  `./node_modules/.bin/browserify -r JSONPath -r jquery-browserify -o #{output_path} -e #{entry_point_path}`
+
+  if firefox && !File.exist?('node_modules/jquery-firefox')
+    File.link('lib/node_modules/jquery-firefox', 'node_modules/jquery-firefox')
+  end
+
+  js = <<-JS
+var browserify = require('browserify');
+var b = browserify();
+b.require({ jquery: '#{firefox ? 'jquery-firefox' : 'jquery-browserify'}' });
+b.addEntry('#{entry_point_path}');
+b.bundle();
+  JS
+  js = js.split.join(' ');
+
+  source = `NODE_PATH=./node_modules node -e "#{js}"`
+  File.open(output_path, 'w') { |f| f.puts source }
+
   puts 'Done'
 end
 
@@ -227,15 +248,15 @@ namespace :firefox do
     end
     puts 'Done'
 
-    browserify 'lib/firefox.js', 'firefox/data/application.js'
+    browserify 'lib/firefox.js', 'firefox/data/application.js', true
+    FileUtils.mkdir_p 'firefox/data/browser/firefox'
+    FileUtils.cp 'lib/browser/firefox/jquery-1.6.4.min.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
 
     %w{
       lib/careplane-tracker-service.js
       lib/worker.js
       lib/browser/firefox/firefox-careplane-tracker-service.js
       lib/browser/firefox/firefox-worker.js
-      lib/careplane.js
-      lib/careplane-events.js
     }.each do |file|
       destination = File.join 'firefox', 'lib', file.sub(/^lib\//, '')
       FileUtils.mkdir_p(File.dirname(destination))

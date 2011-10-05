@@ -12,8 +12,13 @@
     "node": "*"
   },
   "dependencies": {
-    "yaml": "*",
-    "jsdom": "*"
+    "jquery-browserify": "*",
+    "JSONPath": "*",
+    "jsdom": "*",
+    "yaml": "*"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "browserify": "*",
+    "jquery": "*"
+  }
 }
