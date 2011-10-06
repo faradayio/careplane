@@ -20,6 +20,7 @@ google_chrome/stylesheets
 google_chrome/manifest.json
 safari/build
 safari/careplane.safariextension/images
+safari/careplane.safariextension/background.js
 safari/careplane.safariextension/Info.plist
 safari/careplane.safariextension/CareplaneTrackerService.js
 safari/careplane.safariextension/Worker.js
