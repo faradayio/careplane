@@ -69,8 +69,8 @@ end
 def browserify(entry_point_path, output_path, firefox = false)
   puts "Browserifying #{entry_point_path} into #{output_path}"
 
-  if firefox && !File.exist?('node_modules/jquery-firefox')
-    File.link('lib/node_modules/jquery-firefox', 'node_modules/jquery-firefox')
+  if firefox && !File.symlink?('node_modules/jquery-firefox')
+    File.link('lib/node_modules/jquery-firefox', 'node_modules/jquery-firefox') rescue true
   end
 
   js = <<-JS
