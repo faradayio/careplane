@@ -8,6 +8,8 @@ firefox*/chrome/content/lib
 firefox*/chrome/content/src
 firefox*/chrome/content/stylesheets
 firefox/data
+!firefox/data/icon*
+!firefox/data/widget.js
 firefox/lib
 firefox/package.json
 google_chrome/background.js
