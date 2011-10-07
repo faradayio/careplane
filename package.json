@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "jquery-browserify": "*",
-    "JSONPath": "*",
+    "dkastner-JSONPath": "*",
     "jsdom": "*",
     "yaml": "*"
   },
