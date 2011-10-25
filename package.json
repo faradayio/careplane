@@ -12,13 +12,18 @@
     "node": "*"
   },
   "dependencies": {
-    "jquery-browserify": "*",
+    "CM1": ">= 0.4.0",
     "dkastner-JSONPath": "*",
+    "jquery-browserify": "*",
     "jsdom": "*",
+    "superagent": "*",
     "yaml": "*"
   },
   "devDependencies": {
-    "browserify": "*",
-    "jquery": "*"
+    "dkastner-browserify": "*",
+    "dkastner-http-browserify": "*",
+    "jasmine-node": "*",
+    "jquery": "*",
+    "node-fakeweb": "*"
   }
 }

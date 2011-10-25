@@ -1,18 +1,16 @@
 describe('BingFlight', function() {
-  var jsonpath = require('jsonpath');
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
+  var jsonpath = require('dkastner-JSONPath');
   var BingFlight = require('drivers/bing/bing-flight');
   
   describe('.parse', function() {
-    var flights, extension, searchData;
+    var flights, searchData;
     beforeEach(function() {
-      extension = new JasmineExtension(document);
       searchData = JSON.parse(readFixtures('bing_dtw_sfo.json'));
     });
 
     it('parses a standard set of flights', function() {
       var signature = searchData[0].quotes[0].pricing.signature;
-      flights = BingFlight.parse(extension, searchData, signature);
+      flights = BingFlight.parse(searchData, signature);
 
       expect(flights.length).toBe(4);
 
@@ -34,7 +32,7 @@ describe('BingFlight', function() {
     });
     it('follows referenced legs', function() {
       var signature = jsonpath.eval(searchData[0], '$.quotes[?(@.journeyId == "17")].pricing.signature')[0];
-      flights = BingFlight.parse(extension, searchData, signature);
+      flights = BingFlight.parse(searchData, signature);
 
       expect(flights.length).toBe(4);
 

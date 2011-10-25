@@ -1,5 +1,5 @@
 describe('Worker', function() {
-  var Worker = require('worker').Worker;
+  var Worker = require('worker');
 
   describe('#getPreference', function() {
     var worker;

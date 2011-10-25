@@ -1,5 +1,5 @@
 describe('Util', function() {
-  var Util = require('util');
+  var Util = require('../lib/util');
 
   describe('.footprintAnalysis', function() {
     it('reports a better-than-average footprint', function() {

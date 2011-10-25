@@ -1,13 +1,11 @@
 describe('TripController', function() {
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var KayakTrip = require('drivers/kayak/kayak-trip');
   var TripController = require('controllers/trip-controller');
 
   var trip, footprintView, infoView;
   beforeEach(function() {
-    var extension = new JasmineExtension(document);
     loadFixtures('kayak_dtw_sfo_flight.html');
-    trip = new KayakTrip(extension, '0', $('.flightresult').get(0));
+    trip = new KayakTrip('0', $('.flightresult').get(0));
     trip.initViews();
     spyOn(trip.infoView, 'show');
     spyOn(trip.infoView, 'hide');

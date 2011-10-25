@@ -1,5 +1,5 @@
 describe('KayakUkTripFootprintView', function() {
-  var KayakUKTripFootprintView = require('views/kayak-uk-/kayak-uk-trip-footprint-view');
+  var KayakUKTripFootprintView = require('views/kayak-uk/kayak-uk-trip-footprint-view');
 
   beforeEach(function() {
     loadFixtures('kayak_uk_lhr_txl_flight.html');

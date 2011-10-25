@@ -6,7 +6,7 @@ describe('HipmunkRailTrip', function() {
       var rail;
       beforeEach(function() {
         loadFixtures('hipmunk_lan_chi_rail_trip.html');
-        rail = HipmunkRailTrip.parse({}, $('.details-padding').get(1));
+        rail = HipmunkRailTrip.parse($('.details-padding').get(1));
       });
       it('parses origin', function() {
         expect(rail.origin).toBe('BTL');

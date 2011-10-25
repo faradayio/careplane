@@ -6,7 +6,7 @@ describe('HipmunkBusTrip', function() {
       var bus;
       beforeEach(function() {
         loadFixtures('hipmunk_lan_chi_rail_trip.html');
-        bus = HipmunkBusTrip.parse({}, $('.details-padding').get(0));
+        bus = HipmunkBusTrip.parse($('.details-padding').get(0));
       });
       it('parses origin', function() {
         expect(bus.origin).toBe('LNS');

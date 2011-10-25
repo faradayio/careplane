@@ -6,7 +6,7 @@ describe('HipmunkFlight', function() {
       var flight;
       beforeEach(function() {
         loadFixtures('hipmunk_dtw_sfo_trip.html');
-        flight = HipmunkFlight.parse({}, $('.details-padding').get(0));
+        flight = HipmunkFlight.parse($('.details-padding').get(0));
       });
       it('parses airline', function() {
         expect(flight.airline).toBe('American Airlines #4362 ')
@@ -22,7 +22,7 @@ describe('HipmunkFlight', function() {
     describe('special cases', function() {
       it('ignores Mystery airlines/aircraft', function() {
         loadFixtures('hipmunk_lhr_atl_trip.html');
-        var flight = HipmunkFlight.parse({}, $('.details-padding').get(0));
+        var flight = HipmunkFlight.parse($('.details-padding').get(0));
         expect(flight.airline).toBeNull();
         expect(flight.aircraft).toBe('');
         expect(flight.origin).toBe('LHR');

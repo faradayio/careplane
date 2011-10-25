@@ -15,20 +15,20 @@ describe('Trip', function() {
 
       it("tallies the flight's footprint", function() {
         spyOn(trip, 'tallyFootprint');
-        flightEmissionsComplete({ emission: 1 }, {});
+        flightEmissionsComplete(null, { carbon: 1 });
         expect(trip.tallyFootprint).toHaveBeenCalledWith(1);
       });
       it('calls the provided callback function', function() {
         var flight = jasmine.createSpy('Flight');
-        var response = { emission: 1 };
+        var response = { carbon: 1, subject: flight };
 
-        flightEmissionsComplete(response, flight);
+        flightEmissionsComplete(null, response);
 
-        expect(callback).toHaveBeenCalledWith(trip, response, flight);
+        expect(callback).toHaveBeenCalledWith(trip, response);
       });
       it('executes the onTripEmissionsComplete function when all flights are ready', function() {
         trip.isDone = function() { return true; };
-        flightEmissionsComplete({ emission: 1 }, {});
+        flightEmissionsComplete(null, { carbon: 1 });
         expect(onTripEmissionsComplete).toHaveBeenCalled();
       });
     });

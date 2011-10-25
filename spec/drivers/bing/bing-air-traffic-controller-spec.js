@@ -21,16 +21,16 @@ describe('BingAirTrafficController', function() {
     describe('#clear', function() {
       it('loads searchData on first poll (when searchData is not yet set)', function() {
         this.controller.searchData = null;
-        spyOn(this.extension, 'fetch');
+        spyOn(this.controller, 'fetchSearchData');
         this.controller.clear();
-        expect(this.extension.fetch).toHaveBeenCalled();
+        expect(this.controller.fetchSearchData).toHaveBeenCalled();
       });
       it('ignores empty searchData while waiting for AJAX', function() {
         this.controller.searchData = [];
-        spyOn(this.extension, 'fetch');
+        spyOn(this.controller, 'fetchSearchData');
         spyOn(this.controller, 'discoverTrips');
         this.controller.clear();
-        expect(this.extension.fetch).not.toHaveBeenCalled();
+        expect(this.controller.fetchSearchData).not.toHaveBeenCalled();
         expect(this.controller.discoverTrips).not.toHaveBeenCalled();
       });
       it('does the normal stuff once searchData is set', function() {

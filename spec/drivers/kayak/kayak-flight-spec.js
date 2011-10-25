@@ -5,7 +5,7 @@ describe('KayakFlight', function() {
     var flights;
     beforeEach(function() {
       loadFixtures('kayak_dtw_sfo_flight.html');
-      flights = KayakFlight.parse({}, $('.inlineflightitinerarylegs tr'));
+      flights = KayakFlight.parse($('.inlineflightitinerarylegs tr'));
     });
 
     it('returns an array of flights', function() {

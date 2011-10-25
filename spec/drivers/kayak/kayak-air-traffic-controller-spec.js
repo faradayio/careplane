@@ -1,3 +1,6 @@
+var fakeweb = require('node-fakeweb');
+fakeweb.allowNetConnect = false;
+
 describe('KayakAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var Kayak = require('drivers/kayak');
@@ -6,11 +9,12 @@ describe('KayakAirTrafficController', function() {
   var kayak;
   beforeEach(function() {
     this.extension = new JasmineExtension(document);
-    this.extension.urlMap['http://www.kayak.com/s/run/inlineDetails/flight.*'] = {
-      'status': 0,
-      'message': kayakFlightDetails
-    };
     kayak = new Kayak(this.extension);
+
+    fakeweb.registerUri({
+      uri: 'http://www.kayak.com/s/run/inlineDetails/flight',
+      body: kayakFlightDetails
+    });
   });
 
   describe('with fixtures', function() {
@@ -24,7 +28,10 @@ describe('KayakAirTrafficController', function() {
 
   describe('#scoreTrips', function() {
     it('scores standard flights', function() {
-      this.extension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
+      fakeweb.registerUri({
+        uri: 'http://impact.brighterplanet.com/flights.json',
+        body: "{ \"emission\": 234 }"
+      });
       loadFixtures('kayak_dtw_sfo_flight.html');
       var controller = new KayakAirTrafficController(kayak, document);
       controller.discoverTrips();

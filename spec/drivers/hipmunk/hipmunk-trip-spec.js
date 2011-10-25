@@ -1,17 +1,12 @@
 describe('HipmunkTrip', function() {
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var HipmunkTrip = require('drivers/hipmunk/hipmunk-trip');
 
   var routingId = 'routing-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22_0_wide';
 
-  beforeEach(function() {
-    this.extension = new JasmineExtension(document);
-  });
-
   describe('with DTW-SFO trip', function() {
     beforeEach(function() {
       loadFixtures('hipmunk_dtw_sfo_trip.html');
-      this.trip = new HipmunkTrip(this.extension, routingId, $('.routing').get(0));
+      this.trip = new HipmunkTrip(routingId, $('.routing').get(0));
     });
 
     itBehavesLikeA('Trip');
@@ -36,7 +31,7 @@ describe('HipmunkTrip', function() {
 
     it('loads the appropriate flight information', function() {
       loadFixtures('hipmunk_dtw_sfo_trip.html');
-      var trip = new HipmunkTrip(this.extension, routingId, $('.routing').get(0));
+      var trip = new HipmunkTrip(routingId, $('.routing').get(0));
       trip.loadFlights(success);
 
       expect(trip.flights[0].origin).toBe('DTW');
@@ -46,14 +41,14 @@ describe('HipmunkTrip', function() {
     });
     it('gracefully handles trips with missing info-panels', function() {
       loadFixtures('hipmunk_dtw_sfo_missing_info_panel.html');
-      var trip = new HipmunkTrip(this.extension, routingId, $('.routing').get(0));
+      var trip = new HipmunkTrip(routingId, $('.routing').get(0));
       trip.loadFlights(success);
 
       expect(trip.flights.length).toBe(0);
     });
     it('correctly loads wifi-enabled flights', function() {
       loadFixtures('hipmunk_wifi_trip.html');
-      var trip = new HipmunkTrip(this.extension, routingId, $('.routing').get(0));
+      var trip = new HipmunkTrip(routingId, $('.routing').get(0));
       trip.loadFlights(success);
 
       expect(trip.flights[0].origin).toBe('DTW');
