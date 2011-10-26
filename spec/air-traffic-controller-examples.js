@@ -1,6 +1,13 @@
+var fakeweb = require('fakeweb'),
+    http = require('http');
+
 sharedExamplesFor('AirTrafficController', function() {
   beforeEach(function() {
-    this.extension.urlMap['carbon.brighterplanet.com/flights'] = { "emission": 234 };
+    http.register_intercept({
+      uri: '/flights.json',
+      host: 'impact.brighterplanet.com',
+      body: JSON.stringify({ decisions: { carbon: { object: { value: 234 }}}})
+    });
   });
 
   describe('#discoverTrips, #scoreTrips, #rateTrips', function() {

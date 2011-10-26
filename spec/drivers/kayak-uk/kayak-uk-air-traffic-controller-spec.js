@@ -1,4 +1,6 @@
 require('../../air-traffic-controller-examples');
+var fakeweb = require('fakeweb'),
+    http = require('http');
 
 describe('KayakUkAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
@@ -8,10 +10,11 @@ describe('KayakUkAirTrafficController', function() {
   var kayakuk;
   beforeEach(function() {
     this.extension = new JasmineExtension(document);
-    this.extension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight.*'] = {
-      'status': 0,
-      'message': kayakFlightDetails
-    };
+    http.register_intercept({
+      uri: /\/s\/run\/inlineDetails\/flight.*/,
+      host: 'www.kayak.co.uk',
+      body: JSON.stringify({ message: kayakFlightDetails })
+    });
     kayakuk = new KayakUK(this.extension, document);
   });
 
@@ -26,7 +29,11 @@ describe('KayakUkAirTrafficController', function() {
 
   describe('#scoreTrips', function() {
     it('scores standard flights', function() {
-      this.extension.urlMap['carbon.brighterplanet.com/flights'] = "{ \"emission\": 234 }"
+      http.register_intercept({
+        uri: '/flights.json',
+        host: 'impact.brighterplanet.com',
+        body: JSON.stringify({ decisions: { carbon: { object: { value: 234 }}}})
+      });
       loadFixtures('kayak_uk_lhr_txl_flight.html');
       var controller = new KayakUKAirTrafficController(kayakuk, document);
       controller.discoverTrips();

@@ -1,3 +1,6 @@
+var fakeweb = require('fakeweb'),
+    http = require('http');
+
 sharedExamplesFor('Trip', function() {
   var Trip = require('trip');
 
@@ -6,7 +9,11 @@ sharedExamplesFor('Trip', function() {
     onFlightEmissionsComplete = jasmine.createSpy('onFlightEmissionsComplete');
     onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
 
-    this.extension.urlMap['carbon.brighterplanet.com/flights'] = 123.0;
+    http.register_intercept({
+      uri: '/flights.json',
+      host: 'impact.brighterplanet.com',
+      body: JSON.stringify({ decisions: { carbon: { object: { value: 123.0 }}}})
+    });
   });
 
   it('provides #id', function() {

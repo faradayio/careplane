@@ -1,4 +1,6 @@
 require('../../trip-examples');
+var fakeweb = require('fakeweb'),
+    http = require('http');
 
 describe('KayakUkTrip', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
@@ -6,10 +8,11 @@ describe('KayakUkTrip', function() {
 
   beforeEach(function() {
     this.extension = new JasmineExtension(document);
-    this.extension.urlMap['http://www.kayak.co.uk/s/run/inlineDetails/flight'] = {
-      'status': 0,
-      'message': kayakFlightDetails
-    };
+    http.register_intercept({
+      uri: /\/s\/run\/inlineDetails\/flight.*/,
+      host: 'www.kayak.co.uk',
+      body: JSON.stringify({ message: kayakFlightDetails })
+    });
     loadFixtures('kayak_dtw_sfo_flight.html');
     this.trip = new KayakUKTrip(this.extension, '53', $('.flightresult').get(0));
   });
