@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "dkastner-browserify": "*",
+    "fakeweb": "*",
     "jasmine-node": "*",
-    "fakeweb": "*"
+    "jquery": "*"
   }
 }
