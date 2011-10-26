@@ -32,7 +32,7 @@ module CareplaneConfig
   end
 
   def monitorURL(driverName)
-    str = `node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./lib/drivers/#{dasherize(driverName)}').monitorURL);"`
+    str = `NODE_PATH=./node_modules node -e "window = require('jsdom').jsdom('<html><body></body></html>').createWindow(); console.log(require('./lib/drivers/#{dasherize(driverName)}').monitorURL);"`
     str.split.first
   end
 end
@@ -73,17 +73,8 @@ def browserify(entry_point_path, output_path, firefox = false)
     File.link('lib/node_modules/jquery-firefox', 'node_modules/jquery-firefox') rescue true
   end
 
-  js = <<-JS
-var browserify = require('browserify');
-var b = browserify();
-b.require({ jquery: '#{firefox ? 'jquery-firefox' : 'jquery-browserify'}' });
-b.addEntry('#{entry_point_path}');
-b.bundle();
-  JS
-  js = js.split.join(' ');
-
-  source = `NODE_PATH=./node_modules node -e "#{js}"`
-  File.open(output_path, 'w') { |f| f.puts source }
+  jquery_alias = firefox ? 'jquery-firefox' : 'jquery-browserify'
+  `./node_modules/.bin/browserify -e #{entry_point_path} -o #{output_path} -a jquery:#{jquery_alias} -r #{jquery_alias}`
 
   puts 'Done'
 end
@@ -360,8 +351,8 @@ end
 
 desc 'Run Jasmine unit tests (requires Node.js)'
 task :examples, [:spec] => 'jasmine:build' do |t, args|
-  args.with_defaults :spec => ''
-  exec "node spec/support/jasmine-node.js #{args[:spec]}"
+  args.with_defaults :spec => 'spec'
+  exec "NODE_PATH=./lib ./node_modules/.bin/jasmine-node #{args[:spec]}"
 end
 
 desc 'Check the syntax of all Careplane source files (requires Node.js)'
