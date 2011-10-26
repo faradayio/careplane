@@ -1,3 +1,5 @@
+require('../../air-traffic-controller-examples');
+
 describe('HipmunkAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var Hipmunk = require('drivers/hipmunk');

@@ -1,3 +1,5 @@
+require('../../air-traffic-controller-examples');
+
 describe('BingAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var Bing = require('drivers/bing');

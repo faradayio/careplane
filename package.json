@@ -21,6 +21,6 @@
   "devDependencies": {
     "dkastner-browserify": "*",
     "jasmine-node": "*",
-    "node-fakeweb": "*"
+    "fakeweb": "*"
   }
 }

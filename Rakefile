@@ -6,10 +6,6 @@ require 'erb'
 require 'cucumber'
 require 'cucumber/rake/task'
 
-require 'jasmine/base'
-require 'jasmine/config'
-require 'jasmine/server'
-
 ENV['NODE_PATH'] = 'lib'
 
 Cucumber::Rake::Task.new
@@ -350,9 +346,10 @@ namespace :safari do
 end
 
 desc 'Run Jasmine unit tests (requires Node.js)'
-task :examples, [:spec] => 'jasmine:build' do |t, args|
+task :examples, [:spec] do |t, args|
   args.with_defaults :spec => 'spec'
-  exec "NODE_PATH=./lib ./node_modules/.bin/jasmine-node #{args[:spec]}"
+  ENV['NODE_PATH'] = './lib'
+  exec "node_modules/.bin/jasmine-node #{args[:spec]}"
 end
 
 desc 'Check the syntax of all Careplane source files (requires Node.js)'
@@ -368,24 +365,6 @@ task :syntax, :file do |t, args|
   end
 end
 
-namespace :jasmine do
-  desc 'Build Jasmine spec setup'
-  task :build do
-    browserify 'lib/spec.js', 'spec/helpers/application.js'
-  end
-
-  desc 'Run Jasmine spec server'
-  task :server => 'jasmine:build' do
-    jasmine_config_overrides = 'spec/support/jasmine_config.rb'
-    require jasmine_config_overrides if File.exist?(jasmine_config_overrides)
-
-    puts "your tests are here:"
-    puts "  http://localhost:8888/"
-
-    Jasmine::Config.new.start_server
-  end
-end
-
 task :features => 'features:build' do
   exec 'bundle exec cucumber features'
 end
@@ -396,7 +375,7 @@ namespace :features do
 end
 
 desc 'Build all plugins and Jasmine'
-task :build => ['firefox:build', 'google_chrome:build', 'safari:build', 'jasmine:build']
+task :build => ['firefox:build', 'google_chrome:build', 'safari:build']
 
 desc 'Package all plugins'
 task :package => ['firefox:package', 'google_chrome:package', 'safari:package']

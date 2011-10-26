@@ -1,8 +1,10 @@
+require('../helpers/spec-helper');
+
 describe('TripController', function() {
   var KayakTrip = require('drivers/kayak/kayak-trip');
   var TripController = require('controllers/trip-controller');
 
-  var trip, footprintView, infoView;
+  var trip;
   beforeEach(function() {
     loadFixtures('kayak_dtw_sfo_flight.html');
     trip = new KayakTrip('0', $('.flightresult').get(0));

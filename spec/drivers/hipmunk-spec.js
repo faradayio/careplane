@@ -1,3 +1,5 @@
+require('../driver-examples');
+
 describe('Hipmunk', function() {
   var Hipmunk = require('drivers/hipmunk');
 

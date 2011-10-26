@@ -1,3 +1,5 @@
+require('../trip-footprint-view-examples');
+
 describe('OrbitzTripFootprintView', function() {
   var OrbitzTripFootprintView = require('views/orbitz/orbitz-trip-footprint-view');
 

@@ -1,3 +1,5 @@
+require('../../air-traffic-controller-examples');
+
 describe('OrbitzAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var Orbitz = require('drivers/orbitz');

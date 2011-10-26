@@ -1,3 +1,5 @@
+require('../trip-info-view-examples');
+
 describe('BingTripInfoView', function() {
   var BingTripInfoView = require('views/bing/bing-trip-info-view');
 

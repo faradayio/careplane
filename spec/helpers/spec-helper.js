@@ -7,6 +7,8 @@ self = {
 safari = { self: { tab: { dispatchMessage: function() {} } } };
 chrome = { extension: { sendRequest: function() {} } };
 
+require('./jquery-helper');
+
 (function() {
   if(typeof window == 'undefined') {
     // Get Node.js caught up to speed
@@ -56,7 +58,7 @@ jasmine.Env.prototype.itBehavesLikeA = function(subject) {
   if(group) {
     group.call(this);
   } else {
-    jasmine.log('Missing example group "' + subject + '"');
+    console.log('Missing example group "' + subject + '"');
   }
 }
 

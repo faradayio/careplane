@@ -1,3 +1,5 @@
+require('../../trip-examples');
+
 describe('OrbitzTrip', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var OrbitzTrip = require('drivers/orbitz/orbitz-trip');

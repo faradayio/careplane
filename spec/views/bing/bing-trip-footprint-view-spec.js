@@ -1,3 +1,5 @@
+require('../trip-footprint-view-examples');
+
 describe('BingTripFootprintView', function() {
   var BingTripFootprintView = require('views/bing/bing-trip-footprint-view');
 

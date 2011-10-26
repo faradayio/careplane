@@ -1,3 +1,5 @@
+require('../../trip-examples');
+
 describe('HipmunkTrip', function() {
   var HipmunkTrip = require('drivers/hipmunk/hipmunk-trip');
 

@@ -1,3 +1,5 @@
+require('../driver-examples');
+
 describe('Bing', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var Bing = require('drivers/bing');

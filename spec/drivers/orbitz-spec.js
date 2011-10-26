@@ -1,3 +1,5 @@
+require('../driver-examples');
+
 describe('Orbitz', function() {
   var Orbitz = require('drivers/orbitz');
 

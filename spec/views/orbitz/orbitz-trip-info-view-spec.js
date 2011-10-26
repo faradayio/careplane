@@ -1,3 +1,5 @@
+require('../trip-info-view-examples');
+
 describe('OrbitzTripInfoView', function() {
   var OrbitzTripInfoView = require('views/orbitz/orbitz-trip-info-view');
 

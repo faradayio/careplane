@@ -1,3 +1,5 @@
+require('../trip-info-view-examples');
+
 describe('HipmunkTripInfoView', function() {
   var HipmunkTripInfoView = require('views/hipmunk/hipmunk-trip-info-view');
 

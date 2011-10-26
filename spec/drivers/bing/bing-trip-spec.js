@@ -1,3 +1,5 @@
+require('../../trip-examples');
+
 describe('BingTrip', function() {
   var jsonpath = require('dkastner-JSONPath');
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
