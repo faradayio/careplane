@@ -14,7 +14,7 @@ describe('KayakUkTrip', function() {
       body: JSON.stringify({ message: kayakFlightDetails })
     });
     loadFixtures('kayak_dtw_sfo_flight.html');
-    this.trip = new KayakUKTrip(this.extension, '53', $('.flightresult').get(0));
+    this.trip = new KayakUKTrip('53', $('.flightresult').get(0));
   });
 
   itBehavesLikeA('Trip');
