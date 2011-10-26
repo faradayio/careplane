@@ -1,3 +1,5 @@
+require('../trip-info-view-examples');
+
 describe('KayakTripInfoView', function() {
   var KayakTripInfoView = require('views/kayak/kayak-trip-info-view');
 

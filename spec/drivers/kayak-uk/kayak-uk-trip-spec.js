@@ -1,3 +1,5 @@
+require('../../trip-examples');
+
 describe('KayakUkTrip', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var KayakUKTrip = require('drivers/kayak-uk/kayak-uk-trip');

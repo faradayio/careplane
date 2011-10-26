@@ -1,12 +1,18 @@
+require('../../helpers/spec-helper');
+require('../../trip-examples');
+
+var fakeweb = require('fakeweb');
+var http = require('http');
+
 describe('KayakTrip', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var KayakTrip = require('drivers/kayak/kayak-trip');
 
   beforeEach(function() {
-    fakeweb.allowNetConnect = false;
-    fakeweb.registerUri({
-      uri: 'http://www.kayak.com/s/run/inlineDetails/flight',
-      body: JSON.stringify(kayakFlightDetails)
+    http.register_intercept({
+      uri: /\/s\/run\/inlineDetails\/flight/,
+      host: 'www.kayak.com',
+      body: JSON.stringify({ message: kayakFlightDetails })
     });
     loadFixtures('kayak_dtw_sfo_flight.html');
     this.trip = new KayakTrip('53', $('.flightresult').get(0));

@@ -1,3 +1,5 @@
+require('../../air-traffic-controller-examples');
+
 describe('KayakUkAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var KayakUK = require('drivers/kayak-uk');

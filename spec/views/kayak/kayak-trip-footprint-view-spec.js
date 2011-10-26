@@ -1,3 +1,5 @@
+require('../trip-footprint-view-examples');
+
 describe('KayakTripFootprintView', function() {
   var KayakTripFootprintView = require('views/kayak/kayak-trip-footprint-view');
 

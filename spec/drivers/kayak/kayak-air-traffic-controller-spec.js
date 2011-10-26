@@ -1,5 +1,8 @@
-var fakeweb = require('node-fakeweb');
-fakeweb.allowNetConnect = false;
+require('../../helpers/spec-helper');
+require('../../air-traffic-controller-examples');
+
+var fakeweb = require('fakeweb'),
+    http = require('http');
 
 describe('KayakAirTrafficController', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
@@ -11,11 +14,14 @@ describe('KayakAirTrafficController', function() {
     this.extension = new JasmineExtension(document);
     kayak = new Kayak(this.extension);
 
-    fakeweb.registerUri({
-      uri: 'http://www.kayak.com/s/run/inlineDetails/flight',
-      body: kayakFlightDetails
+    http.register_intercept({
+      uri: /\/s\/run\/inlineDetails\/flight.*searchid=VECBAtkvi/,
+      host: 'www.kayak.com',
+      body: JSON.stringify({ message: kayakFlightDetails, status: 0 })
     });
   });
+
+  afterEach(function() { http.clear_intercepts(); });
 
   describe('with fixtures', function() {
     beforeEach(function() {
@@ -28,9 +34,10 @@ describe('KayakAirTrafficController', function() {
 
   describe('#scoreTrips', function() {
     it('scores standard flights', function() {
-      fakeweb.registerUri({
-        uri: 'http://impact.brighterplanet.com/flights.json',
-        body: "{ \"emission\": 234 }"
+      http.register_intercept({
+        uri: '/flights.json',
+        host: 'impact.brighterplanet.com',
+        body: JSON.stringify({ decisions: { carbon: { object: { value: 234 } } } })
       });
       loadFixtures('kayak_dtw_sfo_flight.html');
       var controller = new KayakAirTrafficController(kayak, document);

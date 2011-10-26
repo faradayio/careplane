@@ -1,3 +1,5 @@
+require('../driver-examples');
+
 describe('Kayak', function() {
   var JasmineExtension = require('browser/jasmine/jasmine-extension');
   var Kayak = require('drivers/kayak');
