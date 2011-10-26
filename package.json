@@ -16,14 +16,11 @@
     "dkastner-JSONPath": "*",
     "jquery-browserify": "*",
     "jsdom": "*",
-    "superagent": "*",
     "yaml": "*"
   },
   "devDependencies": {
     "dkastner-browserify": "*",
-    "dkastner-http-browserify": "*",
     "jasmine-node": "*",
-    "jquery": "*",
     "node-fakeweb": "*"
   }
 }
