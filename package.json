@@ -19,7 +19,7 @@
     "yaml": "*"
   },
   "devDependencies": {
-    "dkastner-browserify": "*",
+    "dkastner-browserify": ">= 1.6.2",
     "fakeweb": "*",
     "jasmine-node": "*",
     "jquery": "*"
