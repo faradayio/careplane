@@ -10,6 +10,8 @@ sharedExamplesFor('AirTrafficController', function() {
     });
   });
 
+  afterEach(function() { http.clear_intercepts(); });
+
   describe('#discoverTrips, #scoreTrips, #rateTrips', function() {
     it('discovers, scores, and rates each trip, provides methodologies, and calls searchEmissionsComplete', function() {
       var searchEmissionsComplete = jasmine.createSpy('searchEmissionsComplete');

@@ -39,6 +39,7 @@ describe('KayakAirTrafficController', function() {
         host: 'impact.brighterplanet.com',
         body: JSON.stringify({ decisions: { carbon: { object: { value: 234 } } } })
       });
+
       loadFixtures('kayak_dtw_sfo_flight.html');
       var controller = new KayakAirTrafficController(kayak, document);
       controller.discoverTrips();
@@ -47,6 +48,8 @@ describe('KayakAirTrafficController', function() {
         var p = controller.trips[i].footprintView.footprintParagraph();
         expect(p).toHaveText(/[\d]+/);
       }
+
+      http.clear_intercepts();
     });
   });
 

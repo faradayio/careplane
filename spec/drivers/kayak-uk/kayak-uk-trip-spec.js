@@ -1,4 +1,6 @@
+require('../../helpers/spec-helper');
 require('../../trip-examples');
+
 var fakeweb = require('fakeweb'),
     http = require('http');
 
@@ -15,7 +17,10 @@ describe('KayakUkTrip', function() {
     });
     loadFixtures('kayak_dtw_sfo_flight.html');
     this.trip = new KayakUKTrip('53', $('.flightresult').get(0));
+    this.trip.init();
   });
+
+  afterEach(function() { http.clear_intercepts(); });
 
   itBehavesLikeA('Trip');
 });

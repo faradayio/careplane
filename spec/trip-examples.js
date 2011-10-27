@@ -16,6 +16,8 @@ sharedExamplesFor('Trip', function() {
     });
   });
 
+  afterEach(function() { http.clear_intercepts(); });
+
   it('provides #id', function() {
     expect(this.trip.id).not.toBeNull();
   });

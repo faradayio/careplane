@@ -16,7 +16,10 @@ describe('KayakTrip', function() {
     });
     loadFixtures('kayak_dtw_sfo_flight.html');
     this.trip = new KayakTrip('53', $('.flightresult').get(0));
+    this.trip.init();
   });
+
+  afterEach(function() { http.clear_intercepts(); });
 
   itBehavesLikeA('Trip');
 });

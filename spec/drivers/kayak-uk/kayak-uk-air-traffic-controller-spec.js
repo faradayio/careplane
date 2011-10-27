@@ -18,6 +18,8 @@ describe('KayakUkAirTrafficController', function() {
     kayakuk = new KayakUK(this.extension, document);
   });
 
+  afterEach(function() { http.clear_intercepts(); });
+
   describe('with fixtures', function() {
     beforeEach(function() {
       loadFixtures('kayak_uk_lhr_txl.html');
@@ -34,6 +36,7 @@ describe('KayakUkAirTrafficController', function() {
         host: 'impact.brighterplanet.com',
         body: JSON.stringify({ decisions: { carbon: { object: { value: 234 }}}})
       });
+
       loadFixtures('kayak_uk_lhr_txl_flight.html');
       var controller = new KayakUKAirTrafficController(kayakuk, document);
       controller.discoverTrips();
@@ -42,6 +45,8 @@ describe('KayakUkAirTrafficController', function() {
         var p = controller.trips[i].footprintView.footprintParagraph();
         expect(p).toHaveText(/[\d]+/);
       }
+
+      http.clear_intercepts();
     });
   });
 
