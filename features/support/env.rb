@@ -21,6 +21,7 @@ ENV['PROFILE'] ||= Dir.glob('/Users/dkastner/Library/Application Support/Firefox
 Capybara.default_selector = :css
 Capybara.run_server = false
 Capybara.default_wait_time = 3600
+Capybara.javascript_driver = :webkit
 
 Dir.glob('*.html') { |f| FileUtils.rm_f f }
 
