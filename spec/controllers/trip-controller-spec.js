@@ -8,6 +8,7 @@ describe('TripController', function() {
   beforeEach(function() {
     loadFixtures('kayak_dtw_sfo_flight.html');
     trip = new KayakTrip('0', $('.flightresult').get(0));
+    trip.init();
     trip.initViews();
     spyOn(trip.infoView, 'show');
     spyOn(trip.infoView, 'hide');
