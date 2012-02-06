@@ -1,9 +1,12 @@
-require('./helper');
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert,
+    sinon = helper.sinon;
 
 var fakeweb = require('fakeweb'),
     http = require('http');
 
-sharedExamplesFor('Trip', function() {
+module.exports = {
   var Trip = require('trip');
 
   var onFlightEmissionsComplete, onTripEmissionsComplete;
@@ -69,4 +72,4 @@ sharedExamplesFor('Trip', function() {
       expect(this.trip.isScorable).toBeTruthy();
     });
   });
-});
+};

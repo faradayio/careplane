@@ -1,4 +1,7 @@
-require('./helper');
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert,
+    sinon = helper.sinon;
 
 vows.describe('HipmunkRailTrip').addBatch({
   var HipmunkRailTrip = require('drivers/hipmunk/hipmunk-rail-trip');

@@ -1,6 +1,7 @@
-require('./helper');
-
-require('../../helpers/spec-helper');
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert,
+    sinon = helper.sinon;
 require('../../trip-examples');
 
 vows.describe('OrbitzTrip').addBatch({

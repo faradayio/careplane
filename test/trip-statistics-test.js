@@ -1,4 +1,7 @@
-require('./helper');
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert,
+    sinon = helper.sinon;
 
 vows.describe('TripStatistics').addBatch({
   var AverageTrip = require('average-trip');

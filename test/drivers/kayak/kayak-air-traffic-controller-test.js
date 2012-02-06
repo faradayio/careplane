@@ -1,6 +1,8 @@
-require('./helper');
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert,
+    sinon = helper.sinon;
 
-require('../../helpers/spec-helper');
 require('../../air-traffic-controller-examples');
 
 var fakeweb = require('fakeweb'),
