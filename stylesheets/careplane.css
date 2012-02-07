@@ -136,3 +136,7 @@ div.careplane-info {
 .brighter_planet_cm1_badge p a span { display: block !important; border-left: 1px solid #50A0D1 !important; }
 .brighter_planet_cm1_badge p a .setup { padding: 3px 4px 0 !important; }
 .brighter_planet_cm1_badge p a .punchline { font-size: 13px !important; text-shadow: 0 -1px 1px #124165 !important; color: white !important; padding: 0 4px 3px !important; }
+
+.kayak.brighter_planet_cm1_badge {
+  margin: 5px auto;
+}
