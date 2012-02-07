@@ -14,6 +14,7 @@ module.exports = {
   assert: require('assert'),
   sinon: require('sinon'),
   jsdom: require('jsdom'),
+  plugin: require('../'),
 
   inBrowser: function(callback) {
     this.jsdom.env('<html><body></body></html>', callback);
