@@ -7,6 +7,8 @@ self = {
 safari = { self: { tab: { dispatchMessage: function() {} } } };
 chrome = { extension: { sendRequest: function() {} } };
 
+var path = require('path');
+
 module.exports = {
   vows: require('vows'),
   assert: require('assert'),
@@ -18,9 +20,9 @@ module.exports = {
   },
 
   htmlFixture: function(file, callback) {
-    this.jsdom.env(file, ['http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'], function(err, jsdomWindow) {
-      if(err)
-        console.log(err);
+    this.jsdom.env(path.resolve('test/fixtures', file),
+        [path.resolve('test/fixtures/jquery.min.js')], {}, function(err, jsdomWindow) {
+      if(err) console.log(err);
       callback(jsdomWindow.$);
     });
   },
