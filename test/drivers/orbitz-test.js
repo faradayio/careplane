@@ -1,9 +1,10 @@
 var test = require('../helper'),
+    vows = test.vows,
     plugin = test.plugin;
 
 var Orbitz = plugin.require('./drivers/orbitz');
 var driverExamples = require('../driver-examples');
 
-test.vows.describe('Orbitz').addBatch( 
-  driverExamples.nonPollingDriver(Orbitz)
+vows.describe('Orbitz').addBatch( 
+  driverExamples.pollingDriver(Orbitz)
 ).export(module);
