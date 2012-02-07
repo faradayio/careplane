@@ -1,72 +1,72 @@
 var helper = require('./helper'),
-    vows = helper.vows,
     assert = helper.assert,
-    sinon = helper.sinon;
+    sinon = helper.sinon,
+    plugin = helper.plugin,
+    Careplane = plugin.require('./careplane'),
+    TestExtension = plugin.require('./browser/test/test-extension');
 
-sharedExamplesFor('polling Driver', function() {
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var Careplane = require('careplane');
+module.exports.pollingDriver = function(driverClass) {
+  return {
+    'Load': {
+      'polls when using a non-testing extension': function() {
+        var extension = new Careplane();
+        extension.doc = {
+          location: {
+            href: ''
+          }
+        };
+        var driver = new driverClass(extension);
+        sinon.spy(driver.events, 'loadPoller');
+        driver.prepare = function() {};
+        driver.load();
+        assert(driver.events.loadPoller.called);
+      },
+      'does not poll when using a testing extension': function() {
+        var extension = new TestExtension();
+        extension.doc = {
+          location: {
+            href: ''
+          }
+        };
+        var driver = new driverClass(extension);
+        sinon.spy(driver.atc, 'clear');
+        driver.prepare = function() {};
+        driver.load();
+        assert(driver.atc.clear.called);
+      }
+    }
+  };
+};
 
-  'Load': {
-    'polls when using a non-testing extension': function() {
-      var extension = new Careplane();
-      extension.doc = {
-        location: {
-          href: ''
-        }
-      };
-      var driver = new this.driverClass(extension);
-      spyOn(driver.events, 'loadPoller');
-      driver.prepare = function() {};
-      driver.load();
-      expect(driver.events.loadPoller).toHaveBeenCalled();
-    });
-    'does not poll when using a testing extension': function() {
-      var extension = new JasmineExtension();
-      extension.doc = {
-        location: {
-          href: ''
-        }
-      };
-      var driver = new this.driverClass(extension);
-      spyOn(driver.atc, 'clear');
-      driver.prepare = function() {};
-      driver.load();
-      expect(driver.atc.clear).toHaveBeenCalled();
-    });
-  });
-});
-
-sharedExamplesFor('non-polling Driver', function() {
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var Careplane = require('careplane');
-
-  'Load': {
-    'does not poll when using a non-testing extension': function() {
-      var extension = new Careplane();
-      extension.doc = {
-        location: {
-          href: ''
-        }
-      };
-      var driver = new this.driverClass(extension);
-      spyOn(driver.atc, 'clear');
-      driver.prepare = function() {};
-      driver.load();
-      expect(driver.atc.clear).toHaveBeenCalled();
-    });
-    'does not poll when using a testing extension': function() {
-      var extension = new JasmineExtension();
-      extension.doc = {
-        location: {
-          href: ''
-        }
-      };
-      var driver = new this.driverClass(extension);
-      spyOn(driver.atc, 'clear');
-      driver.prepare = function() {};
-      driver.load();
-      expect(driver.atc.clear).toHaveBeenCalled();
-    });
-  });
-});
+module.exports.nonPollingDriver = function(driverClass) {
+  return {
+    'Load': {
+      'does not poll when using a non-testing extension': function() {
+        var extension = new Careplane();
+        extension.doc = {
+          location: {
+            href: ''
+          }
+        };
+        var driver = new driverClass(extension);
+        sinon.spy(driver.atc, 'clear');
+        driver.prepare = function() {};
+        driver.load();
+        assert(driver.atc.clear.called);
+      },
+      'does not poll when using a testing extension': function() {
+        var extension = new TestExtension();
+        extension.doc = {
+          location: {
+            href: ''
+          }
+        };
+        var driver = new driverClass(extension);
+        sinon.spy(driver.atc, 'clear');
+        driver.prepare = function() {};
+        driver.load();
+        assert(driver.atc.clear.called);
+      }
+    }
+  };
+};

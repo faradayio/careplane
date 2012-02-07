@@ -1,16 +1,9 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var test = require('../helper'),
+    plugin = test.plugin;
 
-require('../driver-examples');
+var Orbitz = plugin.require('./drivers/orbitz');
+var driverExamples = require('../driver-examples');
 
-vows.describe('Orbitz').addBatch({
-  var Orbitz = require('drivers/orbitz');
-
-  beforeEach(function() {
-    this.driverClass = Orbitz;
-  });
-
-  itBehavesLikeA('non-polling Driver');
-});
+test.vows.describe('Orbitz').addBatch( 
+  driverExamples.nonPollingDriver(Orbitz)
+).export(module);
