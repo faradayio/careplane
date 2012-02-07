@@ -1,43 +1,50 @@
-var helper = require('./helper'),
+var helper = require('../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
+var KayakTrip = require('../../lib/drivers/kayak/kayak-trip');
+var TripController = require('../../lib/controllers/trip-controller');
 
-vows.describe('TripController').addBatch({
-  var KayakTrip = require('drivers/kayak/kayak-trip');
-  var TripController = require('controllers/trip-controller');
-
+var tripTopic = function() {
   var trip;
-  beforeEach(function() {
-    loadFixtures('kayak_dtw_sfo_flight.html');
+  helper.htmlFixture('kayak_dtw_sfo_flight.html', function($) {
     trip = new KayakTrip('0', $('.flightresult').get(0));
     trip.init();
     trip.initViews();
-    spyOn(trip.infoView, 'show');
-    spyOn(trip.infoView, 'hide');
   });
+  return trip;
+};
 
-  'trip-footprint-view#mouseover': {
-    'shows the TripInfoView': function() {
+vows.describe('TripController').addBatch({
+  '#mouseover': {
+    topic: tripTopic,
+
+    'shows the TripInfoView': function(trip) {
+      sinon.spy(trip.infoView, 'show');
       var mouseover = TripController.events.tripFootprintHoverIn(trip);
       mouseover();
-      expect(trip.infoView.show).toHaveBeenCalled();
-    });
-  });
-  'trip-footprint-view#mouseout': {
-    'hides the TripInfoView': function() {
+      sinon.assert.called(trip.infoView.show);
+    }
+  },
+  '#mouseout': {
+    topic: tripTopic,
+
+    'hides the TripInfoView': function(trip) {
+      sinon.spy(trip.infoView, 'hide');
       var mouseout = TripController.events.tripFootprintHoverOut(trip);
       mouseout();
-      expect(trip.infoView.hide).toHaveBeenCalled();
-    });
-  });
+      sinon.assert.called(trip.infoView.hide);
+    }
+  },
 
   '#init': {
-    'does not explode': function() {
+    topic: tripTopic,
+
+    'does not explode': function(trip) {
       var controller = new TripController(trip);
-      expect(function() {
+      assert.doesNotThrow(function() {
         controller.init();
-      }).not.toThrow();
-    });
-  });
-});
+      });
+    }
+  }
+}).export(module);
