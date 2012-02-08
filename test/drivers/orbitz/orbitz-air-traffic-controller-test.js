@@ -1,25 +1,14 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var test = require('../../helper'),
+    vows = test.vows,
+    assert = test.assert,
+    sinon = test.sinon;
 
-require('../../air-traffic-controller-examples');
+var Careplane = test.plugin.Careplane,
+    Orbitz = test.plugin.require('./drivers/orbitz'),
+    OrbitzAirTrafficController = test.plugin.require('./drivers/orbitz/orbitz-air-traffic-controller');
 
-vows.describe('OrbitzAirTrafficController').addBatch({
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var Orbitz = require('drivers/orbitz');
-  var OrbitzAirTrafficController = require('drivers/orbitz/orbitz-air-traffic-controller');
+var airTrafficControllerExamples = require('../../air-traffic-controller-examples');
 
-  var orbitz;
-  beforeEach(function() {
-    this.extension = new JasmineExtension(document);
-    orbitz = new Orbitz(this.extension);
-  });
-
-  beforeEach(function() {
-    loadFixtures('orbitz_dtw_sfo.html');
-    this.controller = new OrbitzAirTrafficController(orbitz, document);
-  });
-
-  itBehavesLikeAn('AirTrafficController');
-});
+vows.describe('OrbitzAirTrafficController').addBatch(
+  airTrafficControllerExamples.airTrafficController(Orbitz, OrbitzAirTrafficController, 'orbitz_dtw_sfo.html')
+).export(module);

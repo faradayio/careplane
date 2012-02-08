@@ -1,56 +1,63 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var test = require('./helper'),
+    vows = test.vows,
+    assert = test.assert,
+    sinon = test.sinon;
 
-var fakeweb = require('fakeweb'),
+var $ = require('jquery'),
+    fakeweb = require('fakeweb'),
     http = require('http');
 
-sharedExamplesFor('AirTrafficController', function() {
-  beforeEach(function() {
-    http.register_intercept({
-      uri: '/flights.json',
-      host: 'impact.brighterplanet.com',
-      body: JSON.stringify({ decisions: { carbon: { object: { value: 234 }}}})
-    });
-  });
-
-  afterEach(function() { http.clear_intercepts(); });
-
-  '#discoverTrips, #scoreTrips, #rateTrips': {
-    'discovers, scores, and rates each trip, provides methodologies, and calls searchEmissionsComplete': function() {
-      var searchEmissionsComplete = jasmine.createSpy('searchEmissionsComplete');
-      this.controller.events.searchEmissionsComplete = searchEmissionsComplete;
-      this.controller.discoverTrips();
-
-      var numTrips = this.controller.trips.length;
-      expect(this.controller.tripCount).toBeGreaterThan(0);
-      expect(this.controller.tripCount).toBe(numTrips);
-      this.controller.trips.forEach(function(trip) {
-        expect(trip.isScorable).toBeTruthy();
-      });
-
-      this.controller.scoreTrips();
-      this.controller.trips.forEach(function(trip) {
-        expect(trip.isScorable).toBeFalsy();
-      });
-
-      this.controller.rateTrips();
-
-      for(var i in this.controller.trips) {
-        var p = this.controller.trips[i].footprintView.footprintParagraph();
-        expect(p).toHaveText(/[\d,]+/);
-
-        var div = this.controller.trips[i].infoView.target();
-        expect($(div).find('.careplane-methodologies li a').length).toBeGreaterThan(0);
-        $(div).find('.careplane-methodologies li a').each(function(i, a) {
-          expect($(a)).toHaveText(/[A-Z]{3}-[A-Z]{3}/);
-        });
-
-        expect($(div).find('p.careplane-search-average-comparison')).toHaveText(/impact/);
-      }
-
-      expect(searchEmissionsComplete).toHaveBeenCalled();
-    });
-  });
+http.register_intercept({
+  uri: '/flights.json',
+  host: 'impact.brighterplanet.com',
+  body: JSON.stringify({ decisions: { carbon: { object: { value: 234 }}}})
 });
+
+exports.airTrafficController = function(driverClass, controllerClass, fixtureFile) {
+  return {
+    '#discoverTrips, #scoreTrips, #rateTrips': {
+      'discovers, scores, and rates each trip, provides methodologies, and calls searchEmissionsComplete': function() {
+        test.htmlFixture(fixtureFile, function(err, window) {
+          var document = window.document;
+          var extension = new test.plugin.Careplane(document);
+          var driver = new driverClass(extension);
+          var controller = new controllerClass(driver, document);
+
+          var searchEmissionsComplete = sinon.spy('searchEmissionsComplete');
+          controller.events.searchEmissionsComplete = searchEmissionsComplete;
+          controller.discoverTrips();
+
+          var numTrips = controller.trips.length;
+          assert(controller.tripCount > 0, 'No trips found');
+          assert.equal(controller.tripCount, numTrips, 'controller.tripCount is out of sync');
+          controller.trips.forEach(function(trip) {
+            assert.isTrue(trip.isScorable, 'trip ' + trip + ' is not scorable');
+          });
+
+          controller.scoreTrips();
+          controller.trips.forEach(function(trip) {
+            assert.isFalse(trip.isScorable);
+          });
+
+          controller.rateTrips();
+
+          for(var i in controller.trips) {
+            var p = controller.trips[i].footprintView.footprintParagraph();
+            assert.match(p, /[\d,]+/);
+
+            var div = controller.trips[i].infoView.target();
+            assert($(div).find('.careplane-methodologies li a').length > 0);
+            $(div).find('.careplane-methodologies li a').each(function(i, a) {
+              assert.match($(a).text(), /[A-Z]{3}-[A-Z]{3}/);
+            });
+
+            var comparison = $(div).find('p.careplane-search-average-comparison').text();
+            assert.match(comparison, /impact/);
+          }
+
+          assert(searchEmissionsComplete.called);
+        });
+      }
+    }
+  };
+};
