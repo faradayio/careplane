@@ -1,75 +1,74 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var test = require('./helper'),
+    vows = test.vows,
+    assert = test.assert,
+    sinon = test.sinon;
 
 var fakeweb = require('fakeweb'),
     http = require('http');
 
-module.exports = {
-  var Trip = require('trip');
+var Trip = test.plugin.require('./trip');
+var onFlightEmissionsComplete = sinon.spy('onFlightEmissionsComplete');
+var onTripEmissionsComplete = sinon.spy('onTripEmissionsComplete');
 
-  var onFlightEmissionsComplete, onTripEmissionsComplete;
-  beforeEach(function() {
-    onFlightEmissionsComplete = jasmine.createSpy('onFlightEmissionsComplete');
-    onTripEmissionsComplete = jasmine.createSpy('onTripEmissionsComplete');
+http.register_intercept({
+  uri: '/flights.json',
+  host: 'impact.brighterplanet.com',
+  body: JSON.stringify({ decisions: { carbon: { object: { value: 123.0 }}}})
+});
 
-    http.register_intercept({
-      uri: '/flights.json',
-      host: 'impact.brighterplanet.com',
-      body: JSON.stringify({ decisions: { carbon: { object: { value: 123.0 }}}})
-    });
-  });
+exports.trip = function(fixtureFile, tripFactory) {
+  var trip = tripFactory(test.jqueryFixture(fixtureFile));
+  trip.init();
 
-  afterEach(function() { http.clear_intercepts(); });
+  return {
+    'provides #id': function() {
+      assert.isNotNull(trip.id);
+    },
+    'provides #tripElement': function() {
+      assert.isNotNull(trip.tripElement);
+    },
+    'provides #totalFootprint': function() {
+      assert.isDefined(trip.totalFootprint);
+    },
+    'provides #completedFlightCount': function() {
+      assert.isDefined(trip.completedFlightCount);
+    },
+    'provides #isScorable': function() {
+      assert.isDefined(trip.isScorable);
+    },
+    'provides #id': function() {
+      assert.isDefined(trip.id);
+    },
+    'provides #cost': function() {
+      assert.match(trip.cost().toString(), /^\d+$/);
+    },
 
-  'provides #id': function() {
-    expect(this.trip.id).not.toBeNull();
-  });
-  'provides #tripElement': function() {
-    expect(this.trip.tripElement).not.toBeNull();
-  });
-  'provides #totalFootprint': function() {
-    expect(this.trip.totalFootprint).toBeDefined();
-  });
-  'provides #completedFlightCount': function() {
-    expect(this.trip.completedFlightCount).toBeDefined();
-  });
-  'provides #isScorable': function() {
-    expect(this.trip.isScorable).toBeDefined();
-  });
-  'provides #id': function() {
-    expect(this.trip.id).toBeDefined();
-  });
-  'provides #cost': function() {
-    expect(this.trip.cost().toString()).toMatch(/^\d+$/);
-  });
+    '#score': {
+      'parses each flight and runs the onFlightEmissionsComplete callback': function() {
+        trip.loadFlights(Trip.events.flightsLoaded);
+        trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
+        sinon.assert.called(onFlightEmissionsComplete);
+      },
+      'sets #isScorable to false': function() {
+        trip.loadFlights(Trip.events.flightsLoaded);
+        trip.isScorable = true;
+        trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
+        assert.isFalse(trip.isScorable);
+      }
+    },
 
-  '#score': {
-    'parses each flight and runs the onFlightEmissionsComplete callback': function() {
-      this.trip.loadFlights(Trip.events.flightsLoaded);
-      this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
-      expect(onFlightEmissionsComplete).toHaveBeenCalled();
-    });
-    'sets #isScorable to false': function() {
-      this.trip.loadFlights(Trip.events.flightsLoaded);
-      this.trip.isScorable = true;
-      this.trip.score(onFlightEmissionsComplete, onTripEmissionsComplete);
-      expect(this.trip.isScorable).toBeFalsy();
-    });
-  });
-
-  '#loadFlights': {
-    'gathers a list of flights': function() {
-      this.trip.loadFlights(Trip.events.flightsLoaded);
-      expect(this.trip.flights.length).toBeGreaterThan(0);
-      this.trip.eachFlight(function(flight) {
-        expect(flight.origin).not.toBeNull();
-      });
-    });
-    'sets #isScorable to true when complete': function() {
-      this.trip.loadFlights(Trip.events.flightsLoaded);
-      expect(this.trip.isScorable).toBeTruthy();
-    });
-  });
+    '#loadFlights': {
+      'gathers a list of flights': function() {
+        trip.loadFlights(Trip.events.flightsLoaded);
+        assert(trip.flights.length > 0, 'should have at least one flight');
+        trip.eachFlight(function(flight) {
+          assert.isNotNull(flight.origin, 'should set origin');
+        });
+      },
+      'sets #isScorable to true when complete': function() {
+        trip.loadFlights(Trip.events.flightsLoaded);
+        assert.isTrue(trip.isScorable);
+      }
+    }
+  };
 };
