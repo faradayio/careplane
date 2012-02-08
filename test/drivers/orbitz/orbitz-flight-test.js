@@ -1,21 +1,24 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var test = require('../../helper'),
+    vows = test.vows,
+    assert = test.assert,
+    sinon = test.sinon;
+
+var OrbitzFlight = test.plugin.require('./drivers/orbitz/orbitz-flight');
 
 vows.describe('OrbitzFlight').addBatch({
-  var OrbitzFlight = require('drivers/orbitz/orbitz-flight');
-
   '.parse': {
-    'parses an Orbitz leg': function() {
-      loadFixtures('orbitz_dtw_sfo_result.html');
-      var node = $('.resultLeg').get(0);
+    topic: function() {
+      test.htmlFixture('orbitz_dtw_sfo_flight_details.html', this.callback);
+    },
+
+    'parses an Orbitz leg': function(err, window) {
+      var node = window.document.getElementsByClassName('slice')[0];
 
       var flight = OrbitzFlight.parse(node);
-      expect(flight.origin).toBe('DTW');
-      expect(flight.destination).toBe('SFO');
-      expect(flight.airline).toBe('Delta Air Lines');
-      expect(flight.aircraft).toBe('Boeing 737');
-    });
-  });
-});
+      assert.equal(flight.origin, 'DTW');
+      assert.equal(flight.destination, 'SFO');
+      assert.equal(flight.airline, 'Delta Air Lines');
+      assert.equal(flight.aircraft, 'Boeing 757');
+    }
+  }
+}).export(module);
