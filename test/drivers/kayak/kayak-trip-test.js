@@ -1,28 +1,21 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
-require('../../trip-examples');
+var test = require('../../helper'),
+    vows = test.vows;
 
-var fakeweb = require('fakeweb');
-var http = require('http');
+var tripExamples = require('../../trip-examples');
 
-vows.describe('KayakTrip').addBatch({
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var KayakTrip = require('drivers/kayak/kayak-trip');
+var KayakTrip = test.plugin.require('./drivers/kayak/kayak-trip');
 
-  beforeEach(function() {
-    http.register_intercept({
-      uri: /\/s\/run\/inlineDetails\/flight/,
-      host: 'www.kayak.com',
-      body: JSON.stringify({ message: kayakFlightDetails })
-    });
-    loadFixtures('kayak_dtw_sfo_flight.html');
-    this.trip = new KayakTrip('1050', $('.flightresult').get(0));
-    this.trip.init();
-  });
+var http = require('http'),
+    fakeweb = require('fakeweb');
 
-  afterEach(function() { http.clear_intercepts(); });
-
-  itBehavesLikeA('Trip');
+http.register_intercept({
+  uri: /\/s\/run\/inlineDetails\/flight/,
+  host: 'www.kayak.com',
+  body: JSON.stringify({ message: test.kayakFlightDetails })
 });
+
+vows.describe('KayakTrip').addBatch(
+  tripExamples.trip('kayak_dtw_sfo_flight.html', function($) {
+    return new KayakTrip('1050', $('.flightresult').get(0));
+  })
+).export(module);
