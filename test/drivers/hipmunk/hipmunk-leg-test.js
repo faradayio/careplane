@@ -1,40 +1,40 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
-    sinon = helper.sinon;
+    sinon = helper.sinon,
+    plugin = helper.plugin;
+
+var HipmunkLeg = plugin.require('./drivers/hipmunk/hipmunk-leg'),
+    HipmunkBusTrip = plugin.require('./drivers/hipmunk/hipmunk-bus-trip'),
+    HipmunkFlight = plugin.require('./drivers/hipmunk/hipmunk-flight'),
+    HipmunkRailTrip = plugin.require('./drivers/hipmunk/hipmunk-rail-trip');
 
 vows.describe('HipmunkLeg').addBatch({
-  var HipmunkLeg = require('drivers/hipmunk/hipmunk-leg'),
-      HipmunkBusTrip = require('drivers/hipmunk/hipmunk-bus-trip'),
-      HipmunkFlight = require('drivers/hipmunk/hipmunk-flight'),
-      HipmunkRailTrip = require('drivers/hipmunk/hipmunk-rail-trip');
-
   '.parse': {
-    var leg;
-    beforeEach(function() {
-      leg = document.createElement('div');
-    });
+    topic: function() {
+      return document.createElement('div');
+    },
     
-    'parses a rail trip if the carrier is Amtrak and route number is < 3000': function() {
+    'parses a rail trip if the carrier is Amtrak and route number is < 3000': function(leg) {
       $(leg).html('<div class="flightnum">Amtrak #365</div>');
 
-      spyOn(HipmunkRailTrip, 'parse');
+      sinon.spy(HipmunkRailTrip, 'parse');
       HipmunkLeg.parse(leg);
-      expect(HipmunkRailTrip.parse).toHaveBeenCalled();
-    });
-    'parses a bus trip if the carrier is Amtrak and route number is >= 3000': function() {
+      sinon.assert.called(HipmunkRailTrip.parse);
+    },
+    'parses a bus trip if the carrier is Amtrak and route number is >= 3000': function(leg) {
       $(leg).html('<div class="flightnum">Amtrak #8365</div>');
 
-      spyOn(HipmunkBusTrip, 'parse');
+      sinon.spy(HipmunkBusTrip, 'parse');
       HipmunkLeg.parse(leg);
-      expect(HipmunkBusTrip.parse).toHaveBeenCalled();
-    });
-    'parses a flight if the carrier is not Amtrak': function() {
+      sinon.assert.called(HipmunkBusTrip.parse);
+    },
+    'parses a flight if the carrier is not Amtrak': function(leg) {
       $(leg).html('<div class="flightnum">American Airlines #456</div>');
       
-      spyOn(HipmunkFlight, 'parse');
+      sinon.spy(HipmunkFlight, 'parse');
       HipmunkLeg.parse(leg);
-      expect(HipmunkFlight.parse).toHaveBeenCalled();
-    });
-  });
-});
+      sinon.assert.called(HipmunkFlight.parse);
+    }
+  }
+}).export(module);

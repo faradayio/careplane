@@ -1,20 +1,16 @@
-var helper = require('./helper'),
+var helper = require('../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-require('../driver-examples');
+var Hipmunk = helper.plugin.require('./drivers/hipmunk');
 
-vows.describe('Hipmunk').addBatch({
-  var Hipmunk = require('drivers/hipmunk');
+var driverExamples = require('../driver-examples');
 
-  beforeEach(function() {
-    this.driverClass = Hipmunk;
-  });
-
+vows.describe('Hipmunk').addBatch(
+  driverExamples(Hipmunk)
+).addBatch({
   'has a .driverName': function() {
     expect(Hipmunk.driverName).toBe('Hipmunk');
-  });
-
-  itBehavesLikeA('polling Driver');
-});
+  }
+}).export(module);

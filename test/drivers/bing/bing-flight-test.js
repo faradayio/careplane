@@ -1,21 +1,20 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
+var jsonpath = require('dkastner-JSONPath');
+var BingFlight = helper.plugin.require('./drivers/bing/bing-flight');
+
 vows.describe('BingFlight').addBatch({
-  var jsonpath = require('dkastner-JSONPath');
-  var BingFlight = require('drivers/bing/bing-flight');
-  
   '.parse': {
-    var flights, searchData;
-    beforeEach(function() {
-      searchData = JSON.parse(readFixtures('bing_dtw_sfo.json'));
-    });
+    topic: function() {
+      return JSON.parse(readFixtures('bing_dtw_sfo.json'));
+    },
 
-    'parses a standard set of flights': function() {
+    'parses a standard set of flights': function(searchData) {
       var signature = searchData[0].quotes[0].pricing.signature;
-      flights = BingFlight.parse(searchData, signature);
+      var flights = BingFlight.parse(searchData, signature);
 
       expect(flights.length).toBe(4);
 
@@ -34,10 +33,10 @@ vows.describe('BingFlight').addBatch({
       expect(flights[3].airline).toBe('US');
       expect(flights[3].origin).toBe('PHX');
       expect(flights[3].destination).toBe('DTW');
-    });
-    'follows referenced legs': function() {
+    },
+    'follows referenced legs': function(searchData) {
       var signature = jsonpath.eval(searchData[0], '$.quotes[?(@.journeyId == "17")].pricing.signature')[0];
-      flights = BingFlight.parse(searchData, signature);
+      var flights = BingFlight.parse(searchData, signature);
 
       expect(flights.length).toBe(4);
 
@@ -56,6 +55,6 @@ vows.describe('BingFlight').addBatch({
       expect(flights[3].airline).toBe('US');
       expect(flights[3].origin).toBe('PHX');
       expect(flights[3].destination).toBe('DTW');
-    });
-  });
-});
+    }
+  }
+}).export(module);

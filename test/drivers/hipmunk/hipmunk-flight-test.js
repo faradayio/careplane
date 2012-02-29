@@ -1,38 +1,37 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-vows.describe('HipmunkFlight').addBatch({
-  var HipmunkFlight = require('drivers/hipmunk/hipmunk-flight');
+var HipmunkFlight = helper.plugin.require('./drivers/hipmunk/hipmunk-flight');
 
+vows.describe('HipmunkFlight').addBatch({
   '.parse': {
     'standard flight': {
-      var flight;
-      beforeEach(function() {
+      topic: function() {
         loadFixtures('hipmunk_dtw_sfo_trip.html');
         flight = HipmunkFlight.parse($('.details-padding').get(0));
-      });
+      },
       'parses airline': function() {
-        expect(flight.airline).toBe('American Airlines #4362 ')
-      });
+        assert.equal(flight.airline, 'American Airlines #4362 ')
+      },
       'parses origin': function() {
-        expect(flight.origin).toBe('DTW')
-      });
+        assert.equal(flight.origin, 'DTW')
+      },
       'parses destination': function() {
-        expect(flight.destination).toBe('ORD')
-      });
-    });
+        assert.equal(flight.destination, 'ORD')
+      }
+    },
 
     'special cases': {
       'ignores Mystery airlines/aircraft': function() {
-        loadFixtures('hipmunk_lhr_atl_trip.html');
+        var $ = qweryFixtures('hipmunk_lhr_atl_trip.html');
         var flight = HipmunkFlight.parse($('.details-padding').get(0));
-        expect(flight.airline).toBeNull();
-        expect(flight.aircraft).toBe('');
-        expect(flight.origin).toBe('LHR');
-        expect(flight.destination).toBe('ATL');
-      });
-    });
-  });
-});
+        assert.isNull(flight.airline);
+        assert.equal(flight.aircraft, '');
+        assert.equal(flight.origin, 'LHR');
+        assert.equal(flight.destination, 'ATL');
+      }
+    }
+  }
+}).export(module);

@@ -1,12 +1,12 @@
-var test = require('./helper'),
-    vows = test.vows,
-    assert = test.assert,
-    sinon = test.sinon;
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert,
+    sinon = helper.sinon;
 
 var fakeweb = require('fakeweb'),
     http = require('http');
 
-var Trip = test.plugin.require('./trip');
+var Trip = helper.plugin.require('./trip');
 var onFlightEmissionsComplete = sinon.spy('onFlightEmissionsComplete');
 var onTripEmissionsComplete = sinon.spy('onTripEmissionsComplete');
 
@@ -16,8 +16,8 @@ http.register_intercept({
   body: JSON.stringify({ decisions: { carbon: { object: { value: 123.0 }}}})
 });
 
-exports.trip = function(fixtureFile, tripFactory) {
-  var trip = tripFactory(test.jqueryFixture(fixtureFile));
+module.exports = function(fixtureFile, tripFactory) {
+  var trip = tripFactory(helper.qweryFixture(fixtureFile));
   trip.init();
 
   return {

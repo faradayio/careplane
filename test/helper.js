@@ -20,9 +20,14 @@ module.exports = {
     this.jsdom.env('<html><body></body></html>', callback);
   },
 
+  readFixture: function(file) {
+    var fs = require('fs');
+    return fs.readFileSync(path.resolve('test/fixtures', file));
+  },
+
   htmlFixture: function(file, callback) {
     var fs = require('fs');
-    var html = fs.readFileSync(path.resolve('test/fixtures', file));
+    var html = this.readFixture(file);
 
     if(callback) {
       this.jsdom.env({
@@ -36,18 +41,18 @@ module.exports = {
     }
   },
 
-  jquery: function(jsdomWindow) {
+  qwery: function(jsdomWindow) {
     return require('jquery').create(jsdomWindow);
   },
 
-  jqueryFixture: function(fixtureFile, callback) {
+  qweryFixture: function(fixtureFile, callback) {
     if(callback) {
       this.htmlFixture(fixtureFile, function(err, jsdomWindow) {
-        callback(err, module.exports.jquery(jsdomWindow));
+        callback(err, module.exports.qwery(jsdomWindow), jsdomWindow);
       });
     } else {
       var jsdomWindow = this.htmlFixture(fixtureFile);
-      return this.jquery(jsdomWindow);
+      return this.qwery(jsdomWindow);
     }
   },
 

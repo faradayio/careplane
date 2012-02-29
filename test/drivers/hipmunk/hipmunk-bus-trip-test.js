@@ -1,27 +1,24 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-vows.describe('HipmunkBusTrip').addBatch({
-  var HipmunkBusTrip = require('drivers/hipmunk/hipmunk-bus-trip');
+var HipmunkBusTrip = helper.plugin.require('./drivers/hipmunk/hipmunk-bus-trip');
 
+vows.describe('HipmunkBusTrip').addBatch({
   '.parse': {
-    'standard bus trip': {
-      var bus;
-      beforeEach(function() {
-        loadFixtures('hipmunk_lan_chi_rail_trip.html');
-        bus = HipmunkBusTrip.parse($('.details-padding').get(0));
-      });
-      'parses origin': function() {
-        expect(bus.origin).toBe('LNS');
-      });
-      'parses destination': function() {
-        expect(bus.destination).toBe('BTL');
-      });
-      'parses duration': function() {
-        expect(bus.duration).toBe(4500);
-      });
-    });
-  });
-});
+    topic: function() {
+      var $ = qweryFixture('hipmunk_lan_chi_rail_trip.html');
+      return HipmunkBusTrip.parse($('.details-padding').get(0));
+    },
+    'parses origin': function(bus) {
+      assert.equal(bus.origin, 'LNS');
+    },
+    'parses destination': function() {
+      assert.equal(bus.destination, 'BTL');
+    },
+    'parses duration': function() {
+      assert.equal(bus.duration, 4500);
+    }
+  }
+}).export(module);

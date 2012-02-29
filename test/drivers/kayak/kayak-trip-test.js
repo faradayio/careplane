@@ -15,7 +15,7 @@ http.register_intercept({
 });
 
 vows.describe('KayakTrip').addBatch(
-  tripExamples.trip('kayak_dtw_sfo_flight.html', function($) {
-    return new KayakTrip('1050', $('.flightresult').get(0));
+  tripExamples('kayak_dtw_sfo_flight.html', function($) {
+    return new KayakTrip('1050', $, $('.flightresult').get(0));
   })
 ).export(module);

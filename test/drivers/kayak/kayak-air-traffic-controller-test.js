@@ -1,41 +1,24 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-require('../../air-traffic-controller-examples');
+var KayakAirTrafficController = helper.plugin.require('./drivers/kayak/kayak-air-traffic-controller');
+
+var airTrafficControllerExamples = require('../../air-traffic-controller-examples');
 
 var fakeweb = require('fakeweb'),
     http = require('http');
 
-vows.describe('KayakAirTrafficController').addBatch({
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var Kayak = require('drivers/kayak');
-  var KayakAirTrafficController = require('drivers/kayak/kayak-air-traffic-controller');
+http.register_intercept({
+  uri: /\/s\/run\/inlineDetails\/flight.*searchid=VECBAtkvi/,
+  host: 'www.kayak.com',
+  body: JSON.stringify({ message: helper.kayakFlightDetails, status: 0 })
+});
 
-  var kayak;
-  beforeEach(function() {
-    this.extension = new JasmineExtension(document);
-    kayak = new Kayak(this.extension);
-
-    http.register_intercept({
-      uri: /\/s\/run\/inlineDetails\/flight.*searchid=VECBAtkvi/,
-      host: 'www.kayak.com',
-      body: JSON.stringify({ message: kayakFlightDetails, status: 0 })
-    });
-  });
-
-  afterEach(function() { http.clear_intercepts(); });
-
-  'with fixtures': {
-    beforeEach(function() {
-      loadFixtures('kayak_dtw_sfo.html');
-      this.controller = new KayakAirTrafficController(kayak, document);
-    });
-
-    itBehavesLikeAn('AirTrafficController');
-  });
-
+vows.describe('KayakAirTrafficController').addBatch(
+  airTrafficControllerExamples(KayakAirTrafficController, 'kayak_dtw_sfo.html')
+).addBatch({
   '#scoreTrips': {
     'scores standard flights': function() {
       http.register_intercept({
@@ -44,31 +27,31 @@ vows.describe('KayakAirTrafficController').addBatch({
         body: JSON.stringify({ decisions: { carbon: { object: { value: 234 } } } })
       });
 
-      loadFixtures('kayak_dtw_sfo_flight.html');
-      var controller = new KayakAirTrafficController(kayak, document);
+      var $ = helper.qweryFixture('kayak_dtw_sfo.html');
+      var controller = new KayakAirTrafficController($);
       controller.discoverTrips();
       controller.scoreTrips();
       for(var i in controller.trips) {
         var p = controller.trips[i].footprintView.footprintParagraph();
-        expect(p).toHaveText(/[\d]+/);
+        assert.match(p.text(), /[\d]+/);
       }
 
       http.clear_intercepts();
-    });
-  });
+    }
+  },
 
   '#origin': {
     "returns the search's origin airport": function() {
-      var controller = new KayakAirTrafficController(kayak, document);
+      var controller = new KayakAirTrafficController();
       controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
-      expect(controller.origin()).toBe('DTW');
-    });
-  });
+      assert.equal(controller.origin(), 'DTW');
+    }
+  },
   '#destination': {
     "returns the search's origin airport": function() {
-      var controller = new KayakAirTrafficController(kayak, document);
+      var controller = new KayakAirTrafficController();
       controller.url = 'http://www.kayak.com/#flights/DTW-SFO/2011-05-05/2011-05-12';
-      expect(controller.destination()).toBe('SFO');
-    });
-  });
-});
+      assert.equal(controller.destination(), 'SFO');
+    }
+  }
+}).export(module);

@@ -4,21 +4,18 @@ var helper = require('./helper'),
     plugin = helper.plugin,
     Careplane = plugin.require('./careplane');
 
-module.exports.pollingDriver = function(driverClass) {
+module.exports = function(driverClass, fixtureFile) {
   return {
     '#load': {
       'polls the page for updates': function() {
-        var extension = new Careplane();
-        extension.doc = {
-          location: {
-            href: ''
-          }
-        };
-        var driver = new driverClass(extension);
-        sinon.spy(driver.events, 'loadPoller');
-        driver.prepare = function() {};
-        driver.load();
-        assert(driver.events.loadPoller.called);
+        helper.qweryFixture(fixtureFile, function(err, $, window) {
+          var extension = new Careplane(window);
+          var driver = new driverClass(extension);
+          sinon.spy(driver.events, 'loadPoller');
+          driver.prepare = function() {};
+          driver.load();
+          assert(driver.events.loadPoller.called);
+        });
       }
     }
   };

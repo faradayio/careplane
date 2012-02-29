@@ -1,64 +1,65 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-require('../../trip-examples');
+var HipmunkTrip = helper.plugin.require('./drivers/hipmunk/hipmunk-trip');
 
-vows.describe('HipmunkTrip').addBatch({
-  var HipmunkTrip = require('drivers/hipmunk/hipmunk-trip');
+var tripExamples = require('../../trip-examples');
 
-  var routingId = 'routing-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22_0_wide';
+var routingId = 'routing-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22_0_wide';
 
+vows.describe('HipmunkTrip').addBatch(
+  tripExamples('hipmunk_dtw_sfo_trip.html', function($) {
+    return new HipmunkTrip(routingId, $('.routing').get(0));
+  })
+).addBatch({
   'with DTW-SFO trip': {
-    beforeEach(function() {
-      loadFixtures('hipmunk_dtw_sfo_trip.html');
-      this.trip = new HipmunkTrip(routingId, $('.routing').get(0));
-    });
-
-    itBehavesLikeA('Trip');
+    topic: function() {
+      var $ = qweryFixture('hipmunk_dtw_sfo_trip.html');
+      trip = new HipmunkTrip(routingId, $('.routing').get(0));
+    },
 
     '#infoPanelElementId': {
-      'converts a routing element id into an info-panel id': function() {
-        expect(this.trip.infoPanelElementId()).
-          toBe('info-panel-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22');
-      });
-    });
+      'converts a routing element id into an info-panel id': function(trip) {
+        assert.equal(trip.infoPanelElementId(),
+          'info-panel-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22');
+      }
+    },
 
-    'has an #infoPanelElement property': function() {
-      expect(this.trip.infoPanelElement.id).toMatch(/info-panel/);
-    });
-  });
+    'has an #infoPanelElement property': function(trip) {
+      assert.match(trip.infoPanelElement.id, /info-panel/);
+    }
+  },
 
   '#loadFlights': {
-    var success;
-    beforeEach(function() {
-      success = jasmine.createSpy('loadFlightsSuccess');
-    });
+    topic: function() {
+      return jasmine.createSpy('loadFlightsSuccess');
+    },
 
-    'loads the appropriate flight information': function() {
-      loadFixtures('hipmunk_dtw_sfo_trip.html');
+    'loads the appropriate flight information': function(success) {
+      var $ = qweryFixture('hipmunk_dtw_sfo_trip.html');
       var trip = new HipmunkTrip(routingId, $('.routing').get(0));
       trip.loadFlights(success);
 
-      expect(trip.flights[0].origin).toBe('DTW');
-      expect(trip.flights[0].destination).toBe('ORD');
-      expect(trip.flights[1].origin).toBe('ORD');
-      expect(trip.flights[1].destination).toBe('SFO');
-    });
-    'gracefully handles trips with missing info-panels': function() {
-      loadFixtures('hipmunk_dtw_sfo_missing_info_panel.html');
+      assert.equal(trip.flights[0].origin, 'DTW');
+      assert.equal(trip.flights[0].destination, 'ORD');
+      assert.equal(trip.flights[1].origin, 'ORD');
+      assert.equal(trip.flights[1].destination, 'SFO');
+    },
+    'gracefully handles trips with missing info-panels': function(success) {
+      var $ = qweryFixture('hipmunk_dtw_sfo_missing_info_panel.html');
       var trip = new HipmunkTrip(routingId, $('.routing').get(0));
       trip.loadFlights(success);
 
-      expect(trip.flights.length).toBe(0);
-    });
-    'correctly loads wifi-enabled flights': function() {
-      loadFixtures('hipmunk_wifi_trip.html');
+      assert.equal(trip.flights.length, 0);
+    },
+    'correctly loads wifi-enabled flights': function(success) {
+      var $ = qweryFixture('hipmunk_wifi_trip.html');
       var trip = new HipmunkTrip(routingId, $('.routing').get(0));
       trip.loadFlights(success);
 
-      expect(trip.flights[0].origin).toBe('DTW');
-    });
-  });
-});
+      assert.equal(trip.flights[0].origin, 'DTW');
+    }
+  }
+}).export(module);

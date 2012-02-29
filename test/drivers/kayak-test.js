@@ -1,39 +1,33 @@
-var helper = require('./helper'),
-    vows = helper.vows,
+var helper = require('../helper'),
     assert = helper.assert,
-    sinon = helper.sinon;
+    vows = helper.vows;
 
-require('../driver-examples');
+var Kayak = helper.plugin.require('./drivers/kayak'),
+    Careplane = helper.plugin.require('./careplane');
+
+var driverExamples = require('../driver-examples');
 
 vows.describe('Kayak').addBatch({
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var Kayak = require('drivers/kayak');
-
-  var extension;
-
-  beforeEach(function() {
-    extension = new JasmineExtension(document);
-    this.driverClass = Kayak;
-  });
+  'polling Driver behavior': driverExamples.pollingDriver(Kayak, 'kayak_dtw_sfo.html'),
 
   'has a .driverName': function() {
-    expect(Kayak.driverName).toBe('Kayak');
-  });
+    assert.equal(Kayak.driverName, 'Kayak');
+  },
 
   '.insertAttribution': {
-    var kayak;
-    beforeEach(function() {
-      loadFixtures('kayak_dtw_sfo.html');
-      kayak = new Kayak(extension);
-      kayak.insertAttribution();
-    });
-    'inserts a badge in the top area': function() {
-      expect($('div#rightads .punchline')).toHaveText('Brighter Planet');
-    });
-    'inserts a text attribution in the footer': function() {
-      expect($('span.careplane-attribution-footer')).toHaveText(' · Emission estimates powered by Brighter Planet');
-    });
-  });
+    topic: function() {
+      helper.qweryFixture('kayak_dtw_sfo.html', this.callback);
+    },
 
-  itBehavesLikeA('polling Driver');
-});
+    'inserts a badge in the top area': function(err, $) {
+      var kayak = new Kayak($);
+      kayak.insertAttribution();
+      assert.equal($('div#rightads .punchline').text(), 'Brighter Planet');
+    },
+    'inserts a text attribution in the footer': function(err, $) {
+      var kayak = new Kayak($);
+      kayak.insertAttribution();
+      assert.equal($('span.careplane-attribution-footer').text(), ' · Emission estimates powered by Brighter Planet');
+    }
+  }
+}).export(module);

@@ -1,27 +1,24 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-vows.describe('HipmunkRailTrip').addBatch({
-  var HipmunkRailTrip = require('drivers/hipmunk/hipmunk-rail-trip');
+var HipmunkRailTrip = helper.plugin.require('./drivers/hipmunk/hipmunk-rail-trip');
 
+vows.describe('HipmunkRailTrip').addBatch({
   '.parse': {
-    'standard rail trip': {
-      var rail;
-      beforeEach(function() {
-        loadFixtures('hipmunk_lan_chi_rail_trip.html');
-        rail = HipmunkRailTrip.parse($('.details-padding').get(1));
-      });
-      'parses origin': function() {
-        expect(rail.origin).toBe('BTL');
-      });
-      'parses destination': function() {
-        expect(rail.destination).toBe('CHI');
-      });
-      'parses duration': function() {
-        expect(rail.duration).toBe(11400);
-      });
-    });
-  });
-});
+    topic: function() {
+      var $ = loadFixtures('hipmunk_lan_chi_rail_trip.html');
+      rail = HipmunkRailTrip.parse($('.details-padding').get(1));
+    },
+    'parses origin': function() {
+      assert.equal(rail.origin, 'BTL');
+    },
+    'parses destination': function() {
+      assert.equal(rail.destination, 'CHI');
+    },
+    'parses duration': function() {
+      assert.equal(rail.duration, 11400);
+    }
+  }
+}).export(module);
