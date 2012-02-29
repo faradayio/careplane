@@ -1,22 +1,12 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-require('../trip-info-view-examples');
+var BingTripInfoView = helper.plugin.require('./views/bing/bing-trip-info-view');
 
-vows.describe('BingTripInfoView').addBatch({
-  var BingTripInfoView = require('views/bing/bing-trip-info-view');
+var tripInfoViewExamples = require('../trip-info-view-examples');
 
-  beforeEach(function() {
-    this.trip = {
-      totalFootprint: 143.2,
-      origin: function() { return 'DTW' },
-      destination: function() { return 'SFO' }
-    };
-    this.view = new BingTripInfoView(document.createElement('div'));
-    this.view.init();
-  });
-
-  itBehavesLikeA('TripInfoView');
-});
+vows.describe('BingTripInfoView').addBatch(
+  tripInfoViewExamples(BingTripInfoView)
+).export(module);

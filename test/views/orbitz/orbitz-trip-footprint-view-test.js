@@ -1,18 +1,10 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var helper = require('../../helper'),
+    vows = helper.vows;
 
-require('../trip-footprint-view-examples');
+var OrbitzTripFootprintView = helper.plugin.require('./views/orbitz/orbitz-trip-footprint-view');
 
-vows.describe('OrbitzTripFootprintView').addBatch({
-  var OrbitzTripFootprintView = require('views/orbitz/orbitz-trip-footprint-view');
+var tripFootprintViewExamples = require('../trip-footprint-view-examples');
 
-  beforeEach(function() {
-    loadFixtures('orbitz_dtw_sfo_result.html');
-    this.view = new OrbitzTripFootprintView($('.result').get(0));
-    this.view.init();
-  });
-
-  itBehavesLikeA('TripFootprintView');
-});
+vows.describe('OrbitzTripFootprintView').addBatch(
+  tripFootprintViewExamples(OrbitzTripFootprintView, 'orbitz_dtw_sfo_result.html', '.result')
+).export(module);

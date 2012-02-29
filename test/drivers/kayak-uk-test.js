@@ -1,39 +1,31 @@
-var helper = require('./helper'),
+var helper = require('../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-require('../driver-examples');
+var KayakUK = helper.plugin.require('./drivers/kayak-uk');
 
-vows.describe('KayakUk').addBatch({
-  var JasmineExtension = require('browser/jasmine/jasmine-extension');
-  var KayakUK = require('drivers/kayak-uk');
+var driverExamples = require('../driver-examples');
 
-  var extension;
-
-  beforeEach(function() {
-    this.driverClass = KayakUK;
-    extension = new JasmineExtension(document);
-  });
-
+vows.describe('KayakUk').addBatch(
+  driverExamples(KayakUK, 'kayak_dtw_sfo.html')
+).addBatch({
   'has a .driverName': function() {
-    expect(KayakUK.driverName).toBe('KayakUK');
-  });
+    assert.equal(KayakUK.driverName, 'KayakUK');
+  },
 
   '.insertAttribution': {
-    var kayak;
-    beforeEach(function() {
-      loadFixtures('kayak_dtw_sfo.html');
-      kayak = new KayakUK(extension);
-      kayak.insertAttribution();
-    });
+    topic: function() {
+      var $ = qweryFixture('kayak_dtw_sfo.html');
+      return new KayakUK($);
+    },
     'inserts a badge in the top area': function() {
-      expect($('div#rightads .punchline')).toHaveText('Brighter Planet');
-    });
+      kayak.insertAttribution();
+      assert.equal($('div#rightads .punchline').text(), 'Brighter Planet');
+    },
     'inserts a text attribution in the footer': function() {
-      expect($('span.careplane-attribution-footer')).toHaveText(' · Emission estimates powered by Brighter Planet');
-    });
-  });
-
-  itBehavesLikeA('polling Driver');
-});
+      kayak.insertAttribution();
+      assert.equal($('span.careplane-attribution-footer').text(), ' · Emission estimates powered by Brighter Planet');
+    }
+  }
+}).export(module);

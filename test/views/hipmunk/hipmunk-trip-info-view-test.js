@@ -1,22 +1,10 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var helper = require('../../helper'),
+    vows = helper.vows;
 
-require('../trip-info-view-examples');
+var HipmunkTripInfoView = helper.plugin.require('./views/hipmunk/hipmunk-trip-info-view');
 
-vows.describe('HipmunkTripInfoView').addBatch({
-  var HipmunkTripInfoView = require('views/hipmunk/hipmunk-trip-info-view');
+var tripInfoViewExamples = require('../trip-info-view-examples');
 
-  beforeEach(function() {
-    this.trip = {
-      totalFootprint: 143.2,
-      origin: function() { return 'DTW' },
-      destination: function() { return 'SFO' }
-    };
-    this.view = new HipmunkTripInfoView(document.createElement('div'));
-    this.view.init();
-  });
-
-  itBehavesLikeA('TripInfoView');
-});
+vows.describe('HipmunkTripInfoView').addBatch(
+  tripInfoViewExamples(HipmunkTripInfoView)
+).export(module);

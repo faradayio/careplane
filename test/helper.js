@@ -26,8 +26,13 @@ module.exports = {
   },
 
   htmlFixture: function(file, callback) {
-    var fs = require('fs');
-    var html = this.readFixture(file);
+    var html;
+    if(file) {
+      var fs = require('fs');
+      html = this.readFixture(file);
+    } else {
+      html = '<html><body></body></html>';
+    }
 
     if(callback) {
       this.jsdom.env({

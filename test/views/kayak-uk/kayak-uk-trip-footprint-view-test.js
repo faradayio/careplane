@@ -1,18 +1,10 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var helper = require('../../helper'),
+    vows = helper.vows;
 
-require('../trip-footprint-view-examples');
+var KayakUKTripFootprintView = helper.plugin.require('./views/kayak-uk/kayak-uk-trip-footprint-view');
 
-vows.describe('KayakUkTripFootprintView').addBatch({
-  var KayakUKTripFootprintView = require('views/kayak-uk/kayak-uk-trip-footprint-view');
+var tripFootprintViewExamples = require('../trip-footprint-view-examples');
 
-  beforeEach(function() {
-    loadFixtures('kayak_uk_lhr_txl_flight.html');
-    this.view = new KayakUKTripFootprintView($('.flightresult').get(0));
-    this.view.init();
-  });
-
-  itBehavesLikeA('TripFootprintView');
-});
+vows.describe('KayakUkTripFootprintView').addBatch(
+  tripFootprintViewExamples(KayakUKTripFootprintView, 'kayak_uk_lhr_txl_flight.html', '.flightresult')
+).export(module);

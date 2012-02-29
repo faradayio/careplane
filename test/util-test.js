@@ -1,36 +1,37 @@
-var buster = require('buster');
-var buster = require('buster');
+var helper = require('./helper'),
+    vows = helper.vows,
+    assert = helper.assert;
 
-var Util = require('../lib/util');
+var Util = helper.plugin.require('./util');
 
-buster.testCase('Util', {
+vows.describe('Util').addBatch({
   '.footprintAnalysis': {
     'reports a better-than-average footprint': function() {
       var result = Util.footprintAnalysis(1500,1100);
-      expect(result).toMatch(/taking/);
+      assert.match(result, /taking/);
     },
     'reports an average footprint': function() {
       var result = Util.footprintAnalysis(1100,1100);
-      expect(result).toMatch(/is an average/);
+      assert.match(result, /is an average/);
     },
     'reports a worse-than-average footprint': function() {
       var result = Util.footprintAnalysis(1500,1700);
-      expect(result).toMatch(/adding/);
+      assert.match(result, /adding/);
     }
   },
 
   '.footprintComparison': {
     'reports a better-than-average footprint': function() {
       var result = Util.footprintComparison(1500,1100);
-      expect(result).toMatch(/lower/);
+      assert.match(result, /lower/);
     },
     'reports an average footprint': function() {
       var result = Util.footprintComparison(1100,1100);
-      expect(result).toMatch(/as average/);
+      assert.match(result, /as average/);
     },
     'reports a worse-than-average footprint': function() {
       var result = Util.footprintComparison(1500,1700);
-      expect(result).toMatch(/more/);
+      assert.match(result, /more/);
     }
   }
 });

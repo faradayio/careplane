@@ -6,5 +6,5 @@ var Orbitz = plugin.require('./drivers/orbitz');
 var driverExamples = require('../driver-examples');
 
 vows.describe('Orbitz').addBatch( 
-  driverExamples.pollingDriver(Orbitz)
+  driverExamples(Orbitz)
 ).export(module);

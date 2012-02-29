@@ -1,22 +1,10 @@
-var helper = require('./helper'),
-    vows = helper.vows,
-    assert = helper.assert,
-    sinon = helper.sinon;
+var helper = require('../../helper'),
+    vows = helper.vows;
 
-require('../trip-info-view-examples');
+var OrbitzTripInfoView = helper.plugin.require('./views/orbitz/orbitz-trip-info-view');
 
-vows.describe('OrbitzTripInfoView').addBatch({
-  var OrbitzTripInfoView = require('views/orbitz/orbitz-trip-info-view');
+var tripInfoViewExamples = require('../trip-info-view-examples');
 
-  beforeEach(function() {
-    this.trip = {
-      totalFootprint: 143.2,
-      origin: function() { return 'DTW' },
-      destination: function() { return 'SFO' }
-    };
-    this.view = new OrbitzTripInfoView(document.createElement('div'));
-    this.view.init();
-  });
-
-  itBehavesLikeA('TripInfoView');
-});
+vows.describe('OrbitzTripInfoView').addBatch(
+  tripInfoViewExamples(OrbitzTripInfoView)
+).export(module);

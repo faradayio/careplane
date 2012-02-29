@@ -1,18 +1,12 @@
-var helper = require('./helper'),
+var helper = require('../../helper'),
     vows = helper.vows,
     assert = helper.assert,
     sinon = helper.sinon;
 
-require('../trip-footprint-view-examples');
+var BingTripFootprintView = helper.plugin.require('./views/bing/bing-trip-footprint-view');
 
-vows.describe('BingTripFootprintView').addBatch({
-  var BingTripFootprintView = require('views/bing/bing-trip-footprint-view');
+var tripFootprintViewExamples = require('../trip-footprint-view-examples');
 
-  beforeEach(function() {
-    loadFixtures('bing_dtw_sfo_flight.html');
-    this.view = new BingTripFootprintView($('#flightDetails_0').get(0));
-    this.view.init();
-  });
-
-  itBehavesLikeA('TripFootprintView');
-});
+vows.describe('BingTripFootprintView').addBatch(
+  tripFootprintViewExamples(BingTripFootprintView, 'bing_dtw_sfo_flight.html', '#flightDetails_0')
+);

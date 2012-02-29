@@ -3,47 +3,54 @@ var helper = require('./helper'),
     assert = helper.assert,
     sinon = helper.sinon;
 
+var Preferences = helper.plugin.require('./preferences');
+
 vows.describe('Preferences').addBatch({
-  var Preferences = require('preferences');
-
-  var preferences;
-  beforeEach(function() {
-    preferences = new Preferences();
-    preferences.callbacks = [];
-  });
-
   '#get': {
-    'provides an existing preference to a given callback': function() {
+    topic: function() {
+      prefs = new Preferences();
+      prefs.callbacks = [];
+      return prefs;
+    },
+
+    'provides an existing preference to a given callback': function(preferences) {
       preferences.nativeGet = function(key, callbackId) { preferences.callbacks[callbackId]('awesome'); };
       var result;
       preferences.get('foo', function(val) { result = val; }, 'lame');
-      expect(result).toBe('awesome');
-    });
-    'sends null to the callback if the preference is not set': function() {
+      assert.equal(result, 'awesome');
+    },
+    'sends null to the callback if the preference is not set': function(preferences) {
       preferences.nativeGet = function(key, callbackId) { preferences.callbacks[callbackId](null); };
       var result;
       preferences.get('foo', function(val) { result = val; });
-      expect(result).toBeNull();
-    });
-  });
+      assert.isNull(result);
+    }
+  },
+
   '#getBoolean': {
-    'provides an existing preference to a given callback': function() {
+    topic: function() {
+      prefs = new Preferences();
+      prefs.callbacks = [];
+      return prefs;
+    },
+
+    'provides an existing preference to a given callback': function(preferences) {
       preferences.nativeGet = function(key, callbackId) { preferences.callbacks[callbackId](true); };
       var result;
       preferences.getBoolean('foo', function(val) { result = val; }, 'lame');
-      expect(result).toBeTruthy();
-    });
-    'provides an false preference to a given callback': function() {
+      assert.isTrue(result);
+    },
+    'provides an false preference to a given callback': function(preferences) {
       preferences.nativeGet = function(key, callbackId) { preferences.callbacks[callbackId](false); };
       var result;
       preferences.getBoolean('foo', function(val) { result = val; }, 'lame');
-      expect(result).toBeFalsy();
-    });
-    'sends false to the callback if the preference is not set': function() {
+      assert.isFalse(result);
+    },
+    'sends false to the callback if the preference is not set': function(preferences) {
       preferences.nativeGet = function(key, callbackId) { preferences.callbacks[callbackId](null); };
       var result;
       preferences.getBoolean('foo', function(val) { result = val; });
-      expect(result).toBeFalsy()
-    });
-  });
-});
+      assert.isFalse(result);
+    }
+  }
+}).export(module);

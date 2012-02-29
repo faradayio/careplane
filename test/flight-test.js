@@ -3,36 +3,35 @@ var helper = require('./helper'),
     assert = helper.assert,
     sinon = helper.sinon;
 
-vows.describe('Flight').addBatch({
-  var Flight = require('flight');
+var Flight = helper.plugin.require('./flight');
 
+vows.describe('Flight').addBatch({
   '.isAircraftInfo': {
     'returns true if text matches an aircraft manufacturer': function() {
-      expect(Flight.isAircraftInfo('Boeing 737-800 (Narrow-body Jet)')).toBeTruthy();
-      expect(Flight.isAircraftInfo('Embraer 175 (Narrow-body Jet)')).toBeTruthy();
-    });
+      assert.isTrue(Flight.isAircraftInfo('Boeing 737-800 (Narrow-body Jet)'));
+      assert.isTrue(Flight.isAircraftInfo('Embraer 175 (Narrow-body Jet)'));
+    },
     'returns false if text does not match any aircraft manufacturer': function() {
-      expect(Flight.isAircraftInfo('4h 20m')).toBeFalsy();
-      expect(Flight.isAircraftInfo('80% on time')).toBeFalsy();
-      expect(Flight.isAircraftInfo('1974 miles')).toBeFalsy();
-      expect(Flight.isAircraftInfo('WiFi Available')).toBeFalsy();
-    });
-  });
+      assert.isTrue(Flight.isAircraftInfo('4h 20m'));
+      assert.isTrue(Flight.isAircraftInfo('80% on time'));
+      assert.isTrue(Flight.isAircraftInfo('1974 miles'));
+      assert.isTrue(Flight.isAircraftInfo('WiFi Available'));
+    }
+  },
   '#sanitizedAircraft': {
-    var flight;
-    beforeEach(function() { flight = new Flight(); });
+    topic: function() { return new Flight(); },
 
-    'removes preceding whitespace': function() {
+    'removes preceding whitespace': function(flight) {
       flight.aircraft = "                Careplane";
-      expect(flight.sanitizedAircraft()).toBe('Careplane');
-    });
-    'removes trailing whitespace': function() {
+      assert.equal(flight.sanitizedAircraft(), 'Careplane');
+    },
+    'removes trailing whitespace': function(flight) {
       flight.aircraft = "Careplane 100           ";
-      expect(flight.sanitizedAircraft()).toBe('Careplane 100');
-    });
-    'removes tabs and newlines': function() {
+      assert.equal(flight.sanitizedAircraft(), 'Careplane 100');
+    },
+    'removes tabs and newlines': function(flight) {
       flight.aircraft = "Careplane\t\n\n100";
-      expect(flight.sanitizedAircraft()).toBe('Careplane 100');
-    });
-  });
-});
+      assert.equal(flight.sanitizedAircraft(), 'Careplane 100');
+    }
+  }
+}).export(module);

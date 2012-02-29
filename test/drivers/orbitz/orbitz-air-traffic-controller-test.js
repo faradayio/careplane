@@ -10,5 +10,5 @@ var Careplane = test.plugin.Careplane,
 var airTrafficControllerExamples = require('../../air-traffic-controller-examples');
 
 vows.describe('OrbitzAirTrafficController').addBatch(
-  airTrafficControllerExamples.airTrafficController(Orbitz, OrbitzAirTrafficController, 'orbitz_dtw_sfo.html')
+  airTrafficControllerExamples(Orbitz, OrbitzAirTrafficController, 'orbitz_dtw_sfo.html')
 ).export(module);

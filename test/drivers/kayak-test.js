@@ -7,9 +7,9 @@ var Kayak = helper.plugin.require('./drivers/kayak'),
 
 var driverExamples = require('../driver-examples');
 
-vows.describe('Kayak').addBatch({
-  'polling Driver behavior': driverExamples.pollingDriver(Kayak, 'kayak_dtw_sfo.html'),
-
+vows.describe('Kayak').addBatch(
+  driverExamples(Kayak, 'kayak_dtw_sfo.html')
+).addBatch({
   'has a .driverName': function() {
     assert.equal(Kayak.driverName, 'Kayak');
   },
