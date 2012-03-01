@@ -5,13 +5,13 @@ var helper = require('../helper'),
 var KayakTrip = require('../../lib/drivers/kayak/kayak-trip');
 var TripController = require('../../lib/controllers/trip-controller');
 
+var $ = helper.qweryFixture('kayak_dtw_sfo_flight.html');
+
 var tripTopic = function() {
   var trip;
-  helper.htmlFixture('kayak_dtw_sfo_flight.html', function($) {
-    trip = new KayakTrip('0', $('.flightresult').get(0));
-    trip.init();
-    trip.initViews();
-  });
+  trip = new KayakTrip('0', $, $('.flightresult').get(0));
+  trip.init();
+  trip.initViews();
   return trip;
 };
 
@@ -41,7 +41,7 @@ vows.describe('TripController').addBatch({
     topic: tripTopic,
 
     'does not explode': function(trip) {
-      var controller = new TripController(trip);
+      var controller = new TripController($, trip);
       assert.doesNotThrow(function() {
         controller.init();
       });

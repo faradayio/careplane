@@ -28,11 +28,11 @@ vows.describe('HallOfFame').addBatch({
   '.induct': {
     topic: function() { return new HallOfFame(); },
 
-    'adds a new trip': function() {
+    'adds a new trip': function(hallOfFame) {
       hallOfFame.induct(trip1);
       assert.equal(hallOfFame.trips['22'], trip1);
     },
-    'does not add a duplicate trip': function() {
+    'does not add a duplicate trip': function(hallOfFame) {
       hallOfFame.induct(trip1);
       hallOfFame.induct(trip1);
       assert.equal(hallOfFame.count, 1);
@@ -42,26 +42,26 @@ vows.describe('HallOfFame').addBatch({
   '.average': {
     topic: function() { return new HallOfFame(); },
 
-    'returns the average trip footprint': function() {
+    'returns 0 if there are no trips': function(hallOfFame) {
+      assert.equal(hallOfFame.average(), 0);
+    },
+    'returns the average trip footprint': function(hallOfFame) {
       hallOfFame.induct(trip2);
       hallOfFame.induct(trip3);
       hallOfFame.induct(trip4);
       assert.equal(hallOfFame.average(), 300);
-    },
-    'returns 0 if there are no trips': function() {
-      assert.equal(hallOfFame.average(), 0);
     }
   },
 
   '.updateRatingScale': {
     topic: function() { return new HallOfFame(); },
 
-    'sets scale to null when min and max are the same': function() {
+    'sets scale to null when min and max are the same': function(hallOfFame) {
       hallOfFame.induct(trip1);
 
-      expect(hallOfFame.scale).toBeNull();
+      assert.isNull(hallOfFame.scale);
     },
-    'creates a rating scale for each footprint': function() {
+    'creates a rating scale for each footprint': function(hallOfFame) {
       var tripList = [trip1, trip2, trip3, trip4, trip5];
       for(var i in tripList) {
         hallOfFame.induct(tripList[i]);

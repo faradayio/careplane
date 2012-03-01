@@ -7,21 +7,20 @@ self = {
 safari = { self: { tab: { dispatchMessage: function() {} } } };
 chrome = { extension: { sendRequest: function() {} } };
 
-var path = require('path');
-
 module.exports = {
   vows: require('vows'),
   assert: require('assert'),
   sinon: require('sinon'),
-  jsdom: require('jsdom'),
   plugin: require('../'),
 
   inBrowser: function(callback) {
-    this.jsdom.env('<html><body></body></html>', callback);
+    requrie('jsdom').env('<html><body></body></html>', callback);
   },
 
   readFixture: function(file) {
     var fs = require('fs');
+    var path = require('path');
+
     return fs.readFileSync(path.resolve('test/fixtures', file));
   },
 
@@ -35,13 +34,13 @@ module.exports = {
     }
 
     if(callback) {
-      this.jsdom.env({
+      require('jsdom').env({
         html: html, done: function(err, jsdomWindow) {
           callback(err, jsdomWindow);
         }
       });
     } else {
-      var doc = this.jsdom.html(html);
+      var doc = require('jsdom').html(html);
       return doc.createWindow();
     }
   },

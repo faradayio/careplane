@@ -7,16 +7,17 @@ var helper = require('./helper'),
 module.exports = function(driverClass, fixtureFile) {
   return {
     '#load': {
-      'polls the page for updates': function() {
+      'polls the page for updates': sinon.test(function() {
+        var spy = this.spy;
         helper.qweryFixture(fixtureFile, function(err, $, window) {
           var extension = new Careplane(window);
           var driver = new driverClass(extension);
-          sinon.spy(driver.events, 'loadPoller');
+          spy(driver.events, 'loadPoller');
           driver.prepare = function() {};
           driver.load();
-          assert(driver.events.loadPoller.called);
+          sinon.assert.called(driver.events.loadPoller);
         });
-      }
+      })
     }
   };
 };

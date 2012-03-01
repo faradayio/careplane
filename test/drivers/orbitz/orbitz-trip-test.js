@@ -19,6 +19,6 @@ http.register_intercept({
 
 vows.describe('OrbitzTrip').addBatch(
   tripExamples('orbitz_dtw_sfo_result.html', function($) {
-    return new OrbitzTrip(0, $('.airResultsCard').get(0));
+    return new OrbitzTrip(0, $, $('.airResultsCard').get(0));
   })
 ).export(module);

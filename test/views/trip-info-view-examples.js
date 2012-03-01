@@ -10,26 +10,26 @@ module.exports = function(viewClass) {
     destination: function() { return 'SFO' }
   };
   var $ = helper.qweryFixture();
-  var view = new viewClass($('<div></div>'));
+  var view = new viewClass($, $('<div></div>'));
   view.init();
 
   return {
     '#updateSearchAverage': {
       'updates the search average': function() {
         view.updateSearchAverage(1234, trip);
-        expect($(this.view.target()).find('.careplane-search-average-comparison')).toHaveText(/%/);
+        assert.match($(view.target()).find('.careplane-search-average-comparison').text(), /%/);
       },
       'analyzes the result': function() {
-        this.view.updateSearchAverage(1234, trip);
-        expect($(this.view.target()).find('.careplane-search-average-analysis')).toHaveText(/car/);
+        view.updateSearchAverage(1234, trip);
+        assert.match($(view.target()).find('.careplane-search-average-analysis').text(), /car/);
       }
     },
 
     '#reportFlightMethodology': {
       'adds a methodology URL to the ul': function() {
         var flight = { origin: 'DTW', destination: 'IAD' };
-        this.view.reportFlightMethodology('http://carbon.bp.com/methodology', flight);
-        expect($(this.view.target()).find('ul li a')).toHaveText(/DTW/);
+        view.reportFlightMethodology('http://carbon.bp.com/methodology', flight);
+        assert.match($(view.target()).find('ul li a').text(), /DTW/);
       }
     }
   };

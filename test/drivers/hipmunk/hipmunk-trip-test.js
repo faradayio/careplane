@@ -11,13 +11,13 @@ var routingId = 'routing-8443f61b2d-imbcblcqd4o-DTW_SFOJun21_Jun22_0_wide';
 
 vows.describe('HipmunkTrip').addBatch(
   tripExamples('hipmunk_dtw_sfo_trip.html', function($) {
-    return new HipmunkTrip(routingId, $('.routing').get(0));
+    return new HipmunkTrip(routingId, $, $('.routing').get(0));
   })
 ).addBatch({
   'with DTW-SFO trip': {
     topic: function() {
       var $ = qweryFixture('hipmunk_dtw_sfo_trip.html');
-      trip = new HipmunkTrip(routingId, $('.routing').get(0));
+      trip = new HipmunkTrip(routingId, $, $('.routing').get(0));
     },
 
     '#infoPanelElementId': {

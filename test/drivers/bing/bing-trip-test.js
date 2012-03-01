@@ -11,11 +11,11 @@ var jsonpath = require('dkastner-JSONPath');
 
 var searchData = JSON.parse(helper.readFixture('bing_dtw_sfo.json'));
 
-vows.describe('BingTrip').addBatch({
-  'trip behavior': tripExamples('bing_dtw_sfo_flight.html', function($) {
+vows.describe('BingTrip').addBatch(
+  tripExamples('bing_dtw_sfo_flight.html', function($) {
     return new BingTrip('0', $, $('#flightDetails_0').get(0), searchData);
-  }),
-
+  })
+).addBatch({
   'with search data': {
     topic: function() {
       var $ = helper.qweryFixture('bing_dtw_sfo_flight.html');

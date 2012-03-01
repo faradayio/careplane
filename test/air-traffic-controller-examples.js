@@ -13,15 +13,18 @@ http.register_intercept({
   body: JSON.stringify({ decisions: { carbon: { object: { value: 234 }}}})
 });
 
-module.exports = function(controllerClass, fixtureFile) {
+module.exports = function(controllerClass, fixtureFile, callback) {
+  var $ = test.qweryFixture(fixtureFile);
+  var controller;
+  if(callback)
+    controller = callback($);
+  else
+    controller = new controllerClass($);
+
   return {
     '#discoverTrips, #scoreTrips, #rateTrips': {
-      'discovers, scores, and rates each trip, provides methodologies, and calls searchEmissionsComplete': function() {
-        var $ = test.qweryFixture(fixtureFile);
-        var controller = new controllerClass($);
-
-        var searchEmissionsComplete = sinon.spy('searchEmissionsComplete');
-        controller.events.searchEmissionsComplete = searchEmissionsComplete;
+      'discovers, scores, and rates each trip, provides methodologies, and calls searchEmissionsComplete': sinon.test(function() {
+        this.spy(controller.events, 'searchEmissionsComplete');
         controller.discoverTrips();
 
         var numTrips = controller.trips.length;
@@ -40,7 +43,7 @@ module.exports = function(controllerClass, fixtureFile) {
 
         for(var i in controller.trips) {
           var p = controller.trips[i].footprintView.footprintParagraph();
-          assert.match(p, /[\d,]+/);
+          assert.match(p.text(), /[\d,]+/);
 
           var div = controller.trips[i].infoView.target();
           assert($(div).find('.careplane-methodologies li a').length > 0);
@@ -52,8 +55,8 @@ module.exports = function(controllerClass, fixtureFile) {
           assert.match(comparison, /impact/);
         }
 
-        assert(searchEmissionsComplete.called);
-      }
+        assert(controller.events.searchEmissionsComplete.called);
+      })
     }
   };
 };

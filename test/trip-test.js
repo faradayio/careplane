@@ -5,37 +5,34 @@ var helper = require('./helper'),
 
 var Trip = helper.plugin.require('./trip');
 
+var trip, flightEmissionsComplete, onTripEmissionsComplete, callback;
+trip = new Trip();
+trip.flights = [];
+onTripEmissionsComplete = sinon.spy('onTripEmissionsComplete');
+callback = sinon.spy('callback');
+flightEmissionsComplete = Trip.events.
+  flightEmissionsComplete(trip, callback, onTripEmissionsComplete);
+
 vows.describe('Trip').addBatch({
   '.events': {
     '.flightEmissionsComplete': {
-      topic: function() {
-        var trip, flightEmissionsComplete, onTripEmissionsComplete, callback;
-        trip = new Trip();
-        trip.flights = [];
-        onTripEmissionsComplete = sinon.spy('onTripEmissionsComplete');
-        callback = sinon.spy('callback');
-        flightEmissionsComplete = Trip.events.
-          flightEmissionsComplete(trip, callback, onTripEmissionsComplete);
-        return trip;
-      },
-
-      "tallies the flight's footprint": function(trip) {
-        spyOn(trip, 'tallyFootprint');
+      "iallies the flight's footprint": function() {
+        sinon.spy(trip, 'tallyFootprint');
         flightEmissionsComplete(null, { carbon: 1 });
-        expect(trip.tallyFootprint).toHaveBeenCalledWith(1);
+        sinon.assert.calledWith(trip.tallyFootprint, 1);
       },
-      'calls the provided callback function': function(trip) {
-        var flight = jasmine.createSpy('Flight');
+      'calls the provided callback function': function() {
+        var flight = sinon.spy('Flight');
         var response = { carbon: 1, subject: flight };
 
         flightEmissionsComplete(null, response);
 
-        expect(callback).toHaveBeenCalledWith(trip, response);
+        sinon.assert.calledWith(callback, trip, response);
       },
-      'executes the onTripEmissionsComplete function when all flights are ready': function(trip) {
+      'executes the onTripEmissionsComplete function when all flights are ready': function() {
         trip.isDone = function() { return true; };
         flightEmissionsComplete(null, { carbon: 1 });
-        expect(onTripEmissionsComplete).toHaveBeenCalled();
+        sinon.assert.called(onTripEmissionsComplete);
       }
     }
   },

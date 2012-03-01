@@ -39,7 +39,7 @@ vows.describe('Worker').addBatch({
         key: 'dontcallme',
         callbackId: 'illcallyou'
       });
-      assert.called(worker.sendCallback);
+      sinon.assert.called(worker.sendCallback);
     }
   }
 }).export(module);

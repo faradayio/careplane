@@ -8,16 +8,16 @@ var HipmunkBusTrip = helper.plugin.require('./drivers/hipmunk/hipmunk-bus-trip')
 vows.describe('HipmunkBusTrip').addBatch({
   '.parse': {
     topic: function() {
-      var $ = qweryFixture('hipmunk_lan_chi_rail_trip.html');
-      return HipmunkBusTrip.parse($('.details-padding').get(0));
+      var $ = helper.qweryFixture('hipmunk_lan_chi_rail_trip.html');
+      return HipmunkBusTrip.parse($, $('.details-padding').get(0));
     },
     'parses origin': function(bus) {
       assert.equal(bus.origin, 'LNS');
     },
-    'parses destination': function() {
+    'parses destination': function(bus) {
       assert.equal(bus.destination, 'BTL');
     },
-    'parses duration': function() {
+    'parses duration': function(bus) {
       assert.equal(bus.duration, 4500);
     }
   }

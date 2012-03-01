@@ -10,9 +10,9 @@ module.exports = function(viewClass, fixtureFile, tripSelector) {
 
   return {
     '#updateRating': {
-      'assigns a rating to the this.trip <p> element': function() {
-        this.view.updateRating(0);
-        var color = this.view.footprintParagraph().css('color');
+      'assigns a rating to the trip <p> element': function() {
+        view.updateRating(0);
+        var color = view.footprintParagraph().css('color');
         if(color.search(/rgb/) > -1) {
           assert.equal(color, 'rgb(127, 127, 127)');
         } else {
@@ -20,8 +20,8 @@ module.exports = function(viewClass, fixtureFile, tripSelector) {
         }
       },
       'assigns a "green" rating if rating is positive': function() {
-        this.view.updateRating(0.6);
-        var color = this.view.footprintParagraph().css('color');
+        view.updateRating(0.6);
+        var color = view.footprintParagraph().css('color');
         if(color.search(/rgb/) > -1) {
           assert.match(color, /rgb\(5\d, 204, 5\d\)/);
         } else {
@@ -29,8 +29,8 @@ module.exports = function(viewClass, fixtureFile, tripSelector) {
         }
       },
       'assigns a "red" rating if rating is negative': function() {
-        this.view.updateRating(-0.6);
-        var color = this.view.footprintParagraph().css('color');
+        view.updateRating(-0.6);
+        var color = view.footprintParagraph().css('color');
         if(color.search(/rgb/) > -1) {
           assert.match(color, /rgb\(204, 5\d, 5\d\)/);
         } else {
