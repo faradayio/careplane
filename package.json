@@ -14,14 +14,15 @@
   "dependencies": {
     "CM1": ">= 0.4.0",
     "dkastner-JSONPath": "*",
-    "jquery-browserify": "*"
+    "jquery-browserify": "*",
+    "jsdom": "*"
   },
   "devDependencies": {
     "dkastner-browserify": ">= 1.6.2",
     "fakeweb": "*",
-    "jsdom": "*",
     "jquery": "*",
     "sinon": "*",
+    "socket.io-client": "*",
     "vows": "*",
     "yaml": "*"
   }

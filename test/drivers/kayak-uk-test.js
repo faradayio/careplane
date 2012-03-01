@@ -19,11 +19,11 @@ vows.describe('KayakUk').addBatch(
       var $ = qweryFixture('kayak_dtw_sfo.html');
       return new KayakUK($);
     },
-    'inserts a badge in the top area': function() {
+    'inserts a badge in the top area': function(kayak) {
       kayak.insertAttribution();
       assert.equal($('div#rightads .punchline').text(), 'Brighter Planet');
     },
-    'inserts a text attribution in the footer': function() {
+    'inserts a text attribution in the footer': function(kayak) {
       kayak.insertAttribution();
       assert.equal($('span.careplane-attribution-footer').text(), ' · Emission estimates powered by Brighter Planet');
     }

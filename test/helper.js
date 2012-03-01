@@ -14,7 +14,14 @@ module.exports = {
   plugin: require('../'),
 
   inBrowser: function(callback) {
-    requrie('jsdom').env('<html><body></body></html>', callback);
+    require('jsdom').env('<html><body></body></html>', callback);
+  },
+
+  inQweryBrowser: function(callback) {
+    require('jsdom').env('<html><body></body></html>', function(err, window) {
+      var $ = require('jquery').create(window);
+      callback(err, $);
+    });
   },
 
   readFixture: function(file) {

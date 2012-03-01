@@ -12,29 +12,35 @@ var HipmunkLeg = plugin.require('./drivers/hipmunk/hipmunk-leg'),
 vows.describe('HipmunkLeg').addBatch({
   '.parse': {
     topic: function() {
-      return document.createElement('div');
+      var t = this;
+      helper.inQweryBrowser(function(err, $) {
+        t.callback(err, $, $('<div />'));
+      });
     },
     
-    'parses a rail trip if the carrier is Amtrak and route number is < 3000': function(leg) {
-      $(leg).html('<div class="flightnum">Amtrak #365</div>');
+    'parses a rail trip if the carrier is Amtrak and route number is < 3000': function(err, $, leg) {
+      leg.html('<div class="flightnum">Amtrak #365</div>');
 
-      sinon.spy(HipmunkRailTrip, 'parse');
-      HipmunkLeg.parse(leg);
-      sinon.assert.called(HipmunkRailTrip.parse);
+      var mock = sinon.mock(HipmunkLeg);
+      mock.expects('parseRailTrip').once();
+      HipmunkLeg.parse($, leg);
+      mock.verify();
     },
-    'parses a bus trip if the carrier is Amtrak and route number is >= 3000': function(leg) {
-      $(leg).html('<div class="flightnum">Amtrak #8365</div>');
+    'parses a bus trip if the carrier is Amtrak and route number is >= 3000': function(err, $, leg) {
+      leg.html('<div class="flightnum">Amtrak #8365</div>');
 
-      sinon.spy(HipmunkBusTrip, 'parse');
-      HipmunkLeg.parse(leg);
-      sinon.assert.called(HipmunkBusTrip.parse);
+      var mock = sinon.mock(HipmunkLeg);
+      mock.expects('parseBusTrip').once();
+      HipmunkLeg.parse($, leg);
+      mock.verify();
     },
-    'parses a flight if the carrier is not Amtrak': function(leg) {
-      $(leg).html('<div class="flightnum">American Airlines #456</div>');
+    'parses a flight if the carrier is not Amtrak': function(err, $, leg) {
+      leg.html('<div class="flightnum">American Airlines #456</div>');
       
-      sinon.spy(HipmunkFlight, 'parse');
-      HipmunkLeg.parse(leg);
-      sinon.assert.called(HipmunkFlight.parse);
+      var mock = sinon.mock(HipmunkLeg);
+      mock.expects('parseFlight').once();
+      HipmunkLeg.parse($, leg);
+      mock.verify();
     }
   }
 }).export(module);
