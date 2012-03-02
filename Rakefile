@@ -62,15 +62,19 @@ def changelog_post(browser)
   "_posts/#{datetime}-careplane-#{browser}-#{current_version}.markdown"
 end
 
-def browserify(entry_point_path, output_path, firefox = false)
+def browserify(entry_point_path, output_path, options = {})
   puts "Browserifying #{entry_point_path} into #{output_path}"
 
-  if firefox && !File.symlink?('node_modules/jquery-firefox')
+  if options[:firefox] && !File.symlink?('node_modules/jquery-firefox')
     File.link('lib/node_modules/jquery-firefox', 'node_modules/jquery-firefox') rescue true
   end
 
-  jquery_alias = firefox ? 'jquery-firefox' : 'jquery-browserify'
-  `./node_modules/.bin/browserify -e #{entry_point_path} -o #{output_path} -a jquery:#{jquery_alias} -r #{jquery_alias}`
+  cmd = "./node_modules/.bin/browserify -e #{entry_point_path} -o #{output_path}"
+  if options[:jquery]
+    jquery_alias = options[:firefox] ? 'jquery-firefox' : 'jquery-browserify'
+    cmd += " -a jquery:#{jquery_alias} -r #{jquery_alias}"
+  end
+  `#{cmd}`
 
   puts 'Done'
 end
@@ -235,7 +239,7 @@ namespace :firefox do
     end
     puts 'Done'
 
-    browserify 'lib/firefox.js', 'firefox/data/application.js', true
+    browserify 'lib/firefox.js', 'firefox/data/application.js', :firefox => true, :jquery => true
     FileUtils.mkdir_p 'firefox/data/browser/firefox'
     FileUtils.cp 'lib/browser/firefox/jquery-1.6.4.min.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
 
@@ -287,8 +291,9 @@ namespace :google_chrome do
       FileUtils.cp file, destination
     end
 
-    browserify 'lib/google-chrome.js', 'google_chrome/application.js'
+    browserify 'lib/google-chrome.js', 'google_chrome/application.js', :jquery => true
     browserify 'lib/google-chrome-background.js', 'google_chrome/background.js'
+    browserify 'lib/hipmunk-spy.js', 'google_chrome/hipmunk-spy.js'
   end
   namespace :build do
     task :templates do
@@ -322,7 +327,7 @@ namespace :safari do
       FileUtils.cp file, destination
     end
 
-    browserify 'lib/safari.js', 'safari/careplane.safariextension/application.js'
+    browserify 'lib/safari.js', 'safari/careplane.safariextension/application.js', :jquery => true
     browserify 'lib/safari-background.js', 'safari/careplane.safariextension/background.js'
   end
   namespace :build do

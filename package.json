@@ -15,7 +15,8 @@
     "CM1": ">= 0.4.0",
     "dkastner-JSONPath": "*",
     "jquery-browserify": "*",
-    "jsdom": "*"
+    "jsdom": "*",
+    "underscore": "*"
   },
   "devDependencies": {
     "dkastner-browserify": ">= 1.6.2",
