@@ -293,7 +293,7 @@ namespace :google_chrome do
 
     browserify 'lib/google-chrome.js', 'google_chrome/application.js', :jquery => true
     browserify 'lib/google-chrome-background.js', 'google_chrome/background.js'
-    browserify 'lib/hipmunk-spy.js', 'google_chrome/hipmunk-spy.js'
+    FileUtils.cp 'lib/hipmunk-spy.js', 'google_chrome/hipmunk-spy.js'
   end
   namespace :build do
     task :templates do
