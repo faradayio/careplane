@@ -273,7 +273,8 @@ namespace :firefox do
 
   task :develop => 'firefox:build' do
     Dir.chdir 'firefox' do
-      puts `../moz-addon-sdk/bin/cfx run --addons=../moz-addon-sdk/firebug-1.7.3.xpi`
+      #puts `../moz-addon-sdk/bin/cfx run --addons=../moz-addon-sdk/firebug-1.7.3.xpi`
+      puts `../moz-addon-sdk/bin/cfx run`
     end
   end
 end
@@ -329,6 +330,7 @@ namespace :safari do
 
     browserify 'lib/safari.js', 'safari/careplane.safariextension/application.js', :jquery => true
     browserify 'lib/safari-background.js', 'safari/careplane.safariextension/background.js'
+    FileUtils.cp 'lib/hipmunk-spy.js', 'safari/careplane.safariextension/hipmunk-spy.js'
   end
   namespace :build do
     task :templates do
