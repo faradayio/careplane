@@ -11,6 +11,6 @@ vows.describe('Hipmunk').addBatch(
   driverExamples(Hipmunk)
 ).addBatch({
   'has a .driverName': function() {
-    expect(Hipmunk.driverName).toBe('Hipmunk');
+    assert.equal(Hipmunk.driverName, 'Hipmunk');
   }
 }).export(module);

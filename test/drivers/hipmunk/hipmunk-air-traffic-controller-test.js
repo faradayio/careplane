@@ -12,14 +12,14 @@ vows.describe('HipmunkAirTrafficController').addBatch(
   '#origin': {
     "returns the search's origin airport": function() {
       var controller = new HipmunkAirTrafficController();
-      controller.url = 'http://www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw';
+      controller.url = function() { return 'http://www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw'; };
       assert.equal(controller.origin(), 'DTW');
     }
   },
   '#destination': {
     "returns the search's origin airport": function() {
       var controller = new HipmunkAirTrafficController();
-      controller.url = 'http://www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw';
+      controller.url = function() { return 'http://www.hipmunk.com/results?to=sfo&s=srchn0ifqs7&from=dtw'; };
       assert.equal(controller.destination(), 'SFO');
     }
   }

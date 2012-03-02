@@ -3,8 +3,7 @@ var test = require('./helper'),
     assert = test.assert,
     sinon = test.sinon;
 
-var $ = require('jquery'),
-    fakeweb = require('fakeweb'),
+var fakeweb = require('fakeweb'),
     http = require('http');
 
 http.register_intercept({
