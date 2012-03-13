@@ -2,7 +2,7 @@
   "author": "Derek Kastner <dkastner@gmail.com>",
   "name": "careplane",
   "description": "Footprints for your flights",
-  "version": "0.6.4",
+  "version": "0.10.1",
   "homepage": "http://careplane.org",
   "repository": {
     "type": "git",
