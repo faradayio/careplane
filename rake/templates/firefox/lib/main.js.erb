@@ -37,7 +37,11 @@ var modWorkers = [];
   pageMod.PageMod({
     include: <%= monitorURL %>,
     contentScriptWhen: 'ready',
-    contentScriptFile: [data.url('browser/firefox/jquery-1.6.4.min.js'), data.url('application.js')],
+    contentScriptFile: [
+      data.url('browser/firefox/jquery-1.6.4.min.js'),
+      data.url('browser/firefox/underscore-min.js'),
+      data.url('application.js')
+    ],
     onAttach: function(addon) {
       var modWorker = new workers.FirefoxModWorker(addon, careplanePanel);
       modWorker.init('<%= driver %>');

@@ -74,6 +74,10 @@ def browserify(entry_point_path, output_path, options = {})
     jquery_alias = options[:firefox] ? 'jquery-firefox' : 'jquery-browserify'
     cmd += " -a jquery:#{jquery_alias} -r #{jquery_alias}"
   end
+  if options[:firefox]
+    underscore_alias = 'underscore-firefox'
+    cmd += " -a underscore:#{underscore_alias} -r #{underscore_alias}"
+  end
   `#{cmd}`
 
   puts 'Done'
@@ -242,6 +246,7 @@ namespace :firefox do
     browserify 'lib/firefox.js', 'firefox/data/application.js', :firefox => true, :jquery => true
     FileUtils.mkdir_p 'firefox/data/browser/firefox'
     FileUtils.cp 'lib/browser/firefox/jquery-1.6.4.min.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
+    FileUtils.cp 'lib/browser/firefox/underscore-min.js', 'firefox/data/browser/firefox/underscore-min.js'
 
     %w{
       lib/careplane-tracker-service.js
