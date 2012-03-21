@@ -357,13 +357,6 @@ namespace :safari do
   end
 end
 
-desc 'Run Jasmine unit tests (requires Node.js)'
-task :examples, [:spec] do |t, args|
-  args.with_defaults :spec => 'spec'
-  ENV['NODE_PATH'] = './lib'
-  exec "node_modules/.bin/jasmine-node #{args[:spec]}"
-end
-
 desc 'Check the syntax of all Careplane source files (requires Node.js)'
 task :syntax, :file do |t, args|
   if args[:file]
