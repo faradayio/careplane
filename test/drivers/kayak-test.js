@@ -20,12 +20,12 @@ vows.describe('Kayak').addBatch(
     },
 
     'inserts a badge in the top area': function(err, $) {
-      var kayak = new Kayak($);
+      var kayak = new Kayak({ $: $ });
       kayak.insertAttribution();
       assert.equal($('div#rightads .punchline').text(), 'Brighter Planet');
     },
     'inserts a text attribution in the footer': function(err, $) {
-      var kayak = new Kayak($);
+      var kayak = new Kayak({ $: $ });
       kayak.insertAttribution();
       assert.equal($('span.careplane-attribution-footer').text(), ' · Emission estimates powered by Brighter Planet');
     }
