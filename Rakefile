@@ -313,7 +313,7 @@ namespace :google_chrome do
   task :package => :build do
     FileUtils.mkdir_p('google_chrome/build')
     Dir.chdir 'google_chrome' do
-      puts `zip -r build/careplane.zip application.js background.js background.html images manifest.json options.html stylesheets -x *~`
+      puts `zip -r build/careplane.zip application.js background.js background.html images manifest.json options.html stylesheets hipmunk-spy.js -x *~`
     end
   end
 end
