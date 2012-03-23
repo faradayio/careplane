@@ -14,6 +14,7 @@ firefox/lib
 firefox/package.json
 google_chrome/background.js
 google_chrome/build
+google_chrome/hipmunk-spy.js
 google_chrome/images
 google_chrome/src
 google_chrome/stylesheets
@@ -21,6 +22,7 @@ google_chrome/manifest.json
 safari/build
 safari/careplane.safariextension/images
 safari/careplane.safariextension/background.js
+safari/careplane.safariextension/hipmunk-spy.js
 safari/careplane.safariextension/Info.plist
 safari/careplane.safariextension/CareplaneTrackerService.js
 safari/careplane.safariextension/Worker.js

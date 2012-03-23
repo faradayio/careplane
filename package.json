@@ -19,7 +19,7 @@
     "underscore": "*"
   },
   "devDependencies": {
-    "dkastner-browserify": ">= 1.6.2",
+    "browserify": ">= 1.10.4",
     "fakeweb": "*",
     "jquery": "*",
     "sinon": "*",
