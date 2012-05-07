@@ -92,26 +92,33 @@ end
   :safari_download => lambda { "downloads/careplane-#{current_version}.safariextz" }
 }
 
+desc 'Output the current version'
 task :version do
   puts version
 end
 namespace :version do
 
+  desc 'Bump the version patch #'
   task :bump => 'version:bump:patch'
 
   namespace :bump do
+    desc 'Bump patch (0.0.X)'
     task :patch do
       current = version
       whole, major, minor, patch = current.match(/(\d+)\.(\d+)\.(\d+)$/).to_a
       patch = patch.to_i + 1
       task('version:set').invoke("#{major}.#{minor}.#{patch}")
     end
+
+    desc 'Bump minor (0.X.0)'
     task :minor do
       current = version
       whole, major, minor = current.match(/(\d+)\.(\d+)\.\d+$/).to_a
       minor = minor.to_i + 1
       task('version:set').invoke("#{major}.#{minor}.0")
     end
+
+    desc 'Bump major (X.0.0)'
     task :major do
       current = version
       whole, major = current.match(/(\d+)\.\d+\.\d+$/).to_a
@@ -120,6 +127,7 @@ namespace :version do
     end
   end
 
+  desc 'Manually set the version'
   task :set, :string do |t, args|
     File.open('VERSION', 'w') { |f| f.puts args[:string] }
 
@@ -131,6 +139,7 @@ namespace :version do
     puts "Version set to #{args[:string]}"
   end
 
+  desc 'git tag the current version'
   task :tag do
     psh "git tag v#{version}"
     puts "Tagged #{`git log -n 1 --pretty=oneline`} with v#{version}"
@@ -138,8 +147,8 @@ namespace :version do
 end
 
 
+desc 'Publish github pages site (http://careplane.org)'
 task :pages => 'pages:publish'
-# Update the pages/ directory clone
 namespace :pages do
   desc 'Initialize the pages directory to allow versioning'
   task :sync => '.git/refs/heads/gh-pages' do |f|
@@ -370,6 +379,10 @@ task :syntax, :file do |t, args|
   end
 end
 
+task :vows do
+  exec 'vows'
+end
+
 task :features => 'features:build' do
   exec 'bundle exec cucumber features'
 end
@@ -379,7 +392,7 @@ namespace :features do
   end
 end
 
-desc 'Build all plugins and Jasmine'
+desc 'Build all plugins'
 task :build => ['firefox:build', 'google_chrome:build', 'safari:build']
 
 desc 'Package all plugins'
@@ -388,5 +401,6 @@ task :package => ['firefox:package', 'google_chrome:package', 'safari:package']
 desc 'Build packages, copy them to gh-pages, update website links, push'
 task :release => 'pages:publish'
 
-task :test => [:examples, :features]
+desc 'Run all tests'
+task :test => [:vows, :features]
 task :default => :test
