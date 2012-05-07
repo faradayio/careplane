@@ -60,9 +60,11 @@ You will need to implement several classes. A good example is to look under `lib
 * `lib/drivers/zombo/zombo-trip.js` defines `ZomboTrip`, which:
   * Represents a single flight result, which may contain one or more Flights
   * Is instantiated with an id, an instance of $, and a reference to the trip's flight result DOM element
+  * Prototype inherits from Trip
   * Provides a `#loadFlights` function that loads all the Trip's Flights and calls a given callback with an instance of the Trip.
 * `lib/drivers/zombo/zombo-flight.js` defines `ZomboFlight`, which:
   * Represents a single flight segment within a flight result
+  * Prototype inherits from Flight
   * Provides attributes to be sent to [CM1 flight model](http://impact.brighterplanet.com/models/flight).
     * Currently, only the following characteristics are supported
       * airline
