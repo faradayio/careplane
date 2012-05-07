@@ -4,7 +4,7 @@ Careplane is a browser plug-in for Chrome, Safari, and Firefox that superimposes
 
 ## Installation
 
-See [the Careplane website](http://carplane.org).
+See [the Careplane website](http://careplane.org).
 
 ## Development environment
 
