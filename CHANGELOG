@@ -1,3 +1,6 @@
+v0.10.5 2012-07-23
+* Fix for updated hipmunk data
+* New chrome package format
 v0.10.4 2012-03-23
 * Fix Orbitz loading
 * Fix Hipmunk tab switching
