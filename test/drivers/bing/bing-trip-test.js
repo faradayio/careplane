@@ -13,13 +13,13 @@ var searchData = JSON.parse(helper.readFixture('bing_dtw_sfo.json'));
 
 vows.describe('BingTrip').addBatch(
   tripExamples('bing_dtw_sfo_flight.html', function($) {
-    return new BingTrip('0', $, $('#flightDetails_0').get(0), searchData);
+    return new BingTrip('0', $, $('#resultRow_0').get(0), searchData);
   })
 ).addBatch({
   'with search data': {
     topic: function() {
       var $ = helper.qweryFixture('bing_dtw_sfo_flight.html');
-      var trip = new BingTrip('0', $, $('#flightDetails_0').get(0), searchData);
+      var trip = new BingTrip('0', $, $('#resultRow_0').get(0), searchData);
       return trip;
     },
 
@@ -33,7 +33,7 @@ vows.describe('BingTrip').addBatch(
 
     '#pricingSignature': {
       'parses out the signature parameter': function(trip) {
-        assert.equal(trip.pricingSignature(),'A6tT8o3xQqjRVMhxbd7URwdvDk.c5-BEclPKmOShUqcEzavTRzRCrLUKNuPclV9ZldL2QwE4vcb8DiNjB5OQAA2YFjNHECmX0vrjWFMpp.12Ueb5x08tXyVAh.Eu0ISLyay1Q6OxqxpAJTIvDwvXjAVdse7aDs7i83Dza-zEKouWeOTe1j0EX6YgG33MemBOwDcL15Km5lY5r1Ua5jZYS4KHu3071nVXiqONZW80cfjmTSTE5eq2IHkjR3j3M1G5CGvjczVRixCA2su01A2Zf8Y13c-Q.oo4Wgpzjy5eQpzaRUqVF1dR3c5O.k9ND34EHqQEQL6FewHluTYNClNwEt7YOR9Bi-FAJ.aMmnZfSUJbkV8v-lgv0G10RwfaSCKgGEnNvqb23Rv9yrlagsWgsTNta47q.fvVuxR5OpKt8bi-AWYZTGiy-1ZvuGNS-j.nfH3oQy9RyBFQVExUdTfp.DbCcOOHx0pK5jdx21urYkqI');
+        assert.equal(trip.pricingSignature(),'AcM.EtLnuvycs-RF6M0sLZTcjvsVsL0LCHkwTOpyRr0RRiOMErMN7A1xaAeXlhkeFBMCtWD1eNcv2r-5Lf3vl8xP9XbwkT5s-vAjXodeZoqmdrZvKIAbMX3eLewH8JbgpwjXdXx9wgMLL31j5shxr4bs7AKyq-zvBm9jvOKOn9636urutGsHtd6xuCbuAuDSxrlsjDoaiebu8b0GVfxPCEbQW7D8a.1w3Y3aZCdwHSxRtldTzwzqEosWkVnc70lvXdzDK4y8jcUfoYRF-PSW0L3g1miOhn2-BEfQIyojIGp78RUpZv1sXj81cl98N-WCkT2hySkVho9RNwZeJWIPIUNec2mGGA1Bzu-NJwCAS0Nmbv9tg1C20KgaFfMp-u8ya3SKDfh6lGBwtC90TRYmmeS2RHC.3gkJs161eVnsXQP-');
       }
     }
   }

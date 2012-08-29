@@ -51,7 +51,7 @@ vows.describe('BingAirTrafficController').addBatch(
       'finds a requestId hidden in one of the <a>s': function() {
         var $ = helper.qweryFixture('bing_dtw_sfo.html');
         var controller = new BingAirTrafficController($);
-        assert.equal(controller.requestId(), 'caijs3i7m37c');
+        assert.equal(controller.requestId(), '2012082912474683AcM.EtLnuvycs-RF6M0sLZTcjvsVsL0LCHkwTOpyRr0RRiOMErMN7A1xaAeXlhkeFBMCtWD1eNcv2r-5Lf3vl8xP9XbwkT5s-vAjXodeZoqmdrZvKIAbMX3eLewH8JbgpwjXdXx9wgMLL31j5shx8e6ohMtOMNkwX7dRJ0.LvN25iEnO6Y.-rbVb6a913md3taWYmr2JH.YzoZfM.im-UUXpYm-4PPldnWPD.S0Vt4CboysruRSLkNq0Zda9zcz2Xa-lNOTzkE5l8AR3-lCl3l1aQHpf.f1m8zTuGezogWaXOn8egbTdnXBqmbaZt-ukebsRQa9y9MSZcuUTFNKm2nEP8ro46J1WaO7wNGn.kg9DkK9442oNQwR2zXT08Ac-8kjG-8oefrWVYFTkNgEOgYVAf3BLFpL.W6MuU2TY.XbDOxagHcY8dEjLVVi9Ph9IzTp1jL-y51LqO1awVz.t6aRNF6VaswObYoScMrnSXc5LKez4oYc6Ub7WzmVKEUYS6nuFHKAeapaxgylU7HHKF57gRPTGZ5KqvRiv5O0ZdrMXny.toNZxHI8Em4cyzJc0hUBKqwR28c.bRljYQoBeQ7GPWP-Nmhj7abUu8fKWOyWP3S62VVaw3rXeVBHYfEtvJhhJpm1ZjQiPeqRptsHOJsqbM7Yvg0fabhNOb00cL.GK0w.LE1.1zjCwNOqvqlURer.QeyZGfRjSqx3dKPjU5RZkCsdv8BnmbCCdZqHWKiAlUXBpAJ-QTDZlIh5v0LoAaw__');
       }
     }
   },
