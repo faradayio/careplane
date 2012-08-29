@@ -22,11 +22,10 @@ vows.describe('Bing').addBatch(
     'inserts a badge in the top area': function(err, $, window) {
       var bing = new Bing({ '$': $ });
       bing.insertAttribution();
-      assert.equal($('div#bookingAsst .punchline').text(), 'Brighter Planet');
+      assert.equal($('div#bookingAssistant .punchline').text(), 'Brighter Planet');
     },
     'inserts a text attribution in the footer': function(err, $, window) {
       var bing = new Bing({ '$': $ });
-      //bing.insertAttribution();
       assert.equal($('span.careplane-attribution-footer').text(),'Emission estimates powered by Brighter Planet');
     }
   }
