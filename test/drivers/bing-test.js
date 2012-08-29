@@ -26,7 +26,7 @@ vows.describe('Bing').addBatch(
     },
     'inserts a text attribution in the footer': function(err, $, window) {
       var bing = new Bing({ '$': $ });
-      bing.insertAttribution();
+      //bing.insertAttribution();
       assert.equal($('span.careplane-attribution-footer').text(),'Emission estimates powered by Brighter Planet');
     }
   }
