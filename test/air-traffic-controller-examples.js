@@ -1,7 +1,8 @@
 var test = require('./helper'),
     vows = test.vows,
     assert = test.assert,
-    sinon = test.sinon;
+    sinon = test.sinon,
+    _ = require('underscore');
 
 var fakeweb = require('fakeweb'),
     http = require('http');
@@ -35,16 +36,18 @@ module.exports = function(controllerClass, fixtureFile, callback) {
 
         controller.scoreTrips();
         controller.trips.forEach(function(trip) {
-          assert.isFalse(trip.isScorable);
+          assert.isFalse(trip.isScorable, 'trip is scorable after call to scoreTrips()');
         });
+
+        assert.isEmpty(controller.undiscoveredTripElements(), 'there are still undiscovered trips');
 
         controller.rateTrips();
 
-        for(var i in controller.trips) {
-          var p = controller.trips[i].footprintView.footprintParagraph();
+        _.each(controller.trips, function(trip) {
+          var p = trip.footprintView.footprintParagraph();
           assert.match(p.text(), /[\d,]+/);
 
-          var div = controller.trips[i].infoView.target();
+          var div = trip.infoView.target();
           assert($(div).find('.careplane-methodologies li a').length > 0);
           $(div).find('.careplane-methodologies li a').each(function(i, a) {
             assert.match($(a).text(), /[A-Z]{3}-[A-Z]{3}/);
@@ -52,7 +55,7 @@ module.exports = function(controllerClass, fixtureFile, callback) {
 
           var comparison = $(div).find('p.careplane-search-average-comparison').text();
           assert.match(comparison, /impact/);
-        }
+        });
 
         assert(controller.events.searchEmissionsComplete.called);
       })
