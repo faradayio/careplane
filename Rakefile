@@ -254,7 +254,12 @@ namespace :firefox do
 
     browserify 'lib/firefox.js', 'firefox/data/application.js', :firefox => true, :jquery => true
     FileUtils.mkdir_p 'firefox/data/browser/firefox'
-    FileUtils.cp 'lib/browser/firefox/jquery-1.6.4.min.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
+
+    if ENV['JQUERY_DEVELOPMENT'] == 'true'
+      FileUtils.cp 'lib/browser/firefox/jquery-1.8.0.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
+    else
+      FileUtils.cp 'lib/browser/firefox/jquery-1.6.4.min.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
+    end
     FileUtils.cp 'lib/browser/firefox/underscore-min.js', 'firefox/data/browser/firefox/underscore-min.js'
 
     %w{
