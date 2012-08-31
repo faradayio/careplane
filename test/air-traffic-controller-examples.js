@@ -31,7 +31,8 @@ module.exports = function(controllerClass, fixtureFile, callback) {
         assert(controller.tripCount > 0, 'No trips found');
         assert.equal(controller.tripCount, numTrips, 'controller.tripCount is out of sync');
         controller.trips.forEach(function(trip) {
-          assert.isTrue(trip.isScorable, 'trip ' + trip + ' is not scorable');
+          assert.isNotEmpty(trip.flights, 'trip ' + trip.id + ' has no flights');
+          assert.isTrue(trip.isScorable, 'trip ' + trip.id + ' is not scorable');
         });
 
         controller.scoreTrips();
