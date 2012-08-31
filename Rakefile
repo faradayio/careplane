@@ -246,6 +246,8 @@ namespace :firefox do
     puts 'Building Firefox'
 
     puts 'Copying files...'
+    FileUtils.mkdir_p File.join('firefox', 'data', 'browser', 'firefox')
+
     (@css_files + @image_files).each do |asset|
       destination = File.join('firefox', 'data', File.basename(asset))
       FileUtils.cp asset, destination
@@ -253,7 +255,6 @@ namespace :firefox do
     puts 'Done'
 
     browserify 'lib/firefox.js', 'firefox/data/application.js', :firefox => true, :jquery => true
-    FileUtils.mkdir_p 'firefox/data/browser/firefox'
 
     if ENV['JQUERY_DEVELOPMENT'] == 'true'
       FileUtils.cp 'lib/browser/firefox/jquery-1.8.0.js', 'firefox/data/browser/firefox/jquery-1.6.4.min.js'
