@@ -14,12 +14,13 @@
   "dependencies": {
     "CM1": ">= 0.4.0",
     "dkastner-JSONPath": "*",
+    "http-browserify": "*",
     "jquery-browserify": "*",
     "jsdom": "*",
     "underscore": "*"
   },
   "devDependencies": {
-    "browserify": ">= 1.10.4",
+    "browserify": "= 1.13.1",
     "fakeweb": "*",
     "jquery": "*",
     "sinon": "*",
