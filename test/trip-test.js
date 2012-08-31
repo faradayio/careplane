@@ -8,8 +8,8 @@ var Trip = helper.plugin.require('./trip');
 var trip, flightEmissionsComplete, onTripEmissionsComplete, callback;
 trip = new Trip();
 trip.flights = [];
-onTripEmissionsComplete = sinon.spy('onTripEmissionsComplete');
-callback = sinon.spy('callback');
+onTripEmissionsComplete = sinon.spy();
+callback = sinon.spy();
 flightEmissionsComplete = Trip.events.
   flightEmissionsComplete(trip, callback, onTripEmissionsComplete);
 
@@ -22,7 +22,7 @@ vows.describe('Trip').addBatch({
         sinon.assert.calledWith(trip.tallyFootprint, 1);
       },
       'calls the provided callback function': function() {
-        var flight = sinon.spy('Flight');
+        var flight = sinon.spy();
         var response = { carbon: 1, subject: flight };
 
         flightEmissionsComplete(null, response);

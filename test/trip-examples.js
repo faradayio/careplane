@@ -7,8 +7,8 @@ var fakeweb = require('fakeweb'),
     http = require('http');
 
 var Trip = helper.plugin.require('./trip');
-var onFlightEmissionsComplete = sinon.spy('onFlightEmissionsComplete');
-var onTripEmissionsComplete = sinon.spy('onTripEmissionsComplete');
+var onFlightEmissionsComplete = sinon.spy();
+var onTripEmissionsComplete = sinon.spy();
 
 http.register_intercept({
   uri: '/flights.json',
