@@ -15,7 +15,7 @@ Feature: Orbitz
     And I fill in "airEndDate" with a return date within "#airbotForm"
     And I press "Find Flights" within "#airbotForm"
     And Careplane runs as soon as "#matrix" is visible
-    Then I should see "Emission estimates powered by Brighter Planet"
+    Then I should see "Brighter Planet"
     And I should see carbon footprints
 
 
@@ -28,5 +28,5 @@ Feature: Orbitz
     And I fill in "ar.rt.leaveSlice.date" with a departure date
     And I fill in "ar.rt.returnSlice.date" with a return date
     And I press "Search Flights"
-    Then I should see "Emission estimates powered by Brighter Planet"
+    Then I should see "Brighter Planet"
     And I should see carbon footprints

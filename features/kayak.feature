@@ -15,7 +15,7 @@ Feature: Kayak
     And I fill in "return_date" with a return date
     And I press "fdimgbutton"
     And Careplane runs as soon as ".flightresult" is visible
-    Then I should see "Carbon calculations powered by"
+    Then I should see "Brighter Planet"
     And I should see carbon footprints
 
   @chrome @firefox @safari 
@@ -27,5 +27,5 @@ Feature: Kayak
     And I fill in "depart_date" with a departure date
     And I fill in "return_date" with a return date
     And I press "fdimgbutton"
-    Then I should see "Carbon calculations powered by"
+    Then I should see "Brighter Planet"
     And I should see carbon footprints
