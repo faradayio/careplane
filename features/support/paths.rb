@@ -11,6 +11,8 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
+    when /the travel\s?page/
+      '/travel'
     else
       if page_name =~ /^\//
         page_name

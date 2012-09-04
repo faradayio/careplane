@@ -23,6 +23,11 @@ When %r{I click the Flight Only button} do
   find('span', :text => 'Flight only').click
 end
 
+
+When %r{I click the "(.*)" airport} do |type|
+  find(".#{type} li").click
+end
+
 When %r/I fill in "([^"]+)" with a departure date$/ do |field|
   departure = 2.days.from_now
   step "I fill in \"#{field}\" with \"#{departure.strftime('%m/%d/%Y')}\""
