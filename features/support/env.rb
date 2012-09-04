@@ -51,17 +51,24 @@ Capybara.register_driver :selenium_firefox do |app|
   require 'selenium-webdriver'
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.add_extension File.expand_path(%w(.. .. .. firefox build careplane.xpi).join('/'), __FILE__)
+  profile['javascript.options.showInConsole'] = true
   Capybara::Selenium::Driver.new app, :browser => :firefox, :profile => profile
 end
 
 Before("@chrome") do
-  puts 'Building package...'
-  puts `rake google_chrome:package`, 'Done!'
+  unless @chrome_built
+    puts 'Building chrome package...'
+    puts `rake google_chrome:package`, 'Done!'
+    @chrome_built = true
+  end
   Capybara.current_driver = :selenium_chrome
 end
 
 Before("@firefox") do
-  puts 'Building package...'
-  puts `rake firefox:package`, 'Done!'
+  unless @firefox_built
+    puts 'Building firefox package...'
+    puts `rake firefox:package`, 'Done!'
+    @firefox_built = true
+  end
   Capybara.current_driver = :selenium_firefox
 end
